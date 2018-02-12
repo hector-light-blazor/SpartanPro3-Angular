@@ -38,6 +38,7 @@ export class EsriMapComponent implements OnInit {
   quickPickEnabled: boolean = false;
   selectedAttributes: any = null;
   selectedPic: any = null;
+  selectedQuickPick: any = null;
   enabledFullScreenPic: boolean = false;
   isAlive: boolean = true; //Controls the alive part for unsubscribe and subscribe...
 
@@ -317,10 +318,28 @@ export class EsriMapComponent implements OnInit {
            this.selectedPic = this.app.url + this.app.route.api.dQuickPick + response.graphic.attributes.filepath;
            this.quickPickEnabled = true; // Display quick pick tools
            // Draw square for selecting the graphic...
+           let symbol = new this.app.esriSimpleMarkerSymbol(this.app.esriSimpleMarkerSymbol.STYLE_SQUARE, 35,
+            new this.app.esriSimpleLineSymbol(this.app.esriSimpleLineSymbol.STYLE_SOLID,
+            new this.app.esriColor([255,0,0]), 1),
+            new this.app.esriColor([0,0,0,0.1]));
+          this.map.graphics.clear();
+          let graphic = new this.app.esriGraphic(response.graphic.geometry, symbol)
+          this.map.graphics.add(graphic);
+
+          this.app.animateGraphic(graphic);
         }
        }
     })
 
+    this.quickPickLayer.on('dbl-click', response => {
+        console.log(response);
+    });
+
+  }
+
+  // =-=-=-= MODULE CLEAR MAP GRAPHICS IF NEEDED =-=-=-=
+  clearMapGraphics() {
+    this.map.graphics.clear();
   }
 
   

@@ -20,7 +20,7 @@
   <div class="window-content" style="overflow: hidden;">
     <app-master-loading [regularLoading]="true" *ngIf="isLoading"></app-master-loading>
     <app-full-screen-pick *ngIf="enabledFullScreenPic" [src]="selectedPic" (onClose)="enabledFullScreenPic = false" ></app-full-screen-pick>
-    <app-quick-pick-tools *ngIf="quickPickEnabled" [pic]="selectedPic" (closeOutput)="quickPickEnabled = false"></app-quick-pick-tools>
+    <app-quick-pick-tools *ngIf="quickPickEnabled" [pic]="selectedPic" (closeOutput)="quickPickEnabled = false; clearMapGraphics();"></app-quick-pick-tools>
     <div #map id="map" >
 
     </div>
