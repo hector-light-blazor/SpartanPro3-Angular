@@ -1,0 +1,32 @@
+.desktopLogo {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    z-index: 2;
+    
+}
+
+.fluent-menu{
+    background-color: #1d1d1d;
+}
+
+a{
+    color: #0ce3ac;
+}
+.tabs-content{
+    background-color: #303030;
+}
+
+.fluent-menu .tabs-content {
+    background-color: #303030;
+}
+.fluent-big-button{
+    background-color: transparent;
+    
+}
+.tab-group-caption{
+    color:white;
+}
+.fluent-big-button:hover{
+    background-color: #1d1d1d;
+}

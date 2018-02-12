@@ -1,0 +1,19 @@
+.btnSize {
+    height: 20px;
+}
+
+.window-content {
+    height: 95%;
+}
+.window-rotate {
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Safari */
+    transform: rotate(90deg);
+}
+
+#map {
+    margin: 0; 
+    padding: 0; 
+    height: 100%;
+    width: 100%
+}

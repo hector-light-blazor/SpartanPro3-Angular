@@ -1,0 +1,112 @@
+<div class="grid">
+       
+        <div class="row cells3">
+          <div class="cell">
+              <div class="window error" style="width: 400px;">
+                <div class="window-caption">
+                  <span class="window-caption-icon"><i class="fa fa-windows" aria-hidden="true"></i></span>
+                  <span class="window-caption-title">Open Ticket's</span>
+                  <div class="input-control text">
+                      <input [(ngModel)]="searchAll"  type="text" placeholder="Search Customer" capitalize>
+                  </div>
+                  <div class="dropdown-button">
+                    <button class="button rounded small-button dropdown-toggle">
+                      <i class="fa fa-cogs"></i>
+                    </button>
+                    <ul class="split-content d-menu" data-role="dropdown">
+                        <li (click)="changeOrganizationFilter(orga.organization_id)" *ngFor="let orga of app.organizations" style="cursor: pointer;"><a >{{
+                         
+                          ( orga.organization_name) ? ((orga.organization_name.length > 16) ? (orga.organization_name | slice:0:16) +'..' : orga.organization_name) : ''
+                        }}</a></li>
+                    </ul>
+                </div>
+                  
+                </div>
+                <div class="window-content" style="height: 250px; cursor: pointer;">
+                    <app-master-loading [regularLoading]="true" *ngIf="allLoading"></app-master-loading>
+                  <div class="listview">
+                    <div class="list" style="height: 100px;"  *ngFor="let customer of openTickets  | filtermine:searchAll" routerLink="/ticket/view/{{customer.id_ticket}}">
+      
+                        <!-- <img class="list-icon" style="border-radius: 50%;" [src]="customer.icon" width="50" height="50"  alt="Avatar Badge">  -->
+                        <div style="float:left;">
+                            <span >{{customer.staff}} | <b>{{customer.created_date}}</b></span>
+                            <br>
+                              <span>{{customer.objectid}}</span>
+                            <br>
+                            <span  >{{
+                              ((customer.cfirst_name) ? (((customer.cfirst_name.length > 9) ? (customer.cfirst_name | slice:0:9) +'..' : customer.cfirst_name) + ' ' + ((customer.clast_name.length > 9) ? (customer.clast_name | slice:0:9)+'..' : customer.clast_name)) : '')
+                              }}</span>
+                              
+                        </div>
+                        <div style="float:leaft">
+                            <span class='place-right' style='text-align:center;'>
+                           
+                                <!-- <img style="border-radius: 50%;" [src]="customer.icon_transfer" width="50" height="50"  alt="Avatar Badge">  -->
+                             <br>
+                             <label style="font-size:8px;">
+                             {{customer.init}}
+                             </label>
+                           </span>
+                        </div>
+                       
+                        
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+        
+          <div class="cell">
+            <div class="window success"  style="width: 400px;">
+              <div class="window-caption">
+                  <span class="window-caption-icon"><i class="fa fa-windows" aria-hidden="true"></i></span>
+                  <span class="window-caption-title">Working Ticket's</span>
+                  <div class="input-control text">
+                      <input [(ngModel)]="searchInbox"  type="text" placeholder="Search Customer" capitalize="" class="ng-pristine ng-untouched ng-valid ng-empty">
+                  </div>
+              </div>
+              <div class="window-content" style="height: 250px; cursor: pointer;">
+                  <app-master-loading [regularLoading]="true" *ngIf="allLoading"></app-master-loading>
+                <div class="listview">
+                  <div class="list" style="height: 100px;" *ngFor="let customer of inbox" routerLink="/ticket/view/{{customer.id_ticket}}">
+                    <div style="float:left;">
+                      <br>
+                        <span>{{customer.objectid}}</span>
+                      <br>
+                      <span  >{{customer.cfirst_name + ' ' +  customer.clast_name}}</span>
+                    </div>
+                    <div style="float:leaft">
+                      <span class='place-right' style='text-align:center;'>
+                     
+                          <!-- <img style="border-radius: 50%;" [src]="customer.icon_transfer" width="50" height="50"  alt="Avatar Badge">  -->
+                       <br>
+                       <label style="font-size:8px;">
+                       {{customer.init}}
+                       </label>
+                     </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cell">
+            <div class="window error"> 
+              <div class="window-caption">
+                <span class="window-caption-icon"><i class="fa fa-windows" aria-hidden="true"></i></span>
+                <span class="window-caption-title">Ready Ticket's</span>
+                <div class="input-control text">
+                  <input [(ngModel)]="searchMine" type="text" placeholder="Search Customer">
+                </div>
+              </div>
+              <div class="window-content" style="height: 250px; cursor: pointer;">
+                <div class="listview">
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+      
+        </div>
+      </div>

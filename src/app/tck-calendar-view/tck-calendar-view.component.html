@@ -1,0 +1,41 @@
+<div id="showTickets"   class="window padding20 dialog" style="position: absolute;left: 4%;z-index:3;display:none;width:90%; height:50%;">
+  <div class="window-content" >
+      <span (click)="closemenu('#showTickets')" class="place-right" style="cursor: pointer">
+        <span class="mif-cross"></span>
+      </span>
+      <br>
+      <div class="padding20">
+         <h1>Due Tickets {{choosen_date}}</h1>
+         <div class="listview">
+                 
+                 <button  routerLink="/home/ticketView/{{ticket.id_ticket}}"  *ngFor="let ticket of choosen_tickets" class="shortcut-button bg-cyan bg-active-darkBlue fg-white">
+                      <span class="icon mif-rocket"></span>
+                      <span class="title">{{ticket.cfull_name}}</span>
+                      <span class="badge">{{ticket.objectid}}</span>
+                      
+                  </button>
+         </div>
+      </div>
+  </div>
+</div>
+<div  style="color:white">
+  <div class="toolbar pull-right">
+      <button class="toolbar-button" (click)="previous()"><span class="mif-arrow-left"></span></button>
+      <button class="toolbar-button" (click)="next()"><span class="mif-arrow-right"></span></button>
+  </div>
+  <div class="flex-grid">
+      <h1>{{current_Month + " " + current_Year}}</h1>
+      
+      <div class="row">
+          <div class="cell size2 debug" *ngFor="let day of titles"><h3>{{day}}</h3></div>
+      </div>
+      <div *ngFor="let i of rows" class="row">
+          <div *ngFor="let calendar of month | slice:(i*7):(i+1)*7" style="height:120px;" class="cell size2 debug">
+              <span *ngIf="calendar.events.length > 0" (click)="selection(calendar)" [ngClass]="{'bg-cyan': !calendar.passdue, 'bg-red': calendar.passdue}" class="button badge cycle-button  bg-active-darkBlue fg-white pull-left">{{calendar.events.length}}</span>
+              <span class="pull-right" [ngClass]="{'disabled': calendar.gray, 'badge': calendar.today, 'ribbed-emerald': calendar.today, 'button': calendar.today, 'cycle-button':calendar.today}">{{calendar.date}}</span>
+          </div>
+      </div>
+  </div>
+  <br>
+  <br>
+</div>

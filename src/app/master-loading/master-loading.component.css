@@ -1,0 +1,9 @@
+#con {
+    position: absolute;
+    z-index: 19999;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    margin-left: -50px;
+}

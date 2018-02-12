@@ -1,0 +1,356 @@
+<div style="width:100%;height:30px; background:transparent;">
+  </div>
+  <!-- <app-charm-online></app-charm-online> -->
+  <div  class="desktopLogo">
+          <img src="assets/public_safety_logo.png" width="70" height="50" alt="">
+  </div>
+  <div  id="fluent-menu" class="fluent-menu" data-role="fluentmenu">
+        <div (click)="toogleToolbar()" style="position:absolute;right:0;z-index:3;">
+          <span *ngIf="expandShow" class="mif-expand-less" style="color:white;cursor:pointer;"></span>
+          <span *ngIf="!expandShow" class="mif-expand-more" style="color: white;cursor:pointer;"></span>
+        </div>
+                  <ul class="tabs-holder">
+                      <li class="special ribbed-emerald" (click)="toogleCharm()" style="cursor: pointer"><a>Online</a></li>
+                      <li *ngIf="_toolSettings.SECTIONS.TICKET.onoff" class="active"><a href="#tab_tickets">Ticket</a></li>
+                      <li *ngIf="_toolSettings.SECTIONS.SUBDIVISION.onoff" class=""><a href="#tab_subdivision">Subdivision</a></li>
+                      <li><a>NRF's</a></li>
+                      <li *ngIf="_toolSettings.SECTIONS.MAP.onoff"  class=""><a href="#tab_map">Map</a></li>
+                      <li *ngIf="_toolSettings.SECTIONS.SETTINGS.onoff" class=""><a href="#tab_settings">Settings</a></li>
+                      
+                  </ul>
+  
+                  <div  class="tabs-content">
+                       
+                      <div *ngIf="_toolSettings.SECTIONS.TICKET.onoff" class="tab-panel" id="tab_tickets" style="display: block;">
+                          <div *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.onoff" class="tab-panel-group">
+                              <div class="tab-group-content">
+                                  <a *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.ids.dash"  [routerLink]="['ticket/dashboard']" class="fluent-big-button">
+                                      <!--<span class="icon"><i class="fa fa-tachometer" aria-hidden="true"></i></span>-->
+                                      <img  src="assets/dashboard.png"  alt="Dashboard Toolbar">
+                                      Dashboard
+                                  </a>
+                                  
+                                  <div *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.ids.calendar" class="tab-content-segment">
+                                      <a [routerLink]="['ticket/calendar-view']" class="fluent-big-button">
+                                          <!--<span class="mif-calendar"></span>-->
+                                          <img src="assets/calendar.png" alt="Calendar Toolbar">
+                                          Calendar
+                                      </a>
+                                  </div>
+                                  <div *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.ids.arch" class="tab-content-segment">
+                                      <a class="fluent-big-button">
+                                          <img src="assets/cabinet.png" alt="Archive Toolbar">
+                                          Archive
+                                      </a>
+                                  </div>
+                              </div>
+                              <div class="tab-group-caption">Display</div>
+                          </div>
+                          <div *ngIf="_toolSettings.SECTIONS.TICKET.INSERT.onoff" class="tab-panel-group">
+                              <div class="tab-group-content">
+                                  <div *ngIf="_toolSettings.SECTIONS.TICKET.INSERT.ids.nw" class="tab-content-segment">
+                                      <a (click)="enableTicketTools()" [routerLink]="['ticket/new']" class="fluent-big-button">
+                                        <!--<span class="icon"><i class="fa fa-id-card-o" aria-hidden="true"></i></span>-->
+                                        <img src="assets/edit.png" alt="Edit Toolbar">
+                                          New
+                                      </a>
+                                  </div>
+                                  <div class="tab-group-caption">Insert</div>
+                              </div>
+                          </div>
+  
+                          <div *ngIf="_toolSettings.SECTIONS.TICKET.RECORDS.onoff" class="tab-panel-group">
+                              <div class="tab-group-content">
+                                  <div *ngIf="_toolSettings.SECTIONS.TICKET.RECORDS.ids.filter" class="tab-content-segment">
+                                      <a [routerLink]="['ticketTable']" class="fluent-big-button">
+                                        <!--<span class="mif-stack3"></span>-->
+                                        <img src="assets/filter.png" alt="Filter Toolbar">
+                                        Filter
+                                      </a>
+                                  </div>
+                              </div>
+                              <div class="tab-group-caption">Records</div>
+                          </div>
+                          <div  class="tab-panel-group">
+                              <div *ngIf="_toolSettings.SECTIONS.TICKET.QUICKSEARCH.ids.search" class="tab-group-content">
+                                  <br>
+                                  <br>
+                                  <div class="input-control text">
+                                      <input type="text"  (keyup.enter)="enterQuickSearch()" >
+                                      <button (click)="enterQuickSearch()" class="button"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                  </div>
+                              </div>
+                              <div class="tab-group-caption">Quick Search</div>
+                          </div>
+                          <div *ngIf="ticketAvailable" class="tab-panel-group"  >
+                              <div class="tab-group-content">
+                                <div class="tab-content-segment">
+                                    <button (click)="actionSendToolBar(app.toolbarActivies.TICKET_SAVE_TRANSFER)" class="fluent-big-button">
+                                        <img src="assets/save.png" alt="Save and Transfer Ticket">
+                                        <!--<span class="mif-floppy-disk"></span>-->
+                                        Save &
+                                          <br>
+                                        Transfer
+                                    </button>
+                                    <button (click)="actionSendToolBar(app.toolbarActivies.TICKET_DELETE)" class="fluent-big-button">
+                                      <!--<span class="mif-bin"></span>-->
+                                      <img src="assets/garbage.png" alt="Delete Ticket">
+                                      Delete
+                                    </button>
+                                    <button (click)="actionSendToolBar(app.toolbarActivies.TICKET_ARCHIVE)" class="fluent-big-button">
+                                      <img src="assets/cabinet.png" alt="Archive Ticket" />
+                                      Archive
+                                    </button>
+                                </div>
+                              </div>
+                              <div class="tab-group-caption">Edits</div>
+                          </div>
+                          <div *ngIf="ticketAvailable" class="tab-panel-group"  >
+                              <div class="tab-group-content">
+                                <div class="tab-content-segment">
+                                  <div class="input-control text">
+  
+                                      <span class=" prepend-icon">
+                                        <i class="fa fa-comments"></i>
+                                      </span>
+  
+                                    <input type="text" [(ngModel)]="commentText" (keyup.enter)="actionSendToolBar(app.toolbarActivies.TICKET_INSERT_COMMENT)" uppercase>
+  
+                                  </div>
+  
+                                  <button (click)="actionSendToolBar(app.toolbarActivies.TICKET_DISPLAY_ATTACHMENT)" class="fluent-button" style="cursor:pointer;">
+                                      <!--<span class="mif-attachment"></span>-->
+                                      <img src="assets/attachment.png" alt="">
+                                      Attachment
+                                  </button>
+  
+                                    <!--<button (click)="displayRoutes()" class="fluent-button">
+                                      <span class="mif-rocket"></span>
+                                      <img src="assets/workflow.png" alt="">
+                                        Work Flow
+                                    </button>-->
+  
+                                </div>
+                              </div>
+                              <div class="tab-group-caption">Insert</div>
+                          </div>
+                          <div *ngIf="ticketAvailable" class="tab-panel-group"  >
+                            <div class="tab-group-content">
+                                <div class="tab-content-segment">
+                                  <button style="color:white;text-align:center;margin-left:24px;" class="fluent-big-button dropdown-toggle">
+                                         <img src="assets/map_icon.png" alt="">
+                                          <span class="label">Map</span>
+                                  </button>
+                                      <ul class="d-menu" data-role="dropdown">
+                                          <li><a (click)="actionSendToolBar(app.toolbarActivies.TICKET_ESRI_MAP)">Basemap</a></li>
+                                          <li><a (click)='actionSendToolBar(app.toolbarActivies.TICKET_ESRI_IMAGERY)'>Aerial</a></li>
+                                          <li><a (click)="displayMap('google')">Google Map</a></li>
+                                      </ul>
+                                      <br>
+                                  <button (click)="actionSendToolBar(app.toolbarActivies.TICKET_LIST_ATTACHMENTS)" type="button" name="button" class="fluent-button">
+                                    <!--<span class="mif-cabinet"></span>-->
+                                    <img src="assets/attachment.png" alt="">
+                                    Attachments
+                                  </button>
+                                  <!--<button ng-click="ticketActions(6)" type="button" name="button" class="fluent-button">
+                                    <span class="mif-organization"></span>-->
+                                    <!--<img src="assets/workflow.png" alt="">-->
+                                    <!--Work Flow-->
+                                  <!--</button>-->
+                                  
+                                </div>
+  
+                            </div>
+                            <div class="tab-group-caption">View</div>
+                          </div>
+                          <div *ngIf="filterAvailable" class="tab-panel-group " >
+                              <div class="tab-group-content">
+                                <div class="tab-content-segment">
+                                    <button (click)="showDate()"  class="fluent-button">
+                                      <!--<span class="mif-calendar"></span>-->
+                                      <img src="assets/calendar.png" alt="Calendar">
+                                        Date
+                                    </button>
+                                    <button (click)="getMoreTable(1000)" class="fluent-button">
+                                        <i class="fa fa-download" aria-hidden="true"></i>
+                                        Download 1000+
+                                    </button>
+                                    <button ng-click="dataTableActions('reset')" class="fluent-button">
+                                      <!--<span class="mif-filter"></span>-->
+                                      <img src="assets/filter.png" alt="Filter">
+                                        Reset
+                                    </button>
+                                </div>
+                              </div>
+                              <div class="tab-group-caption">Filter</div>
+                          </div>
+                      </div>
+  
+                      <div *ngIf="_toolSettings.SECTIONS.SUBDIVISION.VIEW.onoff" class="tab-panel" id="tab_subdivision" style="display: none;">
+                          <div class="tab-panel-group">
+                              <div class="tab-group-content">
+                                  <button class="fluent-big-button">
+                                      <span class="icon mif-envelop"></span>
+                                      Create<br>message
+                                  </button>
+                                  <div class="tab-content-segment">
+                                      <button class="fluent-big-button dropdown-toggle">
+                                          <span class="icon mif-file-picture"></span>
+                                          <span class="label">Create<br>element</span>
+                                      </button>
+                                      <ul class="d-menu" data-role="dropdown">
+                                          <li><a href="#">Message</a></li>
+                                          <li><a href="#">Event</a></li>
+                                          <li><a href="#">Meeting</a></li>
+                                          <li><a href="#">Contact</a></li>
+                                      </ul>
+                                  </div>
+                                  <div class="tab-content-segment">
+                                      <button class="fluent-big-button">
+                                          <span class="mif-cancel"></span>
+                                          <span class="label">Delete</span>
+                                      </button>
+                                  </div>
+                              </div>
+                              <div class="tab-group-caption">VIEW</div>
+                          </div>
+                      </div>
+  
+                      <div  class="tab-panel" id="tab_map" style="display: none;">
+                          <div *ngIf="_toolSettings.SECTIONS.MAP.VIEW.onoff"  class="tab-panel-group">
+                              <div class="tab-group-content">
+                                  <div class="tab-group-content">
+                                      <button [routerLink]="['mapView']" class="fluent-big-button">
+                                              <img src="assets/map_icon.png" alt="New User">
+                                              <span class="label">Map</span>
+                                      </button>
+                                  </div>
+                              </div>
+                              <div class="tab-group-caption">View</div>
+                          </div>
+                          <div class="tab-panel-group">
+                              <div class="tab-group-content">
+                                  <button [routerLink]="['uploadQuickPick']" class="fluent-big-button">
+                                      <i class="fa fa-upload" aria-hidden="true"></i>
+                                      <span class="label">Upload</span>
+                                  </button>
+                                  <button [routerLink]="['galleryQuickPick']" class="fluent-big-button">
+                                      <span class="label">Gallery</span>
+                                  </button>
+                              </div>
+                              <div class="tab-group-caption">QuickPick</div>
+                          </div>
+                      </div>
+  
+                      <div class="tab-panel" id="tab_settings" style="display: none;">
+                          <div *ngIf="_toolSettings.SECTIONS.SETTINGS.PROFILE.onoff" class="tab-panel-group">
+                              <div class="tab-group-content">
+                                  <div class="tab-content-segment">
+                                      <button *ngIf="_toolSettings.SECTIONS.SETTINGS.PROFILE.UPDATE" routerLink="/home/updateUser/{{appService.user.user_id}}/{{true}}" class="fluent-big-button">
+                                          <img src="assets/user_edit.png" alt="Edit User">
+                                          <span class="label">Update</span>
+                                      </button>
+                                  </div>
+                                <div class="tab-group-caption">Profile</div>
+                              </div>
+                          </div>
+  
+                          <div *ngIf="_toolSettings.SECTIONS.SETTINGS.USER.onoff" class="tab-panel-group">
+                              <div class="tab-group-content">
+                                   <button [routerLink]="['newUser']" class="fluent-big-button">
+                                          <img src="assets/user_new.png" alt="New User">
+                                          <span class="label">Insert</span>
+                                   </button>
+                                   <button [routerLink]="['updateUser']" class="fluent-big-button">
+                                          <img src="assets/user_edit.png" alt="Edit User">
+                                          <span class="label">Update</span>
+                                    </button>
+                                    
+                              </div>
+                              <div class="tab-group-caption">User</div>
+                          </div>
+                          <div *ngIf="_toolSettings.SECTIONS.SETTINGS.TICKET.onoff" class="tab-panel-group">
+                              <div class="tab-group-content">
+                                   <button [routerLink]="['insertTicketSettings']" class="fluent-big-button">
+                                          <img src="assets/gear_settings.png" alt="New User">
+                                          <span class="label">Insert</span>
+                                   </button>
+                                   <button [routerLink]="['updateTicketSettingsList']" class="fluent-big-button">
+                                          <img src="assets/gear_settings.png" alt="Edit User">
+                                          <span class="label">Update</span>
+                                    </button>
+                                    
+                              </div>
+                              <div class="tab-group-caption">Ticket</div>
+                          </div>
+                          
+                          <div *ngIf="_toolSettings.SECTIONS.SETTINGS.TOOLBAR.onoff" class="tab-panel-group">
+                              <div class="tab-group-content">
+                                   <button [routerLink]="['insertToolbarSettings']" class="fluent-big-button">
+                                          <img src="assets/gear_settings.png" alt="New User">
+                                          <span class="label">Insert</span>
+                                   </button>
+                                   <button [routerLink]="['updateToolbarSettingsList']" class="fluent-big-button">
+                                          <img src="assets/gear_settings.png" alt="Edit User">
+                                          <span class="label">Update</span>
+                                    </button>
+                                    
+                              </div>
+                              <div class="tab-group-caption">Toolbar</div>
+                          </div>
+                          <div class="tab-panel-group">
+                              <div class="tab-group-content">
+                                   <button [routerLink]="['gisRouting']" class="fluent-big-button">
+                                          <img src="assets/map_icon.png" alt="New User">
+                                          <span class="label">Routing</span>
+                                   </button>
+                              </div>
+                              <div class="tab-group-caption">GIS</div>
+                          </div>
+  
+                          <div  class="tab-panel-group">
+                              <div class="tab-group-content">
+                                   <button (click)="_settingsTools('C')"  class="fluent-big-button">
+                                          <img src="assets/crop.png" alt="Crop Avatar">
+                                          <span class="label">Crop</span>
+                                   </button>
+                                   <button (click)="_settingsTools('V')" class="fluent-big-button">
+                                       <img src="assets/badge.png" alt="Badge Avatar">
+                                      <span class="label">View</span>
+                                   </button>
+                              </div>
+                              <div class="tab-group-caption">Avatar</div>
+                          </div>
+                      </div>
+                  </div>
+      </div>
+      <!-- <div id="confirmDeletionT" class="window warning" style="position: absolute;z-index:3;display:none;left: 50%;margin-left: -150px; width:300px; height:200px;">
+        <div class="window-caption">
+           <span class="window-caption-icon"><span class="mif-bin"></span></span>
+           <span class="window-caption-title">Are you sure?</span>
+           <span (click)="closeConfirmation('#confirmDeletionT')" class="mif-cross place-right" style="cursor: pointer"></span>
+        </div>
+        <div class="window-content">
+          <br>
+          <br>
+           <div class="margin10" style="margin-left: 60px;">
+             <button (click)="closeConfirmation('#confirmDeletionT')" class="button">Cancel</button>
+             <button (click)="deleteTicket()"  class="button primary">Submit</button>
+           </div>
+        </div>
+    </div> -->
+    <!-- <div id="confirmArchiveT" class="window warning" style="position: absolute;z-index:3;display:none;left: 50%;margin-left: -150px; width:300px; height:200px;">
+        <div class="window-caption">
+           <span class="window-caption-icon"><span class="mif-cabinet"></span></span>
+           <span class="window-caption-title">Are you sure?</span>
+           <span (click)="closeConfirmation('#confirmArchiveT')" class="mif-cross place-right" style="cursor: pointer"></span>
+        </div>
+        <div class="window-content">
+          <br>
+          <br>
+           <div class="margin10" style="margin-left: 60px;">
+             <button (click)="closeConfirmation('#confirmArchiveT')" class="button">Cancel</button>
+             <button (click)="archive()"  class="button primary">Submit</button>
+           </div>
+        </div>
+    </div> -->

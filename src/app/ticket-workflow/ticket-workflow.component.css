@@ -1,0 +1,10 @@
+.window{
+    position: absolute;
+    z-index: 1002;
+    width: auto;
+    left: 50%;
+    margin-left: -150px;
+  }
+  h2{
+      text-align: center;
+  }
