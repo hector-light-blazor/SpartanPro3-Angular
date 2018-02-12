@@ -17,8 +17,9 @@
           <i class="fa fa-window-minimize" aria-hidden="true"></i>
       </button></span>
   </div>
-  <div class="window-content">
+  <div class="window-content" style="overflow: hidden;">
     <app-master-loading [regularLoading]="true" *ngIf="isLoading"></app-master-loading>
+    <app-quick-pick-tools *ngIf="quickPickEnabled" [pic]="selectedPic" (closeOutput)="quickPickEnabled = false"></app-quick-pick-tools>
     <div #map id="map" >
 
     </div>

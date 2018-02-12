@@ -33,7 +33,8 @@ export class ROUTES {
        dltAttachment:  "addressticket/deleteAttachment", //DELETE ATTACHMENT FROM TICKET....
        gTAttachments: "addressticket/getAttachments/", // DOWNLOAD ALL TICKET ATTACHMENTS RELATED TO THIS TICKET....
        gListUsers:    "users/getListUsers/", // Get List Users...
-       gListOrga:   "users/getListOrganization/" // Get List of organization..
+       gListOrga:   "users/getListOrganization/", // Get List of organization..
+       dQuickPick: "qprocess/displayPic/?path=" // Display QUick Pick picture...
     }
    }
 }
@@ -291,6 +292,7 @@ interface API_ROUTES {
    dltAttachment?: string;
    gListUsers?: string;
    gListOrga?: string;
+   dQuickPick?: string;
 }
 
 interface LOGIN_INFO {

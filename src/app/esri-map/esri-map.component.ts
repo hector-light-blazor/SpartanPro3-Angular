@@ -33,6 +33,11 @@ export class EsriMapComponent implements OnInit {
   quickPickLayer: any = null; // Holds all the camera pictures coming from quick pick...
   trackExtent: any = null;
 
+  // =-=-= QUICK PICK TOOLS =-=-=-=-=-=
+  quickPickEnabled: boolean = false;
+  selectedAttributes: any = null;
+  selectedPic: any = null;
+
   constructor(private app: AppService){ }
 
   ngOnInit() {
@@ -132,7 +137,7 @@ export class EsriMapComponent implements OnInit {
       new this.app.esriColor([0, 0, 0]), 
       4
       ), 
-      new this.app.esriColor([12, 227, 172, 0.9])
+      new this.app.esriColor([220,20,60])
       );
 
      
@@ -287,6 +292,22 @@ export class EsriMapComponent implements OnInit {
         this.isLoading = false;
 	
     }); // End of Map Loaded...
+
+    // Add Click on quick pick ...
+    this.quickPickLayer.on("click", response => {
+
+       if(response) { // Is there response
+
+         if(response.graphic) { // is there graphic from the response
+           console.log("I AM CHANGING ATTRIBUTES");
+           this.selectedAttributes = null;
+           this.selectedAttributes = response.graphic.attributes; // Send attributes to quick pick tools..
+           this.selectedPic = this.app.url + this.app.route.api.dQuickPick + response.graphic.attributes.filepath;
+           this.quickPickEnabled = true; // Display quick pick tools
+           // Draw square for selecting the graphic...
+        }
+       }
+    })
 
   }
 

@@ -1,3 +1,42 @@
-<p>
-  quick-pick-tools works!
-</p>
+<div id="panelRightTools">
+  <div class="panel">
+    <div class="heading">
+        <span class="title">Quick Pick Tools</span>
+        <button (click)="_onCloseWindow();" class="button cycle-button">X</button>
+    </div>
+     <div class="content">
+        <div class="image-container bordered">
+          <div class="frame"><img (click)="_onFullScreen()" [src]="pic"></div>
+        </div>
+         <div *ngIf="toolsEnabled" class="toolbar">
+          <div class="toolbar-section">
+              <button (click)="showEditPick()" class="toolbar-button">
+                <i class="fa fa-picture-o" aria-hidden="true"></i>
+              </button>
+              <!-- <button class="toolbar-button" (click)="displayAttachment()">
+                <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+              </button> -->
+              <a class="toolbar-button" [attr.href]="download" download>
+                <i class="fa fa-cloud-download" aria-hidden="true"></i>
+              </a>
+              <button class="toolbar-button danger" (click)="deleteDatabase()">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+          </div>  
+        </div>
+     </div>
+  </div>
+    <br>
+    <br>
+          <div *ngIf="toolsEnabled" class="input-control select">
+          <label>Type</label>
+          <!-- <select [(ngModel)]="selectedValue"(change)="onChangeSelection()" >
+               <option>B</option>
+               <option>F</option>
+               <option>H</option>
+               <option>M</option>
+               <option>N</option>
+               <option>S</option>
+          </select> -->
+        </div>
+</div>
