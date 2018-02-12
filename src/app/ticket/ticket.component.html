@@ -254,7 +254,7 @@
             <br>
             <div class="input-control text full-size">
                 <label  >Address By</label>
-                <select [disabled]="lvSection" [(ngModel)]="attributes.address_by" >
+                <select [disabled]="lvSection" (change)="changeLVPersonnel()" [(ngModel)]="attributes.address_by" >
                     <option *ngFor="let usr of users" value="{{usr.user_id}}">{{usr.first_name + " " + usr.last_name}}</option>
                     
                 </select>

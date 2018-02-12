@@ -953,6 +953,21 @@ export class TicketComponent implements OnInit {
       }
     }
 
+    changeLVPersonnel() {
+       if(this.attributes.system_assign) {
+          // if string convert to object
+          this.attributes.system_assign = (typeof(this.attributes.system_assign) == "string") ? JSON.parse(this.attributes.system_assign) : this.attributes.system_assign;
+          if(typeof(this.attributes.system_assign) == "object"){ // Only do something if is object..
+             this.attributes.system_assign.a[0] = (typeof(this.attributes.address_by) == "string") ? parseInt(this.attributes.address_by) : this.attributes.address_by; // Convert string to integer
+             
+             //Move Index foward if thats were we going..
+             if(this.attributes.system_assign.index == 0) {
+               this.attributes.system_assign.index++; // Move foward to next personnel...
+             }
+          }
+       }
+    }
+
     // End of Class..
 }
 
