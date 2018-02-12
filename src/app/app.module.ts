@@ -21,6 +21,7 @@ import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 import { FileViewerComponent } from './file-viewer/file-viewer.component';
 import { TicketWorkflowComponent } from './ticket-workflow/ticket-workflow.component';
 import { FilterminePipe } from './filtermine.pipe';
+import { QuickPickToolsComponent } from './quick-pick-tools/quick-pick-tools.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { FilterminePipe } from './filtermine.pipe';
     FileUploaderComponent,
     FileViewerComponent,
     TicketWorkflowComponent,
-    FilterminePipe
+    FilterminePipe,
+    QuickPickToolsComponent
   ],
   imports: [
     BrowserModule,
