@@ -12,6 +12,7 @@ export class QuickPickToolsComponent implements OnInit {
   @Input() attributes: any = null;
   @Output() closeOutput = new EventEmitter();
   @Input() pic: any = null;
+  onCloseEditPick: boolean = false; // Editing Quick Pick...
 
   constructor(private app: AppService) { }
 
@@ -30,8 +31,15 @@ export class QuickPickToolsComponent implements OnInit {
     // }
   }
 
+  // CLose window..
   _onCloseWindow() {
     this.closeOutput.emit(false);
+  }
+
+  // Show full screen picture..
+  _onFullScreen() {
+    console.log("I AM RUNNINT");
+    this.app.actionsQuickPick.next({action: 1});
   }
 
 }

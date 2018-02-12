@@ -1,5 +1,6 @@
 import { Component,ViewChild,Input, Output,ElementRef, EventEmitter, OnInit, ViewEncapsulation } from '@angular/core';
 import {AppService} from '../app.service';
+import "rxjs/add/operator/takeWhile";
 
 @Component({
   selector: 'app-esri-map',
@@ -37,6 +38,8 @@ export class EsriMapComponent implements OnInit {
   quickPickEnabled: boolean = false;
   selectedAttributes: any = null;
   selectedPic: any = null;
+  enabledFullScreenPic: boolean = false;
+  isAlive: boolean = true; //Controls the alive part for unsubscribe and subscribe...
 
   constructor(private app: AppService){ }
 
@@ -44,6 +47,14 @@ export class EsriMapComponent implements OnInit {
 
     //=-=-= INIT MAP =-=-=
     this.initMap();
+
+    //=-=-= LISTENT TO EMITS FROM QUICK PICK TOOLS =-=-=-=-=
+    this.app.actionsQuickPick.takeWhile(() => this.isAlive).subscribe(response => {
+        if(response.action == 1) // Meaning to show fullscreen
+        {
+            this.enabledFullScreenPic = true;
+        }
+    });
   }
 
   ngOnChange() {
@@ -54,6 +65,7 @@ export class EsriMapComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    this.isAlive = false;
     if(this.map) {
       this.map.removeAllLayers();
       this.map.destroy();

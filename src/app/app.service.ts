@@ -74,6 +74,9 @@ export class AppService {
 
   ticketInteractionToolbar = new Subject<any>();
 
+  // New Subject for Quick Pick...
+  actionsQuickPick = new Subject<any>();
+  
 
   //PARCEL FIELDS 
   propertyId: string = 'hcad.DBO.Parcel.PROP_ID';
