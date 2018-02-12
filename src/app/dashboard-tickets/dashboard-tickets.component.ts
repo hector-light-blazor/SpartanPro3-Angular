@@ -37,7 +37,15 @@ export class DashboardTicketsComponent implements OnInit {
     // 2.) Gather All Open Tickets...
     this.allLoading = true;
     this.app.POST_METHOD(this.app.route.api.ftInbox, {data: this.app.account_info.user_id}).subscribe((response:any) => {
-        this.inbox = (response.success) ? response.data : [];
+        console.log(response);
+        if(response) {
+          response.data.forEach(element => {
+              element.icon = (element.icon) ? this.app.url + this.app.route.api.uImage + element.icon : "assets/avatar.png";
+          });
+          this.inbox = (response.success) ? response.data : [];
+        }
+        
+        
     });
 
     // GET ALL OPEN TICKETS BY ORGINZATION... 

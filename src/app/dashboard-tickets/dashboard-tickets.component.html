@@ -27,7 +27,7 @@
                   <div class="listview">
                     <div class="list" style="height: 100px;"  *ngFor="let customer of openTickets  | filtermine:searchAll" routerLink="/ticket/view/{{customer.id_ticket}}">
       
-                        <!-- <img class="list-icon" style="border-radius: 50%;" [src]="customer.icon" width="50" height="50"  alt="Avatar Badge">  -->
+                        <img class="list-icon" style="border-radius: 50%;" [src]="customer.icon" width="50" height="50"  alt="Avatar Badge"> 
                         <div style="float:left;">
                             <span >{{customer.staff}} | <b>{{customer.created_date}}</b></span>
                             <br>
@@ -41,7 +41,7 @@
                         <div style="float:leaft">
                             <span class='place-right' style='text-align:center;'>
                            
-                                <!-- <img style="border-radius: 50%;" [src]="customer.icon_transfer" width="50" height="50"  alt="Avatar Badge">  -->
+                                <img style="border-radius: 50%;" [src]="customer.icon_transfer" width="50" height="50"  alt="Avatar Badge"> 
                              <br>
                              <label style="font-size:8px;">
                              {{customer.init}}
@@ -78,7 +78,7 @@
                     <div style="float:leaft">
                       <span class='place-right' style='text-align:center;'>
                      
-                          <!-- <img style="border-radius: 50%;" [src]="customer.icon_transfer" width="50" height="50"  alt="Avatar Badge">  -->
+                          <img style="border-radius: 50%;" [src]="customer.icon" width="50" height="50"  alt="Avatar Badge"> 
                        <br>
                        <label style="font-size:8px;">
                        {{customer.init}}
