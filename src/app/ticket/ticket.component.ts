@@ -519,7 +519,7 @@ export class TicketComponent implements OnInit {
     this.isMapEnabled = false;
   }
 
-  findParcelsInfo(value, property, msg:boolean) {
+  findParcelsInfo(value, property, msg:boolean, routing?: boolean) {
     if(!property) return;
     if(!value) return;
    
@@ -535,6 +535,7 @@ export class TicketComponent implements OnInit {
       this.isLoading = false;
         if(response) { //Is there reponse...
            response = (typeof(response) == "string") ? JSON.parse(response) : response;
+          
             if(response.results.length > 0) { // is there data to process.
               
               response.results.forEach(element => {
@@ -554,11 +555,19 @@ export class TicketComponent implements OnInit {
                   type: this.app.msg_codes.info
           
               });
+              }    
+
+              // Check if the user is interested in routing...
+              if(routing) {
+                console.log("ROUTING ENABLE");
+                if(!this.attributes.system_assign) { // if not available is going to get gis route...
+                  console.log("SYSTEM ASSIGN IS EMPTY");
+                  // Lets generate gis routing... for this user..
+                  let poly = new this.app.esriPolygon(response.geometry.rings);
+                  this.gisRouting(poly.getCentroid().x, poly.getCentroid().y);
+                }
               }
-            
-              
-            }
-            
+            } // end of response results length..
         }
     });
    }
@@ -932,6 +941,15 @@ export class TicketComponent implements OnInit {
       }else if(event.hasOwnProperty('attributes')) {
 
         this.findParcelsInfo(event.attributes[this.app.propertyId], this.app.propertyId, true);
+      }
+    }
+    
+    changeXYFields() {
+      if(this.attributes.lat && this.attributes.longy) { // if both values are available..
+        if(!this.attributes.system_assign) // if empty lets get gis route...
+        {
+          this.gisRouting(this.attributes.longy, this.attributes.lat); //Lets get GIS Route..
+        }
       }
     }
 

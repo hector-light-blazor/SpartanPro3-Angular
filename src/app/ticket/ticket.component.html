@@ -165,7 +165,7 @@
             <br>
             <div class="input-control text full-size">
                 <label  >Property ID</label>
-                <input uppercase [disabled]="premisesSection" type="text" (focusout)="getConnections(); findParcelsInfo(attributes.property_id, app.propertyId, true)"  [(ngModel)]="attributes.property_id"  >
+                <input uppercase [disabled]="premisesSection" type="text" (focusout)="getConnections(); findParcelsInfo(attributes.property_id, app.propertyId, true, true);"  [(ngModel)]="attributes.property_id"  >
                 
             </div>
             <br>
@@ -300,13 +300,13 @@
             <br>
             <div class="input-control text full-size">
               <label>Lat</label>
-              <input type="text" [(ngModel)]="attributes.lat" >
+              <input type="text" (focusout)="changeXYFields()" [(ngModel)]="attributes.lat" >
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
               <label>Long</label>
-              <input  type="text" [(ngModel)]="attributes.longy" >
+              <input  type="text" (focusout)="changeXYFields()" [(ngModel)]="attributes.longy" >
             </div>       
       </div> <!-- End Of LV Section -->
       <div class="frame ribbed-white" id="db">
