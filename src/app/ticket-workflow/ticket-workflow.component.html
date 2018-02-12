@@ -16,24 +16,13 @@
               <td><h2>Workflow</h2></td>
             </tr>
             <tr *ngFor="let user of workflow">
-               <td></td><td>
+               <td>
+                 <img style="border-radius: 50%;" width="50" height="50" [src]="user.avatar" alt="">
+               </td>
+               <td>
                  {{user.first_name}}
                </td>
             </tr>
-            <tr>
-              <td>IMAGE</td>
-              <td>NAME</td>
-            </tr>
-            <tr>
-                <td>IMAGE</td>
-                <td>NAME</td>
-              </tr>
-              <tr>
-                  <td>IMAGE</td>
-                  <td>NAME</td>
-                </tr>
-          </table>
-         
-            
+          </table>  
     </div>
 </div>

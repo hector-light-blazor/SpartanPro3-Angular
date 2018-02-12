@@ -56,7 +56,7 @@ export class DashboardTicketsComponent implements OnInit {
 
                 response.data[i].icon = this.app.url + this.app.route.api.uImage + response.data[i].icon;
               }else{
-                response.data[i].icon = "assets/ticket.png";
+                response.data[i].icon = "assets/avatar.png";
               }
 
               if(response.data[i].icon_transfer){

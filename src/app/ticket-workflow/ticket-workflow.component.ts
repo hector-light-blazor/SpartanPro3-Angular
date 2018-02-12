@@ -41,6 +41,7 @@ export class TicketWorkflowComponent implements OnInit {
        this.routing.a.forEach(route => {
           this.app.users.forEach(user => {
               if(route == user.user_id){
+                  user.avatar = (user.icon2) ? this.app.url + this.app.route.api.uImage + user.icon2 : "assets/avatar.png";
                   this.workflow.push(user);
                   return;
               }
