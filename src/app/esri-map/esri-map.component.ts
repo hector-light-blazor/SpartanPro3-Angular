@@ -20,6 +20,7 @@ export class EsriMapComponent implements OnInit {
   @ViewChild('map') mapObj:ElementRef; // Controls the html element to put the web map..
   @ViewChild('window') window: ElementRef; // controls the container html of the map..
 
+  // =-=-=-= ESRI VARIABLES _+_+__+_
   map: any; //Map Object to display layers...
   parcelLayer: any = null; // this layer displays all parcels for selection or display...
   ticketLayer: any = null; //Be able to edit and move graphic tickets...
@@ -29,6 +30,8 @@ export class EsriMapComponent implements OnInit {
   polygonSymbol: any = null; // holds the polygon symbol....
   query: any = null; // holds query object...
   queryTask: any = null; // holds query task....
+  quickPickLayer: any = null; // Holds all the camera pictures coming from quick pick...
+  trackExtent: any = null;
 
   constructor(private app: AppService){ }
 
@@ -74,7 +77,13 @@ export class EsriMapComponent implements OnInit {
      this.query.outFields = [this.app.propertyId];
      this.queryTask = new this.app.esriQueryTask(this.app.hcadquery);
 
+
+
+     // DIsplay parcels
      this.parcelLayer = new this.app.esriGraphicsLayer({id: "parcel"});
+     // Display quick pick parcels layer..
+     this.quickPickLayer = new this.app.esriGraphicsLayer({id: "quickPick"});
+     this.quickPickLayer.setMinScale(150000); // Set min Scale for the layer...
 
     // =-=-=-=-=-=-= CHECK WHAT BASEMAP TO USE =-=-=-=-=-=-=-=
     if(this.basemap == 'MAPFLEX') {
@@ -104,6 +113,9 @@ export class EsriMapComponent implements OnInit {
       this.map.addLayer(this.parcelLayer);
     
     }
+
+    // ALWAYS ADD THE QUICK PICK LAYER..
+    this.map.addLayer(this.quickPickLayer);
 
     if(this.ticketEnabled) { // if true add the ticket graphics layer to map..
 
@@ -142,7 +154,25 @@ export class EsriMapComponent implements OnInit {
         if(this.extent) {
           this.map.setExtent(this.extent);
         }
+    
+    // Add Extent Change to display quick pick..
+    this.map.on('extent-change', response => {
+        let extent = this.app.esriwebMercatorUtils.webMercatorToGeographic(response.extent);
+        
+        if(this.trackExtent) {
 
+          if(this.trackExtent.xmin != extent.xmin && this.trackExtent.ymin != extent.ymin && this.trackExtent.xmax != extent.xmax && this.trackExtent.ymax != extent.ymax) {
+              
+             this.getCameraLayer(extent.xmin, extent.ymin, extent.xmax, extent.ymax);
+          }
+
+       }else {
+          this.getCameraLayer(extent.xmin, extent.ymin, extent.xmax, extent.ymax);
+       }
+       // .. GET THE OLD EXTENT NO MATTER WHAT ...
+       this.trackExtent = extent; 
+    });
+    
     this.map.on('mouse-move', response => {
 
         if(this.ticketEnabled && !this.point) { // only if ticket is enabled..
@@ -270,6 +300,54 @@ export class EsriMapComponent implements OnInit {
   maximizeMap() {
 
   }
+
+  // GET CAMERA INFORMATION FROM SERVER =-=-=-=-=--=-
+  getCameraLayer(xmin, ymin, xmax, ymax) {
+    this.quickPickLayer.clear();
+    this.app.POST_METHOD("qprocess/getBoxPics/", {data: { 
+      xmin: xmin, ymin: ymin, xmax: xmax, ymax: ymax,
+      orga: this.app.account_info.organization_id
+         }}).subscribe((response:any) => {
+          if(response.success) {
+              let i = response.data.length;
+              while(i--)
+              {
+                if(response.data[i].type == "H")
+                {
+                  this.quickPickLayer.add(new this.app.esriGraphic(new this.app.esriPoint(
+                    response.data[i].x, response.data[i].y), this.app.cameraGraphics.HomeObj, response.data[i]
+                  ));
+                }
+                else if(response.data[i].type == "B")
+                {  
+                    this.quickPickLayer.add(new this.app.esriGraphic(new this.app.esriPoint(
+                    response.data[i].x, response.data[i].y), this.app.cameraGraphics.BusObj, response.data[i]));
+                }
+                else if(response.data[i].type == "M")
+                {
+                  this.quickPickLayer.add(new this.app.esriGraphic(new this.app.esriPoint(
+                    response.data[i].x, response.data[i].y), this.app.cameraGraphics.MobileObj, response.data[i]));
+                }
+                else if(response.data[i].type == "F")
+                {
+                  this.quickPickLayer.add(new this.app.esriGraphic(new this.app.esriPoint(
+                    response.data[i].x, response.data[i].y), this.app.cameraGraphics.FireObj, response.data[i]));
+                }
+                else if(response.data[i].type == "N")
+                {
+                  this.quickPickLayer.add(new this.app.esriGraphic(new this.app.esriPoint(
+                    response.data[i].x, response.data[i].y), this.app.cameraGraphics.PicNewObj, response.data[i]));
+                }
+                else if(response.data[i].type == "S")
+                {
+                 this.quickPickLayer.add(new this.app.esriGraphic(new this.app.esriPoint(
+                    response.data[i].x, response.data[i].y), this.app.cameraGraphics.StreetSignObj, response.data[i]));
+                }
+              }
+          }
+    });
+}
+
 
   // =-=-=-=-=-=-=-=-= MODULE CLOSE MAP -=-=-=-=-
   closeMap() {

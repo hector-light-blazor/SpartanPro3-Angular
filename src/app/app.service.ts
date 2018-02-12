@@ -98,6 +98,7 @@ export class AppService {
   esriSimpleMarkerSymbol = null;
   esriSimpleLineSymbol = null;
   esriSimpleFillSymbol = null;
+  esriPictureMarkerSymbol: any = null;
   esriPolygon: any = null;
   esriCoreFx: any = null;
   esriFx: any = null;
@@ -110,7 +111,11 @@ export class AppService {
   imageryURL: string = 'https://wms-txgi.tnris.org/login/path/contour-camera-poetic-poem/wms';
   wmtsURL: string = 'https://txgi.tnris.org/login/path/contour-camera-poetic-poem/wmts';
   ticketCenter: any = null;
-
+  cameraGraphics: PICK = {HOME: "assets/Home-48.png", 
+    MOBILE: "assets/MHome-48.png",      PICNEW: "assets/New-48.png", STREETSIGN : "assets/Signpost-48.png",
+    FIRE: "assets/Fire_Hydrant-48.png", BUSINESS : "assets/Business-48.png"
+  }
+  
   constructor(private http: HttpClient) { }
 
   // Gets information from database.
@@ -162,10 +167,11 @@ export class AppService {
     esriLoader.loadModules(['esri/map','esri/config','esri/graphic', "esri/geometry/webMercatorUtils",
     "esri/toolbars/edit", 'esri/layers/WMTSLayer', 'esri/layers/GraphicsLayer','esri/layers/WMTSLayerInfo',
     'esri/layers/ArcGISDynamicMapServiceLayer', "esri/Color", "esri/geometry/Point", "esri/geometry/Circle", 
-    "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",'esri/symbols/SimpleFillSymbol', "esri/tasks/query", "esri/tasks/QueryTask",
+    "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",'esri/symbols/SimpleFillSymbol', "esri/symbols/PictureMarkerSymbol",
+    "esri/tasks/query", "esri/tasks/QueryTask",
 	'esri/geometry/Polygon', 'dojo/fx', 'dojo/_base/fx', 'dojo/fx/easing'], options)
     .then(([Map,Config, Graphic, webMercatorUtils, Edit, WMTSLayer,GraphicsLayer,WMTSLayerInfo, ArcGISDynamicMapServiceLayer, Color, 
-      Point, Circle, SimpleMarkerSymbol, SimpleLineSymbol,SimpleFillSymbol,Query, QueryTask, Polygon, coreFx, fx, easing]) => {
+      Point, Circle, SimpleMarkerSymbol, SimpleLineSymbol,SimpleFillSymbol,PictureMarkerSymbol, Query, QueryTask, Polygon, coreFx, fx, easing]) => {
 
     this.esriMap            = Map;
     this.esriConfig         = Config;
@@ -184,6 +190,7 @@ export class AppService {
     this.esriEasing         = easing;
     this.esriQuery          = Query;
     this.esriQueryTask      = QueryTask;
+    this.esriPictureMarkerSymbol = PictureMarkerSymbol;
 	  
 	  this.esriSimpleMarkerSymbol = SimpleMarkerSymbol;
 	  this.esriSimpleLineSymbol   = SimpleLineSymbol;
@@ -193,7 +200,15 @@ export class AppService {
       // Create Dynamic Object to re-use
       this.mapFlexBaseMap = new ArcGISDynamicMapServiceLayer(this.mapFlexURL);
 
-    })
+      //Generate the picture graphics objects for use...
+      this.cameraGraphics.HomeObj = new PictureMarkerSymbol(this.cameraGraphics.HOME, 30, 30);
+      this.cameraGraphics.MobileObj = new PictureMarkerSymbol(this.cameraGraphics.MOBILE, 34, 34)
+      this.cameraGraphics.PicNewObj = new PictureMarkerSymbol(this.cameraGraphics.PICNEW, 30, 30);
+      this.cameraGraphics.StreetSignObj = new PictureMarkerSymbol(this.cameraGraphics.STREETSIGN, 30, 30);
+      this.cameraGraphics.FireObj = new PictureMarkerSymbol(this.cameraGraphics.FIRE, 30, 30);
+      this.cameraGraphics.BusObj  = new PictureMarkerSymbol(this.cameraGraphics.BUSINESS, 30, 30);
+
+    }) // End of Loading Esri Modules..
    
   }
   
@@ -220,6 +235,22 @@ export class AppService {
       this.esriCoreFx.chain([animB, animA, animB, animA,animB, animA, animB, animB, animA, animB, animA,animB, animA, animB]).play();  
   }
 
+
+}
+
+interface PICK {
+  BUSINESS?: string;
+  BusObj?: any;
+  FIRE?: string;
+  FireObj?: any;
+  HOME?: string;
+  HomeObj?: any;
+  MOBILE?: string;
+  MobileObj?: any;
+  PICNEW?: string;
+  PicNewObj?: any;
+  STREETSIGN?: string;
+  StreetSignObj?: any;
 
 }
 
