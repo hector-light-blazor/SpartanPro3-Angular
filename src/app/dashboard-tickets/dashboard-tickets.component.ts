@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component,ViewChild,ElementRef, OnInit, ViewEncapsulation } from '@angular/core';
 import {AppService} from "../app.service";
 import { Observable } from 'rxjs';
 import "rxjs/add/operator/takeWhile";
@@ -24,6 +24,10 @@ export class DashboardTicketsComponent implements OnInit {
   
   timer = Observable.timer(0, 6000);
   isAlive:boolean = true;
+  choosen: any = null; // this variable handles the right click...
+  link: string = 'https://gis.lrgvdc911.org/php/spartan/api/v2/index.php/users/getUserImage/?pic=';
+  @ViewChild('rightMenu') righClick: ElementRef;
+  @ViewChild('fowardWnw') fowardWn: ElementRef;
   // ON Construct declar some services as needed..
 
 
@@ -31,13 +35,12 @@ export class DashboardTicketsComponent implements OnInit {
   constructor(public app:AppService) { }
 
   ngOnInit() {
-
+    console.log(this.app.users);
     // Begin with Fetching some data from db server..
     // 1.) First Get Worker Ticket Inbox...
     // 2.) Gather All Open Tickets...
     this.allLoading = true;
     this.app.POST_METHOD(this.app.route.api.ftInbox, {data: this.app.account_info.user_id}).subscribe((response:any) => {
-        console.log(response);
         if(response) {
           response.data.forEach(element => {
               element.icon = (element.icon) ? this.app.url + this.app.route.api.uImage + element.icon : "assets/avatar.png";
@@ -82,9 +85,16 @@ export class DashboardTicketsComponent implements OnInit {
        // Set it to the array in control for open tickets.
        this.openTickets = (response.success) ? response.data : [];
       });
+
+      this.timer.flatMap((i) =>  this.app.POST_METHOD(this.app.route.api.ftInbox, {data: this.app.account_info.user_id})).takeWhile(() => this.isAlive).subscribe((response:any) => {
+          if(response) {
+            response.data.forEach(element => {
+                element.icon = (element.icon) ? this.app.url + this.app.route.api.uImage + element.icon : "assets/avatar.png";
+            });
+            this.inbox = (response.success) ? response.data : [];
+          }
+      });
     }
-
-
   }
 
   ngOnDestroy() {
@@ -97,6 +107,49 @@ export class DashboardTicketsComponent implements OnInit {
   changeOrganizationFilter(id) {
     this.organizationFilter = id;
     this.getOpenTickets();
+  }
+
+  closeFowardWindow()
+   {
+     this.fowardWn.nativeElement.style.display = "none";
+   }
+  rightMenuCLK(option: string) {
+
+     this.righClick.nativeElement.style.display = "none";
+     if(option == "O") {
+
+     }else if(option == "F"){
+        this.fowardWn.nativeElement.style.display = "block";
+     }
+     else if(option == "D"){
+
+     }
+  }
+
+  // Start of right click
+  onRightClick(event:MouseEvent, choosen){
+    
+    console.log(choosen);
+    this.choosen = choosen;
+
+    this.righClick.nativeElement.style.display = "block";
+    this.righClick.nativeElement.style.top = (event.pageY - 184) + "px";
+    this.righClick.nativeElement.style.left =  (event.pageX + 20) +  "px";
+   
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+}
+
+  //Once Selected Foward Ticket
+  fowardTicket(user: any) {
+      let attributes = {
+        id_ticket: this.choosen.id_ticket,
+        sentto: user.user_id
+      };
+
+    this.app.POST_METHOD(this.app.route.api.sTicket, {data: attributes}).subscribe((response: any) => {});
+    this.fowardWn.nativeElement.style.display = "none";
   }
 
   getOpenTickets()

@@ -1,5 +1,44 @@
 <div class="grid">
-       
+    <div id="fowardWindow" #fowardWnw class="window info" style="position: absolute;z-index:3;display:none;left: 50%;margin-left: -200px; width:400px; height:400px;" >
+        <div class="window-caption">
+            <span class="window-caption-icon"><span class="mif-contacts-mail"></span></span>
+            <span class="window-caption-title">Foward Ticket - {{(choosen) ? choosen.objectid : 0}}</span>
+            <span (click)="closeFowardWindow()" class="btn-close"></span>
+        </div>
+        <div class="window-content" style="height: 90%;">
+            <div class="listview">
+                <div *ngFor="let user of app.users" class="list" style="height:60px;">
+                   <button (click)="fowardTicket(user)" class="button">Foward<i class="fa fa-rocket"></i></button>
+                    {{user.first_name + " " + user.last_name}}
+
+                    <img class="pull-right" [src]="link + user.icon2" width="30" height="30" />
+                </div>
+            </div>  
+        </div>
+    </div> 
+
+        <div id="menuAll" #rightMenu  class="window" style="position: absolute;display: none;z-index:3;top:0px; left:0px;width:120px; height:180px;">
+          <div class="window-content" >
+              <span (click)="closemenu('#menuAll')" class="place-right" style="cursor: pointer">
+                <span class="mif-cross"></span>
+              </span>
+              <br>
+              <div class="listview">
+                <div (click)="rightMenuCLK('O')" class="list">
+                  <i class="fa fa-folder-open list-icon"></i>
+                  <span  class="list-title">Open</span>
+                </div>
+                <div  (click)="rightMenuCLK('F')" class="list">
+                  <i class="fa fa-forward list-icon"></i>
+                  <span class="list-title">Foward</span>
+                </div>
+                <div (click)="rightMenuCLK('D')" class="list">
+                  <i class="fa fa-trash list-icon"></i>
+                  <span class="list-title">Delete</span>
+                </div>
+              </div>
+          </div>
+        </div>
         <div class="row cells3">
           <div class="cell">
               <div class="window error" style="width: 400px;">
@@ -22,10 +61,10 @@
                 </div>
                   
                 </div>
-                <div class="window-content" style="height: 250px; cursor: pointer;">
+                <div class="window-content"  style="height: 250px; cursor: pointer;">
                     <app-master-loading [regularLoading]="true" *ngIf="allLoading"></app-master-loading>
                   <div class="listview">
-                    <div class="list" style="height: 100px;"  *ngFor="let customer of openTickets  | filtermine:searchAll" routerLink="/ticket/view/{{customer.id_ticket}}">
+                    <div class="list" style="height: 100px;" (contextmenu)="onRightClick($event, customer)"  *ngFor="let customer of openTickets  | filtermine:searchAll" routerLink="/ticket/view/{{customer.id_ticket}}">
       
                         <img class="list-icon" style="border-radius: 50%;" [src]="customer.icon" width="50" height="50"  alt="Avatar Badge"> 
                         <div style="float:left;">
@@ -53,7 +92,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> <!-- End of Window -->
           </div>
         
           <div class="cell">
@@ -68,7 +107,7 @@
               <div class="window-content" style="height: 250px; cursor: pointer;">
                   <app-master-loading [regularLoading]="true" *ngIf="allLoading"></app-master-loading>
                 <div class="listview">
-                  <div class="list" style="height: 100px;" *ngFor="let customer of inbox" routerLink="/ticket/view/{{customer.id_ticket}}">
+                  <div class="list" style="height: 100px;" (contextmenu)="onRightClick($event, customer)" *ngFor="let customer of inbox" routerLink="/ticket/view/{{customer.id_ticket}}">
                     <div style="float:left;">
                       <br>
                         <span>{{customer.objectid}}</span>
