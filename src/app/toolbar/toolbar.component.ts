@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {toolBarSettings} from "./toolbarSettings";
 import {AppService} from "../app.service";
 import "rxjs/add/operator/takeWhile";
@@ -22,7 +23,9 @@ export class ToolbarComponent implements OnInit {
   filterAvailable: boolean = false;
   isAlive: boolean = true;
   expandShow: boolean = true;
-  constructor(private app: AppService) { 
+
+  qsearch: string = ''; // Controls quick search input...
+  constructor(private app: AppService, private router: Router) { 
 
     // =-=-=-= Define Blank Tool Settings Configs =-=-=-=-
     this._toolSettings = {SECTIONS: {
@@ -111,6 +114,13 @@ export class ToolbarComponent implements OnInit {
     // }
    
   }
+
+    //  Get info for quick search processing...
+    enterQuickSearch(){
+      this.router.navigateByUrl("/home/quickSearch/" + this.qsearch);
+      this.qsearch = "";
+      //this.app._toolbarBtns.QUICK_SEARCH = false;
+   }
 
 
   actionSendToolBar(action: number) { 

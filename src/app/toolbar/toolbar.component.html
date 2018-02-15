@@ -76,7 +76,7 @@
                                   <br>
                                   <br>
                                   <div class="input-control text">
-                                      <input type="text"  (keyup.enter)="enterQuickSearch()" >
+                                      <input type="text" [(ngModel)]="qsearch"  (keyup.enter)="enterQuickSearch()" >
                                       <button (click)="enterQuickSearch()" class="button"><i class="fa fa-search" aria-hidden="true"></i></button>
                                   </div>
                               </div>

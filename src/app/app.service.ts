@@ -35,7 +35,8 @@ export class ROUTES {
        gTAttachments: "addressticket/getAttachments/", // DOWNLOAD ALL TICKET ATTACHMENTS RELATED TO THIS TICKET....
        gListUsers:    "users/getListUsers/", // Get List Users...
        gListOrga:   "users/getListOrganization/", // Get List of organization..
-       dQuickPick: "qprocess/displayPic/?path=" // Display QUick Pick picture...
+       dQuickPick: "qprocess/displayPic/?path=", // Display QUick Pick picture...
+       gMultiSearch: "addressticket/getSearchMultiple/?s=" // Search Multi this is part of quick search..
     }
    }
 }
@@ -298,6 +299,7 @@ interface API_ROUTES {
    gListUsers?: string;
    gListOrga?: string;
    dQuickPick?: string;
+   gMultiSearch?: string;
 }
 
 interface LOGIN_INFO {
