@@ -28,7 +28,7 @@ const routes: Routes = [
     component: TckCalendarViewComponent
   },
   {
-    path: 'quickSearch/:search', component: QuickSearchComponent
+    path: 'ticket/quickSearch/:search', component: QuickSearchComponent
   }
 
 ];
