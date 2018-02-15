@@ -23,6 +23,7 @@ import { TicketWorkflowComponent } from './ticket-workflow/ticket-workflow.compo
 import { FilterminePipe } from './filtermine.pipe';
 import { QuickPickToolsComponent } from './quick-pick-tools/quick-pick-tools.component';
 import { FullScreenPickComponent } from './full-screen-pick/full-screen-pick.component';
+import { QuickSearchComponent } from './quick-search/quick-search.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { FullScreenPickComponent } from './full-screen-pick/full-screen-pick.com
     TicketWorkflowComponent,
     FilterminePipe,
     QuickPickToolsComponent,
-    FullScreenPickComponent
+    FullScreenPickComponent,
+    QuickSearchComponent
   ],
   imports: [
     BrowserModule,

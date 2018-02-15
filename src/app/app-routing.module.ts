@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import {DashboardTicketsComponent} from './dashboard-tickets/dashboard-tickets.component';
 import {TckCalendarViewComponent} from './tck-calendar-view/tck-calendar-view.component';
 import {TicketComponent} from './ticket/ticket.component';
+import {QuickSearchComponent} from './quick-search/quick-search.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,9 @@ const routes: Routes = [
   {
     path: 'ticket/calendar-view',
     component: TckCalendarViewComponent
+  },
+  {
+    path: 'quickSearch/:search', component: QuickSearchComponent
   }
 
 ];
