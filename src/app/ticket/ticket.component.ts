@@ -384,20 +384,59 @@ export class TicketComponent implements OnInit {
       let _self = this;
       switch (action.action) {
         case this.app.toolbarActivies.TICKET_SAVE_TRANSFER:
-         
+          let ok:boolean = false;
           // First Route Ticket to next person in line...
           // Second Prepare ticket and finally send to save updates db server..
           if(this.attributes.system_assign) {
             this.attributes['sentto'] = this._routeFigure();
+            ok = true;
+          }else {
+            ok = false;
+            let lv:number = 0;
+            let db: number = 0;
+            let gis: number = 0;
+           
+            // if system assign is blank lets get back route from db server
+            this.app.GET_METHOD(this.app.route.api.bRouting + this.app.account_info.organization_id).subscribe((response: any) => {
+                if(response.success){ // Routing Fail .. needs to assign users for this operation..
+                  response.data.forEach(element => { // GET THE USER IDS and save to system assign...
+                        if(element.r_group == "LV") {
+                           lv = parseInt(element.user_id);
+                        }
+                        else if(element.r_group == "DB"){
+                           db = parseInt(element.user_id);
+                        }
+                        else if(element.r_group == "GIS"){
+                          gis = parseInt(element.user_id);
+                        }
+                  });
+                  // Set it up to the variable..
+                  this.attributes.system_assign = {a: [lv, db, gis], index: 0};
+                  this.attributes['sentto'] = this._routeFigure(); // make decision who to pass...
+                  // Finally we can save the information to the db server..
+                  this.masterSave(this.prepareTicket());
+
+                  setTimeout(() => { // Navigate to dashboard once everything is said and done..
+                    // Change route to default view for this user...
+                   _self.router.navigateByUrl("ticket/dashboard");
+       
+                 }, 300);
+                }
+            });
           }
          
-          this.masterSave(this.prepareTicket()); 
+          if(ok) { // If Everything is ok proceed with normal operations..
+            this.masterSave(this.prepareTicket()); 
 
-          setTimeout(() => {
-             // Change route to default view for this user...
-            _self.router.navigateByUrl("ticket/dashboard");
+            setTimeout(() => {
+              // Change route to default view for this user...
+             _self.router.navigateByUrl("ticket/dashboard");
+ 
+           }, 300);
+          }
+          
 
-          }, 300);
+          
          
           break;
         case this.app.toolbarActivies.TICKET_ARCHIVE:
@@ -465,6 +504,9 @@ export class TicketComponent implements OnInit {
          this.attributes[x] = JSON.stringify(this.attributes[x]);
         
          attr[x] = this.attributes[x]
+      }
+      else if(x == 'point' && !this.attributes[x]) {
+         
       }
       else if(this.attributes[x] && typeof(this.attributes[x]) != "boolean") {
         attr[x] = this.attributes[x];

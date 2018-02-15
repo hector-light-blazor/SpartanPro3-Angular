@@ -26,6 +26,7 @@ export class ROUTES {
        initTicket: "addressticket/initTicket",   // Save Initial Ticket
        sTicket: "addressticket/save/", //Save ticket
        gRouting: "gis/getGISRoutingPersonel/?", // TICKET DECISION FOR GIS ROUTING>>>
+       bRouting: "gis/failOverRouting/?orga=", // Back up Routing Handles fail over from GIS Routing...
        gUpload:  "gis/uploadGIS/",   // Handles all the gis zip upload to the db server...
        tAttachment: "addressticket/uploadAttachments/", // Ticket ATTACHMENT>>>>>> Handles the ticket attachment to the db server....
        dTAttachment: "addressticket/displayPic/?path=", // DIsplay ticket attachment file...
@@ -287,6 +288,7 @@ interface API_ROUTES {
    initTicket?: string;
    sTicket?: string;
    gRouting?: string;
+   bRouting?: string;
    gUpload?: string;
    tAttachment?: string;
    dTAttachment?: string;

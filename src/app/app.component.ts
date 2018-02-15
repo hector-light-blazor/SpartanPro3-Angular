@@ -18,6 +18,10 @@ export class AppComponent {
         this.toolBarOnOff = info.toolbar_on;
         this.account_info = info.user;
         this.appService.account_info = this.account_info;
+
+        // this.appService.GET_METHOD(this.appService.route.api.bRouting + this.appService.account_info.organization_id).subscribe(response => {
+        //    console.log(response);
+        // });
         //console.log(this.account_info);
     });
 
@@ -27,7 +31,7 @@ export class AppComponent {
 
     // GET LIST OF USERS...
     this.appService.GET_METHOD(this.appService.route.api.gListUsers).subscribe((response:any) => {
-        console.log(response);
+        //console.log(response);
         if(response.success) {
            this.appService.users = response.data;
         }
