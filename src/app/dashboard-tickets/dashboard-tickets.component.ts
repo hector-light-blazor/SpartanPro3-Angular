@@ -108,6 +108,10 @@ export class DashboardTicketsComponent implements OnInit {
     this.organizationFilter = id;
     this.getOpenTickets();
   }
+  
+  closemenu() {
+    this.righClick.nativeElement.style.display = "none";
+  }
 
   closeFowardWindow()
    {
