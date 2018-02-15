@@ -117,7 +117,7 @@ export class ToolbarComponent implements OnInit {
 
     //  Get info for quick search processing...
     enterQuickSearch(){
-      this.router.navigateByUrl("/home/quickSearch/" + this.qsearch);
+      this.router.navigateByUrl("/ticket/quickSearch/" + this.qsearch);
       this.qsearch = "";
       //this.app._toolbarBtns.QUICK_SEARCH = false;
    }
