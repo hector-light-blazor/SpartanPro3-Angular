@@ -27,30 +27,64 @@
               <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">MSAG Comm</th>
             </tr>
          </thead><tbody>
-           <tr role="row" *ngFor="let row of dataTable; let index =index;let isOdd=even;let isEven=odd" [class.odd]="isOdd" [class.even]="isEven">
-               <td>
-                  <button class="button rounded" (click)="openComments(row)">
-                    <i class="fa fa-comments"></i></button>
-                </td>
-                <td class="sorting_1">
-                  <a routerLink="/home/ticketView/{{row.id_ticket}}">Open Ticket</a>
-                </td>
-                <td>{{row.sentto}}</td>
-                <td>{{ (row.objectid) ? row.objectid : 'OLD TICKET'}}</td>
-                <td>{{row.user}}</td>
-                <td>{{row.cfull_name}}</td>
-                <td>{{row.cfirst_name}}</td>
-                <td>{{row.clast_name}}</td>
-                <td>{{row.telephone_land_line}}</td>
-                <td>{{row.alt_telephone}}</td>
-                <td>{{row.subdivision}}</td>
-                <td>{{row.block_num}}</td>
-                <td>{{row.lot_num}}</td>
-                <td>{{row.tax_account_num}}</td>
-                <td>{{row.property_id}}</td>
-                <td>{{row.full_address}}</td>
-                <td>{{row.msag_comm}}</td>
-           </tr>
+
+            <ng-template ngFor let-row let-i="index" let-isOdd="even" let-isEven="odd" [ngForOf]="dataTable">
+                <tr role="row" [class.odd]="isOdd" [class.even]="isEven">
+                    <td>
+                       <button class="button rounded" (click)="openComments(row)">
+                         <i class="fa fa-comments"></i></button>
+                     </td>
+                     <td class="sorting_1">
+                       <a routerLink="/home/ticketView/{{row.id_ticket}}">Open Ticket</a>
+                     </td>
+                     <td>{{row.sentto}}</td>
+                     <td>{{ (row.objectid) ? row.objectid : 'OLD TICKET'}}</td>
+                     <td>{{row.user}}</td>
+                     <td>{{row.cfull_name}}</td>
+                     <td>{{row.cfirst_name}}</td>
+                     <td>{{row.clast_name}}</td>
+                     <td>{{row.telephone_land_line}}</td>
+                     <td>{{row.alt_telephone}}</td>
+                     <td>{{row.subdivision}}</td>
+                     <td>{{row.block_num}}</td>
+                     <td>{{row.lot_num}}</td>
+                     <td>{{row.tax_account_num}}</td>
+                     <td>{{row.property_id}}</td>
+                     <td>{{row.full_address}}</td>
+                     <td>{{row.msag_comm}}</td>
+                </tr>
+                <tr *ngIf="row.cdisplay">
+                  <td colspan="7">
+                     <div class="frame ribbed-white" id="comment" style="width: 100%;">
+                         <ul class="chat">
+                             <li *ngFor="let com of row.comments"  class='left clearfix'>
+                               <span class="chat-img pull-left">
+                                 <img src="assets/circle_user.png" alt="User Avatar" class="img-circle" width="32" height="32" />
+                               </span>
+                               <div class="chat-body clearfix">
+                                   <div class="header">
+                                       <strong style="font-size:10px;" class="primary-font">{{com.first_name + ' ' + com.last_name}}</strong> 
+                                       <small class="pull-right text-muted">
+                                           <i class="fa fa-clock-o" aria-hidden="true"></i>{{com.time}}
+                                           <br />
+                                           <button *ngIf="com.allow" (click)="delComment(com.id_com)" class="button danger rounded">Remove</button>
+                                           <button *ngIf="com.allow" (click)="com.edit = !com.edit;" class="button primary rounded">Edit</button>
+                                       </small>  
+                                           
+                                       </div>
+                                       <p>
+                                         <textarea rows="4" cols="40" *ngIf="com.edit" (keyup.enter)="editComment(com)" [(ngModel)]="com.ticket_comments"  uppercase>
+                                           </textarea>
+                                         <label *ngIf="!com.edit">{{com.ticket_comments}}</label>
+                                       </p>
+                               </div>
+                               <hr>
+                             </li>
+                       </ul>
+                     </div>
+                  </td>
+                </tr>
+            </ng-template>
       </tbody>
     </table>
     </div>
