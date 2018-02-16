@@ -16,9 +16,26 @@ export class QuickSearchComponent implements OnInit {
 
   ngOnInit() {
     if(parseInt(this.app.account_info.user_id) == 0)this.router.navigateByUrl("/");
+
+    console.log(this.app.users);
     this.isLoading = true;
-    this.app.GET_METHOD(this.app.route.api.gMultiSearch + this.route.snapshot.params['search']).subscribe(response => {
-      console.log(response);
+    this.app.GET_METHOD(this.app.route.api.gMultiSearch + this.route.snapshot.params['search']).subscribe((response:any) => {
+
+      response.forEach(row => {
+           
+           if(row.sentto == "00") {
+              row.sentto = "ARCHIVE";
+           }else {
+            this.app.users.forEach(user => {
+              if(row.sentto == user.user_id){
+                 row.sentto = user.first_name + ' ' + user.last_name;
+                 return; //Kill Query..
+              }
+            });
+           }
+          
+      });
+
        this.dataTable = response;
        this.isLoading = false;
     })
@@ -38,9 +55,22 @@ export class QuickSearchComponent implements OnInit {
   quickSearch() {
     // this.app.GET_METHOD();
     // this.app.GET_TABLE_MULTI(this.searchTable).subscribe(response => this.dataTable = response);
-    this.app.GET_METHOD(this.app.route.api.gMultiSearch + this.route.snapshot.params['search']).subscribe(response => {
-      this.dataTable = response;
-   })
+    this.app.GET_METHOD(this.app.route.api.gMultiSearch + this.route.snapshot.params['search']).subscribe((response:any) => {
+
+      response.forEach(row => {
+           if(row.sentto == "00") {
+              row.sentto = "ARCHIVE";
+           }else {
+            this.app.users.forEach(user => {
+              if(row.sentto == user.user_id){
+                 row.sentto = user.first_name + ' ' + user.last_name;
+                 return; //Kill Query..
+              }
+            });
+           }
+          
+      });
+    });
   }
 
 }

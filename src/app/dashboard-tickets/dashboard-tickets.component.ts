@@ -35,7 +35,7 @@ export class DashboardTicketsComponent implements OnInit {
   constructor(public app:AppService) { }
 
   ngOnInit() {
-    console.log(this.app.users);
+    //console.log(this.app.users);
     // Begin with Fetching some data from db server..
     // 1.) First Get Worker Ticket Inbox...
     // 2.) Gather All Open Tickets...

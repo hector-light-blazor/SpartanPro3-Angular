@@ -36,7 +36,7 @@ export class TicketWorkflowComponent implements OnInit {
        // Parse Routing
        if(typeof(this.routing) == "string") {
          this.routing = JSON.parse(this.routing);
-         console.log(this.app.users);
+        //  console.log(this.app.users);
        }
        this.routing.a.forEach(route => {
           this.app.users.forEach(user => {
@@ -47,8 +47,8 @@ export class TicketWorkflowComponent implements OnInit {
               }
           });
        });
-       console.log(this.workflow);
-       console.log(this.routing);
+      //  console.log(this.workflow);
+      //  console.log(this.routing);
     }
   }
 

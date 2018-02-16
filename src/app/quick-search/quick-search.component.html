@@ -1,10 +1,16 @@
 <div >
     <app-master-loading [regularLoading]="true" *ngIf="isLoading"></app-master-loading>
-    <div  class="dataTables_filter"><input [(ngModel)]="searchTable" (keyup.enter)="quickSearch()" type="search" placeholder="Quick Search..."></div>
+    <div class="pull-left" style="width: 100%">
+      <label style="color: white;font-size:x-large;">Total: {{dataTable.length}}</label>
+      <input class="place-right" [(ngModel)]="searchTable" (keyup.enter)="quickSearch()" type="search" placeholder="Quick Search...">
+    </div>
+    <!-- <div  class="dataTables_filter"></div> -->
     <table class="dataTable striped border bordered"  style="display: table;" >
         <thead>
             <tr role="row">
+              <th></th>
               <th  rowspan="1" colspan="1"  style="width: 0px;">View</th>
+              <th class="sorting">Status</th>
               <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Ticket #</th>
               <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Created By</th>
               <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Cst Fl Name</th>
@@ -12,9 +18,6 @@
               <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Cst LName</th>
               <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Land Line</th>
               <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Alt Tel</th>
-              <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Ow Fl Name</th>
-              <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Ow FName</th>
-              <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Ow LName</th>
               <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Sub</th>
               <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Blck #</th>
               <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Lt #</th>
@@ -24,27 +27,29 @@
               <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">MSAG Comm</th>
             </tr>
          </thead><tbody>
-           <tr role="row" *ngFor="let data of dataTable; let index =index;let isOdd=even;let isEven=odd" [class.odd]="isOdd" [class.even]="isEven">
-              <td class="sorting_1">
-                 <a routerLink="/home/ticketView/{{data.id_ticket}}">Open Ticket</a>
-              </td>
-              <td>{{ (data.objectid) ? data.objectid : 'OLD TICKET'}}</td>
-              <td>{{data.user}}</td>
-              <td>{{data.cfull_name}}</td>
-              <td>{{data.cfirst_name}}</td>
-              <td>{{data.clast_name}}</td>
-              <td>{{data.telephone_land_line}}</td>
-              <td>{{data.alt_telephone}}</td>
-              <td>{{data.pfull_name}}</td>
-              <td>{{data.pfirst_name}}</td>
-              <td>{{data.plast_name}}</td>
-              <td>{{data.subdivision}}</td>
-              <td>{{data.block_num}}</td>
-              <td>{{data.lot_num}}</td>
-              <td>{{data.tax_account_num}}</td>
-              <td>{{data.property_id}}</td>
-              <td>{{data.full_address}}</td>
-              <td>{{data.msag_comm}}</td>
+           <tr role="row" *ngFor="let row of dataTable; let index =index;let isOdd=even;let isEven=odd" [class.odd]="isOdd" [class.even]="isEven">
+               <td>
+                  <button class="button rounded" (click)="openComments(row)">
+                    <i class="fa fa-comments"></i></button>
+                </td>
+                <td class="sorting_1">
+                  <a routerLink="/home/ticketView/{{row.id_ticket}}">Open Ticket</a>
+                </td>
+                <td>{{row.sentto}}</td>
+                <td>{{ (row.objectid) ? row.objectid : 'OLD TICKET'}}</td>
+                <td>{{row.user}}</td>
+                <td>{{row.cfull_name}}</td>
+                <td>{{row.cfirst_name}}</td>
+                <td>{{row.clast_name}}</td>
+                <td>{{row.telephone_land_line}}</td>
+                <td>{{row.alt_telephone}}</td>
+                <td>{{row.subdivision}}</td>
+                <td>{{row.block_num}}</td>
+                <td>{{row.lot_num}}</td>
+                <td>{{row.tax_account_num}}</td>
+                <td>{{row.property_id}}</td>
+                <td>{{row.full_address}}</td>
+                <td>{{row.msag_comm}}</td>
            </tr>
       </tbody>
     </table>
