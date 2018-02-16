@@ -9,6 +9,12 @@
     <div class="window-content" style="height: auto;">
           <table>
             <tr>
+              <td width="100">
+                  <label class="switch">
+                      <input [(ngModel)]="mainUser" type="checkbox">
+                      <span class="check"></span>
+                  </label>
+              </td>
               <td> <img [src]="profileImage" width="100" height="100" alt=""></td>
               <td><h2 >{{staff.name}}</h2>       </td>
             </tr>
@@ -16,6 +22,12 @@
               <td><h2>Workflow</h2></td>
             </tr>
             <tr *ngFor="let user of workflow">
+              <td>
+                  <label class="switch">
+                      <input [(ngModel)]="user.hasticket" type="checkbox">
+                      <span class="check"></span>
+                  </label>
+              </td>
                <td>
                  <img style="border-radius: 50%;" width="50" height="50" [src]="user.avatar" alt="">
                </td>

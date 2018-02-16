@@ -9,10 +9,12 @@ export class TicketWorkflowComponent implements OnInit {
 
   @Input() staffId: any = null;
   @Input() routing: any = null;
+  @Input() sentto: any = null;
   @Output() onClose = new EventEmitter<any>();
   staff: any = {name: ""};
   profileImage: string = "";
   workflow: any = [];
+  mainUser: boolean = false;
   
   constructor(private app: AppService) { }
 
@@ -23,6 +25,9 @@ export class TicketWorkflowComponent implements OnInit {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
     if(this.staffId){
+      if(this.staffId == this.sentto) {
+         this.mainUser = true;
+      }
       this.app.GET_METHOD("users/getUserNameById/?id=" + this.staffId).subscribe((response:any) => {
          
           if(response.success){
@@ -33,14 +38,27 @@ export class TicketWorkflowComponent implements OnInit {
     }
 
     if(this.routing) {
+       
        // Parse Routing
        if(typeof(this.routing) == "string") {
          this.routing = JSON.parse(this.routing);
         //  console.log(this.app.users);
        }
+       let show: boolean = false;
        this.routing.a.forEach(route => {
+          if(route == this.sentto) {
+             show = true;
+          } 
+
           this.app.users.forEach(user => {
+              
               if(route == user.user_id){
+                  if(show) {
+                     user.hasticket = true;
+                     show = false;
+                  }else {
+                    user.hasticket = false;
+                  }
                   user.avatar = (user.icon2) ? this.app.url + this.app.route.api.uImage + user.icon2 : "assets/avatar.png";
                   this.workflow.push(user);
                   return;
