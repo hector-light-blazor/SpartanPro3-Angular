@@ -13,13 +13,35 @@ export class GoogleMapComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.location);
-    var mapProp = {
-      center: new google.maps.LatLng(26.208254, -98.181494),
-      zoom: 8,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
+  
+    var mapProp;
+    if(this.location) {
+      var position = new google.maps.LatLng(this.location.y, this.location.x)
+      mapProp = {
+        center: position,
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+
+     
+
+    } else {
+      mapProp = {
+        center: new google.maps.LatLng(26.208254, -98.181494),
+        zoom: 8,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+    }
+
+    
     this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+
+    if(this.location) {
+      var marker = new google.maps.Marker({
+        position: position,
+        map: this.map
+      });
+    }
   }
 
 }
