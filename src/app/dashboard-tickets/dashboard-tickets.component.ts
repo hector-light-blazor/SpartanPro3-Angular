@@ -14,8 +14,8 @@ export class DashboardTicketsComponent implements OnInit {
 
   // Global variable 
 
-  inbox:Array<STATUS> =  [];
-  openTickets:Array<STATUS>   =  [];
+  inbox:any =  [];
+  openTickets:any   =  [];
   allLoading: boolean = false;
   searchAll:string = '';
   searchInbox: string = '';
@@ -80,7 +80,7 @@ export class DashboardTicketsComponent implements OnInit {
             }
 
           }
-      
+        //  console.log(response);
 
        // Set it to the array in control for open tickets.
        this.openTickets = (response.success) ? response.data : [];
@@ -88,6 +88,7 @@ export class DashboardTicketsComponent implements OnInit {
 
       this.timer.flatMap((i) =>  this.app.POST_METHOD(this.app.route.api.ftInbox, {data: this.app.account_info.user_id})).takeWhile(() => this.isAlive).subscribe((response:any) => {
           if(response) {
+           
             response.data.forEach(element => {
                 element.icon = (element.icon) ? this.app.url + this.app.route.api.uImage + element.icon : "assets/avatar.png";
             });

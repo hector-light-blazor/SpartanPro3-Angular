@@ -68,9 +68,9 @@
       
                         <img class="list-icon" style="border-radius: 50%;" [src]="customer.icon" width="50" height="48"  alt="Avatar Badge"> 
                         <div style="float:left;">
-                            <span >{{customer.staff}} | <b>{{customer.created_date}}</b></span>
+                            <span >{{customer.staff}} | <b>{{(customer.created_date) ? customer.created_date : ''}}</b></span>
                             <br>
-                              <span>{{(customer.objectid) ? customer.objectid : 0}}</span>
+                              <span>{{(customer) ? customer.objectid : 0}}</span>
                             <br>
                             <span  >{{
                               ((customer.cfirst_name) ? (((customer.cfirst_name.length > 9) ? (customer.cfirst_name | slice:0:9) +'..' : customer.cfirst_name) + ' ' + ((customer.clast_name.length > 9) ? (customer.clast_name | slice:0:9)+'..' : customer.clast_name)) : '')
