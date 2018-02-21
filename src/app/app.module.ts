@@ -24,6 +24,7 @@ import { FilterminePipe } from './filtermine.pipe';
 import { QuickPickToolsComponent } from './quick-pick-tools/quick-pick-tools.component';
 import { FullScreenPickComponent } from './full-screen-pick/full-screen-pick.component';
 import { QuickSearchComponent } from './quick-search/quick-search.component';
+import { GoogleMapComponent } from './google-map/google-map.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { QuickSearchComponent } from './quick-search/quick-search.component';
     FilterminePipe,
     QuickPickToolsComponent,
     FullScreenPickComponent,
-    QuickSearchComponent
+    QuickSearchComponent,
+    GoogleMapComponent
   ],
   imports: [
     BrowserModule,
