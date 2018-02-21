@@ -10,11 +10,17 @@ export class GoogleMapComponent implements OnInit {
   @Output() onClose = new EventEmitter();
   @Input() location: any;
   @ViewChild('gmap') gmapElement: any;
+  @ViewChild('window') gmapHeight: any;
+
   map: google.maps.Map;
   isLoading:boolean = true;
+  height: string = '300px';
   constructor() { }
   
   ngOnInit() {
+    
+    // console.log(this.gmapHeight);
+   
    
     var mapProp;
     if(this.location) {
@@ -46,6 +52,8 @@ export class GoogleMapComponent implements OnInit {
     }
 
     this.isLoading = false;
+   
+    this.height = (this.gmapHeight.nativeElement.offsetHeight - 70) + "px";
   }
 
   ngOnDestroy() {
