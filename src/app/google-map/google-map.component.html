@@ -1,1 +1,27 @@
-<div #gmap style="width:100%;height:400px"></div>
+
+<div #window class="window" style="position: absolute;top: 8px;left:4px; z-index:2000;width: 99%;height:95%;">
+    <div class="window-caption">
+      <span class="window-caption-icon"><i class="fa fa-gamepad" aria-hidden="true"></i></span>
+      <span class="window-caption-title">Map Viewer</span>
+      <span class="pull-right">
+          <button (click)="closeMap()" class="button btnSize">
+              <i class="fa fa-window-close" aria-hidden="true"></i>
+          </button>
+        </span>
+      <span class="pull-right">
+        <button  class="button btnSize">
+            <i class="fa fa-window-restore" aria-hidden="true"></i>
+        </button>
+      </span>
+      <span class="pull-right">
+        <button  class="button btnSize">
+            <i class="fa fa-window-minimize" aria-hidden="true"></i>
+        </button></span>
+    </div>
+    <div class="window-content" style="overflow: hidden;">
+      <app-master-loading [regularLoading]="true" *ngIf="isLoading"></app-master-loading>
+      <div #gmap style="width:100%;height:600px;"></div>
+
+    </div>
+  </div>
+  

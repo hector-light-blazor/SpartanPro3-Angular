@@ -1,4 +1,4 @@
-import { Component,Input, ViewChild, OnInit } from '@angular/core';
+import { Component,Input,Output, EventEmitter, ViewChild, OnInit } from '@angular/core';
 import { } from '@types/googlemaps';
 
 @Component({
@@ -7,19 +7,21 @@ import { } from '@types/googlemaps';
   styleUrls: ['./google-map.component.css']
 })
 export class GoogleMapComponent implements OnInit {
+  @Output() onClose = new EventEmitter();
   @Input() location: any;
   @ViewChild('gmap') gmapElement: any;
   map: google.maps.Map;
+  isLoading:boolean = true;
   constructor() { }
-
-  ngOnInit() {
   
+  ngOnInit() {
+   
     var mapProp;
     if(this.location) {
       var position = new google.maps.LatLng(this.location.y, this.location.x)
       mapProp = {
         center: position,
-        zoom: 15,
+        zoom: 17,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
 
@@ -42,6 +44,15 @@ export class GoogleMapComponent implements OnInit {
         map: this.map
       });
     }
+
+    this.isLoading = false;
+  }
+
+  ngOnDestroy() {
+  }
+
+  closeMap() {
+      this.onClose.emit(true);
   }
 
 }
