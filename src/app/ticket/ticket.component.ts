@@ -562,7 +562,7 @@ export class TicketComponent implements OnInit {
   // Handles closing map view
 
   closeClick(event: string) {
-    console.log("I AM RUNNING WHAT");
+    // console.log("I AM RUNNING WHAT");
     this.isMapEnabled = false;
   }
 
@@ -954,6 +954,31 @@ export class TicketComponent implements OnInit {
                 this.attributes.system_assign = {a: arr, index: 0};
             }
           }
+      }, error => { // If error go on fall back but only get the information needed..
+
+            let ok = false;
+            let lv:number = 0;
+            let db: number = 0;
+            let gis: number = 0;
+           // if system assign is blank lets get back route from db server
+           this.app.GET_METHOD(this.app.route.api.bRouting + this.app.account_info.organization_id).subscribe((response: any) => {
+            if(response.success){ // Routing Fail .. needs to assign users for this operation..
+              response.data.forEach(element => { // GET THE USER IDS and save to system assign...
+                    if(element.r_group == "LV") {
+                       lv = parseInt(element.user_id);
+                    }
+                    else if(element.r_group == "DB"){
+                       db = parseInt(element.user_id);
+                    }
+                    else if(element.r_group == "GIS"){
+                      gis = parseInt(element.user_id);
+                    }
+              });
+              // Set it up to the variable..
+              this.attributes.system_assign = {a: [lv, db, gis], index: 0};
+            
+            }
+        });
       });
     }
 
