@@ -12,11 +12,12 @@
          <button (click)="confirmationDecision()"  class="button primary">Submit</button>
        </div>
     </div>
-</div>
+</div> <!-- Confirmation Window -->
 <app-ticket-workflow *ngIf="displayWorkflow" (onClose)="displayWorkflow = false;" [sentto]="attributes.sentto" [routing]="attributes.system_assign" [staffId]="attributes.started_ticket"></app-ticket-workflow>
 <app-file-uploader (changeConfig)="fileUploaderActions($event)" *ngIf="showFileUploader" [objectid]='attributes.id_ticket'></app-file-uploader>
 <file-viewer (actions)="showFileViewer = false;" [ticketid]='attributes.id_ticket' *ngIf="showFileViewer"></file-viewer>
 <app-esri-map (closeClick)="closeClick($event)" (mapEvents)="collectMapEvents($event)" [ticketEnabled]="enableTicket" [point]='loc' [polygon]='parcel' [extent]="extent" [basemap]='base'  *ngIf="isMapEnabled"></app-esri-map>
+<app-google-map *ngIf="isGoogleEnabled" [location]="loc"></app-google-map>
 <div *ngIf="showAttach" class="container page-content">
   <form>
       <!-- <file-uploader [objectid]="attributes.id_ticket" [activeColor]="'orangered'" [baseColor]="'green'"></file-uploader> -->

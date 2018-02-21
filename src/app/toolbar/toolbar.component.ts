@@ -157,6 +157,9 @@ export class ToolbarComponent implements OnInit {
         case this.app.toolbarActivies.TICKET_LIST_ATTACHMENTS:
           this.app.toolbarActions.next({action: action, data: null});
           break;
+        case this.app.toolbarActivies.TICKET_GOOGLE_MAP:
+          this.app.toolbarActions.next({action: action, data: null});
+          break;
         default:
           break;
       }

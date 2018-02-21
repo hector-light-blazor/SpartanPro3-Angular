@@ -41,6 +41,7 @@ export class TicketComponent implements OnInit {
   parcels: any; // List All Parcels from db server
   profileImage: string = "assets/avatar.png"; //display profile image...
   isMapEnabled: boolean = false; // Controls the esri map view to display ...
+  isGoogleEnabled: boolean = false; // Controls the google map view to display ...
   extent: any = null; //ticket extent from parcels...
   base: string = ''; //Tell the esri map component what basemap to use....
   loc: any = null; // hold the locaiton to display to esri map...
@@ -475,6 +476,10 @@ export class TicketComponent implements OnInit {
           break;
         case this.app.toolbarActivies.TICKET_LIST_ATTACHMENTS:
           this.showFileViewer = true;
+        case this.app.toolbarActivies.TICKET_GOOGLE_MAP:
+          this.isGoogleEnabled = true;
+          console.log("HELLO");
+          break;
         default:
           break;
       }
@@ -1025,7 +1030,7 @@ interface FEED {
    ticket_section:  string,
    allow?: boolean;
    edit?: boolean;
-   time_track:      any
+   time_track:      any;
 }
 
 
