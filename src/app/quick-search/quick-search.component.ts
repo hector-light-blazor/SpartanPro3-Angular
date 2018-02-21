@@ -19,7 +19,7 @@ export class QuickSearchComponent implements OnInit {
   ngOnInit() {
     if(parseInt(this.app.account_info.user_id) == 0)this.router.navigateByUrl("/");
 
-    console.log(this.app.users);
+   // console.log(this.app.users);
     this.isLoading = true;
     this.app.GET_METHOD(this.app.route.api.gMultiSearch + this.route.snapshot.params['search']).subscribe((response:any) => {
 
@@ -115,7 +115,7 @@ export class QuickSearchComponent implements OnInit {
              let track:Date = new Date(com.time_track);
 
              let format = this.app.FORMAT_AMPM(new Date(com.time_track));
-             console.log(format);
+            // console.log(format);
              com.edit = false;
              com.allow = (com.user_id == this.app.account_info.user_id);
              com.time = (track.getMonth() + 1)  + "/" + track.getDate() + "/" + track.getFullYear() + " " + format;//this.app.FORMAT_AMPM(new Date(com.time_track));
