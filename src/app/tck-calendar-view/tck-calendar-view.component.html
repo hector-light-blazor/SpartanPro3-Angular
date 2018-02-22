@@ -1,14 +1,14 @@
 <div id="showTickets"   class="window padding20 dialog" style="position: absolute;left: 4%;z-index:3;display:none;width:90%; height:50%;">
   <div class="window-content" >
       <span (click)="closemenu('#showTickets')" class="place-right" style="cursor: pointer">
-        <span class="mif-cross"></span>
+        <i class="fa fa-times"></i>
       </span>
       <br>
       <div class="padding20">
          <h1>Due Tickets {{choosen_date}}</h1>
          <div class="listview">
                  
-                 <button  routerLink="/home/ticketView/{{ticket.id_ticket}}"  *ngFor="let ticket of choosen_tickets" class="shortcut-button bg-cyan bg-active-darkBlue fg-white">
+                 <button  routerLink="/ticket/view/{{ticket.id_ticket}}"  *ngFor="let ticket of choosen_tickets" class="shortcut-button bg-cyan bg-active-darkBlue fg-white">
                       <span class="icon mif-rocket"></span>
                       <span class="title">{{ticket.cfull_name}}</span>
                       <span class="badge">{{ticket.objectid}}</span>
@@ -20,8 +20,8 @@
 </div>
 <div  style="color:white">
   <div class="toolbar pull-right">
-      <button class="toolbar-button" (click)="previous()"><span class="mif-arrow-left"></span></button>
-      <button class="toolbar-button" (click)="next()"><span class="mif-arrow-right"></span></button>
+      <button class="toolbar-button" (click)="previous()"><i class="fa fa-arrow-left"></i></button>
+      <button class="toolbar-button" (click)="next()"><i class="fa fa-arrow-right"></i></button>
   </div>
   <div class="flex-grid">
       <h1>{{current_Month + " " + current_Year}}</h1>

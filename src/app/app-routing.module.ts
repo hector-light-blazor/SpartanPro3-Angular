@@ -5,7 +5,7 @@ import {DashboardTicketsComponent} from './dashboard-tickets/dashboard-tickets.c
 import {TckCalendarViewComponent} from './tck-calendar-view/tck-calendar-view.component';
 import {TicketComponent} from './ticket/ticket.component';
 import {QuickSearchComponent} from './quick-search/quick-search.component';
-
+import {ArchiveTicketListComponent} from './archive-ticket-list/archive-ticket-list.component';
 const routes: Routes = [
   {
     path: '',
@@ -20,6 +20,10 @@ const routes: Routes = [
     component: TicketComponent
   },
   {
+    path: 'ticket/view/archives',
+    component: ArchiveTicketListComponent
+  },
+  {
     path: 'ticket/view/:id',
     component: TicketComponent
   },
@@ -27,6 +31,7 @@ const routes: Routes = [
     path: 'ticket/calendar-view',
     component: TckCalendarViewComponent
   },
+  
   {
     path: 'ticket/quickSearch/:search', component: QuickSearchComponent
   }

@@ -37,7 +37,7 @@
                                           Calendar
                                       </a>
                                   </div>
-                                  <div *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.ids.arch" class="tab-content-segment">
+                                  <div *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.ids.arch" [routerLink]="['ticket/view/archives']" class="tab-content-segment">
                                       <a class="fluent-big-button">
                                           <img src="assets/cabinet.png" alt="Archive Toolbar">
                                           Archive
