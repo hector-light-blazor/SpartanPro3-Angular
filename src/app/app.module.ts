@@ -25,6 +25,7 @@ import { QuickPickToolsComponent } from './quick-pick-tools/quick-pick-tools.com
 import { FullScreenPickComponent } from './full-screen-pick/full-screen-pick.component';
 import { QuickSearchComponent } from './quick-search/quick-search.component';
 import { GoogleMapComponent } from './google-map/google-map.component';
+import { ArchiveTicketListComponent } from './archive-ticket-list/archive-ticket-list.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { GoogleMapComponent } from './google-map/google-map.component';
     QuickPickToolsComponent,
     FullScreenPickComponent,
     QuickSearchComponent,
-    GoogleMapComponent
+    GoogleMapComponent,
+    ArchiveTicketListComponent
   ],
   imports: [
     BrowserModule,
