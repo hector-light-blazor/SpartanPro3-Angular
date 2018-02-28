@@ -6,6 +6,8 @@ import {TckCalendarViewComponent} from './tck-calendar-view/tck-calendar-view.co
 import {TicketComponent} from './ticket/ticket.component';
 import {QuickSearchComponent} from './quick-search/quick-search.component';
 import {ArchiveTicketListComponent} from './archive-ticket-list/archive-ticket-list.component';
+import {TicketChartsComponent} from './ticket-charts/ticket-charts.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -14,6 +16,10 @@ const routes: Routes = [
   {
     path: 'ticket/dashboard',
     component: DashboardTicketsComponent
+  },
+  {
+    path: 'ticket/charts',
+    component: TicketChartsComponent
   },
   {
     path: 'ticket/new',

@@ -36,7 +36,8 @@ export class ROUTES {
        gListUsers:    "users/getListUsers/", // Get List Users...
        gListOrga:   "users/getListOrganization/", // Get List of organization..
        dQuickPick: "qprocess/displayPic/?path=", // Display QUick Pick picture...
-       gMultiSearch: "addressticket/getSearchMultiple/?s=" // Search Multi this is part of quick search..
+       gMultiSearch: "addressticket/getSearchMultiple/?s=", // Search Multi this is part of quick search..
+       gTCharts: "addressticket/getCharts/?o=" // Get Ticket Charts by organization number of tickets by month...
     }
    }
 }
@@ -301,6 +302,7 @@ interface API_ROUTES {
    gListOrga?: string;
    dQuickPick?: string;
    gMultiSearch?: string;
+   gTCharts?: string;
 }
 
 interface LOGIN_INFO {
