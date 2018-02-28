@@ -1,0 +1,71 @@
+
+<div *ngIf="!appService._dataTableViews.TABLE"  id="dialog" ng-show="true" class="padding20 dialog info">
+    <h1>Range Dates</h1>
+    <div class="input-control text full-text">
+        <label>From</label>
+        <input type="date" [(ngModel)]="filterDate.from">
+    </div>
+    <div class="input-control text full-text">
+        <label>To</label>
+        <input type="date" [(ngModel)]="filterDate.to">
+    </div>
+    <span (click)="toggleTable()" class="dialog-close-button"></span>
+    <button type="button" class="button cycle-button" (click)="filterByDate()"  name="button"><span class="mif-search"></span></button>
+</div>
+
+<div *ngIf="appService._dataTableViews.TABLE">
+<div  class="dataTables_filter"><label>Filter Table:<input [(ngModel)]="searchTable" type="search" ></label></div>
+<table class="dataTable striped border bordered"  style="display: table;" >
+<thead>
+<tr role="row">
+  <th  rowspan="1" colspan="1"  style="width: 0px;">View</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Ticket #</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Created By</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Cst Fl Name</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Cst FName</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Cst LName</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Land Line</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Alt Tel</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Alt 2 Tel</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Alt 3 Tel</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Alt 4 Tel</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Ow Fl Name</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Ow FName</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Ow LName</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Sub</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Blck #</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Lt #</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Tax Account</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Property Id</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">Full Address</th>
+  <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">MSAG Comm</th>
+</tr>
+</thead><tbody>
+<tr role="row" *ngFor="let data of dataTable | dataTable:searchTable; let index =index;let isOdd=even;let isEven=odd" [class.odd]="isOdd" [class.even]="isEven">
+  <td class="sorting_1">
+     <a routerLink="/home/ticketView/{{data.id_ticket}}">Open</a>
+  </td>
+  <td>{{data.objectid}}</td>
+  <td>{{data.user}}</td>
+  <td>{{data.cfull_name}}</td>
+  <td>{{data.cfirst_name}}</td>
+  <td>{{data.clast_name}}</td>
+  <td>{{data.telephone_land_line}}</td>
+  <td>{{data.alt_telephone}}</td>
+  <td>{{data.alt2_telephone}}</td>
+  <td>{{data.alt3_telephone}}</td>
+  <td>{{data.alt4_telephone}}</td>
+  <td>{{data.pfull_name}}</td>
+  <td>{{data.pfirst_name}}</td>
+  <td>{{data.plast_name}}</td>
+  <td>{{data.subdivision}}</td>
+  <td>{{data.block_num}}</td>
+  <td>{{data.lot_num}}</td>
+  <td>{{data.tax_account_num}}</td>
+  <td>{{data.property_id}}</td>
+  <td>{{data.full_address}}</td>
+  <td>{{data.msag_comm}}</td>
+</tr>
+</tbody>
+</table>
+</div>

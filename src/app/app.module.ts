@@ -27,6 +27,7 @@ import { QuickSearchComponent } from './quick-search/quick-search.component';
 import { GoogleMapComponent } from './google-map/google-map.component';
 import { ArchiveTicketListComponent } from './archive-ticket-list/archive-ticket-list.component';
 import { TicketChartsComponent } from './ticket-charts/ticket-charts.component';
+import { TicketDataTableComponent } from './ticket-data-table/ticket-data-table.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { TicketChartsComponent } from './ticket-charts/ticket-charts.component';
     QuickSearchComponent,
     GoogleMapComponent,
     ArchiveTicketListComponent,
-    TicketChartsComponent
+    TicketChartsComponent,
+    TicketDataTableComponent
   ],
   imports: [
     BrowserModule,
