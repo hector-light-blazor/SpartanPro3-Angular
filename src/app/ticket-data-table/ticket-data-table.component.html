@@ -41,7 +41,7 @@
   <th class="sorting" rowspan="1" colspan="1"  style="width: 0px;">MSAG Comm</th>
 </tr>
 </thead><tbody>
-<tr role="row" *ngFor="let data of dataTable | dataTable:searchTable; let index =index;let isOdd=even;let isEven=odd" [class.odd]="isOdd" [class.even]="isEven">
+<!-- <tr role="row" *ngFor="let data of dataTable | dataTable:searchTable; let index =index;let isOdd=even;let isEven=odd" [class.odd]="isOdd" [class.even]="isEven">
   <td class="sorting_1">
      <a routerLink="/home/ticketView/{{data.id_ticket}}">Open</a>
   </td>
@@ -65,7 +65,7 @@
   <td>{{data.property_id}}</td>
   <td>{{data.full_address}}</td>
   <td>{{data.msag_comm}}</td>
-</tr>
+</tr> -->
 </tbody>
 </table>
 </div>
