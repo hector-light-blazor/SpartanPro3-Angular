@@ -13,12 +13,16 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: 'ticket/charts',
+    loadChildren: './ticket-charts/ticket-charts.module#TicketChartsModule'
+  },
+  {
     path: 'ticket/dashboard',
     loadChildren: './dashboard-tickets/dashboard-tickets.module#DashboardTicketsModule'
   },
   {
-    path: 'ticket/charts',
-    loadChildren: './ticket-charts/ticket-charts.module#TicketChartsModule'
+    path: 'ticket/filter',
+    loadChildren: './ticket-data-table/ticket-data-table.module#TicketDataTableModule'
   },
   {
     path: 'ticket/new',
