@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'ticket/dashboard',
-    component: DashboardTicketsComponent
+    loadChildren: './dashboard-tickets/dashboard-tickets.module#DashboardTicketsModule'
   },
   {
     path: 'ticket/charts',
@@ -23,7 +23,8 @@ const routes: Routes = [
   },
   {
     path: 'ticket/new',
-    component: TicketComponent
+    loadChildren: './ticket/ticket.module#TicketModule'
+  
   },
   {
     path: 'ticket/view/archives',
@@ -31,7 +32,7 @@ const routes: Routes = [
   },
   {
     path: 'ticket/view/:id',
-    component: TicketComponent
+    loadChildren: './ticket/ticket.module#TicketModule'
   },
   {
     path: 'ticket/calendar-view',
