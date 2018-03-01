@@ -56,10 +56,10 @@ export class QuickSearchComponent implements OnInit {
   //Main Functions
   //Re quick search
   quickSearch() {
-    // this.app.GET_METHOD();
-    // this.app.GET_TABLE_MULTI(this.searchTable).subscribe(response => this.dataTable = response);
-    this.app.GET_METHOD(this.app.route.api.gMultiSearch + this.route.snapshot.params['search']).subscribe((response:any) => {
-
+  
+    this.dataTable = [];
+    this.isLoading = true;
+    this.app.GET_METHOD(this.app.route.api.gMultiSearch + this.searchTable).subscribe((response:any) => {
       response.forEach(row => {
            row.cdisplay = false;
            row.comments = [];
@@ -75,6 +75,9 @@ export class QuickSearchComponent implements OnInit {
            }
           
       });
+
+      this.dataTable = response;
+       this.isLoading = false;
     });
   }
 
