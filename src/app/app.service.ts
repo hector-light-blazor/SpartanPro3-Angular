@@ -59,6 +59,8 @@ export class AppService {
      user_id: null
   }
 
+  _dataTableViews: TICKET_TABLE_VIEWS;
+
   // MSG Codes for Notify Pop
   msg_codes: MSG_CODES = {alert: "alert", success: "success", info: 'info'};
 
@@ -322,4 +324,10 @@ interface MSG_CODES {
    alert?: string;
    success?: string;
    info?: string;
+}
+
+interface TICKET_TABLE_VIEWS{
+  TABLE: boolean,
+  DATE:boolean,
+  LMT: number
 }

@@ -13,7 +13,7 @@ export class TicketDataTableComponent implements OnInit {
   searchTable: string = "";
   filterDate:DATE_JSON;
   isAlive: boolean = true;
-  constructor(private appService: AppService) { 
+  constructor(public appService: AppService) { 
     this.lmt = 1000;
     this.dataTable = [];
     this.searchTable = "";
@@ -41,7 +41,7 @@ export class TicketDataTableComponent implements OnInit {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     // this.appService._toolbarBtns.TICKET_TABLE = false;
-    // this.appService._dataTableViews.LMT = this.lmt;
+    this.appService._dataTableViews.LMT = this.lmt;
     this.isAlive = false;
     //this.appService.emitTableLMT(0);
     //this.appService._dataTableViews.LMT = 0;

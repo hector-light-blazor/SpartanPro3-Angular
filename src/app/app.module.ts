@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
 
 
 import { NotificationsModule } from 'angular-notice'
-import {SharedModule} from "./shared/shared.module";
+import { SharedModule} from "./shared/shared.module";
 
 import { AppComponent } from './app.component';
 
@@ -17,7 +17,6 @@ import { UppercaseDirective } from './uppercase.directive';
 import { QuickSearchComponent } from './quick-search/quick-search.component';
 
 import { ArchiveTicketListComponent } from './archive-ticket-list/archive-ticket-list.component';
-import { TicketChartsComponent } from './ticket-charts/ticket-charts.component';
 import { TicketDataTableComponent } from './ticket-data-table/ticket-data-table.component';
 import { AppService } from './app.service';
 
@@ -31,7 +30,6 @@ import { AppService } from './app.service';
     UppercaseDirective,
     QuickSearchComponent,
     ArchiveTicketListComponent,
-    TicketChartsComponent,
     TicketDataTableComponent
   ],
   imports: [
