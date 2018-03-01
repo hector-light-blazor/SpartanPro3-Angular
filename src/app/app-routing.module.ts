@@ -35,7 +35,7 @@ const routes: Routes = [
   },
   {
     path: 'ticket/calendar-view',
-    component: TckCalendarViewComponent
+    loadChildren: './tck-calendar-view/tck-calendar-view.module#TckCalendarViewModule'
   },
   
   {

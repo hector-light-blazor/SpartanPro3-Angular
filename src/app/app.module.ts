@@ -11,7 +11,6 @@ import { AppComponent } from './app.component';
 
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { LoginComponent } from './login/login.component';
-import { TckCalendarViewComponent } from './tck-calendar-view/tck-calendar-view.component';
 import { UppercaseDirective } from './uppercase.directive';
 
 import { QuickSearchComponent } from './quick-search/quick-search.component';
@@ -26,7 +25,6 @@ import { AppService } from './app.service';
     AppComponent,
     ToolbarComponent,
     LoginComponent,
-    TckCalendarViewComponent,
     UppercaseDirective,
     QuickSearchComponent,
     ArchiveTicketListComponent,
