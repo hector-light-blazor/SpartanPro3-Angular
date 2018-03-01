@@ -39,7 +39,8 @@ const routes: Routes = [
   },
   
   {
-    path: 'ticket/quickSearch/:search', component: QuickSearchComponent
+    path: 'ticket/quickSearch/:search', 
+    loadChildren: './quick-search/quick-search.module#QuickSearchModule'
   }
 
 ];

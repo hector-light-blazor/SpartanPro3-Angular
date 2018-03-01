@@ -13,8 +13,6 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { LoginComponent } from './login/login.component';
 import { UppercaseDirective } from './uppercase.directive';
 
-import { QuickSearchComponent } from './quick-search/quick-search.component';
-
 import { ArchiveTicketListComponent } from './archive-ticket-list/archive-ticket-list.component';
 import { TicketDataTableComponent } from './ticket-data-table/ticket-data-table.component';
 import { AppService } from './app.service';
@@ -26,7 +24,6 @@ import { AppService } from './app.service';
     ToolbarComponent,
     LoginComponent,
     UppercaseDirective,
-    QuickSearchComponent,
     ArchiveTicketListComponent,
     TicketDataTableComponent
   ],
