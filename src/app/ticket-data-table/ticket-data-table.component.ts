@@ -16,7 +16,7 @@ export class TicketDataTableComponent implements OnInit {
   isAlive: boolean = true;
   isLoading: boolean = true;
   constructor(public appService: AppService) { 
-    this.lmt = 1000;
+    this.appService._dataTableViews.LMT = this.lmt = 1000;
     this.dataTable = [];
     this.searchTable = "";
     this.filterDate = {
@@ -33,6 +33,7 @@ export class TicketDataTableComponent implements OnInit {
           this.appService._toolbarBtns.TICKET_TABLE = true;
     
           this.appService.dataTable.takeWhile(() => this.isAlive).subscribe(value => {
+           
             this.dataTable = value;
           }); 
           

@@ -172,10 +172,20 @@ export class ToolbarComponent implements OnInit {
     this.app._dataTableViews.TABLE = (this.app._dataTableViews.TABLE) ?  false : true;  
   }
 
-  getMoreTable(val:number){
+  getMoreTable(val:number){ // GET 1000 items more filter table..
+
     this.app._dataTableViews.LMT += val;
     this.app.dataTable.next([]);
     this.app.GET_METHOD(this.app.route.api.gFTable + this.app._dataTableViews.LMT).subscribe((response:any) => {
+
+        this.app.dataTable.next(response);
+    });
+ }
+ resetTable(val: number) { // Reset filter table module...
+    this.app._dataTableViews.LMT = 1000;
+    this.app.dataTable.next([]);
+    this.app.GET_METHOD(this.app.route.api.gFTable + this.app._dataTableViews.LMT).subscribe((response:any) => {
+  
         this.app.dataTable.next(response);
     });
  }
