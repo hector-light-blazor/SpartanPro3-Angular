@@ -476,6 +476,7 @@ export class TicketComponent implements OnInit {
           break;
         case this.app.toolbarActivies.TICKET_LIST_ATTACHMENTS:
           this.showFileViewer = true;
+          break;
         case this.app.toolbarActivies.TICKET_GOOGLE_MAP:
           this.isGoogleEnabled = true;
           this.loc = (this.attributes.lat && this.attributes.longy) ? new this.app.esriPoint(parseFloat(this.attributes.longy), parseFloat(this.attributes.lat)) : null;
