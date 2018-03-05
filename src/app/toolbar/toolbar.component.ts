@@ -25,8 +25,9 @@ export class ToolbarComponent implements OnInit {
   expandShow: boolean = true;
 
   qsearch: string = ''; // Controls quick search input...
-  constructor(private app: AppService, private router: Router) { 
+  constructor(public app: AppService, private router: Router) { 
 
+    this.app._toolbarBtns.TICKET_TABLE = false;
     // =-=-=-= Define Blank Tool Settings Configs =-=-=-=-
     this._toolSettings = {SECTIONS: {
       TICKET: {
@@ -129,19 +130,19 @@ export class ToolbarComponent implements OnInit {
     // 1 represents save & transfer ticket...
       switch (action) {
         case this.app.toolbarActivies.TICKET_SAVE_TRANSFER:
-          console.log("I RAN WHAT"); 
+         
           this.app.toolbarActions.next({action: action, data: null});
           break;
         case this.app.toolbarActivies.TICKET_ARCHIVE:
-          console.log("GOING TO ARCHIVE TICKET");
+       
           this.app.toolbarActions.next({action: action, data: null});
           break;
         case this.app.toolbarActivies.TICKET_DELETE:
-          console.log("GOING TO DELETE TICKET");
+      
           this.app.toolbarActions.next({action: action, data: null});
           break;
         case this.app.toolbarActivies.TICKET_INSERT_COMMENT:
-          console.log("INSERTING COMMENTS");
+    
           this.app.toolbarActions.next({action: action, data: this.commentText});
           this.commentText = "";
           break;
@@ -154,15 +155,29 @@ export class ToolbarComponent implements OnInit {
         case this.app.toolbarActivies.TICKET_DISPLAY_ATTACHMENT:
           this.app.toolbarActions.next({action: action, data: null});
           break;
-        case this.app.toolbarActivies.TICKET_LIST_ATTACHMENTS:
+       
+        case this.app.toolbarActivies.TICKET_GOOGLE_MAP:
           this.app.toolbarActions.next({action: action, data: null});
           break;
-        case this.app.toolbarActivies.TICKET_GOOGLE_MAP:
+        case this.app.toolbarActivies.TICKET_LIST_ATTACHMENTS:
           this.app.toolbarActions.next({action: action, data: null});
           break;
         default:
           break;
       }
   }
+
+  showDate(){
+    this.app._dataTableViews.DATE = (this.app._dataTableViews.DATE) ? false : true;
+    this.app._dataTableViews.TABLE = (this.app._dataTableViews.TABLE) ?  false : true;  
+  }
+
+  getMoreTable(val:number){
+    this.app._dataTableViews.LMT += val;
+    this.app.dataTable.next([]);
+    this.app.GET_METHOD(this.app.route.api.gFTable + this.app._dataTableViews.LMT).subscribe((response:any) => {
+        this.app.dataTable.next(response);
+    });
+ }
 
 }

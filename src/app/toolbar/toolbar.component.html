@@ -155,7 +155,9 @@
                                           <li><a (click)="actionSendToolBar(app.toolbarActivies.TICKET_GOOGLE_MAP)">Google Map</a></li>
                                       </ul>
                                       <br>
-                                  <button (click)="actionSendToolBar(app.toolbarActivies.TICKET_LIST_ATTACHMENTS)" type="button" name="button" class="fluent-button">
+                                      <br>
+                                      <br>
+                                  <button (click)="actionSendToolBar(app.toolbarActivies.TICKET_LIST_ATTACHMENTS); $event.stopPropagation();" type="button" name="button" class="fluent-button">
                                     <!--<span class="mif-cabinet"></span>-->
                                     <img src="assets/attachment.png" alt="">
                                     Attachments
@@ -171,7 +173,7 @@
                             </div>
                             <div class="tab-group-caption">View</div>
                           </div>
-                          <div *ngIf="filterAvailable" class="tab-panel-group " >
+                          <div *ngIf="app._toolbarBtns.TICKET_TABLE" class="tab-panel-group " >
                               <div class="tab-group-content">
                                 <div class="tab-content-segment">
                                     <button (click)="showDate()"  class="fluent-button">
