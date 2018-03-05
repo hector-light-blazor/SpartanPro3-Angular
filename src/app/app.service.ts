@@ -37,7 +37,9 @@ export class ROUTES {
        gListOrga:   "users/getListOrganization/", // Get List of organization..
        dQuickPick: "qprocess/displayPic/?path=", // Display QUick Pick picture...
        gMultiSearch: "addressticket/getSearchMultiple/?s=", // Search Multi this is part of quick search..
-       gTCharts: "addressticket/getCharts/?o=" // Get Ticket Charts by organization number of tickets by month...
+       gTCharts: "addressticket/getCharts/?o=", // Get Ticket Charts by organization number of tickets by month...
+       gFTable: "addressticket/getTable/?lmt=", // Get Filter Table by limits of 1000
+       gFRTable: "addressticket/getRange/?f=" // Get Table by Range for address ticket..
     }
    }
 }
@@ -59,8 +61,8 @@ export class AppService {
      user_id: null
   }
 
-  _dataTableViews: TICKET_TABLE_VIEWS;
-
+  _dataTableViews: TICKET_TABLE_VIEWS = {TABLE: false};
+  _toolbarBtns: TOOLBAR_BUTTONS = {TICKET_TABLE: false};
   // MSG Codes for Notify Pop
   msg_codes: MSG_CODES = {alert: "alert", success: "success", info: 'info'};
 
@@ -82,7 +84,8 @@ export class AppService {
   // New Subject for Quick Pick...
   actionsQuickPick = new Subject<any>();
   
-
+  public dataTable = new Subject<any[]>();
+ 
   //PARCEL FIELDS 
   propertyId: string = 'hcad.DBO.Parcel.PROP_ID';
   hoodName: string = 'HCAD2.dbo.web_map_property.hood_name';
@@ -305,6 +308,8 @@ interface API_ROUTES {
    dQuickPick?: string;
    gMultiSearch?: string;
    gTCharts?: string;
+   gFTable?: string;
+   gFRTable?: string;
 }
 
 interface LOGIN_INFO {
@@ -327,7 +332,14 @@ interface MSG_CODES {
 }
 
 interface TICKET_TABLE_VIEWS{
-  TABLE: boolean,
-  DATE:boolean,
-  LMT: number
+  TABLE?: boolean,
+  DATE?:boolean,
+  LMT?: number
+}
+
+interface TOOLBAR_BUTTONS{
+  TICKET?: boolean,
+  TICKET_TABLE?: boolean,
+  QUICK_SEARCH?: boolean,
+  SETTINGS_PHOTO?: boolean
 }

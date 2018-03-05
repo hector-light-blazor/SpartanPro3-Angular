@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AppService} from "../app.service";
 import "rxjs/add/operator/takeWhile";
+
 @Component({
   selector: 'app-ticket-data-table',
   templateUrl: './ticket-data-table.component.html',
@@ -13,6 +14,7 @@ export class TicketDataTableComponent implements OnInit {
   searchTable: string = "";
   filterDate:DATE_JSON;
   isAlive: boolean = true;
+  isLoading: boolean = true;
   constructor(public appService: AppService) { 
     this.lmt = 1000;
     this.dataTable = [];
@@ -22,46 +24,51 @@ export class TicketDataTableComponent implements OnInit {
       from: ""
     }
 
+    this.appService._dataTableViews.TABLE = true;
+
 }
 
   ngOnInit() {
           //On init display 
-          //this.appService._toolbarBtns.TICKET_TABLE = true;
+          this.appService._toolbarBtns.TICKET_TABLE = true;
     
-          // this.appService.dataTable.takeWhile(() => this.isAlive).subscribe(value => {
-          //   this.dataTable = value;
-          // }); 
-    
-          // this.appService.GET_TABLE(this.lmt).subscribe(response => {
-          //     this.dataTable = response;
-          // }); 
+          this.appService.dataTable.takeWhile(() => this.isAlive).subscribe(value => {
+            this.dataTable = value;
+          }); 
+          
+          this.appService.GET_METHOD(this.appService.route.api.gFTable + this.lmt).subscribe((response: any) => {
+              this.dataTable = response;
+              this.isLoading = false;
+          });
   }
 
   ngOnDestroy() {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
-    // this.appService._toolbarBtns.TICKET_TABLE = false;
+    this.appService._toolbarBtns.TICKET_TABLE = false;
     this.appService._dataTableViews.LMT = this.lmt;
     this.isAlive = false;
-    //this.appService.emitTableLMT(0);
-    //this.appService._dataTableViews.LMT = 0;
-    //this.appService.dataTable.unsubscribe();
-    //this.appService.tableLMT.unsubscribe(); 
+    
   }
 
 
   toggleTable(){
-    //this.appService._dataTableViews.TABLE = !this.appService._dataTableViews.TABLE;
+    this.appService._dataTableViews.TABLE = !this.appService._dataTableViews.TABLE;
   }
 
   //Filter table by date..
   filterByDate(){
-      console.log(this.filterDate);
+
       let filter = this.filterDate.from + "&t=" + this.filterDate.to;
-      // this.appService.GET_TABLE_RANGE(filter).subscribe(response => {
-      //   this.toggleTable();
-      //   this.dataTable = response;
-      // });
+      this.dataTable = [];
+      this.isLoading = true;
+
+      this.appService.GET_METHOD(this.appService.route.api.gFRTable + filter).subscribe((response: Array<any>) => {
+          this.toggleTable();
+          this.dataTable = response;
+          this.isLoading = false;
+      });
+     
   }
 
 }

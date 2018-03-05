@@ -12,6 +12,7 @@ import { EsriMapComponent } from '../esri-map/esri-map.component';
 import { FullScreenPickComponent } from '../full-screen-pick/full-screen-pick.component';
 import { QuickPickToolsComponent } from '../quick-pick-tools/quick-pick-tools.component';
 import { GoogleMapComponent } from '../google-map/google-map.component';
+import { DatatablePipe } from '../datatable.pipe';
 
 @NgModule({
   imports: [
@@ -30,9 +31,9 @@ import { GoogleMapComponent } from '../google-map/google-map.component';
     FullScreenPickComponent,
     EsriMapComponent,
     GoogleMapComponent,
-    FilterminePipe],
+    FilterminePipe, DatatablePipe],
   exports: [MasterLoadingComponent,FormsModule, TextMaskModule,NgxDatatableModule,
     TicketWorkflowComponent,FileUploaderComponent, EsriMapComponent, GoogleMapComponent,
-    FileViewerComponent,QuickPickToolsComponent ,FullScreenPickComponent, FilterminePipe]
+    FileViewerComponent,QuickPickToolsComponent ,FullScreenPickComponent, FilterminePipe, DatatablePipe]
 })
 export class SharedModule { }
