@@ -41,8 +41,10 @@ export class DashboardTicketsComponent implements OnInit {
     // 2.) Gather All Open Tickets...
     this.allLoading = true;
     this.app.POST_METHOD(this.app.route.api.ftInbox, {data: this.app.account_info.user_id}).subscribe((response:any) => {
-        if(response) {
+        if(response.success) {
           response.data.forEach(element => {
+              element.total = (element.total == "0") ? false : true;
+              element.letter_generated = (element.letter_generated == "1") ? true : false;
               element.icon = (element.icon) ? this.app.url + this.app.route.api.uImage + element.icon : "assets/avatar.png";
           });
           this.inbox = (response.success) ? response.data : [];
@@ -87,9 +89,11 @@ export class DashboardTicketsComponent implements OnInit {
       });
 
       this.timer.flatMap((i) =>  this.app.POST_METHOD(this.app.route.api.ftInbox, {data: this.app.account_info.user_id})).takeWhile(() => this.isAlive).subscribe((response:any) => {
-          if(response) {
+          if(response.success) {
            
             response.data.forEach(element => {
+                element.total = (element.total == "0") ? false : true;
+                element.letter_generated = (element.letter_generated == "1") ? true : false;
                 element.icon = (element.icon) ? this.app.url + this.app.route.api.uImage + element.icon : "assets/avatar.png";
             });
             this.inbox = (response.success) ? response.data : [];

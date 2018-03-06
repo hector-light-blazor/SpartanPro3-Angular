@@ -109,10 +109,15 @@
                 <div class="listview">
                   <div class="list" style="height: 100px;" (contextmenu)="onRightClick($event, customer)" *ngFor="let customer of inbox" routerLink="/ticket/view/{{customer.id_ticket}}">
                     <div style="float:left;">
+                        <img class="list-icon" style="border-radius: 50%;" src="assets/msg.png" width="50" height="48"  alt="Avatar Badge"> 
                       <br>
                         <span>{{customer.objectid}}</span>
                       <br>
                       <span  >{{customer.cfirst_name + ' ' +  customer.clast_name}}</span>
+                      <label class="switch-original ">
+                        <input type="checkbox" [(ngModel)]="customer.letter_generated" disabled >
+                        <span class="check"></span>
+                      </label>
                     </div>
                     <div style="float:leaft">
                       <span class='place-right' style='text-align:center;'>
@@ -120,7 +125,7 @@
                           <img style="border-radius: 50%;" [src]="customer.icon" width="50" height="50"  alt="Avatar Badge"> 
                        <br>
                        <label style="font-size:8px;">
-                       {{customer.init}}
+                        {{customer.initials}}
                        </label>
                      </span>
                     </div>
