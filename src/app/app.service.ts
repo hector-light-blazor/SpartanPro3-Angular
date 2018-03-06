@@ -16,7 +16,7 @@ export class ROUTES {
        dtFeeds: "addressticket/delComment/?id=", // delete ticket feed
        itFeeds: "addressticket/insertComments/", // insert ticket feed
        utFeeds: "addressticket/updateComment/", // update ticket feed
-       ftInbox: "addressticket/getInbox", // fetch ticket inbox
+       ftInbox: "addressticket/getInbox2", // fetch ticket inbox
        oTicket:  "addressticket/getAllPendingTicketsByOrga/?id=", // all open pending tickets by organization....
        mTicket: "addressticket/getMine/?id=", //mine tickets..
        uImage: "users/getUserImage/?pic=",  // user image.."users/getUsers/"
