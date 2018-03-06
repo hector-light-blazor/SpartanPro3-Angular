@@ -39,7 +39,9 @@
               </div>
           </div>
         </div>
-        <div class="row cells3">
+        
+        <div class="row cells2">
+         
           <div class="cell">
               <div class="window error" style="width: 400px;">
                 <div class="window-caption">
@@ -107,7 +109,7 @@
               <div class="window-content" style="height: 250px; cursor: pointer;">
                   <app-master-loading [regularLoading]="true" *ngIf="allLoading"></app-master-loading>
                 <div class="listview">
-                  <div class="list" style="height: 100px;" (contextmenu)="onRightClick($event, customer)" *ngFor="let customer of inbox" routerLink="/ticket/view/{{customer.id_ticket}}">
+                  <div class="list" [ngClass]="{'inboxR': customer.total}" style="height: 100px;" (contextmenu)="onRightClick($event, customer)" *ngFor="let customer of inbox" routerLink="/ticket/view/{{customer.id_ticket}}">
                     <div style="float:left;">
                         <img class="list-icon" style="border-radius: 50%;" src="assets/msg.png" width="50" height="48"  alt="Avatar Badge"> 
                       <br>
@@ -135,7 +137,7 @@
             </div>
           </div>
 
-          <div class="cell">
+          <!-- <div class="cell">
             <div class="window error"> 
               <div class="window-caption">
                 <span class="window-caption-icon"><i class="fa fa-windows" aria-hidden="true"></i></span>
@@ -150,7 +152,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
       
         </div>
       </div>
