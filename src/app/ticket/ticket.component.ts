@@ -388,7 +388,12 @@ export class TicketComponent implements OnInit {
           let ok:boolean = false;
           // First Route Ticket to next person in line...
           // Second Prepare ticket and finally send to save updates db server..
-          if(this.attributes.system_assign) {
+          
+          // Update need to check that if string..
+          // if string need to check that array is not blank..
+          ok = (typeof this.attributes.system_assign == "string") ?  (this.attributes.system_assign.indexOf("[]") == -1) : false;
+          
+          if(ok) {
             this.attributes['sentto'] = this._routeFigure();
             ok = true;
           }else {
