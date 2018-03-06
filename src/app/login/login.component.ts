@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import {AppService} from "../app.service";
 import {Router} from "@angular/router";
-import { Xmb } from '@angular/compiler/src/i18n/serializers/xmb';
+
 
 @Component({
   selector: 'app-login',

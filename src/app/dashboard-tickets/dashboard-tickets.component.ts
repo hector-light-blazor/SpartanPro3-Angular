@@ -138,7 +138,7 @@ export class DashboardTicketsComponent implements OnInit {
   // Start of right click
   onRightClick(event:MouseEvent, choosen){
     
-    console.log(choosen);
+    //console.log(choosen);
     this.choosen = choosen;
 
     this.righClick.nativeElement.style.display = "block";
