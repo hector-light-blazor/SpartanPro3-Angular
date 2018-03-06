@@ -13,7 +13,7 @@ import { FullScreenPickComponent } from '../full-screen-pick/full-screen-pick.co
 import { QuickPickToolsComponent } from '../quick-pick-tools/quick-pick-tools.component';
 import { GoogleMapComponent } from '../google-map/google-map.component';
 import { DatatablePipe } from '../datatable.pipe';
-
+import { UppercaseDirective } from '../uppercase.directive';
 @NgModule({
   imports: [
 
@@ -31,9 +31,9 @@ import { DatatablePipe } from '../datatable.pipe';
     FullScreenPickComponent,
     EsriMapComponent,
     GoogleMapComponent,
-    FilterminePipe, DatatablePipe],
+    FilterminePipe, DatatablePipe, UppercaseDirective],
   exports: [MasterLoadingComponent,FormsModule, TextMaskModule,NgxDatatableModule,
     TicketWorkflowComponent,FileUploaderComponent, EsriMapComponent, GoogleMapComponent,
-    FileViewerComponent,QuickPickToolsComponent ,FullScreenPickComponent, FilterminePipe, DatatablePipe]
+    FileViewerComponent,QuickPickToolsComponent ,FullScreenPickComponent, FilterminePipe, DatatablePipe, UppercaseDirective]
 })
 export class SharedModule { }

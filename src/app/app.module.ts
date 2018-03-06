@@ -9,7 +9,7 @@ import { SharedModule} from "./shared/shared.module";
 import { AppComponent } from './app.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { LoginComponent } from './login/login.component';
-import { UppercaseDirective } from './uppercase.directive';
+
 import { ArchiveTicketListComponent } from './archive-ticket-list/archive-ticket-list.component';
 import { AppService } from './app.service';
 
@@ -18,7 +18,6 @@ import { AppService } from './app.service';
     AppComponent,
     ToolbarComponent,
     LoginComponent,
-    UppercaseDirective,
     ArchiveTicketListComponent
   ],
   imports: [
