@@ -8,7 +8,7 @@ import { Component, OnInit,Input, ViewEncapsulation } from '@angular/core';
 })
 export class MasterLoadingComponent implements OnInit {
 
- 
+  @Input() title: string = "Please wait loading...";
   @Input() regularLoading: boolean = false;
   constructor() { }
 

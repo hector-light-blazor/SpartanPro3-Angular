@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
          
           this._appService.cntAppFromLogin.next({toolbar_on:true, user: response.data[0]});
          
-          this.router.navigateByUrl("ticket/dashboard");
+          // this.router.navigateByUrl("ticket/dashboard");
         }else {
            alert("Wrong information");
         }
@@ -79,7 +79,7 @@ export class LoginComponent implements OnInit {
        
         this._appService.cntAppFromLogin.next({toolbar_on:true, user: response.data[0]});
        
-        this.router.navigateByUrl("ticket/dashboard");
+        // this.router.navigateByUrl("ticket/dashboard");
       }else {alert("Wrong Information")}
 
   }, error => alert("Can't Access Server"));

@@ -91,7 +91,19 @@ export class TicketComponent implements OnInit {
 
     }
     
-   
+    //Setup the configuration for ticket where whats available to user...
+      if(this.app.account_info.config){
+        for(var x = 0; x < this.app.account_info.config.length; x++){
+        if(this.app.account_info.config[x].setting_type == "TICKET"){
+            this.customerSection = !this.app.account_info.config[x].json.customerSection;
+            this.premisesSection = !this.app.account_info.config[x].json.premisesSection;
+            this.lvSection       = !this.app.account_info.config[x].json.lvSection;
+            this.dbSection       = !this.app.account_info.config[x].json.dbSection;
+            this.gisSection      = !this.app.account_info.config[x].json.gisSection;
+            break;
+        }
+      }
+    }
 
 
       this.isConnectionsLoading = true;

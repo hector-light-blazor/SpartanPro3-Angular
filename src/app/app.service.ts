@@ -39,7 +39,9 @@ export class ROUTES {
        gMultiSearch: "addressticket/getSearchMultiple/?s=", // Search Multi this is part of quick search..
        gTCharts: "addressticket/getCharts/?o=", // Get Ticket Charts by organization number of tickets by month...
        gFTable: "addressticket/getTable/?lmt=", // Get Filter Table by limits of 1000
-       gFRTable: "addressticket/getRange/?f=" // Get Table by Range for address ticket..
+       gFRTable: "addressticket/getRange/?f=", // Get Table by Range for address ticket..
+       gTConfig: "config/getTicketSettings", // Get Ticket Settings Configuration..
+       gUConfig: "users/getFullConfig/?id=" // Get Users Config...
     }
    }
 }
@@ -60,6 +62,8 @@ export class AppService {
      deparment_id: "",
      user_id: null
   }
+
+  
 
   _dataTableViews: TICKET_TABLE_VIEWS = {TABLE: false};
   _toolbarBtns: TOOLBAR_BUTTONS = {TICKET_TABLE: false};
@@ -310,6 +314,8 @@ interface API_ROUTES {
    gTCharts?: string;
    gFTable?: string;
    gFRTable?: string;
+   gTConfig?: string;
+   gUConfig?: string;
 }
 
 interface LOGIN_INFO {
@@ -322,7 +328,8 @@ interface LOGIN_INFO {
   password?: "";
   role_id?: string;
   symbol?: string;
-  user_id?: string
+  user_id?: string;
+  config?: any;
 }
 
 interface MSG_CODES {

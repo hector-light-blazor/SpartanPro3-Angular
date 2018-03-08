@@ -13,7 +13,7 @@
                       <li class="special ribbed-emerald" (click)="toogleCharm()" style="cursor: pointer"><a>Online</a></li>
                       <li *ngIf="_toolSettings.SECTIONS.TICKET.onoff" class="active"><a href="#tab_tickets">Ticket</a></li>
                       <li *ngIf="_toolSettings.SECTIONS.SUBDIVISION.onoff" class=""><a href="#tab_subdivision">Subdivision</a></li>
-                      <li><a>NRF's</a></li>
+                      <li><a href="#tab_nrefs">NRF's</a></li>
                       <li *ngIf="_toolSettings.SECTIONS.MAP.onoff"  class=""><a href="#tab_map">Map</a></li>
                       <li *ngIf="_toolSettings.SECTIONS.SETTINGS.onoff" class=""><a href="#tab_settings">Settings</a></li>
                       
@@ -224,6 +224,9 @@
                               </div>
                               <div class="tab-group-caption">VIEW</div>
                           </div>
+                      </div>
+                      <div id="tab_nrfs">
+
                       </div>
   
                       <div  class="tab-panel" id="tab_map" style="display: none;">

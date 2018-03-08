@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
 import {AppService} from "./app.service";
 import { Observable } from 'rxjs';
 import "rxjs/add/operator/takeWhile";
@@ -13,20 +14,91 @@ export class AppComponent {
   toolBarOnOff: boolean = false;
   title = 'app';
   isAlive: boolean = true;
+  isLoading: boolean = false;
+  msg: string = "Please wait... Setting up Spartan Pro";
   timer = Observable.timer(0, 6000);
   account_info: any;
   ticketFirst: boolean = true;
   ticketCount: number = 0;
-  constructor(private appService: AppService, private notify: NativeNotificationService) {
+
+  constructor(private router: Router, private appService: AppService, private notify: NativeNotificationService) {
+
+    let _self = this;
+
     this.appService.cntAppFromLogin.takeWhile(() => this.isAlive).subscribe(info => {
-        this.toolBarOnOff = info.toolbar_on;
+        this.isLoading = true;
+       
         this.account_info = info.user;
         this.appService.account_info = this.account_info;
 
+        // Get Inbox Information..
+        this.timer.flatMap((i) =>  this.appService.POST_METHOD(this.appService.route.api.ftInbox, {data: this.appService.account_info.user_id})).takeWhile(() => this.isAlive).subscribe((response:any) => {
+          if(response.success) {
+            if(this.ticketFirst) {
+              this.ticketCount = response.data.length;
+              this.ticketFirst = false;
+            }else {
+              let count = response.data.length;
+              if(count > this.ticketCount) {
+                  this.ticketNotify();
+                  this.ticketCount = count;
+              }
+            }
+
+            
+          }
+      });
         // this.appService.GET_METHOD(this.appService.route.api.bRouting + this.appService.account_info.organization_id).subscribe(response => {
         //    console.log(response);
         // });
         //console.log(this.account_info);
+
+
+
+      // this.appService.GET_METHOD(this.appService.route.api.gTConfig).subscribe(response => {
+      //    console.log(response);
+      // })
+      this.appService.GET_METHOD(this.appService.route.api.gUConfig + this.appService.account_info.user_id).subscribe((response:any) => {
+       
+        if(response){
+         
+          console.log(response);
+              for(var x = 0; x < response.length; x++){
+                response[x].json = JSON.parse(response[x].json);
+              }
+            this.appService.account_info.config = response;
+            
+            setTimeout(() => {
+               _self.toolBarOnOff = info.toolbar_on;
+                _self.isLoading = false;
+                _self.router.navigateByUrl("ticket/dashboard");
+            }, 400);
+              
+
+              console.log(response);
+            //     if(response[x].setting_type == "TOOLBAR"){
+            //       // console.log(response[x]);
+            //         this._toolSettings = response[x].json;
+            //         if(!this._toolSettings.SECTIONS.TICKET.QUICKSEARCH.onoff){
+            //             this.appService._toolbarBtns.QUICK_SEARCH = false;
+            //           }
+            //          console.log(this._toolSettings);
+            //           if(this._toolSettings.SECTIONS.SETTINGS.USER.onoff) {
+            //             console.log("ADMIN")
+            //             this.appService.admin = true;
+            //           }else {
+            //             this.appService.admin = false;
+            //           }
+                    
+            //     }else if(response[x].setting_type == "HOMEVIEW") {
+            //         if(response[x].name == "QUICKPICK") {
+            //           this.router.navigateByUrl("/home/mapView");
+            //         }
+            //     }
+            // }
+
+        } 
+    });
     });
 
     //<<Lets Load the ESRI OBJECTS SO THE WHOLE DOCUMENT CAN USE THE OBJECTS>>>>
@@ -46,23 +118,7 @@ export class AppComponent {
        this.appService.organizations = response;
     });
 
-    // Get Inbox Information..
-    this.timer.flatMap((i) =>  this.appService.POST_METHOD(this.appService.route.api.ftInbox, {data: this.appService.account_info.user_id})).takeWhile(() => this.isAlive).subscribe((response:any) => {
-      if(response.success) {
-        if(this.ticketFirst) {
-          this.ticketCount = response.data.length;
-          this.ticketFirst = false;
-        }else {
-           let count = response.data.length;
-           if(count > this.ticketCount) {
-              this.ticketNotify();
-              this.ticketCount = count;
-           }
-        }
-
-        
-      }
-  });
+    
 
   }
 
