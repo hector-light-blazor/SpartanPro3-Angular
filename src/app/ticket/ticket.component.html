@@ -32,34 +32,35 @@
 <div *ngIf="showRoutes" >
   <!-- <app-routes [routing]="attributes.system_assign" [users]="routes"></app-routes> -->
 </div>
-<div [hidden]="showAttach || showViewAttach || showViewRoutes || showRoutes" class="place-left" style="width: 80%;height:50px;">
-  <div style="float:left;cursor: pointer;">
-      <img (click)="_openStaffProfile()" [src]="profileImage"  width="40" height="40" alt="">
-  </div>
-  <div style="float:left; width: 20px;height: 5px;">
 
-  </div>
-  <div style="float: left;">
-       <h3  style="color:white">Ticket Number: {{attributes.objectid}}</h3>
-  </div>
- 
-  <!--{{::ticket.attributes.objectid}}-->
-</div>
-<div (mouseenter)="showBack()" (mouseout)="showFront()" [hidden]="showAttach || showViewAttach || showViewRoutes || showRoutes" id="card"  class="place-left bg-red fg-white" style="cursor:pointer; width: 10%; height:50px;text-align:center;padding: 14px;">
-    <span *ngIf="iconNumberOfDays"  class="mif-spinner5 mif-ani-spin"></span>
-    <div *ngIf="front"  >
-        {{numberOfDays}} Days
-    </div>
-    <div *ngIf="!front"  >
-        {{init_date}}
-    </div>
-</div>
-<div [hidden]="showAttach || showViewAttach || showViewRoutes || showRoutes" class="place-left bg-blue fg-white" style="cursor:pointer; width: 10%; height:50px;text-align:center;padding:14px;">
-  <span>{{due_date}}</span>
-</div>
-<br>
-<br>
 <div [hidden]="showAttach || showViewAttach || showViewRoutes || showRoutes" class="tabcontrol" data-role="tabcontrol">
+        <div [hidden]="showAttach || showViewAttach || showViewRoutes || showRoutes" class="place-left" style="width: 80%;height:50px;">
+                <div style="float:left;cursor: pointer;">
+                    <img (click)="_openStaffProfile()" [src]="profileImage"  width="40" height="40" alt="">
+                </div>
+                <div style="float:left; width: 20px;height: 5px;">
+              
+                </div>
+                <div style="float: left;">
+                     <h3  style="color:white">Ticket Number: {{attributes.objectid}}</h3>
+                </div>
+               
+                <!--{{::ticket.attributes.objectid}}-->
+              </div>
+              <div (mouseenter)="showBack()" (mouseout)="showFront()" [hidden]="showAttach || showViewAttach || showViewRoutes || showRoutes" id="card"  class="place-left bg-red fg-white" style="cursor:pointer; width: 10%; height:50px;text-align:center;padding: 14px;">
+                  <span *ngIf="iconNumberOfDays"  class="mif-spinner5 mif-ani-spin"></span>
+                  <div *ngIf="front"  >
+                      {{numberOfDays}} Days
+                  </div>
+                  <div *ngIf="!front"  >
+                      {{init_date}}
+                  </div>
+              </div>
+              <div [hidden]="showAttach || showViewAttach || showViewRoutes || showRoutes" class="place-left bg-blue fg-white" style="cursor:pointer; width: 10%; height:50px;text-align:center;padding:14px;">
+                <span>{{due_date}}</span>
+              </div>
+              <br>
+              <br>
 <ul class="tabs">
   <li><a href="#customerData">CUSTOMER DATA</a></li>
   <li><a href="#premisesData">PREMISES DATA</a></li>
