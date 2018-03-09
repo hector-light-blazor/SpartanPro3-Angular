@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit {
   username: string = "";
   password: string = "";
   remeberMe: boolean = false;
+  display: boolean = true;
+  
   cookie: Array<string> = [];
   constructor(private _appService: AppService, private router: Router) { 
 
@@ -63,7 +65,7 @@ export class LoginComponent implements OnInit {
       if(response.success) {
          
           this._appService.cntAppFromLogin.next({toolbar_on:true, user: response.data[0]});
-         
+          this.display = false;
           // this.router.navigateByUrl("ticket/dashboard");
         }else {
            alert("Wrong information");
@@ -78,7 +80,7 @@ export class LoginComponent implements OnInit {
       if(response.success) {
        
         this._appService.cntAppFromLogin.next({toolbar_on:true, user: response.data[0]});
-       
+        this.display = false;
         // this.router.navigateByUrl("ticket/dashboard");
       }else {alert("Wrong Information")}
 
