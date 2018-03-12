@@ -409,7 +409,9 @@ export class TicketComponent implements OnInit {
           
           // Update need to check that if string..
           // if string need to check that array is not blank..
-          ok = (typeof this.attributes.system_assign == "string") ?  (this.attributes.system_assign.indexOf("[]") == -1) : false;
+          // Check the object making sure array is greater than zero..
+          // Fix update 3-12-18
+          ok = (typeof this.attributes.system_assign == "string") ?  (this.attributes.system_assign.indexOf("[]") == -1) : ((this.attributes.system_assign.a.length > 0) ? true : false);
           
           if(ok) {
             this.attributes['sentto'] = this._routeFigure();
