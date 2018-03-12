@@ -85,6 +85,8 @@ export class TicketComponent implements OnInit {
       range_high: 0,
       range_low: 0,
       esn: 0,
+      address_by: -1,
+      address_issued_by: -1,
       plack_generated: false,
       letter_generated: false,
       address_issued: false
@@ -1116,7 +1118,7 @@ interface Ticket{
   letter_generated?: any;
   plack_generated?: any;
   address_issued_date?: string;
-  address_issued_by?: string;
+  address_issued_by?: any;
   lat?: string;
   longy?: string;
   range_low?: number;
