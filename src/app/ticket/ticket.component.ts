@@ -174,7 +174,7 @@ export class TicketComponent implements OnInit {
            });
          }else {
 
-          
+            console.log(this.attributes);
            this.generateTicketNumber();
          }
       })
@@ -233,7 +233,7 @@ export class TicketComponent implements OnInit {
     // TODO: ASK API TO CREATE TICKET NUMBER..
     this.app.GET_METHOD(this.app.route.api.tNumber).subscribe((response:any) => {
        
-     
+      console.log(this.attributes);
       if(response.success){
           let today = new Date();
          let dd = (today.getDate() < 10) ? "0" + today.getDate() : today.getDate();
@@ -347,7 +347,11 @@ export class TicketComponent implements OnInit {
   fetchUsers() {
     this.app.GET_METHOD(this.app.route.api.fUsers).subscribe((response:any) => {
         
+        response.data.forEach(element => {
+            element.user_id = parseInt(element.user_id);
+        });
         this.users = response.data;
+        console.log(this.users);
     });
   }
 
