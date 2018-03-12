@@ -145,7 +145,7 @@ export class FileUploaderComponent {
                         jQuery.Notify({
                         caption: 'Upload',
                         content: "New File Attach",
-                        type: this.app.msg_codes.alert
+                        type: this.app.msg_codes.success
                     });
                     }
                     
