@@ -45,6 +45,11 @@ const routes: Routes = [
   {
     path: 'ticket/quickSearch/:search', 
     loadChildren: './quick-search/quick-search.module#QuickSearchModule'
+  },
+
+  {
+    path: 'nrf',
+    loadChildren: './nrf/nrf.module#NrfModule'
   }
 
 ];

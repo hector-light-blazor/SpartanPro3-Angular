@@ -1,0 +1,46 @@
+<div class="window"  style="position: absolute;top: 8px;left:4px; z-index:4;width: 99%;height:auto;">
+  <div class="window-caption">
+    <span class="window-caption-icon"><i class="fa fa-paperclip" aria-hidden="true"></i></span>
+    <span class="window-caption-title">File Upload</span>
+    <span class="pull-right">
+        <button [routerLink]="['/nrf/dashboard']" class="button btnSize">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+        </button>
+      </span>
+  </div>
+  <div class="window-content" style="overflow:auto;" >
+    <app-master-loading [regularLoading]="true" *ngIf="isLoading"></app-master-loading>
+    <div class="container" >
+        <br>
+        <label class="uploader" ondragover="return false;"
+        [class.loaded]="loaded" 
+        [style.outlineColor]="dragging ? activeColor : baseColor"
+        (dragenter)="handleDragEnter()"
+        (dragleave)="handleDragLeave()"
+        (drop)="handleDrop($event)">
+
+        <i *ngIf="!loaded" class="mif-upload"  style="font-size: 4.8rem;"
+            [style.color]="dragging 
+                ? ((imageSrc.length > 0) ? overlayColor : activeColor)
+                : ((imageSrc.length > 0) ? overlayColor : baseColor)"></i>
+        <i *ngIf="fileLoaded && !showLoader" class="mif-file-text" style="font-size: 6.8rem;" [style.color]="dragging 
+                ? ((imageSrc.length > 0) ? overlayColor : activeColor)
+                : ((imageSrc.length > 0) ? overlayColor : baseColor)"></i>
+        <img *ngIf="!showLoader"
+            [src]="imageSrc" 
+            (load)="handleImageLoad()" 
+            [class.loaded]="imageLoaded"/>
+    
+        <input type="file" name="file" accept="{{acceptInput}}"
+            (change)="handleInputChange($event)">
+        <div *ngIf="showLoader" data-role="preloader" data-type="square" data-style="color" style="margin:0 auto;" class="preloader-square color-style">
+        <div class="square"></div><div class="square"></div><div class="square"></div><div class="square"></div></div>   
+      </label>
+      <h1>{{fileName}}</h1>
+      <button *ngIf="loaded" (click)="_removeAttachment()" class="button danger">Remove</button>
+      <button *ngIf="loaded" (click)="_uploadAttachment()" class="button primary">Upload</button>
+    </div>
+    
+  </div>
+</div>
+

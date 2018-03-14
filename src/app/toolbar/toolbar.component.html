@@ -13,7 +13,7 @@
                       <li class="special ribbed-emerald" (click)="toogleCharm()" style="cursor: pointer"><a>Online</a></li>
                       <li *ngIf="_toolSettings.SECTIONS.TICKET.onoff" class="active"><a href="#tab_tickets">Ticket</a></li>
                       <li *ngIf="_toolSettings.SECTIONS.SUBDIVISION.onoff" class=""><a href="#tab_subdivision">Subdivision</a></li>
-                      <li><a href="#tab_nrefs">NRF's</a></li>
+                      <li><a href="#tab_nrfs">NRF's</a></li>
                       <li *ngIf="_toolSettings.SECTIONS.MAP.onoff"  class=""><a href="#tab_map">Map</a></li>
                       <li *ngIf="_toolSettings.SECTIONS.SETTINGS.onoff" class=""><a href="#tab_settings">Settings</a></li>
                       
@@ -225,8 +225,35 @@
                               <div class="tab-group-caption">VIEW</div>
                           </div>
                       </div>
-                      <div id="tab_nrfs">
-
+                      <div class="tab-panel" id="tab_nrfs">
+                        <div  class="tab-panel-group">
+                            <div class="tab-group-content">
+                                <a  [routerLink]="['nrf/dashboard']" class="fluent-big-button">
+                                    <!--<span class="icon"><i class="fa fa-tachometer" aria-hidden="true"></i></span>-->
+                                    <img  src="assets/dashboard.png"  alt="Dashboard Toolbar">
+                                    Dashboard
+                                </a>
+                            </div>
+                            <div class="tab-group-caption">Display</div>
+                        </div>
+                        <div  class="tab-panel-group">
+                            <div class="tab-group-content">
+                                    <div class="tab-content-segment">
+                                            <a  [routerLink]="['nrf/upload']" class="fluent-big-button">
+                                           
+                                                <i class="fa fa-table fa-6" aria-hidden="true"></i>
+                                                SpreadSheet
+                                            </a>
+                                    </div>
+                                    <div class="tab-content-segment">
+                                                <a  [routerLink]="['nrf/assign']" class="fluent-big-button">
+                                   
+                                                    <i class="fa fa-table fa-6" aria-hidden="true"></i>
+                                                    Users
+                                                </a>
+                                        </div>
+                            <div class="tab-group-caption">Management</div>
+                        </div>
                       </div>
   
                       <div  class="tab-panel" id="tab_map" style="display: none;">
