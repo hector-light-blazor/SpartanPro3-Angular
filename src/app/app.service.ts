@@ -41,7 +41,8 @@ export class ROUTES {
        gFTable: "addressticket/getTable/?lmt=", // Get Filter Table by limits of 1000
        gFRTable: "addressticket/getRange/?f=", // Get Table by Range for address ticket..
        gTConfig: "config/getTicketSettings", // Get Ticket Settings Configuration..
-       gUConfig: "users/getFullConfig/?id=" // Get Users Config...
+       gUConfig: "users/getFullConfig/?id=", // Get Users Config...
+       gNRF: "nrf/getNRF/" // GET ALL NRF RECORDS...
     }
    }
 }
@@ -316,6 +317,7 @@ interface API_ROUTES {
    gFRTable?: string;
    gTConfig?: string;
    gUConfig?: string;
+   gNRF?: string;
 }
 
 interface LOGIN_INFO {

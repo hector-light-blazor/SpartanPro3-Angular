@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { UploadComponent } from './upload/upload.component';
 import {SharedModule} from "../shared/shared.module";
 import { AssignComponent } from './assign/assign.component';
+import { FormComponent } from './form/form.component';
 
 @NgModule({
   imports: [
@@ -13,6 +14,6 @@ import { AssignComponent } from './assign/assign.component';
     NrfRoutingModule,
     SharedModule
   ],
-  declarations: [DashboardComponent, UploadComponent, AssignComponent]
+  declarations: [DashboardComponent, UploadComponent, AssignComponent, FormComponent]
 })
 export class NrfModule { }

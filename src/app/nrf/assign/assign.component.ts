@@ -8,9 +8,26 @@ import {AppService} from "../../app.service";
 })
 export class AssignComponent implements OnInit {
 
-  constructor(private app:AppService) { }
+  nrfs:any = [];
+  users: any =  [];
+  constructor(private app: AppService) { 
+
+    console.log(this.app.url + this.app.route.api.gNRF);
+
+   
+
+  }
 
   ngOnInit() {
+    this.users = this.app.users;
+    this.app.GET_METHOD(this.app.route.api.gNRF).subscribe(response => {
+       console.log(response);
+       this.nrfs = response;
+    });
+  }
+
+  onChangeAssignee(selected) {
+      console.log(selected);
   }
 
 }
