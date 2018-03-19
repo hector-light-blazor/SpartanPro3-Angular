@@ -7,27 +7,51 @@
       <span class="btn-close"></span>
   </div>
   <div class="window-content" style="height: 400px">
-    <form >
-      <div class="input-control text full-size">
-        <input type="text">
+      <div class="tabcontrol" data-role="tabcontrol">
+          <ul class="tabs">
+              <li><a href="#info" >Info</a></li>
+              <li><a href="#notes" >Notes</a></li>
+          </ul>
+          <div class="frames">
+              <div class="frame ribbed-white" id="info">
+                  <form >
+                      <label >PSAP Name</label>
+                    <div class="input-control text full-size">
+                      
+                      <input type="text">
+                    </div>
+                    <label >Host PSAP Name</label>
+                    <div class="input-control password full-size">
+                      
+                      <input type="text">
+                    </div>
+                    <label >Date</label>
+                    <div class="input-control text full-size">
+                      <input type="text" >
+                    </div>
+                    <label >Time</label>
+                    <div class="input-control text full-size">
+                      <input type="text" >
+                    </div>
+                    <label >Call One</label>
+                    <div class="input-control text full-size">
+                      <input type="text" >
+                    </div>
+                    <label >Call Two</label>
+                    <div class="input-control text full-size">
+                      <input type="text" >
+                    </div>
+                    <label >Call Three</label>
+                    <div class="input-control text full-size">
+                      <input type="text" >
+                    </div>
+                  </form>
+              </div>
+              <div class="frame ribbed-white" id="notes">
+                
+              </div>
+          </div>
       </div>
-      <!-- input[type=password] -->
-      <div class="input-control password full-size">
-        <input type="password">
-      </div>
-      <!-- input with placeholder -->
-      <div class="input-control text full-size">
-        <input type="text" placeholder="Input you text here...">
-      </div>
-      <!-- readonly input -->
-      <div class="input-control text full-size">
-        <input type="text" readonly>
-      </div>
-      <!-- disabled input -->
-      <div class="input-control text full-size">
-        <input type="text" disabled>
-      </div>
-    </form>
   </div>
 </div>
 
