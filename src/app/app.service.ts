@@ -42,7 +42,9 @@ export class ROUTES {
        gFRTable: "addressticket/getRange/?f=", // Get Table by Range for address ticket..
        gTConfig: "config/getTicketSettings", // Get Ticket Settings Configuration..
        gUConfig: "users/getFullConfig/?id=", // Get Users Config...
-       gNRF: "nrf/getNRF/" // GET ALL NRF RECORDS...
+       gNRF: "nrf/getNRF/", // GET ALL NRF RECORDS...
+       aNRF: "nrf/assignUser/", // Assign User NRF records.
+       emNRF: "nrf/getNRFOnEm/" // GET NRF on Employee records..
     }
    }
 }
@@ -318,6 +320,8 @@ interface API_ROUTES {
    gTConfig?: string;
    gUConfig?: string;
    gNRF?: string;
+   aNRF?: string;
+   emNRF?: string;
 }
 
 interface LOGIN_INFO {

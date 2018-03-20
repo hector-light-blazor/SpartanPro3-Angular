@@ -1,7 +1,7 @@
 <div class="window">
   <div class="window-caption">
       <span class="window-caption-icon"><span class="mif-windows"></span></span>
-      <span class="window-caption-title">NRF Form</span>
+      <span class="window-caption-title">NRF Form - {{name}}</span>
       <span class="btn-min"></span>
       <span class="btn-max"></span>
       <span class="btn-close"></span>
@@ -48,7 +48,21 @@
                   </form>
               </div>
               <div class="frame ribbed-white" id="notes">
-                
+                 <div id="chat" >
+                    <div id="body" style="height: 300px;">
+                      <ul>
+                        <li></li>
+                      </ul>
+                    </div>
+                    <div id="bottom" style="bottom: 0px;">
+                        <div class="input-control text full-size" data-role="input">
+                            <input type="text">
+                            <button class="button">
+                                <i class="fa fa-comments"></i>
+                            </button>
+                        </div>
+                    </div>
+                 </div>
               </div>
           </div>
       </div>

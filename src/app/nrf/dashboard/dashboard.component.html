@@ -1,3 +1,32 @@
-<p>
-  NRF dashboard works!
-</p>
+<div class="window">
+    <div class="window-caption">
+        <span class="window-caption-icon"><span class="mif-windows"></span></span>
+        <span class="window-caption-title">All NRFs - {{nrfs.length}}</span>
+        <span class="btn-min"></span>
+        <span class="btn-max"></span>
+        <span class="btn-close"></span>
+    </div>
+    <div class="window-content" style="height: 400px">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>full tn</th>
+            <th>bid date</th>
+            <th>HOST name</th>
+            <th>PSAP Name</th>
+          </tr>
+          
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of nrfs">
+            <td>{{item.full_tn}}</td>
+            <td>{{item.bid_date}}</td>
+            <td>{{item.psap}}</td>
+            <td>{{item.psap_name}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  

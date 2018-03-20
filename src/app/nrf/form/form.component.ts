@@ -8,7 +8,7 @@ import { Component,Input, Output, EventEmitter, OnInit } from '@angular/core';
 export class FormComponent implements OnInit {
 
   @Input() attributes: any = null;
-  
+  name: string = 'None';
   constructor() { }
 
   ngOnInit() {

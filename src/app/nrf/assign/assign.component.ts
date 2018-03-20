@@ -23,6 +23,10 @@ export class AssignComponent implements OnInit {
 
   onChangeAssignee(selected) {
       console.log(selected);
+
+      this.app.POST_METHOD(this.app.route.api.aNRF, {a: selected.assignee, id: selected.nref_id}).subscribe((response: any) => {
+          console.log(response);
+      });
   }
 
 }
