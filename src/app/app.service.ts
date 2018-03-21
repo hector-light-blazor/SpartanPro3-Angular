@@ -44,7 +44,8 @@ export class ROUTES {
        gUConfig: "users/getFullConfig/?id=", // Get Users Config...
        gNRF: "nrf/getNRF/", // GET ALL NRF RECORDS...
        aNRF: "nrf/assignUser/", // Assign User NRF records.
-       emNRF: "nrf/getNRFOnEm/" // GET NRF on Employee records..
+       emNRF: "nrf/getNRFOnEm/?id=",
+       tsNRF: "nrf/timeStamp/" // add time stamp nrf records..
     }
    }
 }
@@ -322,6 +323,7 @@ interface API_ROUTES {
    gNRF?: string;
    aNRF?: string;
    emNRF?: string;
+   tsNRF?: string;
 }
 
 interface LOGIN_INFO {

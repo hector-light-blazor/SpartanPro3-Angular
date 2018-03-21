@@ -1,4 +1,5 @@
-<div class="window">
+<app-form *ngIf="openForm" (close)="openForm=false;" [attributes]="selected"></app-form>
+<div *ngIf="!openForm" class="window">
     <div class="window-caption">
         <span class="window-caption-icon"><span class="mif-windows"></span></span>
         <span class="window-caption-title">All NRFs - {{nrfs.length}}</span>
@@ -10,8 +11,9 @@
       <table class="table">
         <thead>
           <tr>
-            <th>full tn</th>
-            <th>bid date</th>
+            <th></th>
+            <th>Full TN</th>
+            <th>Bid date</th>
             <th>HOST name</th>
             <th>PSAP Name</th>
           </tr>
@@ -19,7 +21,12 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of nrfs">
-            <td>{{item.full_tn}}</td>
+            <td>
+              <button class="button rounded" (click)="onOpenForm(item)" >Open Form</button>
+            </td>
+            <td>
+            {{item.full_tn}}
+            </td>
             <td>{{item.bid_date}}</td>
             <td>{{item.psap}}</td>
             <td>{{item.psap_name}}</td>

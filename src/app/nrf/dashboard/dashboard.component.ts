@@ -8,16 +8,25 @@ import { AppService } from '../../app.service';
 })
 export class DashboardComponent implements OnInit {
   nrfs: any= [];
+  openForm: boolean = false;
+  selected: any = null;
   constructor(private app: AppService) {
 
 
    }
 
   ngOnInit() {
-    
+    if(!this.app.account_info.user_id) return;
     this.app.GET_METHOD(this.app.route.api.emNRF + this.app.account_info.user_id).subscribe((response: any) => {
         console.log(response);
+        this.nrfs = response;
     });
+  }
+
+  onOpenForm(selected) {
+    this.openForm = true;
+    this.selected = selected;
+
   }
 
 }

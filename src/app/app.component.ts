@@ -62,7 +62,7 @@ export class AppComponent {
        
         if(response){
          
-          console.log(response);
+         // console.log(response);
               for(var x = 0; x < response.length; x++){
                 response[x].json = JSON.parse(response[x].json);
               }
@@ -75,7 +75,7 @@ export class AppComponent {
             }, 400);
               
 
-              console.log(response);
+             // console.log(response);
             //     if(response[x].setting_type == "TOOLBAR"){
             //       // console.log(response[x]);
             //         this._toolSettings = response[x].json;
