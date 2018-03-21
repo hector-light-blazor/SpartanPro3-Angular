@@ -17,16 +17,20 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     if(!this.app.account_info.user_id) return;
-    this.app.GET_METHOD(this.app.route.api.emNRF + this.app.account_info.user_id).subscribe((response: any) => {
-        console.log(response);
-        this.nrfs = response;
-    });
+    this.onRefresh();
   }
 
   onOpenForm(selected) {
     this.openForm = true;
     this.selected = selected;
 
+  }
+
+  onRefresh() {
+    this.app.GET_METHOD(this.app.route.api.emNRF + this.app.account_info.user_id).subscribe((response: any) => {
+      
+      this.nrfs = response;
+    });
   }
 
 }

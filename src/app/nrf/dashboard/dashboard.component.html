@@ -1,4 +1,4 @@
-<app-form *ngIf="openForm" (close)="openForm=false;" [attributes]="selected"></app-form>
+<app-form *ngIf="openForm" (close)="openForm=false;onRefresh();" [attributes]="selected"></app-form>
 <div *ngIf="!openForm" class="window">
     <div class="window-caption">
         <span class="window-caption-icon"><span class="mif-windows"></span></span>

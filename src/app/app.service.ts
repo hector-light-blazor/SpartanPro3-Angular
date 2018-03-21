@@ -45,7 +45,10 @@ export class ROUTES {
        gNRF: "nrf/getNRF/", // GET ALL NRF RECORDS...
        aNRF: "nrf/assignUser/", // Assign User NRF records.
        emNRF: "nrf/getNRFOnEm/?id=",
-       tsNRF: "nrf/timeStamp/" // add time stamp nrf records..
+       tsNRF: "nrf/timeStamp/", // add time stamp nrf records..
+       cNRF: "nrf/closeNRF/", // Close NRF Form..
+       gcNRF: "nrf/getComments/?id=", // Get Comments NRF..
+       scNRF: "nrf/saveComment/" // Save Comment NRF...
     }
    }
 }
@@ -324,6 +327,9 @@ interface API_ROUTES {
    aNRF?: string;
    emNRF?: string;
    tsNRF?: string;
+   cNRF?: string;
+   gcNRF?: string;
+   scNRF?: string;
 }
 
 interface LOGIN_INFO {

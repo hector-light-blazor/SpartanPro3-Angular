@@ -13,7 +13,10 @@
           </ul>
           <div class="frames">
               <div class="frame ribbed-white" id="info">
-                  
+                      <label >TN Full</label>
+                      <div class="input-control text full-size">
+                        <input [(ngModel)]="attributes.full_tn" disabled type="text">
+                      </div>
                       <label >PSAP Name</label>
                     <div class="input-control text full-size">
                       
@@ -47,7 +50,7 @@
                     <label >STATUS</label>
                     <div class="input-control select">
                       
-                        <select [(ngModel)]="attributes.status">
+                        <select (change)="onChange()" [(ngModel)]="attributes.status">
                             <option>OPEN</option>
                             <option>CLOSED</option>
                         </select>
@@ -56,19 +59,20 @@
               </div>
               <div class="frame ribbed-white" id="notes">
                  <div id="chat" >
-                    <div id="body" style="height: 220px;">
+                    <div id="body" style="height: 240px;overflow: auto;">
                       <ul>
-                        <li></li>
+                        <li *ngFor="let item of comments"> {{item.notes}}</li>
                       </ul>
                     </div>
-                    <div id="bottom" style="bottom: 0px;">
-                        <div class="input-control text full-size" data-role="input">
-                            <input type="text">
-                            <button class="button">
-                                <i class="fa fa-comments"></i>
-                            </button>
-                        </div>
-                    </div>
+                    <div id="bottom" style="height: 50px; bottom: 0px;">
+                      <div class="input-control text full-size" data-role="input">
+                          <input (keyup.enter)="sendComments()" [(ngModel)]="comment" type="text">
+                          <button (click)="sendComments()" class="button">
+                              <i class="fa fa-comments"></i>
+                          </button>
+                      </div>
+                  </div>
+                    
                  </div>
               </div>
           </div>

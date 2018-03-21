@@ -11,6 +11,8 @@ export class FormComponent implements OnInit {
   @Input() attributes: any = null;
   @Output() close = new EventEmitter();
   name: string = 'None';
+  comment: string = "";
+  comments: any = [];
   constructor(private app:  AppService) { }
 
   ngOnInit() {
@@ -25,6 +27,8 @@ export class FormComponent implements OnInit {
     if(this.attributes.status != "CLOSED") {
       this.attributes.status = "OPEN";
     }
+
+    this.getComments();
   }
 
   onClose() {
@@ -62,6 +66,30 @@ export class FormComponent implements OnInit {
            
           })
       }
+
+    }
+
+    onChange() {
+
+     // console.log(this.attributes);
+
+      this.app.POST_METHOD(this.app.route.api.cNRF, {id: this.attributes.nref_id, status: this.attributes.status}).subscribe(response => {
+          //console.log(response);
+          this.onClose();
+      });
+    }
+
+    getComments() {
+       this.app.GET_METHOD(this.app.route.api.gcNRF + this.attributes.nref_id).subscribe(response => {
+          this.comments = response;
+       });
+    }
+    sendComments() {
+
+        this.app.POST_METHOD(this.app.route.api.scNRF, {id: this.attributes.nref_id, comment: this.comment}).subscribe(response => {
+            this.getComments();
+            this.comment = "";
+        });
 
     }
 

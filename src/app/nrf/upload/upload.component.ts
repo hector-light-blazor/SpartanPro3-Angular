@@ -112,12 +112,8 @@ export class UploadComponent implements OnInit {
      
      this.isLoading  = this.showLoader = true;
      let _self = this;
-     if (this.attachTicket)
-     { 
-       if(!this.objectid) {
-         console.log("NO TICKET NUMBER AVAILABLE...")
-         return;
-       }
+ 
+       
 
          let formData:FormData = new FormData();
          formData.append("images[]", this.file, this.fileName);
@@ -170,58 +166,6 @@ export class UploadComponent implements OnInit {
        xhr.open('POST', "https://gis.lrgvdc911.org/excel/", true);
 
      xhr.send(formData);
-     }else { // <<<<<ELSE HANDLES THE GIS PORTION FOR UPLOADING DATA>>>>>
-          let formData:FormData = new FormData();
-          let _self = this;
-          formData.append("images[]", this.file, this.fileName);
-         
-
-         let xhr:XMLHttpRequest = new XMLHttpRequest();
-         xhr.onreadystatechange = () => {
-             if (xhr.readyState === 4) {
-
-
-                 if (xhr.status === 200) {
-                     
-                     var json = JSON.parse(xhr.responseText);
-                      this.showLoader  = false;
-                     if(!json.success){
-
-                        
-                         jQuery.Notify({
-                         caption: 'Error Uploading',
-                         content: "Can't Upload " + xhr.responseText,
-                         type: this.app.msg_codes.alert
-                     });
-                     }else{
-
-                          this.changeConfig.emit(true);
-                         this.imageSrc = "";
-                         this.file = {};
-                         this.fileLoaded = this.loaded = false;
-                         this.fileName = "Waiting...";
-                         jQuery.Notify({
-                         caption: 'Upload',
-                         content: "New File Attach",
-                         type: this.app.msg_codes.success
-                     });
-                     }
-                     
-                 } else {
-                     jQuery.Notify({
-                         caption: 'Error Uploading',
-                         content: "Can't Upload " + xhr.responseText,
-                         type: this.app.msg_codes.alert
-                     });
-                     
-                 }
-             }
-             
-     };
-     xhr.open('POST', this.app.url + this.app.route.api.gUpload, true);
-
-     xhr.send(formData);
-     }
      
  }
 
