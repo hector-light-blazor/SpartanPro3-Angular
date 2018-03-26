@@ -1,0 +1,52 @@
+<div class="window">
+    <div class="window-caption">
+        <span class="window-caption-icon"><span class="mif-windows"></span></span>
+        <span class="window-caption-title">Export Data - {{nrfs.length}}</span>
+        <span class="pull-right">
+            <button (click)="showDate = !showDate" class="button btnSize">
+              <i class="fa fa-filter"></i>
+            </button>
+            <button (click)="onDownloadCurrent()" class="button btnSize">
+              <i class="fa fa-file-excel-o"></i>
+            </button>
+          </span>
+    </div>
+    <div class="window-content" style="height: 400px">
+      <div *ngIf="showDate">
+        <input type="date" [(ngModel)]="from" placeholder="From2">
+        <input type="date" [(ngModel)]="to" placeholder="To">
+        <button (click)="onFilterDate()">Submit</button>
+      </div>
+      <table *ngIf="!showDate"  class="table">
+        <thead>
+          <tr>
+            <th>Full TN</th>
+            <th>Bid date</th>
+            <th>HOST name</th>
+            <th>PSAP Name</th>
+            <th>Assignee</th>
+          </tr>
+          
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of nrfs">
+            <td>{{item.full_tn}}</td>
+            <td>{{item.bid_date}}</td>
+            <td>{{item.psap}}</td>
+            <td>{{item.psap_name}}</td>
+            <td>
+                <div class="input-control text full-size">
+                    <select [(ngModel)]="item.assignee" (change)="onChangeAssignee(item)" >
+                        <option *ngFor="let usr of users" value="{{usr.user_id}}">{{usr.first_name + " " + usr.last_name}}</option>
+                    </select>
+                    <button (click)="item.assignee = -1;"  class="button"><i class="fa fa-undo" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  

@@ -48,7 +48,11 @@ export class ROUTES {
        tsNRF: "nrf/timeStamp/", // add time stamp nrf records..
        cNRF: "nrf/closeNRF/", // Close NRF Form..
        gcNRF: "nrf/getComments/?id=", // Get Comments NRF..
-       scNRF: "nrf/saveComment/" // Save Comment NRF...
+       scNRF: "nrf/saveComment/", // Save Comment NRF...
+       gANRF: "nrf/getALLNRF/",   // GET ALL NRF....
+       dANRF: "nrf/downloadALLNRF/", // Download ALL NREF EXCEL...
+       dFNRF: "nrf/downloadDateNRF/?f=", // Download Filter NREF Excel...
+       fNRF: "nrf/filterNRF/?f=" // filter by date nrf...
     }
    }
 }
@@ -307,11 +311,11 @@ interface API_ROUTES {
    initTicket?: string;
    sTicket?: string;
    gRouting?: string;
-   bRouting?: string;
    gUpload?: string;
-   tAttachment?: string;
-   dTAttachment?: string;
+   bRouting?: string;
    gTFile?: string;
+   dTAttachment?: string;
+   tAttachment?: string;
    gTAttachments?: string
    dltAttachment?: string;
    gListUsers?: string;
@@ -330,6 +334,10 @@ interface API_ROUTES {
    cNRF?: string;
    gcNRF?: string;
    scNRF?: string;
+   gANRF?: string;
+   dANRF?: string;
+   dFNRF?: string;
+   fNRF?: string;
 }
 
 interface LOGIN_INFO {

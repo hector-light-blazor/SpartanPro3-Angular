@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UploadComponent } from './upload/upload.component';
 import { AssignComponent } from './assign/assign.component';
+import { ExportComponent } from './export/export.component';
 
 const routes: Routes = [{
   path: 'dashboard',
@@ -15,6 +16,10 @@ const routes: Routes = [{
 {
  path: 'assign', 
  component: AssignComponent
+}, {
+  path: 'export',
+  component: ExportComponent
+
 }
 ];
 
