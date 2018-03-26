@@ -50,6 +50,10 @@ const routes: Routes = [
   {
     path: 'nrf',
     loadChildren: './nrf/nrf.module#NrfModule'
+  },
+  {
+    path: 'subdivision',
+    loadChildren: '.subdivision/subdivision.module#SubdivisionModule'
   }
 
 ];
