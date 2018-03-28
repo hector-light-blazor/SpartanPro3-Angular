@@ -871,6 +871,7 @@ export class TicketComponent implements OnInit {
       this.selectedParcel = data; // Selected parcel
       jQuery("#confirm").fadeIn('slow'); // show confirmation..
       this.confirmSelection = 2; // When making decisions from yes or no...
+      this.confirmationName = "Copy Parcel Info";
     }
 
     // When The User press the copy button will get information paste into address ticket..
