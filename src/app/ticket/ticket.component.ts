@@ -50,6 +50,9 @@ export class TicketComponent implements OnInit {
   searchParcel: string = ''; // find particular parcel information from db server...
   enableTicket: boolean = false; // this variable will tell esri map comp either to display graphics layer for ticket or not for editing and other purposes.
   users: any = [] // Gets a list of all users to be used in drop downs as options...
+  confirmationName: string = ""; // this controls the name of what to confirm on pop up....
+  stopSave: boolean = false; // NG DESTROY HACK PREVENTS FROM SENDING TICKET TO NEXT PERSON....
+
 
   // Control ticket fields..
   customerSection: boolean = false;
@@ -212,6 +215,9 @@ export class TicketComponent implements OnInit {
 
     // Once We Destroy the component remove the unecessary toolbar 
     this.app.ticketInteractionToolbar.next(false);
+
+
+    if(this.stopSave) return; // This is a hack this will prevent from saving the ticket if true..
 
     // ..As Well The Ticket what ever was edited..
     // .. No routing necessary...
@@ -460,18 +466,16 @@ export class TicketComponent implements OnInit {
  
            }, 300);
           }
-          
-
-          
-         
           break;
         case this.app.toolbarActivies.TICKET_ARCHIVE:
           //Display pop up for archive..
           this.confirmSelection = 1;
+          this.confirmationName = "Archive Ticket";
           jQuery("#confirm").fadeIn("slow");
           break;
         case this.app.toolbarActivies.TICKET_DELETE:
           this.confirmSelection = 0;
+          this.confirmationName = "Delete Ticket";
           jQuery("#confirm").fadeIn("slow");
          break;
         case this.app.toolbarActivies.TICKET_INSERT_COMMENT:
@@ -790,6 +794,9 @@ export class TicketComponent implements OnInit {
     confirmationDecision() {
 
         if(this.confirmSelection == 0) { // Zero is to delete
+            //Lets prevent the ng destroy to send the ticket to next person...
+            this.stopSave = true;
+
             let attributes = {
               id_ticket: this.attributes.id_ticket,
               system_assign: '{"a": [], "index": 0}',
@@ -819,6 +826,11 @@ export class TicketComponent implements OnInit {
   
         }else if(this.confirmSelection == 1) { // 1 is to archive...
            //lets close this ticket and archive change route to home..
+
+           // Lets prevent from ng Destroy on save sending the ticket to next person..
+           this.stopSave = true;
+
+           
               let attributes = {
                 id_ticket: this.attributes.id_ticket,
                 system_assign: '{"a": [], "index": 0}',

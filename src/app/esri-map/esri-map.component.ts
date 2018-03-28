@@ -216,7 +216,7 @@ export class EsriMapComponent implements OnInit {
            // lets search the property and send the found parcel from either hcad or db server holding the other information...
          
           this.app.GEOMETRY_METHOD('geom=' + JSON.stringify(response.mapPoint)).subscribe((response:any) => {
-             console.log(response);
+            
              if(response){
               if(response.features.length > 0) {
                 //display polygon because we found one...
