@@ -24,7 +24,8 @@ export class AppComponent {
   constructor(private router: Router, private appService: AppService, private notify: NativeNotificationService) {
 
     let _self = this;
-
+      //<<Lets Load the ESRI OBJECTS SO THE WHOLE DOCUMENT CAN USE THE OBJECTS>>>>
+      this.appService.esriLoadObjects();
     this.appService.cntAppFromLogin.takeWhile(() => this.isAlive).subscribe(info => {
         this.isLoading = true;
        
@@ -48,6 +49,19 @@ export class AppComponent {
             
           }
       });
+
+      // Process the msag polygon...
+      if(this.appService.msagObject) {
+        this.appService.msagObject.forEach(element => {
+
+            // console.log(element);
+            element.geo = new this.appService.esriPolygon(element.geo.coordinates[0]);
+         });
+        console.log(this.appService.msagObject);
+      }
+    
+
+
         // this.appService.GET_METHOD(this.appService.route.api.bRouting + this.appService.account_info.organization_id).subscribe(response => {
         //    console.log(response);
         // });
@@ -101,8 +115,7 @@ export class AppComponent {
     });
     });
 
-    //<<Lets Load the ESRI OBJECTS SO THE WHOLE DOCUMENT CAN USE THE OBJECTS>>>>
-    this.appService.esriLoadObjects();
+  
    
     // GET LIST OF USERS...
     this.appService.GET_METHOD(this.appService.route.api.gListUsers).subscribe((response:any) => {
@@ -116,6 +129,23 @@ export class AppComponent {
     this.appService.GET_METHOD(this.appService.route.api.gListOrga).subscribe((response: any) => {
       
        this.appService.organizations = response;
+    });
+
+    // GET List of MSAG...
+    this.appService.GET_METHOD(this.appService.route.api.gMSAG).subscribe((response: any) => {
+      console.log("LOADED MSAG");
+     
+      if(response) {
+        console.log(this.appService.esriPolygon);
+
+       
+          response.data.forEach(element => {
+            element.geo = JSON.parse(element.geo);
+        });
+        
+        this.appService.msagObject = response.data;
+      }
+        
     });
 
     

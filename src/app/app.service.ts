@@ -52,7 +52,8 @@ export class ROUTES {
        gANRF: "nrf/getALLNRF/",   // GET ALL NRF....
        dANRF: "nrf/downloadALLNRF/", // Download ALL NREF EXCEL...
        dFNRF: "nrf/downloadDateNRF/?f=", // Download Filter NREF Excel...
-       fNRF: "nrf/filterNRF/?f=" // filter by date nrf...
+       fNRF: "nrf/filterNRF/?f=", // filter by date nrf...
+       gMSAG: "gis/getMSAG/"  // GET MSAG...
     }
    }
 }
@@ -135,6 +136,7 @@ export class AppService {
   mapFlexBaseMap: any = null;
   imageryLayer: any = null;
   mapFlexURL: string = "https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/MapFlex2/MapServer";
+  msagObject: any  = [];
   imageryURL: string = 'https://wms-txgi.tnris.org/login/path/contour-camera-poetic-poem/wms';
   wmtsURL: string = 'https://txgi.tnris.org/login/path/contour-camera-poetic-poem/wmts';
   ticketCenter: any = null;
@@ -327,6 +329,7 @@ interface API_ROUTES {
    gFRTable?: string;
    gTConfig?: string;
    gUConfig?: string;
+   gMSAG?: string;
    gNRF?: string;
    aNRF?: string;
    emNRF?: string;

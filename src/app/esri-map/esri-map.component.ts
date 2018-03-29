@@ -31,7 +31,8 @@ export class EsriMapComponent implements OnInit {
   polygonSymbol: any = null; // holds the polygon symbol....
   query: any = null; // holds query object...
   queryTask: any = null; // holds query task....
-  quickPickLayer: any = null; // Holds all the camera pictures coming from quick pick...
+  quickPickLayer: any = null; // Holds all the camera pictures coming from quick pick...]
+  msagLayer: any = null; // msag community layer..
   trackExtent: any = null;
 
   // =-=-= QUICK PICK TOOLS =-=-=-=-=-=
@@ -99,6 +100,12 @@ export class EsriMapComponent implements OnInit {
 
      // DIsplay parcels
      this.parcelLayer = new this.app.esriGraphicsLayer({id: "parcel"});
+
+     // Display msag community
+     this.msagLayer = new this.app.esriGraphicsLayer({id: "msag"});
+
+     this.msagLayer.setMinScale(100000);
+
      // Display quick pick parcels layer..
      this.quickPickLayer = new this.app.esriGraphicsLayer({id: "quickPick"});
      this.quickPickLayer.setMinScale(150000); // Set min Scale for the layer...
@@ -112,6 +119,7 @@ export class EsriMapComponent implements OnInit {
           
           this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURL);
           this.map.addLayer(this.app.mapFlexBaseMap);
+          this.map.addLayer(this.msagLayer);
           this.map.addLayer(this.parcelLayer);
         }
 		
@@ -128,6 +136,7 @@ export class EsriMapComponent implements OnInit {
       this.app.mapFlexBaseMap.setVisibleLayers([32,0, 8]);
       this.map.addLayer(this.app.imageryLayer);
       this.map.addLayer(this.app.mapFlexBaseMap);
+      this.map.addLayer(this.msagLayer);
       this.map.addLayer(this.parcelLayer);
     
     }
@@ -164,7 +173,7 @@ export class EsriMapComponent implements OnInit {
     // Loading off
     this.isLoading = false;
       
-		 
+		
 
      // =-=-=-=-= INIT MAP EVENTS =-=-=-=-=-=-=-=
     this.map.on("load", response => { // TODO: once production added to load instead layer add result..
