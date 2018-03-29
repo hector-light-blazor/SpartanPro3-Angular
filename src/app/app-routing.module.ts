@@ -53,7 +53,7 @@ const routes: Routes = [
   },
   {
     path: 'subdivision',
-    loadChildren: '.subdivision/subdivision.module#SubdivisionModule'
+    loadChildren: './subdivision/subdivision.module#SubdivisionModule'
   }
 
 ];
