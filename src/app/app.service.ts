@@ -135,7 +135,7 @@ export class AppService {
   esriQueryTask: any = null;
   mapFlexBaseMap: any = null;
   imageryLayer: any = null;
-  mapFlexURL: string = "https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/MapFlex2/MapServer";
+  mapFlexURL: string = "https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/MapFlex3/MapServer";
   msagObject: any  = [];
   imageryURL: string = 'https://wms-txgi.tnris.org/login/path/contour-camera-poetic-poem/wms';
   wmtsURL: string = 'https://txgi.tnris.org/login/path/contour-camera-poetic-poem/wmts';
