@@ -60,7 +60,7 @@ export class ToolbarComponent implements OnInit {
          }
       },
 
-      SUBDIVISION: {onoff: false,
+      SUBDIVISION: {onoff: true,
         VIEW: {onoff: false, ids: {dash: false, calendar: false, arch: false}}
       },
       MAP: {onoff: true,
@@ -188,6 +188,10 @@ export class ToolbarComponent implements OnInit {
   
         this.app.dataTable.next(response);
     });
+ }
+
+ onLogOut() {
+    window.open("https://gis.lrgvdc911.org/spartanpro3", "_self");
  }
 
 }

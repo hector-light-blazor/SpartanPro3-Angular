@@ -1,9 +1,17 @@
 <div style="width:100%;height:30px; background:transparent;">
+        <div class="pull-right">
+                <button (click)="onLogOut()" class="button rounded">
+                        <i class="fa fa-sign-out"></i>
+                    <span class="caption">Log Out</span>
+                </button>
+              </div>
   </div>
+  
   <!-- <app-charm-online></app-charm-online> -->
   <div  class="desktopLogo">
           <img src="assets/public_safety_logo.png" width="70" height="50" alt="">
   </div>
+  
   <div  id="fluent-menu" class="fluent-menu" data-role="fluentmenu">
         <div (click)="toogleToolbar()" style="position:absolute;right:0;z-index:3;">
           <span *ngIf="expandShow" class="mif-expand-less" style="color:white;cursor:pointer;"></span>
