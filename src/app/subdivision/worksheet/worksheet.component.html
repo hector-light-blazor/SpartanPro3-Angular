@@ -5,12 +5,119 @@
         <li><a href="#dbsheet">DATABASE VALIDATION PROCESS</a></li>
         <li><a href="#gissheet">GIS VALIDATION PROCESS</a></li>
         <li><a href="#feed">COMMENTS FEED</a></li>
+        <li><a href="#georef"> GEOREFERENCE</a></li>
     </ul>
     <div class="frames">
-        <div class="frame" id="worksheet">SHEET</div>
-        <div class="frame" id="lvsheet">LV</div>
-        <div class="frame" id="dbsheet">DB</div>
-        <div class="frame" id="gissheet">GIS</div>
-        <div class="frame" id="feed">FEED</div>
+        <div class="frame ribbed-white" id="worksheet">
+          <label >SUBDIVISION NAME</label>
+          <div class="input-control text full-size">
+            <input type="text">
+          </div>
+          <label >TAX ACCOUNT #</label>
+          <div class="input-control text full-size">
+            <input type="text">
+          </div>
+          <label >9-1-1 COMMUNITY</label>
+          <div class="input-control text full-size">
+            <input type="text">
+          </div>
+          <label >ESN</label>
+          <div class="input-control text full-size">
+            <input type="text">
+          </div>
+          
+        </div>
+        <div class="frame ribbed-white" id="lvsheet">
+          <div class="grid">
+              <div class="row cells2">
+                  <div class="cell debug">
+                      <div class="form-group">
+                          <label class="col-md-2 control-label">Street</label>
+                          <div class="col-md-4">
+                            <input ng-disabled="lvrights" type="text" class="form-control ng-pristine ng-untouched ng-valid ng-empty" name="street" capitalize="">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Low</label>
+                            <div class="col-md-4">
+                              <input ng-disabled="lvrights" type="text" ng-model="low" class="form-control ng-pristine ng-untouched ng-valid ng-empty" name="low" valid-number="">
+                            </div>
+                          </div>
+                          <div class="form-group">
+                              <label class="col-md-2 control-label">High</label>
+                              <div class="col-md-4">
+                                <input ng-disabled="lvrights" type="text" ng-model="high" class="form-control ng-pristine ng-untouched ng-valid ng-empty" name="high" valid-number="">
+                              </div>
+                            </div>
+                  </div>
+                  <div class="cell debug">2</div>
+                  
+              </div>
+          </div>
+          <hr>
+           <h2 style="text-align: center;">Plat Received From</h2>
+           <div>
+              <label class="input-control checkbox">
+                  <input type="checkbox" >
+                  
+                  <span class="check"></span>
+                  <span class="caption">DBA</span>
+                 
+              </label>
+           </div>
+           <div class="input-control text full-size">
+              <input type="text">
+          </div>
+           <br>
+           <br>
+           <div>
+             <label class="input-control checkbox">
+                  <input type="checkbox" >
+                  <span  class="check"></span>
+                  <span  class="caption">ENGINEER/DEVELOPER</span>
+                  
+             </label>
+           </div>
+           <div class="input-control text full-size">
+              <input type="text">
+          </div>
+           <br>
+           <br>
+           <div>
+              <label class="input-control checkbox">
+                  <input type="checkbox" >
+                  <span  class="check"></span>
+                  <span  class="caption">ONLINE</span>
+              </label>
+           </div>
+           <div class="input-control text full-size">
+              <input type="text">
+          </div>
+           <br>
+           <br>
+           <div>
+              <label class="input-control checkbox">
+                  <input type="checkbox" >
+                  <span  class="check"></span>
+                  <span  class="caption">CITY</span>
+                  
+              </label>
+           </div>
+           <div class="input-control text full-size">
+              <input type="text">
+          </div>
+        </div>
+        <div class="frame ribbed-white" id="dbsheet">
+          
+        </div>
+        <div class="frame ribbed-white" id="gissheet">
+          
+        </div>
+        <div class="frame ribbed-white" id="feed">
+          
+        </div>
+        <div class="frame ribbed-white" id="georef">
+
+        </div>
     </div>
 </div>
