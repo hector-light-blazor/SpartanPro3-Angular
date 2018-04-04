@@ -203,36 +203,55 @@
                               <div class="tab-group-caption">Filter</div>
                           </div>
                       </div>
-  
+                      
+                      <!-- START SUBDIVISION -->
                       <div *ngIf="_toolSettings.SECTIONS.SUBDIVISION.VIEW.onoff" class="tab-panel" id="tab_subdivision" >
                           <div class="tab-panel-group">
                               <div class="tab-group-content">
-                                  <button class="fluent-big-button">
-                                      <span class="icon mif-envelop"></span>
-                                      Create<br>message
-                                  </button>
-                                  <div class="tab-content-segment">
-                                      <button class="fluent-big-button dropdown-toggle">
-                                          <span class="icon mif-file-picture"></span>
-                                          <span class="label">Create<br>element</span>
-                                      </button>
-                                      <ul class="d-menu" data-role="dropdown">
-                                          <li><a href="#">Message</a></li>
-                                          <li><a href="#">Event</a></li>
-                                          <li><a href="#">Meeting</a></li>
-                                          <li><a href="#">Contact</a></li>
-                                      </ul>
-                                  </div>
-                                  <div class="tab-content-segment">
-                                      <button class="fluent-big-button">
-                                          <span class="mif-cancel"></span>
-                                          <span class="label">Delete</span>
-                                      </button>
-                                  </div>
+                                <a *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.ids.dash"  [routerLink]="['ticket/dashboard']" class="fluent-big-button">
+                                    <!--<span class="icon"><i class="fa fa-tachometer" aria-hidden="true"></i></span>-->
+                                    <img  src="assets/dashboard.png"  alt="Dashboard Toolbar">
+                                    Dashboard
+                                </a>
+                                
+                                <div *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.ids.calendar" class="tab-content-segment">
+                                    <a [routerLink]="['ticket/calendar-view']" class="fluent-big-button">
+                                        <!--<span class="mif-calendar"></span>-->
+                                        <img src="assets/calendar.png" alt="Calendar Toolbar">
+                                        Calendar
+                                    </a>
+                                </div>
+                                <div *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.ids.arch" [routerLink]="['ticket/view/archives']" class="tab-content-segment">
+                                    <a class="fluent-big-button">
+                                        <img src="assets/cabinet.png" alt="Archive Toolbar">
+                                        Archive
+                                    </a>
+                                </div>
+                                <div [routerLink]="['ticket/charts']">
+                                    <a class="fluent-big-button">
+                                          <i class="fa fa-chart-bar"></i>
+                                          <i class="fa fa-chart-bar"></i>
+                                          <i class="fa fa-chart-area"></i>
+                                        Charts
+                                    </a>
+                                </div>
                               </div>
-                              <div class="tab-group-caption">VIEW</div>
+                              <div class="tab-group-caption">Display</div>
+                          </div>
+                          <div class="tab-panel-group">
+                            <div *ngIf="_toolSettings.SECTIONS.TICKET.INSERT.ids.nw" class="tab-content-segment">
+                                <a (click)="enableTicketTools()" [routerLink]="['subdivision/new']" class="fluent-big-button">
+                                  <!--<span class="icon"><i class="fa fa-id-card-o" aria-hidden="true"></i></span>-->
+                                  <img src="assets/edit.png" alt="Edit Toolbar">
+                                    New
+                                </a>
+                            </div>
+                            <div class="tab-group-caption">Insert</div>
                           </div>
                       </div>
+                      <!-- END SUBDIVISION -->
+
+                      <!-- START NRF -->
                       <div class="tab-panel" id="tab_nrfs">
                         <div  class="tab-panel-group">
                             <div class="tab-group-content">

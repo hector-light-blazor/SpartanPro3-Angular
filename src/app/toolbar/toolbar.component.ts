@@ -61,7 +61,7 @@ export class ToolbarComponent implements OnInit {
       },
 
       SUBDIVISION: {onoff: true,
-        VIEW: {onoff: false, ids: {dash: false, calendar: false, arch: false}}
+        VIEW: {onoff: true, ids: {dash: false, calendar: false, arch: false}}
       },
       MAP: {onoff: true,
           VIEW: {onoff: true, ids: {MAP: true}}
