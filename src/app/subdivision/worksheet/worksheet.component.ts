@@ -7,9 +7,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WorksheetComponent implements OnInit {
 
+  streets: Array<STREET> = [];
+
+  name: string;
+  low: string;
+  high: string;
+
   constructor() { }
 
   ngOnInit() {
   }
 
+  addStreet() {
+      console.log("HELLO");
+      this.streets.push({name: this.name, low: this.low, high: this.high});
+      console.log(this.streets)
+  }
+
+}
+
+interface STREET {
+  name: string;
+  low:  string;
+  high: string;
 }
