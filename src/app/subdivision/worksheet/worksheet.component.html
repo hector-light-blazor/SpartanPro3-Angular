@@ -35,23 +35,29 @@
                           <label class="col-md-2 control-label">Street</label>
                           <br>
                           <div class="input-control text full-size">
-                              <input type="text" [(ngModel)]="name" >
+                              <input type="text" [(ngModel)]="name" uppercase>
+                              <span style="color: red;">Please Enter Name</span>
                           </div>
                         </div>
+                        <br>
                         <div class="form-group">
                             <label class="col-md-2 control-label">Low</label>
                             <br>
                             <div class="input-control text full-size">
                                 <input type="text" [(ngModel)]="low">
+                                <span style="color: red;">Please Enter Low</span>
                             </div>
                           </div>
+                          <br>
                           <div class="form-group">
                               <label class="col-md-2 control-label">High</label>
                               <br>
                               <div class="input-control text full-size">
                                   <input type="text" [(ngModel)]="high">
+                                  <span style="color: red;">Please Enter High</span>
                               </div>
                             </div>
+                            <br>
                             <div class="form-group">
                                 <div >
                                   <input  type="button" (click)="addStreet()" value="Insert" class="btn btn-primary">
@@ -142,7 +148,7 @@
           
         </div>
         <div class="frame ribbed-white" id="georef">
-
+            <app-leaflet-map></app-leaflet-map>
         </div>
     </div>
 </div>

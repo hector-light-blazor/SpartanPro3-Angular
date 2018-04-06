@@ -8,20 +8,46 @@ import { Component, OnInit } from '@angular/core';
 export class WorksheetComponent implements OnInit {
 
   streets: Array<STREET> = [];
-
+  street: STREET = null;
   name: string;
   low: string;
   high: string;
-
+  nameError: boolean = false;
+  highError: boolean = false;
+  lowError: boolean = false;
   constructor() { }
 
   ngOnInit() {
   }
 
   addStreet() {
-      console.log("HELLO");
+
+      if(this.checkLVStreets()) { //If info not filled out stop the program alert users.
+        return;
+      }
+    
       this.streets.push({name: this.name, low: this.low, high: this.high});
       console.log(this.streets)
+  }
+
+  checkLVStreets():boolean {
+    var response:boolean = false;
+    if(!this.name) {
+      this.nameError = true;
+      response = true;
+    }
+    
+    if(!this.high) {
+      this.highError = true;
+      response = true;
+    }
+    
+    if(!this.low) {
+      this.lowError = true;
+      response = true;
+    }
+
+    return response;
   }
 
 }

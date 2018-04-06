@@ -14,6 +14,7 @@ import { QuickPickToolsComponent } from '../quick-pick-tools/quick-pick-tools.co
 import { GoogleMapComponent } from '../google-map/google-map.component';
 import { DatatablePipe } from '../datatable.pipe';
 import { UppercaseDirective } from '../uppercase.directive';
+import { LeafletMapComponent } from '../leaflet-map/leaflet-map.component';
 @NgModule({
   imports: [
 
@@ -30,10 +31,11 @@ import { UppercaseDirective } from '../uppercase.directive';
     QuickPickToolsComponent,
     FullScreenPickComponent,
     EsriMapComponent,
+    LeafletMapComponent,
     GoogleMapComponent,
     FilterminePipe, DatatablePipe, UppercaseDirective],
   exports: [MasterLoadingComponent,FormsModule, TextMaskModule,NgxDatatableModule,
-    TicketWorkflowComponent,FileUploaderComponent, EsriMapComponent, GoogleMapComponent,
+    TicketWorkflowComponent,FileUploaderComponent, EsriMapComponent,LeafletMapComponent, GoogleMapComponent,
     FileViewerComponent,QuickPickToolsComponent ,FullScreenPickComponent, FilterminePipe, DatatablePipe, UppercaseDirective]
 })
 export class SharedModule { }
