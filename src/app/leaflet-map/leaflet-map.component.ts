@@ -16,20 +16,21 @@ export class LeafletMapComponent implements OnInit {
 
   ngOnInit() {
 
-    this.map = L.map("map").setView([26.229259, -98.148752], 4);
+    this.map = L.map("map", {maxZoom: 20}).setView([26.229259, -98.148752], 8);
 
     console.log(L);
-    // var ign = new L.TileLayer.WMTS( "https://wms-txgi.tnris.org/login/path/contour-camera-poetic-poem/wms" ,
-    //                            {
-    //                                layer: "texas",
-    //                                style: "normal",
-    //                                tilematrixSet: "PM",
-    //                                format: "image/png",
-    //                                attribution: "<a href='https://github.com/mylen/leaflet.TileLayer.WMTS'>GitHub</a>&copy; <a href='http://www.ign.fr'>IGN</a>"
-    //                            }
-    //                           );
+    var ign = new L.TileLayer.WMTS( "https://wms-txgi.tnris.org/login/path/contour-camera-poetic-poem/wms" ,
+                               {
+                                   layer: "texas",
+                                   style: "normal",
+                                   tilematrixSet: "PM",
+                                   maxZoom: 20,
+                                   format: "image/png",
+                                   attribution: "<a href='https://github.com/mylen/leaflet.TileLayer.WMTS'>GitHub</a>&copy; <a href='http://www.ign.fr'>IGN</a>"
+                               }
+                              );
 							  
-		// 	this.map.addLayer(ign);
+			this.map.addLayer(ign);
 
     
     this.mapflex = L.esri.dynamicMapLayer({
@@ -38,7 +39,7 @@ export class LeafletMapComponent implements OnInit {
         zIndex: 0
       });
     
-    this.map.addLayer(this.mapflex);
+   // this.map.addLayer(this.mapflex);
     
 
 
