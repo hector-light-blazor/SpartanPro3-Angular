@@ -162,6 +162,9 @@ export class ToolbarComponent implements OnInit {
         case this.app.toolbarActivies.TICKET_LIST_ATTACHMENTS:
           this.app.toolbarActions.next({action: action, data: null});
           break;
+        case this.app.toolbarActivies.TICKET_LETTER:
+          console.log("GENERATE LETTER");
+          break;
         default:
           break;
       }
@@ -192,6 +195,11 @@ export class ToolbarComponent implements OnInit {
 
  onLogOut() {
     window.open("https://gis.lrgvdc911.org/spartanpro3", "_self");
+ }
+
+ generateLetter() {
+
+
  }
 
 }
