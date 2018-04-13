@@ -27,7 +27,10 @@ export class WorksheetComponent implements OnInit {
       }
     
       this.streets.push({name: this.name, low: this.low, high: this.high});
-      console.log(this.streets)
+
+      // Back to blank..
+      this.low = this.name = this.high = "";
+      
   }
 
   checkLVStreets():boolean {
