@@ -24,8 +24,10 @@ export class AppComponent {
   constructor(private router: Router, private appService: AppService, private notify: NativeNotificationService) {
 
     let _self = this;
+
+  
       //<<Lets Load the ESRI OBJECTS SO THE WHOLE DOCUMENT CAN USE THE OBJECTS>>>>
-     //this.appService.esriLoadObjects();
+    this.appService.esriLoadObjects();
     this.appService.cntAppFromLogin.takeWhile(() => this.isAlive).subscribe(info => {
         this.isLoading = true;
        
@@ -49,6 +51,9 @@ export class AppComponent {
             
           }
       });
+
+     
+
 
       // Process the msag polygon...
       if(this.appService.msagObject) {
@@ -177,4 +182,7 @@ export class AppComponent {
 
     this.notify.notify(options);
   }
+
+
+
 }

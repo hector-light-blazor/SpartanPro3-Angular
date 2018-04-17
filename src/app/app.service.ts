@@ -66,6 +66,7 @@ export class AppService {
   organizations: any = []; // stores the list of organizations in this variable...
   route: ROUTES = new ROUTES();
   url: string  = "https://gis.lrgvdc911.org/php/spartan/api/v2/index.php/";
+  url_letter: string = "https://gis.lrgvdc911.org/WebAPI/api/letter";
   hcadurl: string = this.url + 'proxy/findHCADParcels/?' //"http://propaccess.hidalgoad.org:6080/arcgis/rest/services/HidalgoMapSearch/MapServer/find?";
   hcadurl2: string = this.url + 'proxy/geometryHCADParcels/?';
   hcadquery: string = "http://propaccess.hidalgoad.org:6080/arcgis/rest/services/HidalgoMapSearch/MapServer/1";
@@ -165,6 +166,10 @@ export class AppService {
     // Post information to the database...
   POST_METHOD(request, body) {
     return this.http.post(this.url + request, body);
+  }
+
+  POST_METHOD2( body) {
+    return this.http.post(this.url_letter, body);
   }
 
   // Module to handle string to float
