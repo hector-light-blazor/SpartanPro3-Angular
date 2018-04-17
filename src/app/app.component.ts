@@ -26,8 +26,9 @@ export class AppComponent {
     let _self = this;
 
   
-      //<<Lets Load the ESRI OBJECTS SO THE WHOLE DOCUMENT CAN USE THE OBJECTS>>>>
-    this.appService.esriLoadObjects();
+      //<<Lets Load the ESRI OBJECTS SO THE WHOLE DOCUMENT CAN USE THE OBJECTS>>>
+     this.appService.esriLoadObjects();
+
     this.appService.cntAppFromLogin.takeWhile(() => this.isAlive).subscribe(info => {
         this.isLoading = true;
        
