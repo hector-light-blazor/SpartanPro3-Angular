@@ -164,6 +164,7 @@ export class ToolbarComponent implements OnInit {
           break;
         case this.app.toolbarActivies.TICKET_LETTER:
           console.log("GENERATE LETTER");
+          this.app.toolbarActions.next({action: action, data: null});
           break;
         default:
           break;

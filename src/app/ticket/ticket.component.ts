@@ -357,7 +357,6 @@ export class TicketComponent implements OnInit {
             element.user_id = parseInt(element.user_id);
         });
         this.users = response.data;
-        console.log(this.users);
     });
   }
 
@@ -481,6 +480,9 @@ export class TicketComponent implements OnInit {
         case this.app.toolbarActivies.TICKET_INSERT_COMMENT:
           this.enterComment(action.data);
          break;
+        case this.app.toolbarActivies.TICKET_LETTER:
+          this.generateLetter();
+          break;
         case this.app.toolbarActivies.TICKET_ESRI_MAP:
           this.isMapEnabled = true;
           this.base = 'MAPFLEX';
@@ -580,8 +582,27 @@ export class TicketComponent implements OnInit {
     }
    
   }
-  //Make Decision what to find parcel
 
+  generateLetter() {
+
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", this.app.url + this.app.route.api.gLTicket);
+    form.setAttribute("target", "_blank");
+
+    var input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = "letter";
+    input.value = JSON.stringify(this.attributes);
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+
+   
+  }
+
+  //Make Decision what to find parcel
   decideParcelInfo(value) {
      
     if(!isNaN(value)) this.findParcelsInfo(value, this.app.propertyId, false);

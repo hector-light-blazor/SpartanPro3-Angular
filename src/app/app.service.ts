@@ -53,7 +53,8 @@ export class ROUTES {
        dANRF: "nrf/downloadALLNRF/", // Download ALL NREF EXCEL...
        dFNRF: "nrf/downloadDateNRF/?f=", // Download Filter NREF Excel...
        fNRF: "nrf/filterNRF/?f=", // filter by date nrf...
-       gMSAG: "gis/getMSAG/"  // GET MSAG...
+       gMSAG: "gis/getMSAG/",  // GET MSAG...
+       gLTicket: "template/generateLetter" // This is to generate letter
     }
    }
 }
@@ -347,6 +348,7 @@ interface API_ROUTES {
    dANRF?: string;
    dFNRF?: string;
    fNRF?: string;
+   gLTicket?: string;
 }
 
 interface LOGIN_INFO {
