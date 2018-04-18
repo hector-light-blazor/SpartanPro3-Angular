@@ -30,6 +30,7 @@ export class WorksheetComponent implements OnInit {
 
       // Back to blank..
       this.low = this.name = this.high = "";
+      this.nameError = this.highError = this.lowError = false;
       
   }
 

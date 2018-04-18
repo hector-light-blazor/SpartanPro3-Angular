@@ -36,7 +36,7 @@
                           <br>
                           <div class="input-control text full-size">
                               <input type="text" [(ngModel)]="name" uppercase>
-                              <span style="color: red;">Please Enter Name</span>
+                              <span *ngIf="nameError" style="color: red;">Please Enter Name</span>
                           </div>
                         </div>
                         <br>
@@ -45,7 +45,7 @@
                             <br>
                             <div class="input-control text full-size">
                                 <input type="text" [(ngModel)]="low">
-                                <span style="color: red;">Please Enter Low</span>
+                                <span *ngIf="lowError" style="color: red;">Please Enter Low</span>
                             </div>
                           </div>
                           <br>
@@ -54,7 +54,7 @@
                               <br>
                               <div class="input-control text full-size">
                                   <input type="text" [(ngModel)]="high">
-                                  <span style="color: red;">Please Enter High</span>
+                                  <span *ngIf="highError" style="color: red;">Please Enter High</span>
                               </div>
                             </div>
                             <br>
