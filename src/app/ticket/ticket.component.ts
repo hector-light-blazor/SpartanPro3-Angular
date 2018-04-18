@@ -365,6 +365,14 @@ export class TicketComponent implements OnInit {
   getConnections() {
 
       let data = null;
+
+      // if no property id don't check
+      if(!this.attributes.property_id) { // Kill app if either are not available..
+        return;
+      }else if(!this.attributes.tax_account_num) {
+        return;
+      }
+
       //First Check if property id is there..
       if(this.attributes.property_id) {
          data = {data: {'property_id' : this.attributes.property_id, 'id_ticket': this.attributes.id_ticket}};
@@ -584,22 +592,55 @@ export class TicketComponent implements OnInit {
   }
 
   generateLetter() {
+    var json = null;
+    var sub = false;
+    if(!this.attributes.cfirst_name || !this.attributes.clast_name) {
+      jQuery.Notify({
+        caption: 'Error',
+        content: 'Please provide customer first name or last name?',
+        timeout: 5000,
+        type: this.app.msg_codes.alert
 
-    var form = document.createElement("form");
-    form.setAttribute("method", "post");
-    form.setAttribute("action", this.app.url + this.app.route.api.gLTicket);
-    form.setAttribute("target", "_blank");
+      });
+      return; //Exit FUNCTION...
+    }else if(!this.attributes.objectid) {
+      jQuery.Notify({
+        caption: 'Error',
+        content: 'No ticket number!',
+        timeout: 5000,
+        type: this.app.msg_codes.alert
 
-    var input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = "letter";
-    input.value = JSON.stringify(this.attributes);
-    form.appendChild(input);
-    document.body.appendChild(form);
-    form.submit();
-    document.body.removeChild(form);
+      });
+      return; //Exit FUNCTION
+    }
+    else if(!this.attributes.property_id) { // No Property id then use subdivision name..
+      json = {"id": this.attributes.objectid, "cf": this.attributes.cfirst_name, 
+      "cl" : this.attributes.clast_name, 
+      "p" : "NONE",
+       "f" : this.attributes.full_address, "m" : this.attributes.msag_comm}
+       sub = true;
+    }else {
+      json = {"id": this.attributes.objectid, "cf": this.attributes.cfirst_name, 
+      "cl" : this.attributes.clast_name, 
+      "p" : this.attributes.property_id,
+      "f" : this.attributes.full_address, "m" : this.attributes.msag_comm}
+    }
 
-   
+    this.isLoading = true;
+    
+
+    this.app.GET_METHOD(this.app.route.api.gLTicket + JSON.stringify(json)).subscribe(response => {
+      var name = this.attributes.objectid + "_"
+      if(sub) {
+        name += "NONE.docx";
+      }else {
+        name += this.attributes.property_id + ".docx";
+      }
+      
+        window.open("http://docs.google.com/gview?url=" + this.app.url + 
+        "template/getDocx/?doc=" + name, "_blank");
+        this.isLoading = false;
+    });
   }
 
   //Make Decision what to find parcel
