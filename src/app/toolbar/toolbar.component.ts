@@ -163,7 +163,7 @@ export class ToolbarComponent implements OnInit {
           this.app.toolbarActions.next({action: action, data: null});
           break;
         case this.app.toolbarActivies.TICKET_LETTER:
-          console.log("GENERATE LETTER");
+          
           this.app.toolbarActions.next({action: action, data: null});
           break;
         default:
@@ -202,10 +202,6 @@ export class ToolbarComponent implements OnInit {
     window.open("https://gis.lrgvdc911.org/spartanpro3", "_self");
  }
 
- generateLetter() {
-
-
- }
 
  delete_cookie(name) {
     document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
