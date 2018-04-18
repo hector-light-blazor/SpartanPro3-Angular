@@ -136,24 +136,6 @@ export class AppComponent {
       
        this.appService.organizations = response;
     });
-
-    // GET List of MSAG...
-    this.appService.GET_METHOD(this.appService.route.api.gMSAG).subscribe((response: any) => {
-      console.log("LOADED MSAG");
-     
-      if(response) {
-        console.log(this.appService.esriPolygon);
-
-       
-          response.data.forEach(element => {
-            element.geo = JSON.parse(element.geo);
-        });
-        
-        this.appService.msagObject = response.data;
-      }
-        
-    });
-
     
 
   }
