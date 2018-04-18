@@ -195,12 +195,20 @@ export class ToolbarComponent implements OnInit {
  }
 
  onLogOut() {
+   //TODO: REMOVE COOKIES...
+   this.delete_cookie("username");
+   this.delete_cookie("pass");
+   
     window.open("https://gis.lrgvdc911.org/spartanpro3", "_self");
  }
 
  generateLetter() {
 
 
+ }
+
+ delete_cookie(name) {
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
  }
 
 }
