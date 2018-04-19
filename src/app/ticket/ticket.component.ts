@@ -594,6 +594,8 @@ export class TicketComponent implements OnInit {
   generateLetter() {
     var json = null;
     var sub = false;
+    var date = new Date();
+    
     if(!this.attributes.cfirst_name || !this.attributes.clast_name) {
       jQuery.Notify({
         caption: 'Error',
@@ -613,23 +615,45 @@ export class TicketComponent implements OnInit {
       });
       return; //Exit FUNCTION
     }
+    else if(!this.attributes.full_address) {
+      jQuery.Notify({
+        caption: 'Error',
+        content: 'No address available!',
+        timeout: 5000,
+        type: this.app.msg_codes.alert
+
+      });
+      return;
+    }
+    else if(!this.attributes.msag_comm) {
+      jQuery.Notify({
+        caption: 'Error',
+        content: 'No msag community!',
+        timeout: 5000,
+        type: this.app.msg_codes.alert
+
+      });
+      return;
+    }
     else if(!this.attributes.property_id) { // No Property id then use subdivision name..
       json = {"id": this.attributes.objectid, "cf": this.attributes.cfirst_name, 
       "cl" : this.attributes.clast_name, 
       "p" : "NONE",
-       "f" : this.attributes.full_address, "m" : this.attributes.msag_comm}
+       "f" : this.attributes.full_address, "m" : this.attributes.msag_comm, "time" : date.getTime() }
        sub = true;
     }else {
       json = {"id": this.attributes.objectid, "cf": this.attributes.cfirst_name, 
       "cl" : this.attributes.clast_name, 
       "p" : this.attributes.property_id,
-      "f" : this.attributes.full_address, "m" : this.attributes.msag_comm}
+      "f" : this.attributes.full_address, "m" : this.attributes.msag_comm, "time" : date.getTime()}
     }
 
     this.isLoading = true;
     
+    var json_string =  JSON.stringify(json);
+    json_string  = encodeURIComponent(json_string);
 
-    this.app.GET_METHOD(this.app.route.api.gLTicket + JSON.stringify(json)).subscribe(response => {
+    this.app.GET_METHOD(this.app.route.api.gLTicket + json_string).subscribe(response => {
       var name = this.attributes.objectid + "_"
       if(sub) {
         name += "NONE.docx";
