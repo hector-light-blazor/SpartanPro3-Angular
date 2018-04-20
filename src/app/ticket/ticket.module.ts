@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TicketRoutingModule } from './ticket-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { TicketComponent } from './ticket.component';
+import { DialogComponent } from './dialog/dialog.component';
 
 @NgModule({
   imports: [
@@ -11,6 +12,6 @@ import { TicketComponent } from './ticket.component';
     TicketRoutingModule,
     SharedModule
   ],
-  declarations: [TicketComponent]
+  declarations: [TicketComponent, DialogComponent]
 })
 export class TicketModule { }

@@ -14,6 +14,7 @@
        </div>
     </div>
 </div> <!-- Confirmation Window -->
+<app-dialog></app-dialog>
 <app-ticket-workflow *ngIf="displayWorkflow" (onClose)="displayWorkflow = false;" [sentto]="attributes.sentto" [routing]="attributes.system_assign" [staffId]="attributes.started_ticket"></app-ticket-workflow>
 <app-file-uploader (changeConfig)="fileUploaderActions($event)" *ngIf="showFileUploader" [objectid]='attributes.id_ticket'></app-file-uploader>
 <file-viewer (actions)="showFileViewer = false;" [ticketid]='attributes.id_ticket' *ngIf="showFileViewer"></file-viewer>

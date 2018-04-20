@@ -57,7 +57,7 @@
                     <ul class="split-content d-menu" data-role="dropdown">
                         <li (click)="changeOrganizationFilter(orga.organization_id)" *ngFor="let orga of app.organizations" style="cursor: pointer;"><a >{{
                          
-                          ( orga.organization_name) ? ((orga.organization_name.length > 16) ? (orga.organization_name | slice:0:16) +'..' : orga.organization_name) : ''
+                          ( orga.name) ? ((orga.name.length > 16) ? (orga.name | slice:0:16) +'..' : orga.name) : ''
                         }}</a></li>
                     </ul>
                 </div>

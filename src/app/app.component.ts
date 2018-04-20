@@ -134,6 +134,7 @@ export class AppComponent {
     // Get List of Organizations....
     this.appService.GET_METHOD(this.appService.route.api.gListOrga).subscribe((response: any) => {
       
+      
        this.appService.organizations = response;
     });
     
