@@ -18,7 +18,10 @@
               <td> 
                 <img [src]="profileImage" width="100" height="100" alt="">
               </td>
-              <td><h2 >{{staff.name}}</h2>       </td>
+              <td>
+                <h2 >{{staff.name}}</h2> 
+                <h4>{{staff.organization_name}}</h4>      
+              </td>
             </tr>
             <tr>
               <td><h2>Workflow</h2></td>
@@ -35,6 +38,8 @@
                </td>
                <td>
                  {{user.first_name + ' ' + user.last_name}}
+                 <br>
+                 {{user.organization_name}}
                </td>
             </tr>
           </table>  
