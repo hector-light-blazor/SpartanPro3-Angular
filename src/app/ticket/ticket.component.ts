@@ -52,7 +52,7 @@ export class TicketComponent implements OnInit {
   users: any = [] // Gets a list of all users to be used in drop downs as options...
   confirmationName: string = ""; // this controls the name of what to confirm on pop up....
   stopSave: boolean = false; // NG DESTROY HACK PREVENTS FROM SENDING TICKET TO NEXT PERSON....
-
+  displayDialog: boolean = false; // Display
 
   // Control ticket fields..
   customerSection: boolean = false;
@@ -489,7 +489,7 @@ export class TicketComponent implements OnInit {
           this.enterComment(action.data);
          break;
         case this.app.toolbarActivies.TICKET_LETTER:
-          this.generateLetter();
+          this.displayDialogOption();
           break;
         case this.app.toolbarActivies.TICKET_ESRI_MAP:
           this.isMapEnabled = true;
@@ -590,22 +590,27 @@ export class TicketComponent implements OnInit {
     }
    
   }
-
-  generateLetter() {
+  displayDialogOption() {
+    this.displayDialog = true;
+  }
+  generateLetter(value_name) {
+   
+    this.displayDialog = false;
     var json = null;
     var sub = false;
     var date = new Date();
     
-    if(!this.attributes.cfirst_name || !this.attributes.clast_name) {
+    if(!value_name) {
       jQuery.Notify({
         caption: 'Error',
-        content: 'Please provide customer first name or last name?',
+        content: 'Please provide name!',
         timeout: 5000,
         type: this.app.msg_codes.alert
 
       });
-      return; //Exit FUNCTION...
-    }else if(!this.attributes.objectid) {
+      return; //Exit FUNCTION
+    }
+   else if(!this.attributes.objectid) {
       jQuery.Notify({
         caption: 'Error',
         content: 'No ticket number!',
@@ -636,14 +641,14 @@ export class TicketComponent implements OnInit {
       return;
     }
     else if(!this.attributes.property_id) { // No Property id then use subdivision name..
-      json = {"id": this.attributes.objectid, "cf": this.attributes.cfirst_name, 
-      "cl" : this.attributes.clast_name, 
+      json = {"id": this.attributes.objectid, "cf": "", 
+      "cl" : value_name, 
       "p" : "NONE",
        "f" : this.attributes.full_address, "m" : this.attributes.msag_comm, "time" : date.getTime() }
        sub = true;
     }else {
-      json = {"id": this.attributes.objectid, "cf": this.attributes.cfirst_name, 
-      "cl" : this.attributes.clast_name, 
+      json = {"id": this.attributes.objectid, "cf": "", 
+      "cl" : value_name, 
       "p" : this.attributes.property_id,
       "f" : this.attributes.full_address, "m" : this.attributes.msag_comm, "time" : date.getTime()}
     }

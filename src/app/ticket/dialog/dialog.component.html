@@ -1,22 +1,24 @@
-<div class="window" style="width: 400px;">
+<div class="window" style="position: absolute; z-index: 3000;left: 50%; top: 50%;margin-top: -150px;margin-left: -200px; height: 300px;width: 400px;">
     <div class="window-caption">
         <span class="window-caption-icon"><span class="mif-windows"></span></span>
         <span class="window-caption-title">Name Letter</span>
        
-        <span class="btn-close"></span>
+        <span class="btn-close" (click)="closeDialog()"></span>
     </div>
     <div class="window-content" style="height: 200px">
       <label >Type the name of the customer?</label>
       <br>
         <div class="input-control text full-size">
-            <input type="text">
+            <input [(ngModel)]="choosen" type="text">
         </div>
         <label >Suggestions</label>
-        <div class="input-control select">
-            <select>
-                <option>CHAPA HECTOR</option>
-                <option>GOMEZ JOSE</option>
+        <br>
+        <div class="input-control select full-size">
+            <select  [(ngModel)]="choosen">
+                <option *ngFor="let name of names">{{name}}</option>
             </select>
         </div>
+        <br>
+        <button class="button rounded" (click)="sendLetterRequest()">Submit</button>
     </div>
 </div>
