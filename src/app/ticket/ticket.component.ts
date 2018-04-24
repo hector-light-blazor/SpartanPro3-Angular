@@ -599,7 +599,7 @@ export class TicketComponent implements OnInit {
     var json = null;
     var sub = false;
     var date = new Date();
-    
+    var time = date.getTime();
     if(!value_name) {
       jQuery.Notify({
         caption: 'Error',
@@ -641,16 +641,16 @@ export class TicketComponent implements OnInit {
       return;
     }
     else if(!this.attributes.property_id) { // No Property id then use subdivision name..
-      json = {"id": this.attributes.objectid, "cf": "", 
-      "cl" : value_name, 
+      json = {"id": this.attributes.objectid, 
+      "name" : value_name, 
       "p" : "NONE",
-       "f" : this.attributes.full_address, "m" : this.attributes.msag_comm, "time" : date.getTime() }
+       "f" : this.attributes.full_address, "m" : this.attributes.msag_comm, "time" : time }
        sub = true;
     }else {
-      json = {"id": this.attributes.objectid, "cf": "", 
-      "cl" : value_name, 
+      json = {"id": this.attributes.objectid,  
+      "name" : value_name, 
       "p" : this.attributes.property_id,
-      "f" : this.attributes.full_address, "m" : this.attributes.msag_comm, "time" : date.getTime()}
+      "f" : this.attributes.full_address, "m" : this.attributes.msag_comm, "time" : time}
     }
 
     this.isLoading = true;
@@ -661,9 +661,9 @@ export class TicketComponent implements OnInit {
     this.app.GET_METHOD(this.app.route.api.gLTicket + json_string).subscribe(response => {
       var name = this.attributes.objectid + "_"
       if(sub) {
-        name += "NONE.docx";
+        name += "NONE_" + time + " .docx";
       }else {
-        name += this.attributes.property_id + ".docx";
+        name += this.attributes.property_id + "_" + time + ".docx";
       }
       
        // http://docs.google.com/gview?url=
