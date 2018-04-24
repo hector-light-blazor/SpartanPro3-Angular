@@ -198,17 +198,17 @@ export class ToolbarComponent implements OnInit {
    //TODO: REMOVE COOKIES...
    this.delete_cookie("username");
    this.delete_cookie("pass");
-   setTimeout(() => {
-    window.open("https://gis.lrgvdc911.org/spartanpro3/", "_self");
-   }, 300);
+    setTimeout(() => {
+     window.open("https://gis.lrgvdc911.org/spartanpro3/", "_self");
+    }, 100);
    
  }
 
 
  delete_cookie(name) {
-
+    console.log(document.cookie);
     document.cookie = name+'=; Max-Age=-99999999;';  
-    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/';
  }
 
 }
