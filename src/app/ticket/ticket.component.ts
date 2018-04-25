@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AppService} from "../app.service";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
 import "rxjs/add/operator/takeWhile";
-import { timeout } from 'q';
+
 
 declare var jQuery:any;
 
@@ -423,8 +423,9 @@ export class TicketComponent implements OnInit {
           // Update need to check that if string..
           // if string need to check that array is not blank..
           // Check the object making sure array is greater than zero..
-          // Fix update 3-12-18
-          ok = (typeof this.attributes.system_assign == "string") ?  (this.attributes.system_assign.indexOf("[]") == -1) : ((this.attributes.system_assign.a.length > 0) ? true : false);
+          // Fix update 3-12-18 ||  4-25-18
+          // If system assign null then get random people...
+          ok = (this.attributes.system_assign) ? ((typeof this.attributes.system_assign == "string") ?  (this.attributes.system_assign.indexOf("[]") == -1) : ((this.attributes.system_assign.a.length > 0) ? true : false)) : false;
           
           if(ok) {
             this.attributes['sentto'] = this._routeFigure();
@@ -546,26 +547,27 @@ export class TicketComponent implements OnInit {
       }
       else if(x == 'system_assign' && typeof(this.attributes[x]) == 'object'){ // Convert to string..
         
-         this.attributes[x] = JSON.stringify(this.attributes[x]);
+         this.attributes[x] = JSON.stringify(this.attributes[x]); // Convert JSON Object to string...
         
-         attr[x] = this.attributes[x]
+         attr[x] = this.attributes[x] // added to the return json..
       }
-      else if(x == 'point' && !this.attributes[x]) {
+      // else if(x == 'point' && !this.attributes[x]) {
          
-      }
-      else if(this.attributes[x] && typeof(this.attributes[x]) != "boolean") {
-        attr[x] = this.attributes[x];
-      }else if(x == "address_issued" || x == "letter_generated" || x == "plack_generated") {
+      // }
+      else if(x == "address_issued" || x == "letter_generated" || x == "plack_generated") {
         
         attr[x] = (this.attributes[x]) ? 1 : 0;
       }
-      else if(x == 'add_num'){
+      else if(this.attributes[x] && typeof(this.attributes[x]) != "boolean") {
+        attr[x] = this.attributes[x];
+      }
+      else if(x == 'add_num' && !this.attributes[x]){
         attr[x] = 0;
       }
-      else {
+      // else {
 
-        attr[x] = '';
-      }
+      //   attr[x] = '';
+      // }
     }
 
     return attr;
@@ -643,7 +645,7 @@ export class TicketComponent implements OnInit {
     else if(!this.attributes.property_id) { // No Property id then use subdivision name..
       json = {"id": this.attributes.objectid, 
       "name" : value_name, 
-      "p" : "NONE",
+      "p" : this.attributes.subdivision + " " + this.attributes.lot_num,
        "f" : this.attributes.full_address, "m" : this.attributes.msag_comm, "time" : time }
        sub = true;
     }else {
