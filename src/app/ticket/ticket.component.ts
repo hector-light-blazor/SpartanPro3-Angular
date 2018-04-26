@@ -663,10 +663,12 @@ export class TicketComponent implements OnInit {
     this.app.GET_METHOD(this.app.route.api.gLTicket + json_string).subscribe(response => {
       var name = this.attributes.objectid + "_"
       if(sub) {
-        name += "NONE_" + time + " .docx";
+        name +=  this.attributes.subdivision + " " + this.attributes.lot_num + "_" + time + ".docx";
       }else {
         name += this.attributes.property_id + "_" + time + ".docx";
       }
+      name = encodeURIComponent(name);
+      console.log(name)
       
        // http://docs.google.com/gview?url=
        // this.app.url + "template/getDocx/?doc=" +
