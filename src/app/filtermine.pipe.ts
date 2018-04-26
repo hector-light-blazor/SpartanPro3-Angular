@@ -4,24 +4,28 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'filtermine'
 })
 export class FilterminePipe implements PipeTransform {
-
+  
+  // Pipe helps search on dashboard for anything in the information...
   transform(array: any[], query: string): any {
+
+    if(!array) return [];
+    if(!query) return array;
+
+    query = query.toUpperCase();
     return array.filter(customer => {
-      // console.log(args);
-      if(query)
-      {
-        // console.log(args);
-        if(customer.cfull_name)
-        {
-          return customer.cfull_name.includes(query.toUpperCase()) == true;
-        }else{
-            if(customer.cfirst_name) return customer.cfirst_name.includes(query.toUpperCase()) == true;
+        var response = false;
 
-            if(customer.clast_name) return customer.clast_name.includes(query.toUpperCase()) == true;
-
+        for(var x in customer) {
+            if(customer[x]){
+              response = customer[x].includes(query);
+            }
+            if(response) {
+              break; // Exit Loop
+            }
         }
-      }
-        return customer;
+        return response;
+        
+ 
       
     });
   }
