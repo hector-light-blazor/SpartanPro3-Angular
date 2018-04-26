@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 
 import { ArchiveTicketListComponent } from './archive-ticket-list/archive-ticket-list.component';
 import { AppService } from './app.service';
+import { MainMapComponent } from './main-map/main-map.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { AppService } from './app.service';
     AppComponent,
     ToolbarComponent,
     LoginComponent,
-    ArchiveTicketListComponent
+    ArchiveTicketListComponent,
+    MainMapComponent
   ],
   imports: [
     BrowserModule,

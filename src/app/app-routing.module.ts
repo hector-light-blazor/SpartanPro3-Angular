@@ -7,6 +7,8 @@ import {TicketComponent} from './ticket/ticket.component';
 import {QuickSearchComponent} from './quick-search/quick-search.component';
 import {ArchiveTicketListComponent} from './archive-ticket-list/archive-ticket-list.component';
 
+import { MainMapComponent } from './main-map/main-map.component';
+
 const routes: Routes = [
   {
     path: '',
@@ -54,6 +56,10 @@ const routes: Routes = [
   {
     path: 'subdivision',
     loadChildren: './subdivision/subdivision.module#SubdivisionModule'
+  },
+  {
+    path: 'Map',
+    component: MainMapComponent
   }
 
 ];

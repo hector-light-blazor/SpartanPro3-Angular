@@ -102,9 +102,9 @@ export class EsriMapComponent implements OnInit {
      this.parcelLayer = new this.app.esriGraphicsLayer({id: "parcel"});
 
      // Display msag community
-     this.msagLayer = new this.app.esriGraphicsLayer({id: "msag"});
+     //this.msagLayer = new this.app.esriGraphicsLayer({id: "msag"});
 
-     this.msagLayer.setMinScale(100000);
+     //this.msagLayer.setMinScale(100000);
 
      // Display quick pick parcels layer..
      this.quickPickLayer = new this.app.esriGraphicsLayer({id: "quickPick"});
@@ -119,7 +119,7 @@ export class EsriMapComponent implements OnInit {
           
           this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURL);
           this.map.addLayer(this.app.mapFlexBaseMap);
-          this.map.addLayer(this.msagLayer);
+          //this.map.addLayer(this.msagLayer);
           this.map.addLayer(this.parcelLayer);
         }
 		
@@ -136,7 +136,7 @@ export class EsriMapComponent implements OnInit {
       this.app.mapFlexBaseMap.setVisibleLayers([32,0, 8]);
       this.map.addLayer(this.app.imageryLayer);
       this.map.addLayer(this.app.mapFlexBaseMap);
-      this.map.addLayer(this.msagLayer);
+      //this.map.addLayer(this.msagLayer);
       this.map.addLayer(this.parcelLayer);
     
     }

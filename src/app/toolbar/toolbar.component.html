@@ -291,18 +291,20 @@
                             <div class="tab-group-caption">Management</div>
                         </div>
                       </div>
-  
-                      <div  class="tab-panel" id="tab_map" style="display: none;">
+                    </div>
+                    <!-- End of NRF -->
+                      <!-- Start of Map -->
+                      <div  class="tab-panel" id="tab_map" >
                           <div *ngIf="_toolSettings.SECTIONS.MAP.VIEW.onoff"  class="tab-panel-group">
                               <div class="tab-group-content">
                                   <div class="tab-group-content">
-                                      <button [routerLink]="['mapView']" class="fluent-big-button">
+                                      <button [routerLink]="['Map']" class="fluent-big-button">
                                               <img src="assets/map_icon.png" alt="New User">
                                               <span class="label">Map</span>
                                       </button>
                                   </div>
                               </div>
-                              <div class="tab-group-caption">View</div>
+                              <div class="tab-group-caption">Display</div>
                           </div>
                           <div class="tab-panel-group">
                               <div class="tab-group-content">
@@ -317,7 +319,8 @@
                               <div class="tab-group-caption">QuickPick</div>
                           </div>
                       </div>
-  
+                      <!-- End of Map -->
+                      <!-- Start of Settings... -->
                       <div class="tab-panel" id="tab_settings" style="display: none;">
                           <div *ngIf="_toolSettings.SECTIONS.SETTINGS.PROFILE.onoff" class="tab-panel-group">
                               <div class="tab-group-content">
