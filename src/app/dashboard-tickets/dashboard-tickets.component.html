@@ -48,7 +48,7 @@
                   <span class="window-caption-icon"><i class="fa fa-windows" aria-hidden="true"></i></span>
                   <span class="window-caption-title">Open Ticket's</span>
                   <div class="input-control text">
-                      <input [(ngModel)]="searchAll"  type="text" placeholder="Search Customer" capitalize>
+                      <input [(ngModel)]="searchAll"  type="text" placeholder="Search Info" capitalize>
                   </div>
                   <div class="dropdown-button">
                     <button class="button rounded small-button dropdown-toggle">
@@ -103,19 +103,21 @@
                   <span class="window-caption-icon"><i class="fa fa-windows" aria-hidden="true"></i></span>
                   <span class="window-caption-title">Working Ticket's</span>
                   <div class="input-control text">
-                      <input [(ngModel)]="searchInbox"  type="text" placeholder="Search Customer" capitalize="" class="ng-pristine ng-untouched ng-valid ng-empty">
+                      <input [(ngModel)]="searchInbox"  type="text" placeholder="Search Info" capitalize="" class="ng-pristine ng-untouched ng-valid ng-empty">
                   </div>
               </div>
               <div class="window-content" style="height: 250px; cursor: pointer;">
                   <app-master-loading [regularLoading]="true" *ngIf="allLoading"></app-master-loading>
                 <div class="listview">
-                  <div class="list" [ngClass]="{'inboxR': customer.total}" style="height: 100px;" (contextmenu)="onRightClick($event, customer)" *ngFor="let customer of inbox" routerLink="/ticket/view/{{customer.id_ticket}}">
+                  <div class="list" [ngClass]="{'inboxR': customer.total}" style="height: 100px;" (contextmenu)="onRightClick($event, customer)" *ngFor="let customer of inbox | filtermine: searchInbox" routerLink="/ticket/view/{{customer.id_ticket}}">
                     <div style="float:left;">
                         <img class="list-icon" style="border-radius: 50%;" src="assets/msg.png" width="50" height="48"  alt="Avatar Badge"> 
                       <br>
                         <span>{{customer.objectid}}</span>
                       <br>
-                      <span  >{{customer.cfirst_name + ' ' +  customer.clast_name}}</span>
+                      <span  >{{
+                        ((customer.cfirst_name) ? (((customer.cfirst_name.length > 9) ? (customer.cfirst_name | slice:0:9) +'..' : customer.cfirst_name) + ' ' + ((customer.clast_name.length > 9) ? (customer.clast_name | slice:0:9)+'..' : customer.clast_name)) : '')
+                        }}</span>
                       <label class="switch-original ">
                         <input type="checkbox" [(ngModel)]="customer.letter_generated" disabled >
                         <span class="check"></span>
