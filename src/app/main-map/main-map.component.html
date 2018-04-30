@@ -1,12 +1,21 @@
-<div #map id="map">
-  <div style="position: relative; top: 0; z-index: 3000;" class="dropdown-button place-right">
+<div id="main" style="height: 100%"  ondragover="return false;"(dragenter)="handleDragEnter()"
+      (dragleave)="handleDragLeave()"
+      (drop)="handleDrop($event)">
+
+  <app-quick-pick-list [picks]="quickPickCollections" *ngIf="displayCollection"></app-quick-pick-list>
+
+<div #map id="map"  ondragover="return false;">
+  <div #base style="position: absolute;right: 0; z-index: 3000;" class="dropdown-button place-right">
     <button class="button rounded dropdown-toggle">Basemaps</button>
-    <ul class="split-content d-menu place-right" data-role="dropdown">
-        <li><a >Original</a></li>
-        <li><a >Aerial</a></li>
-        <li><a >Google</a></li>
+    <ul class="split-content d-menu place-right" style="min-width: 0;" data-role="dropdown">
+        <li><a (click)="changeBase(mapflex)">Original</a></li>
+        <li><a (click)="changeBase(wms)">Aerial</a></li>
+        <li><a (click)="changeBase(google)">Google</a></li>
     </ul>
   </div>
 </div>
+
+</div>
+
 
 
