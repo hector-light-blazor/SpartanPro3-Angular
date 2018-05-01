@@ -161,6 +161,7 @@ export class MainMapComponent implements OnInit {
         reader64.onload = this._handleBase64Loaded.bind(this);
         // <<<<GET THE PICTURE NAME>>>>
         this.quickPickCollections.push({name: this.files[0].name});
+       // this.files[0].getAsDataURL();
         reader.readAsArrayBuffer(this.files[0]); 
        // reader64.readAsDataURL(this.files[0]);
 
@@ -197,13 +198,14 @@ export class MainMapComponent implements OnInit {
 
      // Add to the current array.
      // From Blob array create URL
-     var myImgDat = new ImageData(100, 100);
-
-     myImgDat.data.set(reader.result);
+     var arrayBufferView = new Uint8Array( reader.result );
+     var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
+     var urlCreator = window.URL;
+     var imageUrl = urlCreator.createObjectURL( blob );
   
      this.quickPickCollections[this.quickPickCollections.length - 1]['pnt'] = pnt;
-     this.quickPickCollections[this.quickPickCollections.length - 1]['src'] = myImgDat;
-     console.log(this.quickPickCollections);
+     this.quickPickCollections[this.quickPickCollections.length - 1]['src'] = imageUrl;
+      console.log(this.quickPickCollections);
      this.quickPickBase.add(new this.app.esriGraphic(pnt, this.pointSymbol));
   }
 
