@@ -1,4 +1,5 @@
 import { Component,ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
 import { AppService } from '../app.service';
 import * as EXIF from "exif-js/exif"
 
@@ -31,7 +32,7 @@ export class MainMapComponent implements OnInit {
   quickPickCollections: Array<any> = []; // Collect all the photos into array for future process...
   displayCollection: boolean = false;
 
-  constructor(private app: AppService) { }
+  constructor(private app: AppService, private sanitizer: DomSanitizer) { }
 
   
   // Gets call by angular that is ready..
@@ -204,7 +205,7 @@ export class MainMapComponent implements OnInit {
      var imageUrl = urlCreator.createObjectURL( blob );
   
      this.quickPickCollections[this.quickPickCollections.length - 1]['pnt'] = pnt;
-     this.quickPickCollections[this.quickPickCollections.length - 1]['src'] = imageUrl;
+     this.quickPickCollections[this.quickPickCollections.length - 1]['src'] = this.sanitizer.bypassSecurityTrustUrl(imageUrl); // this will fix the unsafe blob image..
       console.log(this.quickPickCollections);
      this.quickPickBase.add(new this.app.esriGraphic(pnt, this.pointSymbol));
   }
