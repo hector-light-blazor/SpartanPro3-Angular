@@ -1,9 +1,11 @@
 <div id="container">
-    <div id="sub" *ngFor="let pick of picks">
+    <div id="sub" *ngFor="let pick of picks; let i = index">
         <div id="piccontainer">
             <div class="image-container bordered">
                 <div class="frame">
+                    <span>{{pick.name}}</span>
                   <img [src]="pick.src">
+                  <button (click)="removeElement(pick, i)" class="button rounded danger">Delete</button>
                 </div>
               </div>
         </div>

@@ -57,14 +57,14 @@ export class AppComponent {
 
 
       // Process the msag polygon...
-      if(this.appService.msagObject) {
-        this.appService.msagObject.forEach(element => {
+      // if(this.appService.msagObject) {
+      //   this.appService.msagObject.forEach(element => {
 
-            // console.log(element);
-            element.geo = new this.appService.esriPolygon(element.geo.coordinates[0]);
-         });
-        console.log(this.appService.msagObject);
-      }
+      //       // console.log(element);
+      //       element.geo = new this.appService.esriPolygon(element.geo.coordinates[0]);
+      //    });
+      //   console.log(this.appService.msagObject);
+      // }
     
 
 

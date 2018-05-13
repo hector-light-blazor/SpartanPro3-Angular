@@ -1,0 +1,10 @@
+#search {
+    position: absolute;
+    left: 10px;
+    z-index: 4000;
+    width: 300px;
+    opacity: 0.3;
+}
+#search:hover{
+    opacity: 1;
+}

@@ -1,0 +1,33 @@
+<div id="container">
+        <div class="toolbar">
+                <div class="toolbar-section">
+                    <label >Identify Results</label>
+                    <button (click)="onClose()" class="toolbar-button">X</button>
+                   
+                </div>
+            </div>
+  <div id="sub" *ngFor="let item of list; let i = index">
+
+    <div class="panel">
+        <div class="heading">
+            <span class="title">{{item.layerName}}</span>
+            <button (click)="viewFeature(item, i)" class="button cycle-button">
+                <i *ngIf="!item.display" class="fa fa-plus"></i>
+                <i *ngIf="item.display"  class="fa fa-minus"></i>
+            </button>
+        </div>
+        <div *ngIf="item.display" class="content">
+                <table class="table"  style="padding-left:100px;" cellspacing="0" cellpadding="5" border="0">
+                        <tbody>
+                            <tr *ngFor="let item of item.feature.attributes | keys">
+                                <td>{{item.key}}:</td><td>{{item.value}}</td></tr>
+                        </tbody>
+                </table>
+        </div>
+    </div>
+      
+      
+      <div id="line"></div>
+      <br>
+  </div>
+</div>

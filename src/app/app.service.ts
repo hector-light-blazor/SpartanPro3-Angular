@@ -88,7 +88,8 @@ export class AppService {
 
   toolbarActivies: TOOL_ACTIONS = {TICKET_SAVE_TRANSFER: 1, 
     TICKET_ARCHIVE: 2, TICKET_DELETE: 3, TICKET_INSERT_COMMENT: 4, TICKET_ESRI_MAP: 5, TICKET_ESRI_IMAGERY: 6,
-    TICKET_DISPLAY_ATTACHMENT: 7, TICKET_LIST_ATTACHMENTS: 8, TICKET_GOOGLE_MAP: 9, TICKET_LETTER: 10
+    TICKET_DISPLAY_ATTACHMENT: 7, TICKET_LIST_ATTACHMENTS: 8, TICKET_GOOGLE_MAP: 9, TICKET_LETTER: 10,
+    MAP_IDENTIFY: 11
   };
 
   // Sends information to app component from login component..
@@ -135,6 +136,8 @@ export class AppService {
   esriEasing: any = null;
   esriQuery: any = null;
   esriQueryTask: any = null;
+  esriIdentifyTask: any = null;
+  esriIdentifyParams: any = null;
   mapFlexBaseMap: any = null;
   imageryLayer: any = null;
   mapFlexURL: string = "https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/MapFlex3/MapServer";
@@ -203,10 +206,10 @@ export class AppService {
     "esri/toolbars/edit", 'esri/layers/WMTSLayer', 'esri/layers/GraphicsLayer','esri/layers/WMTSLayerInfo',
     'esri/layers/ArcGISDynamicMapServiceLayer', "esri/Color", "esri/geometry/Point", "esri/geometry/Circle", 
     "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",'esri/symbols/SimpleFillSymbol', "esri/symbols/PictureMarkerSymbol",
-    "esri/tasks/query", "esri/tasks/QueryTask",
+    "esri/tasks/query", "esri/tasks/QueryTask", "esri/tasks/IdentifyTask", "esri/tasks/IdentifyParameters",
 	'esri/geometry/Polygon', 'dojo/fx', 'dojo/_base/fx', 'dojo/fx/easing'], options)
     .then(([Map,Config, Graphic, webMercatorUtils, Edit, WMTSLayer,GraphicsLayer,WMTSLayerInfo, ArcGISDynamicMapServiceLayer, Color, 
-      Point, Circle, SimpleMarkerSymbol, SimpleLineSymbol,SimpleFillSymbol,PictureMarkerSymbol, Query, QueryTask, Polygon, coreFx, fx, easing]) => {
+      Point, Circle, SimpleMarkerSymbol, SimpleLineSymbol,SimpleFillSymbol,PictureMarkerSymbol, Query, QueryTask,IdentifyTask, IdentifyParameters,  Polygon, coreFx, fx, easing]) => {
 
     this.esriMap            = Map;
     this.esriConfig         = Config;
@@ -231,7 +234,8 @@ export class AppService {
 	  this.esriSimpleLineSymbol   = SimpleLineSymbol;
 	  this.esriSimpleFillSymbol   = SimpleFillSymbol;
     this.esriPolygon      = Polygon;
-
+    this.esriIdentifyTask = IdentifyTask;
+    this.esriIdentifyParams = IdentifyParameters;
       // Create Dynamic Object to re-use
       this.mapFlexBaseMap = new ArcGISDynamicMapServiceLayer(this.mapFlexURL);
 
@@ -300,6 +304,7 @@ interface TOOL_ACTIONS {
   TICKET_LIST_ATTACHMENTS?: number;
   TICKET_GOOGLE_MAP?: number;
   TICKET_LETTER?: number;
+  MAP_IDENTIFY?: number;
 }
 
 interface API_ROUTES {

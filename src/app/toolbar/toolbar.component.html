@@ -307,6 +307,19 @@
                               <div class="tab-group-caption">Display</div>
                           </div>
                           <div class="tab-panel-group">
+                             <div class="tab-group-content">
+                                <button    class="fluent-big-button">
+                                    <img src="assets/measuring-tool.png" alt="M">
+                                    <span class="label">Measure</span>
+                                </button>
+                                <button (click)="actionSendToolBar(app.toolbarActivies.MAP_IDENTIFY)"  class="fluent-big-button">
+                                    <img src="assets/identify-tool.png" alt="M">
+                                    <span class="label">Identify</span>
+                                </button>
+                             </div>
+                             <div class="tab-group-caption">Tools</div>
+                          </div>
+                          <!-- <div class="tab-panel-group">
                               <div class="tab-group-content">
                                   <button [routerLink]="['uploadQuickPick']" class="fluent-big-button">
                                       <i class="fa fa-upload" aria-hidden="true"></i>
@@ -317,7 +330,7 @@
                                   </button>
                               </div>
                               <div class="tab-group-caption">QuickPick</div>
-                          </div>
+                          </div> -->
                       </div>
                       <!-- End of Map -->
                       <!-- Start of Settings... -->

@@ -166,6 +166,9 @@ export class ToolbarComponent implements OnInit {
           
           this.app.toolbarActions.next({action: action, data: null});
           break;
+        case this.app.toolbarActivies.MAP_IDENTIFY:
+          this.app.toolbarActions.next({action: action, data: null});
+          break;
         default:
           break;
       }

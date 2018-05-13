@@ -1,10 +1,10 @@
 #container {
     position: absolute;
     left: 0;
-    width: 300px;
+    width: 350px;
     height: 70%;
     z-index: 4000;
-    background: white;
+    background: #303030;
     cursor: pointer;
     overflow: auto;
    
@@ -16,4 +16,8 @@
 
 #line {
     border-bottom: 1px solid #e6e6e6;
+}
+
+#sub {
+    padding: 10px 10px 0;
 }

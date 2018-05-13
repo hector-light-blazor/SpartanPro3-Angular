@@ -2,6 +2,8 @@ import { Component,ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/cor
 import {DomSanitizer} from '@angular/platform-browser';
 import { AppService } from '../app.service';
 import * as EXIF from "exif-js/exif"
+import { MapServiceService } from '../map-service.service';
+
 
 @Component({
   selector: 'app-main-map',
@@ -23,7 +25,7 @@ export class MainMapComponent implements OnInit {
   mapflex: number = 0;
   wms: number = 1;
   google: number =2;
-  
+  displayIdentify: boolean = false;
   dragging: boolean = false;
   files: Array<File>;
   fileName: string = "Waiting...";
@@ -31,8 +33,10 @@ export class MainMapComponent implements OnInit {
   pointSymbol: any = null; //holds the point symbol...
   quickPickCollections: Array<any> = []; // Collect all the photos into array for future process...
   displayCollection: boolean = false;
+  collectionIndex: number = 0;
+  isAlive: boolean = true;
 
-  constructor(private app: AppService, private sanitizer: DomSanitizer) { }
+  constructor(private app: AppService,private mapService: MapServiceService, private sanitizer: DomSanitizer) { }
 
   
   // Gets call by angular that is ready..
@@ -43,6 +47,27 @@ export class MainMapComponent implements OnInit {
     
     document.body.style.overflow = 'hidden';
 
+
+    // =-=-= GOINT TO CONTROL ALL THE TOOL BAR ACTIONS =-=-=-=-=
+    this.app.toolbarActions.takeWhile(() => this.isAlive).subscribe(action => {
+
+        // Send it to map Service to make the decision...
+       switch (action.action) {
+        case this.app.toolbarActivies.MAP_IDENTIFY:
+          this.mapService.iOn = true;
+          this.map.setCursor("pointer")
+          break;
+      
+        default:
+          break;
+      }
+
+    
+    })
+
+    // Setup some tools
+    this.mapService.identifyObject = new this.app.esriIdentifyTask(this.app.mapFlexURL);
+    this.mapService.identifyParams = new this.app.esriIdentifyParams()
     //=-=-= INIT MAP =-=-=
     this.initMap();
   }
@@ -51,7 +76,17 @@ export class MainMapComponent implements OnInit {
 
   ngOnDestroy() {
     document.body.style.overflow = 'auto';
-    this.map.destroy(); // Destroy the map instance...
+
+    this.isAlive = false;
+
+    // Going to try to destroy object...
+    try {
+     
+      this.map.destroy(); // Destroy the map instance...
+    } catch (error) {
+      
+    }
+    
   }
 
 
@@ -59,6 +94,8 @@ export class MainMapComponent implements OnInit {
 
   // =-=-=-= INIT MAP =-=-=-=
   initMap() {
+
+    let _self = this;
      // Setup PROXY IF NOT BEEN ALREADY this only applies to esri
      this.app.esriConfig.defaults.io.proxyUrl = this.app.proxyUrl
 
@@ -69,6 +106,17 @@ export class MainMapComponent implements OnInit {
         slider: false,
         isDoubleClickZoom: false
      });
+
+     // Set the map object..
+     this.mapService.setMapObj(this.map);
+
+     // FINISH THE INDENTIFY PARAMS.....
+     this.mapService.identifyParams.tolerance = 3;
+     this.mapService.identifyParams.returnGeometry = true;
+     this.mapService.identifyParams.layerIds = [1, 8, 11, 46];
+     this.mapService.identifyParams.layerOption = this.app.esriIdentifyParams.LAYER_OPTION_ALL;
+     this.mapService.identifyParams.width = this.map.width;
+     this.mapService.identifyParams.height = this.map.height;
 
 
      // TESTING POINT SYMBOL
@@ -105,6 +153,40 @@ export class MainMapComponent implements OnInit {
        this.map.addLayers([this.mapWMSBase,this.mapFlexBase, this.skeletonFlexBase, this.quickPickBase]);
 
 
+
+       // Setup Listeners...
+
+       this.map.on("extent-change", object => {
+
+          // Time outs on extent change..
+          setTimeout(() => {
+            if(_self.mapService.iOn) {
+              _self.map.setCursor("pointer");
+            }
+          }, 300);
+
+       });
+
+       this.map.on('click', object => {
+          
+        // Identifies layers..
+        if(this.mapService.iOn) {
+            this.mapService.identifyParams.geometry = object.mapPoint;
+            this.mapService.identifyParams.mapExtent = this.map.extent;
+            var deferred = this.mapService.identifyObject.execute(this.mapService.identifyParams).addCallback(response => {
+
+               response.forEach(element => {
+                  element.display = false;
+               });
+
+               this.mapService.identifyResponse = response;
+               this.mapService.iOn = false;
+               this.displayIdentify = true;
+            });
+
+          }
+
+       });
       
 
   }
@@ -128,6 +210,14 @@ export class MainMapComponent implements OnInit {
 
   }
 
+  //=-=-=-=-=-= REMOVE GRAPHICS FROM QPICK =-=-=-=-=
+  removeQPick(graphic) {
+
+    // REmove the selected graphic..
+    this.quickPickBase.remove(graphic.graphic);
+    this.displayCollection = (this.quickPickBase.graphics.length > 0) ? true : false; // If Less than 0 graphics then hide left panel..
+  }
+
 
   // =-=-=-=-=-=-=-= THIS IS FOR DRAG AND DROP FILES TO VIEW ON MAP SUCH AS QUICK PICK =-=-=-=-=-=-=-=-=-=-=-=-=-=
       handleDragEnter() {
@@ -147,50 +237,96 @@ export class MainMapComponent implements OnInit {
       }
 
 
-    handleInputChange(e) {
+    async handleInputChange(e) {
+
+      let _self = this;
       this.files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
-     
+        var reader = new FileReader();
+
+        // Once Loaded process
+        reader.onload = this._handleReaderLoaded.bind(this);
+
+    
+
       if(!this.displayCollection) {
         this.displayCollection = true;
       }
+
       if(this.files.length == 1) {
 
-
-        var reader = new FileReader();
-        var reader64 = new FileReader();
-        reader.onload = this._handleReaderLoaded.bind(this);
-        reader64.onload = this._handleBase64Loaded.bind(this);
+      
         // <<<<GET THE PICTURE NAME>>>>
         this.quickPickCollections.push({name: this.files[0].name});
-       // this.files[0].getAsDataURL();
+      
         reader.readAsArrayBuffer(this.files[0]); 
-       // reader64.readAsDataURL(this.files[0]);
+      
 
       }else if(this.files.length > 1) {
+          this.collectionIndex = 0;//this.files.length - 1;
+          for(var i = 0; i < this.files.length; i++) {
+             var promise = Promise.resolve();
+            // console.log("HEY " + i)
 
-          var length = this.files.length;
-          for(var i = 0; i < length; i++) {
-            var reader = new FileReader();
-            var reader64 = new FileReader();
-
-            this.quickPickCollections.push({name: this.files[i].name});
-            
+             await this.pFileReader(this.files[i]).then(e => {
+                // console.log(e);
+                // console.log(_self.files[_self.collectionIndex].name);
+                _self._processMultiple(e, _self.files[_self.collectionIndex].name);
+                _self.collectionIndex++;
+             });
+          
           }
+
       }
       
   }
 
-  _handleBase64Loaded(e) {
-    var target = e.target;
-    this.quickPickCollections[this.quickPickCollections.length - 1]['src'] = target.result;
+ async pFileReader(file): Promise<any>{
+    return await new Promise((resolve, reject) => {
+      var fr = new FileReader();  
+      fr.onload = resolve;  // CHANGE to whatever function you want which would eventually call resolve
+      fr.readAsArrayBuffer(file);
+    });
   }
+ 
+
+  
+ _processMultiple(e, name) {
+  //  console.log(e)
+  var reader = e.target;
+    
+  // GET EXIF BINARY FILE
+  var exif = EXIF.readFromBinaryFile(reader.result);
+  
+  // GET GPS LONGY AND LAT
+  var lng = this.toDecimal(exif.GPSLongitude, exif.GPSLongitudeRef);
+  var lat = this.toDecimal(exif.GPSLatitude, exif.GPSLatitudeRef);
+ 
+ // console.log(this);
+  var pnt = new this.app.esriPoint(lng, lat);
+
+  // Add to the current array.
+  // From Blob array create URL
+  var arrayBufferView = new Uint8Array( reader.result );
+  var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
+  var urlCreator = window.URL;
+  var imageUrl = urlCreator.createObjectURL( blob );
+  let graphic = new this.app.esriGraphic(pnt, this.pointSymbol)
+  this.quickPickCollections.push({graphic: graphic, pnt:  pnt, src: this.sanitizer.bypassSecurityTrustUrl(imageUrl), name: name});
+ //this.quickPickCollections[this.quickPickCollections.length - 1]['src'] = this.sanitizer.bypassSecurityTrustUrl(imageUrl); // this will fix the unsafe blob image..
+ 
+ // console.log("DONE");
+  this.quickPickBase.add(graphic);
+ }
+
 
   _handleReaderLoaded(e) {
-    var reader = e.target;
+    //  console.log(e)
+     var reader = e.target;
     
+     // GET EXIF BINARY FILE
      var exif = EXIF.readFromBinaryFile(reader.result);
-     
-     
+    // console.log(exif);
+     // GET GPS LONGY AND LAT
      var lng = this.toDecimal(exif.GPSLongitude, exif.GPSLongitudeRef);
      var lat = this.toDecimal(exif.GPSLatitude, exif.GPSLatitudeRef);
      
@@ -203,11 +339,13 @@ export class MainMapComponent implements OnInit {
      var blob = new Blob( [ arrayBufferView ], { type: "image/jpeg" } );
      var urlCreator = window.URL;
      var imageUrl = urlCreator.createObjectURL( blob );
-  
+    
+     let name = this.quickPickCollections[this.quickPickCollections.length - 1]['name'];
      this.quickPickCollections[this.quickPickCollections.length - 1]['pnt'] = pnt;
      this.quickPickCollections[this.quickPickCollections.length - 1]['src'] = this.sanitizer.bypassSecurityTrustUrl(imageUrl); // this will fix the unsafe blob image..
-      console.log(this.quickPickCollections);
-     this.quickPickBase.add(new this.app.esriGraphic(pnt, this.pointSymbol));
+     let graphic = this.quickPickCollections[this.quickPickCollections.length - 1]['graphic'] = new this.app.esriGraphic(pnt, this.pointSymbol, {name: name})
+     //console.log(this.quickPickCollections);
+     this.quickPickBase.add(graphic);
   }
 
     // Convert decimal degrees

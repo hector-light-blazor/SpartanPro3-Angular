@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   
   cookie: Array<string> = [];
   constructor(private _appService: AppService, private router: Router) { 
-    console.log(document.cookie);
+   
     if(document.cookie) {
        // Lets Process the cookie
       

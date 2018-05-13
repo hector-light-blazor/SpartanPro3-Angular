@@ -14,6 +14,10 @@ import { ArchiveTicketListComponent } from './archive-ticket-list/archive-ticket
 import { AppService } from './app.service';
 import { MainMapComponent } from './main-map/main-map.component';
 import { QuickPickListComponent } from './quick-pick-list/quick-pick-list.component';
+import { SearchAddressComponent } from './search-address/search-address.component';
+import { MapServiceService } from './map-service.service';
+import { IdentifyListComponent } from './identify-list/identify-list.component';
+import { KeysPipe } from './keys.pipe';
 
 
 @NgModule({
@@ -23,7 +27,10 @@ import { QuickPickListComponent } from './quick-pick-list/quick-pick-list.compon
     LoginComponent,
     ArchiveTicketListComponent,
     MainMapComponent,
-    QuickPickListComponent
+    QuickPickListComponent,
+    SearchAddressComponent,
+    IdentifyListComponent,
+    KeysPipe
   ],
   imports: [
     BrowserModule,
@@ -32,7 +39,7 @@ import { QuickPickListComponent } from './quick-pick-list/quick-pick-list.compon
     NotificationsModule,
     SharedModule
   ],
-  providers: [AppService],
+  providers: [AppService, MapServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
