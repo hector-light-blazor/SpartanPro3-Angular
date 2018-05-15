@@ -30,3 +30,7 @@ a{
 .fluent-big-button:hover{
     background-color: #1d1d1d;
 }
+
+.hideContent {
+    display: none;
+}

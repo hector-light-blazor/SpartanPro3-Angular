@@ -21,6 +21,7 @@ export class MainMapComponent implements OnInit {
   mapFlexBase: any = null;
   skeletonFlexBase: any = null;
   quickPickBase: any = null;
+  graphicLayer: any = null;
   mapWMSBase: any = null;
   mapflex: number = 0;
   wms: number = 1;
@@ -31,6 +32,8 @@ export class MainMapComponent implements OnInit {
   fileName: string = "Waiting...";
   fileLoaded:boolean = false;
   pointSymbol: any = null; //holds the point symbol...
+  polygonSymbol: any = null; // holds the polygon symbol....
+  lineSymbol: any = null; // holds the polyline symbol..
   quickPickCollections: Array<any> = []; // Collect all the photos into array for future process...
   displayCollection: boolean = false;
   collectionIndex: number = 0;
@@ -66,10 +69,17 @@ export class MainMapComponent implements OnInit {
     })
 
     // Setup some tools
-    this.mapService.identifyObject = new this.app.esriIdentifyTask(this.app.mapFlexURL);
-    this.mapService.identifyParams = new this.app.esriIdentifyParams()
-    //=-=-= INIT MAP =-=-=
-    this.initMap();
+    try {
+      this.mapService.identifyObject = new this.app.esriIdentifyTask(this.app.mapFlexURL);
+      this.mapService.identifyParams = new this.app.esriIdentifyParams()
+       //=-=-= INIT MAP =-=-=
+      this.initMap();
+    } catch (error) {
+      console.log(error);
+      console.log("FAILED TO LOAD MAP")
+    }
+  
+   
   }
 
   // Gets call when angular componenet is destroy
@@ -113,7 +123,7 @@ export class MainMapComponent implements OnInit {
      // FINISH THE INDENTIFY PARAMS.....
      this.mapService.identifyParams.tolerance = 3;
      this.mapService.identifyParams.returnGeometry = true;
-     this.mapService.identifyParams.layerIds = [1, 8, 11, 46];
+     this.mapService.identifyParams.layerIds = [1, 8, 11, 46, 33];
      this.mapService.identifyParams.layerOption = this.app.esriIdentifyParams.LAYER_OPTION_ALL;
      this.mapService.identifyParams.width = this.map.width;
      this.mapService.identifyParams.height = this.map.height;
@@ -130,6 +140,19 @@ export class MainMapComponent implements OnInit {
       ), 
       new this.app.esriColor([220,20,60])
       );
+
+      this.lineSymbol = new this.app.esriSimpleLineSymbol(
+        this.app.esriSimpleLineSymbol.STYLE_SOLID,
+        new this.app.esriColor([0, 0, 0]), 
+        4
+        )
+
+
+      this.polygonSymbol = new this.app.esriSimpleFillSymbol(this.app.esriSimpleFillSymbol.STYLE_SOLID,
+          new this.app.esriSimpleLineSymbol(this.app.esriSimpleLineSymbol.STYLE_DASHDOT,
+          new this.app.esriColor([0, 0, 0]), 4),new this.app.esriColor([12, 227, 172, 0.2])
+          );
+
 
       // Create Dynamic Map..
       this.mapFlexBase = new this.app.esriDynamicLayer(this.app.mapFlexURL);
@@ -148,9 +171,11 @@ export class MainMapComponent implements OnInit {
 
       this.quickPickBase = new this.app.esriGraphicsLayer();
 
+      this.graphicLayer = new this.app.esriGraphicsLayer();
+
       // Lets Load Layers to the map object...
        // add layer...
-       this.map.addLayers([this.mapWMSBase,this.mapFlexBase, this.skeletonFlexBase, this.quickPickBase]);
+       this.map.addLayers([this.mapWMSBase,this.mapFlexBase, this.skeletonFlexBase, this.quickPickBase, this.graphicLayer]);
 
 
 
@@ -182,6 +207,7 @@ export class MainMapComponent implements OnInit {
                this.mapService.identifyResponse = response;
                this.mapService.iOn = false;
                this.displayIdentify = true;
+               this.map.setCursor("default");
             });
 
           }
@@ -268,8 +294,7 @@ export class MainMapComponent implements OnInit {
             // console.log("HEY " + i)
 
              await this.pFileReader(this.files[i]).then(e => {
-                // console.log(e);
-                // console.log(_self.files[_self.collectionIndex].name);
+               
                 _self._processMultiple(e, _self.files[_self.collectionIndex].name);
                 _self.collectionIndex++;
              });
@@ -312,9 +337,7 @@ export class MainMapComponent implements OnInit {
   var imageUrl = urlCreator.createObjectURL( blob );
   let graphic = new this.app.esriGraphic(pnt, this.pointSymbol)
   this.quickPickCollections.push({graphic: graphic, pnt:  pnt, src: this.sanitizer.bypassSecurityTrustUrl(imageUrl), name: name});
- //this.quickPickCollections[this.quickPickCollections.length - 1]['src'] = this.sanitizer.bypassSecurityTrustUrl(imageUrl); // this will fix the unsafe blob image..
  
- // console.log("DONE");
   this.quickPickBase.add(graphic);
  }
 
@@ -358,6 +381,34 @@ export class MainMapComponent implements OnInit {
 
       return flip * response;
   };
+
+
+  // Zoom And Flash...
+  zoomAndFlash(feature) {
+
+    // First all Graphics in the layer
+    this.graphicLayer.clear();
+
+   // What geometry type to check...
+   switch (feature.geometry.type) {
+     case new this.app.esriPoint().type:
+       this.graphicLayer.add(new this.app.esriGraphic(feature.geometry, this.pointSymbol));
+       let circle = this.app.esriCircle(feature.geometry, {"radius": 300});
+       
+       this.map.setExtent(circle.getExtent());
+       break;
+     case new this.app.esriPolyline().type:
+        this.graphicLayer.add(new this.app.esriGraphic(feature.geometry, this.lineSymbol));
+        this.map.setExtent(feature.geometry.getExtent())
+        break;
+     case new this.app.esriPolygon().type:
+        this.graphicLayer.add(new this.app.esriGraphic(feature.geometry, this.polygonSymbol));
+        this.map.setExtent(feature.geometry.getExtent())
+        break;
+     default:
+       break;
+   }
+  }
 
     
 

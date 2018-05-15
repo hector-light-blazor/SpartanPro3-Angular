@@ -18,8 +18,7 @@ import { SearchAddressComponent } from './search-address/search-address.componen
 import { MapServiceService } from './map-service.service';
 import { IdentifyListComponent } from './identify-list/identify-list.component';
 import { KeysPipe } from './keys.pipe';
-
-
+import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +34,7 @@ import { KeysPipe } from './keys.pipe';
   imports: [
     BrowserModule,
     HttpClientModule,
+    NguiAutoCompleteModule,
     AppRoutingModule,
     NotificationsModule,
     SharedModule

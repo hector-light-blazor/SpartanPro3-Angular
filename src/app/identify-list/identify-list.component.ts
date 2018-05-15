@@ -12,6 +12,7 @@ export class IdentifyListComponent implements OnInit {
   selectionIndex: number = -1;
 
   @Output() close = new EventEmitter();
+  @Output() display = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
@@ -30,7 +31,9 @@ export class IdentifyListComponent implements OnInit {
      this.selection = feature;
      this.selectionIndex = i
 
-
+     // Only if the feature is display true
+     if(feature.display) 
+         this.display.emit(feature.feature);
     
 
   }
@@ -38,6 +41,21 @@ export class IdentifyListComponent implements OnInit {
   onClose() {
 
       this.close.emit(false);
+  }
+
+  onMini() {
+     // Make the identify window minimized...
+     var container = document.getElementById("container");
+     var arrow = document.getElementById("arrow");
+     container.style.display = 'none';
+     arrow.style.display = "block"
+  }
+  unMini() {
+
+    var container = document.getElementById("container")
+    var arrow = document.getElementById('arrow')
+    container.style.display = "block"
+    arrow.style.display = "none"
   }
 
 }

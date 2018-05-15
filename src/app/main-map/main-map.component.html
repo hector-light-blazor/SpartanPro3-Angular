@@ -2,11 +2,11 @@
       (dragleave)="handleDragLeave()"
       (drop)="handleDrop($event)">
   <app-search-address></app-search-address>
-  <app-identify-list (close)="displayIdentify = false;" [list]="mapService.identifyResponse" *ngIf="displayIdentify"></app-identify-list>
+  <app-identify-list (display)="zoomAndFlash($event)" (close)="displayIdentify = false;graphicLayer.clear();" [list]="mapService.identifyResponse" *ngIf="displayIdentify"></app-identify-list>
   <app-quick-pick-list (remove)="removeQPick($event)" [picks]="quickPickCollections" *ngIf="displayCollection"></app-quick-pick-list>
 
 <div #map id="map"  ondragover="return false;">
-  <div #base style="position: absolute;right: 0; z-index: 3000;" class="dropdown-button place-right">
+  <div #base style="position: absolute;right: 0; z-index: 2500;" class="dropdown-button place-right baseStyle">
     <button class="button rounded dropdown-toggle">Basemaps</button>
     <ul class="split-content d-menu place-right" style="min-width: 0;" data-role="dropdown">
         <li><a (click)="changeBase(mapflex)">Original</a></li>

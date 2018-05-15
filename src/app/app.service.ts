@@ -118,6 +118,8 @@ export class AppService {
   esriConfig: any = null;
   esriGraphic: any = null;
   esriwebMercatorUtils: any = null;
+  esrigeometryEngine: any = null;
+  esriDraw: any = null;
   esriEdit: any = null;
   esriGraphicsLayer: any = null;
   esriWMTSLayer: any = null;
@@ -131,6 +133,7 @@ export class AppService {
   esriSimpleFillSymbol = null;
   esriPictureMarkerSymbol: any = null;
   esriPolygon: any = null;
+  esriPolyline: any = null;
   esriCoreFx: any = null;
   esriFx: any = null;
   esriEasing: any = null;
@@ -202,14 +205,14 @@ export class AppService {
       url: 'https://js.arcgis.com/3.23/'
     };
 
-    esriLoader.loadModules(['esri/map','esri/config','esri/graphic', "esri/geometry/webMercatorUtils",
-    "esri/toolbars/edit", 'esri/layers/WMTSLayer', 'esri/layers/GraphicsLayer','esri/layers/WMTSLayerInfo',
-    'esri/layers/ArcGISDynamicMapServiceLayer', "esri/Color", "esri/geometry/Point", "esri/geometry/Circle", 
+    esriLoader.loadModules(['esri/map','esri/config','esri/graphic', "esri/geometry/webMercatorUtils","esri/geometry/geometryEngine",
+    "esri/toolbars/edit","esri/toolbars/draw", 'esri/layers/WMTSLayer', 'esri/layers/GraphicsLayer','esri/layers/WMTSLayerInfo',
+    'esri/layers/ArcGISDynamicMapServiceLayer', "esri/Color", "esri/geometry/Point","esri/geometry/Polyline", "esri/geometry/Circle", 
     "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",'esri/symbols/SimpleFillSymbol', "esri/symbols/PictureMarkerSymbol",
     "esri/tasks/query", "esri/tasks/QueryTask", "esri/tasks/IdentifyTask", "esri/tasks/IdentifyParameters",
 	'esri/geometry/Polygon', 'dojo/fx', 'dojo/_base/fx', 'dojo/fx/easing'], options)
-    .then(([Map,Config, Graphic, webMercatorUtils, Edit, WMTSLayer,GraphicsLayer,WMTSLayerInfo, ArcGISDynamicMapServiceLayer, Color, 
-      Point, Circle, SimpleMarkerSymbol, SimpleLineSymbol,SimpleFillSymbol,PictureMarkerSymbol, Query, QueryTask,IdentifyTask, IdentifyParameters,  Polygon, coreFx, fx, easing]) => {
+    .then(([Map,Config, Graphic, webMercatorUtils,geometryEngine, Edit,Draw, WMTSLayer,GraphicsLayer,WMTSLayerInfo, ArcGISDynamicMapServiceLayer, Color, 
+      Point,Polyline, Circle, SimpleMarkerSymbol, SimpleLineSymbol,SimpleFillSymbol,PictureMarkerSymbol, Query, QueryTask,IdentifyTask, IdentifyParameters,  Polygon, coreFx, fx, easing]) => {
 
     this.esriMap            = Map;
     this.esriConfig         = Config;
@@ -234,6 +237,7 @@ export class AppService {
 	  this.esriSimpleLineSymbol   = SimpleLineSymbol;
 	  this.esriSimpleFillSymbol   = SimpleFillSymbol;
     this.esriPolygon      = Polygon;
+    this.esriPolyline     = Polyline;
     this.esriIdentifyTask = IdentifyTask;
     this.esriIdentifyParams = IdentifyParameters;
       // Create Dynamic Object to re-use

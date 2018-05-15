@@ -1,6 +1,7 @@
 <div id="search">
   <div class="input-control text full-size" data-role="input">
-    <input type="text" >
+     
+    <input auto-complete path-to-data="results" [(ngModel)]="myData" list-formatter="formatted_address" style="height: 38px;" [source]="googleGeoCode" type="text" >
     <button class="button"><i aria-hidden="true" class="fa fa-search"></i></button>
   </div>
 </div>

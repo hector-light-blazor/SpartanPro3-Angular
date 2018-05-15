@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-search-address',
@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchAddressComponent implements OnInit {
 
+  public googleGeoCode: string = 'https://maps.googleapis.com/maps/api/geocode/json?address=:my_own_keyword';
+  
   constructor() { }
 
   ngOnInit() {

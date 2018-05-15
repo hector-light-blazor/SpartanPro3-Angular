@@ -736,8 +736,11 @@ export class TicketComponent implements OnInit {
                 if(!this.attributes.system_assign) { // if not available is going to get gis route...
                   console.log("SYSTEM ASSIGN IS EMPTY");
                   // Lets generate gis routing... for this user..
-                  let poly = new this.app.esriPolygon(response.geometry.rings);
-                  this.gisRouting(poly.getCentroid().x, poly.getCentroid().y);
+                  if(response.geometry.rings) { // if is not undefined do something with that information...
+                    let poly = new this.app.esriPolygon(response.geometry.rings);
+                    this.gisRouting(poly.getCentroid().x, poly.getCentroid().y);
+                  }
+                 
                 }
               }
             } // end of response results length..

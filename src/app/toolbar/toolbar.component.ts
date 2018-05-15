@@ -23,7 +23,6 @@ export class ToolbarComponent implements OnInit {
   filterAvailable: boolean = false;
   isAlive: boolean = true;
   expandShow: boolean = true;
-
   qsearch: string = ''; // Controls quick search input...
   constructor(public app: AppService, private router: Router) { 
 
@@ -97,6 +96,11 @@ export class ToolbarComponent implements OnInit {
 
   toogleToolbar() {
     this.expandShow = !this.expandShow;
+    var tabs = document.getElementsByClassName("tabs-content")
+    if(this.expandShow) 
+      tabs[0]['style']['display'] = ''
+    else
+      tabs[0]['style']['display'] = 'none'
   }
 
   toogleCharm() {

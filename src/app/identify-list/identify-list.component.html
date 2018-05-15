@@ -1,11 +1,22 @@
+<div id="arrow">
+    <button (click)="unMini()" class="button">Identify Results <i class="fa fa-angle-double-right"></i></button>
+</div>
 <div id="container">
-        <div class="toolbar">
-                <div class="toolbar-section">
-                    <label >Identify Results</label>
-                    <button (click)="onClose()" class="toolbar-button">X</button>
-                   
-                </div>
+
+    <div class="window">
+        <div class="window-caption">
+            <div class="window-caption-title">Identify Results
+                    
+                <button (click)="onClose()" class="button cycle-button pull-right">X</button>
+                <button (click)="onMini()" class="button cycle-button pull-right">
+                        <i class="fa fa-window-minimize"></i>
+                </button>
             </div>
+        </div>
+    </div>
+        
+            <br>
+            <br>
   <div id="sub" *ngFor="let item of list; let i = index">
 
     <div class="panel">
