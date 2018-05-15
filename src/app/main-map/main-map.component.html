@@ -2,19 +2,14 @@
       (dragleave)="handleDragLeave()"
       (drop)="handleDrop($event)">
   <app-search-address></app-search-address>
+  <app-basemap (change)="changeBase($event)"></app-basemap>
   <app-identify-list (display)="zoomAndFlash($event)" (close)="displayIdentify = false;graphicLayer.clear();" [list]="mapService.identifyResponse" *ngIf="displayIdentify"></app-identify-list>
   <app-quick-pick-list (remove)="removeQPick($event)" [picks]="quickPickCollections" *ngIf="displayCollection"></app-quick-pick-list>
-
-<div #map id="map"  ondragover="return false;">
-  <div #base style="position: absolute;right: 0; z-index: 2500;" class="dropdown-button place-right baseStyle">
-    <button class="button rounded dropdown-toggle">Basemaps</button>
-    <ul class="split-content d-menu place-right" style="min-width: 0;" data-role="dropdown">
-        <li><a (click)="changeBase(mapflex)">Original</a></li>
-        <li><a (click)="changeBase(wms)">Aerial</a></li>
-        <li><a (click)="changeBase(google)">Google</a></li>
-    </ul>
+  <app-google-map2  [ngClass]="{'googleDisplay': displayGoogle, 'googleHide': !displayGoogle}"  [extent]="googleExtent" ></app-google-map2>
+  
+  <div #map id="map" [ngClass]="{'googleHide': displayGoogle}"  ondragover="return false;">
+   
   </div>
-</div>
 
 </div>
 

@@ -89,7 +89,7 @@ export class AppService {
   toolbarActivies: TOOL_ACTIONS = {TICKET_SAVE_TRANSFER: 1, 
     TICKET_ARCHIVE: 2, TICKET_DELETE: 3, TICKET_INSERT_COMMENT: 4, TICKET_ESRI_MAP: 5, TICKET_ESRI_IMAGERY: 6,
     TICKET_DISPLAY_ATTACHMENT: 7, TICKET_LIST_ATTACHMENTS: 8, TICKET_GOOGLE_MAP: 9, TICKET_LETTER: 10,
-    MAP_IDENTIFY: 11
+    MAP_IDENTIFY: 11, MAP_MEASURE: 12
   };
 
   // Sends information to app component from login component..
@@ -232,7 +232,8 @@ export class AppService {
     this.esriQuery          = Query;
     this.esriQueryTask      = QueryTask;
     this.esriPictureMarkerSymbol = PictureMarkerSymbol;
-	  
+    this.esriDraw = Draw;
+    this.esrigeometryEngine = geometryEngine;
 	  this.esriSimpleMarkerSymbol = SimpleMarkerSymbol;
 	  this.esriSimpleLineSymbol   = SimpleLineSymbol;
 	  this.esriSimpleFillSymbol   = SimpleFillSymbol;
@@ -309,6 +310,7 @@ interface TOOL_ACTIONS {
   TICKET_GOOGLE_MAP?: number;
   TICKET_LETTER?: number;
   MAP_IDENTIFY?: number;
+  MAP_MEASURE?:number;
 }
 
 interface API_ROUTES {

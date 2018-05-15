@@ -19,6 +19,8 @@ import { MapServiceService } from './map-service.service';
 import { IdentifyListComponent } from './identify-list/identify-list.component';
 import { KeysPipe } from './keys.pipe';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
+import { GoogleMap2Component } from './google-map2/google-map2.component';
+import { BasemapComponent } from './basemap/basemap.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +31,9 @@ import { NguiAutoCompleteModule } from '@ngui/auto-complete';
     QuickPickListComponent,
     SearchAddressComponent,
     IdentifyListComponent,
-    KeysPipe
+    KeysPipe,
+    GoogleMap2Component,
+    BasemapComponent
   ],
   imports: [
     BrowserModule,

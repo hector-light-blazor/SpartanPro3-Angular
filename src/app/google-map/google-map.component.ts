@@ -8,7 +8,7 @@ import { } from '@types/googlemaps';
 })
 export class GoogleMapComponent implements OnInit {
   @Output() onClose = new EventEmitter();
-  @Input() location: any;
+  @Input() location: any = null; // This is for single location
   @ViewChild('gmap') gmapElement: any;
   @ViewChild('window') gmapHeight: any;
 

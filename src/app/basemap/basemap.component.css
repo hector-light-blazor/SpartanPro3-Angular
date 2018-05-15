@@ -1,0 +1,7 @@
+.baseStyle {
+    opacity: 0.3;
+  }
+  .baseStyle:hover{
+    opacity: 1;
+  }
+  

@@ -14,8 +14,7 @@ export class MainMapComponent implements OnInit {
 
   // Global Variables..
   @ViewChild('map') mapObj:ElementRef; 
-  @ViewChild('base') baseObj: ElementRef;
-
+ 
   // Esri Local Variables...
   map: any = null;
   mapFlexBase: any = null;
@@ -26,6 +25,7 @@ export class MainMapComponent implements OnInit {
   mapflex: number = 0;
   wms: number = 1;
   google: number =2;
+  googleExtent: any = null;
   displayIdentify: boolean = false;
   dragging: boolean = false;
   files: Array<File>;
@@ -38,7 +38,8 @@ export class MainMapComponent implements OnInit {
   displayCollection: boolean = false;
   collectionIndex: number = 0;
   isAlive: boolean = true;
-
+  displayGoogle: boolean = false;
+  measureTool: any = null;
   constructor(private app: AppService,private mapService: MapServiceService, private sanitizer: DomSanitizer) { }
 
   
@@ -60,7 +61,8 @@ export class MainMapComponent implements OnInit {
           this.mapService.iOn = true;
           this.map.setCursor("pointer")
           break;
-      
+        case this.app.toolbarActivies.MAP_MEASURE:
+          break;
         default:
           break;
       }
@@ -116,6 +118,9 @@ export class MainMapComponent implements OnInit {
         slider: false,
         isDoubleClickZoom: false
      });
+
+     // Create the measure Tool for esri map..
+     this.measureTool = new this.app.esriDraw(this.map);
 
      // Set the map object..
      this.mapService.setMapObj(this.map);
@@ -220,6 +225,9 @@ export class MainMapComponent implements OnInit {
 
   // =-=-=-=-=-=-= CHANGE LAYERS =-=-=-=-
   changeBase(option) {
+
+    // Always hide
+      this.displayGoogle = false;
       if(option == this.mapflex){
         
         this.mapFlexBase.show();
@@ -232,6 +240,15 @@ export class MainMapComponent implements OnInit {
    
        this.mapWMSBase.show();
       
+      }
+      else if(option == this.google) {
+      
+        let extent = this.app.esriwebMercatorUtils.webMercatorToGeographic(this.map.extent);
+
+        this.displayGoogle = true;
+        this.googleExtent = extent;
+
+
       }
 
   }

@@ -1,14 +1,7 @@
 #map {
-    margin: 0; 
-    padding: 0; 
-    height: 100%;
+
+    height: calc(100% - 190px);
     width: 100%
-}
-.baseStyle {
-  opacity: 0.3;
-}
-.baseStyle:hover{
-  opacity: 1;
 }
 
 
@@ -79,4 +72,12 @@ h1{
   
   .uploader img.loaded {
     opacity: 1;
+  }
+
+  .googleDisplay {
+    display: block;
+  }
+
+  .googleHide{
+    display: none;
   }
