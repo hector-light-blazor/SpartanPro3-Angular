@@ -51,6 +51,9 @@ export class MainMapComponent implements OnInit {
     
     document.body.style.overflow = 'hidden';
 
+    // Setup the map Height....
+    var map = document.getElementById("map");
+    map.style.height = (window.innerHeight - 196) + "px";
 
     // =-=-= GOINT TO CONTROL ALL THE TOOL BAR ACTIONS =-=-=-=-=
     this.app.toolbarActions.takeWhile(() => this.isAlive).subscribe(action => {
@@ -62,6 +65,19 @@ export class MainMapComponent implements OnInit {
           this.map.setCursor("pointer")
           break;
         case this.app.toolbarActivies.MAP_MEASURE:
+          break;
+        case this.app.toolbarActivies.COLLAPSE_TOOLBAR: // If toolbar collapse...
+
+          if(action.data) {
+            // Setup the map Height....
+           var map = document.getElementById("map");
+           map.style.height = (window.innerHeight - 196) + "px";
+          }else {
+            var map = document.getElementById("map");
+          
+            map.style.height = (window.innerHeight - 60) + "px";
+          }
+          
           break;
         default:
           break;
@@ -119,8 +135,16 @@ export class MainMapComponent implements OnInit {
         isDoubleClickZoom: false
      });
 
+     // TELL MAP TO DISABLE THE KEYBOARD NA
+    this.map.disableKeyboardNavigation();
      // Create the measure Tool for esri map..
      this.measureTool = new this.app.esriDraw(this.map);
+
+
+    //  var measurement = new this.app.esriMeasurement({
+    //   map: this.map
+    //  }, document.getElementById("measurementDiv"));
+    // measurement.startup();
 
      // Set the map object..
      this.mapService.setMapObj(this.map);
@@ -128,7 +152,7 @@ export class MainMapComponent implements OnInit {
      // FINISH THE INDENTIFY PARAMS.....
      this.mapService.identifyParams.tolerance = 3;
      this.mapService.identifyParams.returnGeometry = true;
-     this.mapService.identifyParams.layerIds = [1, 8, 11, 46, 33];
+     this.mapService.identifyParams.layerIds = [2, 8, 11, 47, 34, 30, 29];
      this.mapService.identifyParams.layerOption = this.app.esriIdentifyParams.LAYER_OPTION_ALL;
      this.mapService.identifyParams.width = this.map.width;
      this.mapService.identifyParams.height = this.map.height;
@@ -219,6 +243,41 @@ export class MainMapComponent implements OnInit {
 
        });
       
+
+  }
+
+  // =-=-=-=-=-=-= SELECTED DROP DOWN SEARCH =-=-=-=-=-=-=
+  zoomToSelected(selected) {
+     //console.log(selected);
+     let geom = JSON.parse(selected.geometry);
+
+     if(geom.type == "MultiPolygon") {
+       let polygon = new this.app.esriPolygon(geom.coordinates[0]);
+       this.graphicLayer.clear();
+       this.graphicLayer.add(new this.app.esriGraphic(polygon, this.polygonSymbol));
+       this.map.setExtent(polygon.getExtent())
+     }
+     else if(geom.type == "Point") {
+        let point = new this.app.esriPoint(geom.coordinates, new this.app.esriSpatialReference({wkid: 4326}));
+        this.graphicLayer.clear();
+        this.graphicLayer.add(new this.app.esriGraphic(point, this.pointSymbol));
+        
+        let circle = this.app.esriCircle(point, {"radius": 300});
+        
+        this.map.setExtent(circle.getExtent());
+     }
+  }
+
+
+  zoomToXY(event) {
+    //console.log(event);
+    let point = new this.app.esriPoint([parseFloat(event.x), parseFloat(event.y)], new this.app.esriSpatialReference({wkid: 4326}));
+    this.graphicLayer.clear();
+    this.graphicLayer.add(new this.app.esriGraphic(point, this.pointSymbol));
+    
+    let circle = this.app.esriCircle(point, {"radius": 300});
+    
+    this.map.setExtent(circle.getExtent());
 
   }
 

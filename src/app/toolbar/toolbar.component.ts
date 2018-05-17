@@ -101,6 +101,8 @@ export class ToolbarComponent implements OnInit {
       tabs[0]['style']['display'] = ''
     else
       tabs[0]['style']['display'] = 'none'
+    
+    this.app.toolbarActions.next({action: this.app.toolbarActivies.COLLAPSE_TOOLBAR, data: this.expandShow});
   }
 
   toogleCharm() {

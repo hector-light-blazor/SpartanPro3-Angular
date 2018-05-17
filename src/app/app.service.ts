@@ -89,7 +89,7 @@ export class AppService {
   toolbarActivies: TOOL_ACTIONS = {TICKET_SAVE_TRANSFER: 1, 
     TICKET_ARCHIVE: 2, TICKET_DELETE: 3, TICKET_INSERT_COMMENT: 4, TICKET_ESRI_MAP: 5, TICKET_ESRI_IMAGERY: 6,
     TICKET_DISPLAY_ATTACHMENT: 7, TICKET_LIST_ATTACHMENTS: 8, TICKET_GOOGLE_MAP: 9, TICKET_LETTER: 10,
-    MAP_IDENTIFY: 11, MAP_MEASURE: 12
+    MAP_IDENTIFY: 11, MAP_MEASURE: 12, COLLAPSE_TOOLBAR: 13
   };
 
   // Sends information to app component from login component..
@@ -115,8 +115,10 @@ export class AppService {
 
   // =-=-=-=-= ESRI GLOBAL VARIABLES =-=-=-=-=-=-=-=
   esriMap:any = null;
+  esriSpatialReference: any = null;
   esriConfig: any = null;
   esriGraphic: any = null;
+  esriMeasurement: any = null;
   esriwebMercatorUtils: any = null;
   esrigeometryEngine: any = null;
   esriDraw: any = null;
@@ -205,18 +207,20 @@ export class AppService {
       url: 'https://js.arcgis.com/3.23/'
     };
 
-    esriLoader.loadModules(['esri/map','esri/config','esri/graphic', "esri/geometry/webMercatorUtils","esri/geometry/geometryEngine",
-    "esri/toolbars/edit","esri/toolbars/draw", 'esri/layers/WMTSLayer', 'esri/layers/GraphicsLayer','esri/layers/WMTSLayerInfo',
+    esriLoader.loadModules(['esri/map',"esri/SpatialReference" , 'esri/config','esri/graphic', "esri/geometry/webMercatorUtils","esri/geometry/geometryEngine",
+    "esri/toolbars/edit","esri/toolbars/draw","esri/dijit/Measurement", 'esri/layers/WMTSLayer', 'esri/layers/GraphicsLayer','esri/layers/WMTSLayerInfo',
     'esri/layers/ArcGISDynamicMapServiceLayer', "esri/Color", "esri/geometry/Point","esri/geometry/Polyline", "esri/geometry/Circle", 
     "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",'esri/symbols/SimpleFillSymbol', "esri/symbols/PictureMarkerSymbol",
     "esri/tasks/query", "esri/tasks/QueryTask", "esri/tasks/IdentifyTask", "esri/tasks/IdentifyParameters",
 	'esri/geometry/Polygon', 'dojo/fx', 'dojo/_base/fx', 'dojo/fx/easing'], options)
-    .then(([Map,Config, Graphic, webMercatorUtils,geometryEngine, Edit,Draw, WMTSLayer,GraphicsLayer,WMTSLayerInfo, ArcGISDynamicMapServiceLayer, Color, 
+    .then(([Map,SpatialReference, Config, Graphic, webMercatorUtils,geometryEngine, Edit,Draw, Measurement, WMTSLayer,GraphicsLayer,WMTSLayerInfo, ArcGISDynamicMapServiceLayer, Color, 
       Point,Polyline, Circle, SimpleMarkerSymbol, SimpleLineSymbol,SimpleFillSymbol,PictureMarkerSymbol, Query, QueryTask,IdentifyTask, IdentifyParameters,  Polygon, coreFx, fx, easing]) => {
 
     this.esriMap            = Map;
+    this.esriSpatialReference = SpatialReference;
     this.esriConfig         = Config;
     this.esriGraphic        = Graphic;
+    this.esriMeasurement    = Measurement;
     this.esriwebMercatorUtils = webMercatorUtils;
     this.esriEdit           = Edit;
     this.esriGraphicsLayer  = GraphicsLayer;
@@ -311,6 +315,7 @@ interface TOOL_ACTIONS {
   TICKET_LETTER?: number;
   MAP_IDENTIFY?: number;
   MAP_MEASURE?:number;
+  COLLAPSE_TOOLBAR?:number;
 }
 
 interface API_ROUTES {

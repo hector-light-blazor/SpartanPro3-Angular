@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-search-address',
@@ -7,11 +7,31 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class SearchAddressComponent implements OnInit {
 
-  public googleGeoCode: string = 'https://maps.googleapis.com/maps/api/geocode/json?address=:my_own_keyword';
-  
+  public googleGeoCode: string = 'https://gis.lrgvdc911.org/php/spartan/api/v2/index.php/search/atoComplete?auto=:my_own_keyword' //'https://maps.googleapis.com/maps/api/geocode/json?address=:my_own_keyword';
+  @Output() selected = new EventEmitter();
+  @Output() xysearch = new EventEmitter();
+  myData: any = null;
+  lat: boolean = false;
+  lng: boolean = false;
+  latinput: any = null;
+  lnginput: any = null;
+
   constructor() { }
 
   ngOnInit() {
+  }
+  
+  enterSearch(){
+    if(this.latinput && this.lnginput) {
+      this.xysearch.emit({x: this.lnginput, y: this.latinput});
+    }
+    
+  }
+
+  myCallback(select) {
+    //console.log(select);
+
+    this.selected.emit(select);
   }
 
 }
