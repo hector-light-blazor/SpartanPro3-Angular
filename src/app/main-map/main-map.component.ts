@@ -103,7 +103,7 @@ export class MainMapComponent implements OnInit {
        //=-=-= INIT MAP =-=-=
       this.initMap();
     } catch (error) {
-      console.log(error);
+     // console.log(error);
       console.log("FAILED TO LOAD MAP")
     }
   
@@ -284,6 +284,18 @@ export class MainMapComponent implements OnInit {
         
         this.map.setExtent(circle.getExtent());
      }
+  }
+
+
+  // Zoom To Picture Selected...
+  zoomPicture(item) {
+    console.log(item)
+
+    this.app.animateGraphic(item.graphic)
+
+    let circle = this.app.esriCircle(item.pnt, {"radius": 300});
+    
+    this.map.setExtent(circle.getExtent());
   }
 
 

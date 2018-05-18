@@ -6,6 +6,8 @@
                     <span>{{pick.name}}</span>
                   <img [src]="pick.src">
                   <button (click)="removeElement(pick, i)" class="button rounded danger">Delete</button>
+                  <button (click)="zoomPic(pick, i)" class="button rounded primary">Zoom</button>
+
                 </div>
               </div>
         </div>

@@ -8,6 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class QuickPickListComponent implements OnInit {
   @Input() picks: Array<any> = [];
   @Output() remove = new EventEmitter();
+  @Output() zoom = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
@@ -20,6 +21,11 @@ export class QuickPickListComponent implements OnInit {
 
     // Tell the parent component to remove graphic..
     this.remove.emit(item);
+  }
+
+  zoomPic(item, i) {
+    
+    this.zoom.emit(item);
   }
 
 }

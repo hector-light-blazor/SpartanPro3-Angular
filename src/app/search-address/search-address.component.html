@@ -1,9 +1,9 @@
 <div id="search">
   <div class="input-control text full-size" data-role="input">
      
-    <input auto-complete min-chars="3" (valueChanged)="myCallback($event)" path-to-data="results" [(ngModel)]="myData" list-formatter="suggestion" style="height: 37px;" [source]="googleGeoCode" type="text" >
+    <input auto-complete min-chars="3" id="auto" (valueChanged)="myCallback($event)" path-to-data="results" [(ngModel)]="myData" list-formatter="suggestion" style="height: 2.125rem;" [source]="googleGeoCode" type="text" >
     <div class="button-group">
-      <button class="button"><i aria-hidden="true" class="fa fa-search"></i></button>
+      <button class="button" id="searchauto"><i aria-hidden="true" class="fa fa-search"></i></button>
       <button class="button" (click)="lat = !lat; lng = !lng;"><i class="fa fa-map-marker"></i></button>
    </div>
   </div>

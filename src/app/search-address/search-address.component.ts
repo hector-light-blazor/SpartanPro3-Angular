@@ -19,6 +19,12 @@ export class SearchAddressComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+    var auto   = document.getElementById("auto");
+    var search = document.getElementById("searchauto");
+    console.log(auto.style.height);
+    console.log(search.style.height)
+
   }
   
   enterSearch(){

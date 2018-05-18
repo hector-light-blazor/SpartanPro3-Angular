@@ -4,7 +4,7 @@
   <app-search-address (xysearch)="zoomToXY($event)" (selected)="zoomToSelected($event)"></app-search-address>
   <app-basemap (change)="changeBase($event)"></app-basemap>
   <app-identify-list (display)="zoomAndFlash($event)" (close)="displayIdentify = false;graphicLayer.clear();" [list]="mapService.identifyResponse" *ngIf="displayIdentify"></app-identify-list>
-  <app-quick-pick-list (remove)="removeQPick($event)" [picks]="quickPickCollections" *ngIf="displayCollection"></app-quick-pick-list>
+  <app-quick-pick-list (zoom)="zoomPicture($event)" (remove)="removeQPick($event)" [picks]="quickPickCollections" *ngIf="displayCollection"></app-quick-pick-list>
   <app-google-map2  [ngClass]="{'googleDisplay': displayGoogle, 'googleHide': !displayGoogle}"  [extent]="googleExtent" ></app-google-map2>
   
 
