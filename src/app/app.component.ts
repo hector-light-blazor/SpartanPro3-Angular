@@ -91,8 +91,8 @@ export class AppComponent {
             setTimeout(() => {
                _self.toolBarOnOff = info.toolbar_on;
                 _self.isLoading = false;
-                // _self.router.navigateByUrl("ticket/dashboard");
-                _self.router.navigateByUrl("Map");
+                _self.router.navigateByUrl("ticket/dashboard");
+                //_self.router.navigateByUrl("Map");
             }, 400);
               
 

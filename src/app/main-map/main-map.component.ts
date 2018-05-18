@@ -39,7 +39,7 @@ export class MainMapComponent implements OnInit {
   collectionIndex: number = 0;
   isAlive: boolean = true;
   displayGoogle: boolean = false;
- 
+  measureDiv: any = null;
   measureTool: any = null;
   constructor(private app: AppService,private mapService: MapServiceService, private sanitizer: DomSanitizer) { }
 
@@ -115,6 +115,11 @@ export class MainMapComponent implements OnInit {
   ngOnDestroy() {
     document.body.style.overflow = 'auto';
 
+
+      // Destroy the measurement tool
+      this.measureDiv.destroy();
+
+    // Is Alive..
     this.isAlive = false;
 
     // Going to try to destroy object...
@@ -154,10 +159,10 @@ export class MainMapComponent implements OnInit {
      this.measureTool = new this.app.esriDraw(this.map);
 
 
-     var measurement = new this.app.esriMeasurement({
+     this.measureDiv = new this.app.esriMeasurement({
       map: this.map
      }, document.getElementById("measurementDiv"));
-    measurement.startup();
+    this.measureDiv.startup();
 
      // Set the map object..
      this.mapService.setMapObj(this.map);
