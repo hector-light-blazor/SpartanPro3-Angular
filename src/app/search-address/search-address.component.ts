@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit,Input,  ViewChild, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-search-address',
@@ -15,16 +15,24 @@ export class SearchAddressComponent implements OnInit {
   lng: boolean = false;
   latinput: any = null;
   lnginput: any = null;
-
+  @Input() offset: boolean = false;
   constructor() { }
 
   ngOnInit() {
 
-    var auto   = document.getElementById("auto");
-    var search = document.getElementById("searchauto");
-    console.log(auto.style.height);
-    console.log(search.style.height)
+   
 
+  }
+
+
+  ngOnChanges() {
+    var container = document.getElementById("search");
+    if(this.offset) {
+     
+      container.style.top = "230px";
+    }else {
+      container.style.top = "";
+    }
   }
   
   enterSearch(){

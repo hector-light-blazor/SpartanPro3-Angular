@@ -1,5 +1,6 @@
 import { Component, OnInit,OnDestroy,OnChanges, Output, Input, ViewChild, EventEmitter } from '@angular/core';
 import { } from '@types/googlemaps';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-google-map2',
@@ -12,19 +13,25 @@ export class GoogleMap2Component implements OnInit {
   @Output() onClose = new EventEmitter();
   @Input() location: any = null;  //  Single Location input for map creation...
   @Input() extent: any = null;    // Lng and Lat Bounds
+
   @ViewChild('gmap') gmapElement:  any;
   @ViewChild('window') gmapHeight: any;
 
   map: google.maps.Map;
   isLoading:boolean = true;
   height: string = '1000px';
+  isAlive: boolean = true;
 
-  constructor() { }
+  constructor(private app: AppService) { }
 
   ngOnInit() {
-    let height:number = window.innerHeight;
-    
-    this.height = height + "px";
+   
+
+    var map = document.getElementById("gmap");
+          
+    map.style.height = (window.innerHeight - 196) + "px";
+
+
 
     var mapProp;
     var _self = this;
@@ -38,7 +45,28 @@ export class GoogleMap2Component implements OnInit {
       this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
 
 
-    console.log("INITIALIZE");
+       // =-=-= GOINT TO CONTROL ALL THE TOOL BAR ACTIONS =-=-=-=-=
+       this.app.toolbarActions.takeWhile(() => this.isAlive).subscribe(action => {
+          switch (action.action) {
+            case this.app.toolbarActivies.COLLAPSE_TOOLBAR: // If toolbar collapse...
+
+                if(action.data) {
+                  // Setup the map Height....
+                var map = document.getElementById("gmap");
+                map.style.height = (window.innerHeight - 196) + "px";
+                }else {
+                  var map = document.getElementById("gmap");
+                
+                  map.style.height = (window.innerHeight - 60) + "px";
+                }
+            
+             break;
+            default:
+             break;
+          }
+       });
+
+
   }
 
   ngOnChanges() {
@@ -55,10 +83,13 @@ export class GoogleMap2Component implements OnInit {
       this.extent = null;
 
     }
+
+
+
   }
 
   ngOnDestroy() {
-    
+    this.isAlive = false;
   }
 
 }

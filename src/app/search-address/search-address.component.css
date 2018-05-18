@@ -1,6 +1,7 @@
 #search {
     position: absolute;
     left: 10px;
+    
     z-index: 999;
     width: 330px;
     opacity: 1;

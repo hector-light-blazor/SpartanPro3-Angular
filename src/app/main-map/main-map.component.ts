@@ -41,6 +41,8 @@ export class MainMapComponent implements OnInit {
   displayGoogle: boolean = false;
   measureDiv: any = null;
   measureTool: any = null;
+  offsetbase: boolean = false;
+  offsetsearch: boolean = false;
   constructor(private app: AppService,private mapService: MapServiceService, private sanitizer: DomSanitizer) { }
 
   
@@ -116,18 +118,19 @@ export class MainMapComponent implements OnInit {
     document.body.style.overflow = 'auto';
 
 
-      // Destroy the measurement tool
-      this.measureDiv.destroy();
-
+     
     // Is Alive..
     this.isAlive = false;
 
     // Going to try to destroy object...
     try {
      
+       // Destroy the measurement tool
+       this.measureDiv.destroy();
+
       this.map.destroy(); // Destroy the map instance...
     } catch (error) {
-      
+      console.log("ERROR");
     }
     
   }
@@ -289,7 +292,7 @@ export class MainMapComponent implements OnInit {
 
   // Zoom To Picture Selected...
   zoomPicture(item) {
-    console.log(item)
+    
 
     this.app.animateGraphic(item.graphic)
 
@@ -317,6 +320,8 @@ export class MainMapComponent implements OnInit {
 
     // Always hide
       this.displayGoogle = false;
+      this.offsetbase = false;
+      this.offsetsearch = false;
       if(option == this.mapflex){
         
         this.mapFlexBase.show();
@@ -324,20 +329,20 @@ export class MainMapComponent implements OnInit {
     
       }
       else if(option == this.wms) {
-      this.mapFlexBase.hide();
-       this.skeletonFlexBase.show();
-   
-       this.mapWMSBase.show();
+         this.mapFlexBase.hide();
+         this.skeletonFlexBase.show();
+         this.mapWMSBase.show();
       
       }
       else if(option == this.google) {
       
-        let extent = this.app.esriwebMercatorUtils.webMercatorToGeographic(this.map.extent);
+        // Offset Controls the movement of the search bar...
+         this.offsetbase = true;
+         this.offsetsearch = true;
+         let extent = this.app.esriwebMercatorUtils.webMercatorToGeographic(this.map.extent);
 
-        this.displayGoogle = true;
-        this.googleExtent = extent;
-
-
+         this.displayGoogle = true;
+         this.googleExtent = extent;
       }
 
   }
