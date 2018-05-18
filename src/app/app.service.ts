@@ -127,6 +127,7 @@ export class AppService {
   esriWMTSLayer: any = null;
   esriWMTSLayerInfo: any = null;
   esriDynamicLayer: any = null;
+  esriParser = null;
   esriColor = null;
   esriPoint = null;
   esriCircle = null;
@@ -207,15 +208,19 @@ export class AppService {
       url: 'https://js.arcgis.com/3.23/'
     };
 
-    esriLoader.loadModules(['esri/map',"esri/SpatialReference" , 'esri/config','esri/graphic', "esri/geometry/webMercatorUtils","esri/geometry/geometryEngine",
+    esriLoader.loadModules(["dojo/parser", 'esri/map',"esri/SpatialReference" , 'esri/config','esri/graphic', "esri/geometry/webMercatorUtils","esri/geometry/geometryEngine",
     "esri/toolbars/edit","esri/toolbars/draw","esri/dijit/Measurement", 'esri/layers/WMTSLayer', 'esri/layers/GraphicsLayer','esri/layers/WMTSLayerInfo',
     'esri/layers/ArcGISDynamicMapServiceLayer', "esri/Color", "esri/geometry/Point","esri/geometry/Polyline", "esri/geometry/Circle", 
     "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",'esri/symbols/SimpleFillSymbol', "esri/symbols/PictureMarkerSymbol",
     "esri/tasks/query", "esri/tasks/QueryTask", "esri/tasks/IdentifyTask", "esri/tasks/IdentifyParameters",
-	'esri/geometry/Polygon', 'dojo/fx', 'dojo/_base/fx', 'dojo/fx/easing'], options)
-    .then(([Map,SpatialReference, Config, Graphic, webMercatorUtils,geometryEngine, Edit,Draw, Measurement, WMTSLayer,GraphicsLayer,WMTSLayerInfo, ArcGISDynamicMapServiceLayer, Color, 
+	'esri/geometry/Polygon', 'dojo/fx', 'dojo/_base/fx', 'dojo/fx/easing',  "dijit/layout/BorderContainer",
+  "dijit/layout/ContentPane",
+  "dijit/TitlePane",
+  "dijit/form/CheckBox" ], options)
+    .then(([parser, Map,SpatialReference, Config, Graphic, webMercatorUtils,geometryEngine, Edit,Draw, Measurement, WMTSLayer,GraphicsLayer,WMTSLayerInfo, ArcGISDynamicMapServiceLayer, Color, 
       Point,Polyline, Circle, SimpleMarkerSymbol, SimpleLineSymbol,SimpleFillSymbol,PictureMarkerSymbol, Query, QueryTask,IdentifyTask, IdentifyParameters,  Polygon, coreFx, fx, easing]) => {
 
+    this.esriParser         = parser;
     this.esriMap            = Map;
     this.esriSpatialReference = SpatialReference;
     this.esriConfig         = Config;

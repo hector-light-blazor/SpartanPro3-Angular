@@ -7,8 +7,15 @@
   <app-quick-pick-list (remove)="removeQPick($event)" [picks]="quickPickCollections" *ngIf="displayCollection"></app-quick-pick-list>
   <app-google-map2  [ngClass]="{'googleDisplay': displayGoogle, 'googleHide': !displayGoogle}"  [extent]="googleExtent" ></app-google-map2>
   
+
+  <div id="mtool" class="dijitTitlePaneTitle" style="position: absolute; display: none; bottom: 0;width: 330px; z-index: 100;">
+    <div id="measurementDiv"></div>
+  </div>
+     
+  
+
   <div #map id="map" style="height: 200px;" [ngClass]="{'googleHide': displayGoogle}"  ondragover="return false;">
-    
+   
   </div>
 
 </div>

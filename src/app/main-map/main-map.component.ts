@@ -39,6 +39,7 @@ export class MainMapComponent implements OnInit {
   collectionIndex: number = 0;
   isAlive: boolean = true;
   displayGoogle: boolean = false;
+ 
   measureTool: any = null;
   constructor(private app: AppService,private mapService: MapServiceService, private sanitizer: DomSanitizer) { }
 
@@ -65,6 +66,15 @@ export class MainMapComponent implements OnInit {
           this.map.setCursor("pointer")
           break;
         case this.app.toolbarActivies.MAP_MEASURE:
+          // This is to show the map measure tool...
+          var tool = document.getElementById("mtool");
+          var style = tool.style.display;
+          if(style == "none") {
+            tool.style.display = "block";
+          }
+          else {
+            tool.style.display = "none";
+          }
           break;
         case this.app.toolbarActivies.COLLAPSE_TOOLBAR: // If toolbar collapse...
 
@@ -127,6 +137,9 @@ export class MainMapComponent implements OnInit {
      // Setup PROXY IF NOT BEEN ALREADY this only applies to esri
      this.app.esriConfig.defaults.io.proxyUrl = this.app.proxyUrl
 
+    // Start parser
+   // this.app.esriParser.parse();
+
      // Create Map Object...
      this.map = new this.app.esriMap(this.mapObj.nativeElement,{
         center: [-98.181494, 26.208254], 
@@ -141,10 +154,10 @@ export class MainMapComponent implements OnInit {
      this.measureTool = new this.app.esriDraw(this.map);
 
 
-    //  var measurement = new this.app.esriMeasurement({
-    //   map: this.map
-    //  }, document.getElementById("measurementDiv"));
-    // measurement.startup();
+     var measurement = new this.app.esriMeasurement({
+      map: this.map
+     }, document.getElementById("measurementDiv"));
+    measurement.startup();
 
      // Set the map object..
      this.mapService.setMapObj(this.map);

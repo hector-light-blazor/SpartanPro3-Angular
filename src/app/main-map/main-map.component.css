@@ -32,6 +32,12 @@ h1{
   .uploader .icon {
     pointer-events: none;
   }
+
+  .dijitTitlePaneTitle {
+    padding: 10px 15px;
+    color: #595959;
+    background-color: #f8f8f8;
+  }
   
   .uploader,
   .uploader .icon {
@@ -78,4 +84,10 @@ h1{
 
   .googleHide{
     display: none;
+  }
+
+
+  .dijitButtonContents {
+    padding: 5px 10px;
+
   }
