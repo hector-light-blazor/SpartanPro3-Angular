@@ -8,139 +8,20 @@
         <li><a href="#georef"> GEOREFERENCE</a></li>
     </ul>
     <div class="frames">
+        
         <div class="frame ribbed-white" id="worksheet">
-          <label >SUBDIVISION NAME</label>
-          <div class="input-control text full-size">
-            <input type="text">
-          </div>
-          <label >TAX ACCOUNT #</label>
-          <div class="input-control text full-size">
-            <input type="text">
-          </div>
-          <label >9-1-1 COMMUNITY</label>
-          <div class="input-control text full-size">
-            <input type="text">
-          </div>
-          <label >ESN</label>
-          <div class="input-control text full-size">
-            <input type="text">
-          </div>
-          
-        </div>
+            <app-main-page></app-main-page>
+        </div>  
+       
         <div class="frame ribbed-white" id="lvsheet">
-          <div class="grid">
-              <div class="row cells2">
-                  <div class="cell">
-                      <div class="form-group">
-                          <label class="col-md-2 control-label">Street</label>
-                          <br>
-                          <div class="input-control text full-size">
-                              <input type="text" [(ngModel)]="name" uppercase>
-                              <span *ngIf="nameError" style="color: red;">Please Enter Name</span>
-                          </div>
-                        </div>
-                        <br>
-                        <div class="form-group">
-                            <label class="col-md-2 control-label">Low</label>
-                            <br>
-                            <div class="input-control text full-size">
-                                <input type="text" [(ngModel)]="low">
-                                <span *ngIf="lowError" style="color: red;">Please Enter Low</span>
-                            </div>
-                          </div>
-                          <br>
-                          <div class="form-group">
-                              <label class="col-md-2 control-label">High</label>
-                              <br>
-                              <div class="input-control text full-size">
-                                  <input type="text" [(ngModel)]="high">
-                                  <span *ngIf="highError" style="color: red;">Please Enter High</span>
-                              </div>
-                            </div>
-                            <br>
-                            <div class="form-group">
-                                <div >
-                                  <input  type="button" (click)="addStreet()" value="Insert" class="btn btn-primary">
-                                </div>
-                              </div>
-                  </div>
-                  <div class="cell">
-                      <table class="table">
-                          <thead>
-                            <tr>
-                              <th>Listed Street(s)</th>
-                              <th>Low</th>
-                              <th>High</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                              <tr *ngFor="let street of streets">
-                                  <td>{{street.name}}</td>
-                                  <td>{{street.low}}</td>
-                                  <td>{{street.high}}</td>
-                              </tr>
-                          </tbody>
-                        </table>
-                  </div>
-                  
-              </div>
-          </div>
-          <hr>
-           <h2 style="text-align: center;">Plat Received From</h2>
-           <div>
-              <label class="input-control checkbox">
-                  <input type="checkbox" >
-                  
-                  <span class="check"></span>
-                  <span class="caption">DBA</span>
-                 
-              </label>
-           </div>
-           <div class="input-control text full-size">
-              <input type="text">
-          </div>
-           <br>
-           <br>
-           <div>
-             <label class="input-control checkbox">
-                  <input type="checkbox" >
-                  <span  class="check"></span>
-                  <span  class="caption">ENGINEER/DEVELOPER</span>
-                  
-             </label>
-           </div>
-           <div class="input-control text full-size">
-              <input type="text">
-          </div>
-           <br>
-           <br>
-           <div>
-              <label class="input-control checkbox">
-                  <input type="checkbox" >
-                  <span  class="check"></span>
-                  <span  class="caption">ONLINE</span>
-              </label>
-           </div>
-           <div class="input-control text full-size">
-              <input type="text">
-          </div>
-           <br>
-           <br>
-           <div>
-              <label class="input-control checkbox">
-                  <input type="checkbox" >
-                  <span  class="check"></span>
-                  <span  class="caption">CITY</span>
-                  
-              </label>
-           </div>
-           <div class="input-control text full-size">
-              <input type="text">
-          </div>
+            <app-lv-page ></app-lv-page>
         </div>
+        
+        
         <div class="frame ribbed-white" id="dbsheet">
-          
+              <app-db-page></app-db-page>
         </div>
+        
         <div class="frame ribbed-white" id="gissheet">
           
         </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+
 @Component({
   selector: 'app-identify-list',
   templateUrl: './identify-list.component.html',
@@ -8,11 +9,15 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class IdentifyListComponent implements OnInit {
 
   @Input() list: Array<any> = null;
+  
   selection: any = null;
   selectionIndex: number = -1;
 
   @Output() close = new EventEmitter();
   @Output() display = new EventEmitter();
+
+  opacity: any = 1;
+
   constructor() { }
 
   ngOnInit() {
@@ -43,6 +48,11 @@ export class IdentifyListComponent implements OnInit {
       this.close.emit(false);
   }
 
+  // Display the transparency..
+  onTransparency() {
+    this.opacity = (this.opacity == 1) ? 0.5 : 1;
+  }
+
   onMini() {
      // Make the identify window minimized...
      var container = document.getElementById("container");
@@ -57,5 +67,4 @@ export class IdentifyListComponent implements OnInit {
     container.style.display = "block"
     arrow.style.display = "none"
   }
-
 }

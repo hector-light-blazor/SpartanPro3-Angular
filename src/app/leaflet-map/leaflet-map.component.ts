@@ -21,18 +21,23 @@ export class LeafletMapComponent implements OnInit {
     console.log(esri);
     //esri.basemapLayer('Gray').addTo(this.map);
     console.log(L);
-    var ign = new L.TileLayer.WMTS( "https://wms-txgi.tnris.org/login/path/contour-camera-poetic-poem/wms" ,
-                               {
-                                   layer: "texas",
-                                   style: "normal",
-                                   tilematrixSet: "PM",
-                                   maxZoom: 22,
-                                   format: "image/png",
-                                   attribution: "<a href='https://github.com/mylen/leaflet.TileLayer.WMTS'>GitHub</a>&copy; <a href='http://www.ign.fr'>IGN</a>"
-                               }
-                              );
-							  
-			this.map.addLayer(ign);
+    try {
+        var ign = new L.TileLayer.WMTS( "https://wms-txgi.tnris.org/login/path/contour-camera-poetic-poem/wms" ,
+        {
+            layer: "texas",
+            style: "normal",
+            tilematrixSet: "PM",
+            maxZoom: 22,
+            format: "image/png",
+            attribution: "<a href='https://github.com/mylen/leaflet.TileLayer.WMTS'>GitHub</a>&copy; <a href='http://www.ign.fr'>IGN</a>"
+        }
+      );
+
+      this.map.addLayer(ign);
+    } catch (error) {
+      console.log("ERROR LOADING WMTS LAYER")
+    }
+   
 
     
      this.mapflex = esri.dynamicMapLayer({
@@ -41,7 +46,7 @@ export class LeafletMapComponent implements OnInit {
         zIndex: 0
       }).addTo(this.map);
     
-   //this.map.addLayer(this.mapflex);
+   this.map.addLayer(this.mapflex);
     
 
 

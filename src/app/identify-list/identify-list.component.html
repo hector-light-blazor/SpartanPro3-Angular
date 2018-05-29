@@ -1,16 +1,19 @@
 <div id="arrow">
     <button (click)="unMini()" class="button">Identify Results <i class="fa fa-angle-double-right"></i></button>
 </div>
-<div id="container">
+<div id="container" [ngStyle]="{'opacity': opacity}">
 
     <div class="window">
         <div class="window-caption">
             <div class="window-caption-title">Identify Results
-                    
-                <button (click)="onClose()" class="button cycle-button pull-right">X</button>
-                <button (click)="onMini()" class="button cycle-button pull-right">
-                        <i class="fa fa-window-minimize"></i>
-                </button>
+                  
+                <div class="pull-right">
+                    <button (click)="onTransparency()" class="button cycle-button"><i class="fa fa-cog"></i></button>
+                    <button (click)="onMini()" class="button cycle-button">
+                            <i class="fa fa-window-minimize"></i>
+                    </button>
+                    <button (click)="onClose()" class="button cycle-button">X</button>
+                </div>
             </div>
         </div>
     </div>
