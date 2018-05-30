@@ -20,54 +20,7 @@ export class WorksheetComponent implements OnInit {
   ngOnInit() {
   }
 
-  addStreet() {
-
-      if(this.checkLVStreets()) { //If info not filled out stop the program alert users.
-        return;
-      }
-    
-      this.streets.push({name: this.name, low: this.low, high: this.high});
-
-      // Back to blank..
-      this.low = this.name = this.high = "";
-      this.nameError = this.highError = this.lowError = false;
-      
-  }
-
-  removeItem(index) {
-    this.streets.splice(index, 1);
-  }
-
-  checkLVStreets():boolean {
-    var response:boolean = false;
-    if(!this.name) {
-      this.nameError = true;
-      response = true;
-    }
-
-    let num:any = this.high;
-    
-    if(!this.high) {
-      this.highError = true;
-      response = true;
-    }
-    else if(isNaN(num)) {
-      this.highError = true;
-      response = true
-    }
-     num = this.low;
-    if(!this.low) {
-      this.lowError = true;
-      response = true;
-    }
-
-    else if(isNaN(num)) {
-      this.lowError = true;
-      response = true;
-    }
-
-    return response;
-  }
+  
 
 }
 

@@ -271,7 +271,7 @@ export class MainMapComponent implements OnInit {
   zoomToSelected(selected) {
      //console.log(selected);
      let geom = JSON.parse(selected.geometry);
-
+    
      if(geom.type == "MultiPolygon") {
        let polygon = new this.app.esriPolygon(geom.coordinates[0]);
        this.graphicLayer.clear();
@@ -286,6 +286,14 @@ export class MainMapComponent implements OnInit {
         let circle = this.app.esriCircle(point, {"radius": 300});
         
         this.map.setExtent(circle.getExtent());
+     }else if(geom.type == "MultiLineString"){
+      let line = new this.app.esriPolyline(geom.coordinates);
+      this.graphicLayer.clear();
+      this.graphicLayer.add(new this.app.esriGraphic(line, this.polygonSymbol));
+      
+     
+      
+      this.map.setExtent(line.getExtent());
      }
   }
 
