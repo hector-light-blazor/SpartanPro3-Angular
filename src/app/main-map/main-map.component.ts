@@ -269,32 +269,43 @@ export class MainMapComponent implements OnInit {
 
   // =-=-=-=-=-=-= SELECTED DROP DOWN SEARCH =-=-=-=-=-=-=
   zoomToSelected(selected) {
-     //console.log(selected);
-     let geom = JSON.parse(selected.geometry);
-    
-     if(geom.type == "MultiPolygon") {
-       let polygon = new this.app.esriPolygon(geom.coordinates[0]);
-       this.graphicLayer.clear();
-       this.graphicLayer.add(new this.app.esriGraphic(polygon, this.polygonSymbol));
-       this.map.setExtent(polygon.getExtent())
-     }
-     else if(geom.type == "Point") {
-        let point = new this.app.esriPoint(geom.coordinates, new this.app.esriSpatialReference({wkid: 4326}));
-        this.graphicLayer.clear();
-        this.graphicLayer.add(new this.app.esriGraphic(point, this.pointSymbol));
-        
-        let circle = this.app.esriCircle(point, {"radius": 300});
-        
-        this.map.setExtent(circle.getExtent());
-     }else if(geom.type == "MultiLineString"){
-      let line = new this.app.esriPolyline(geom.coordinates);
-      this.graphicLayer.clear();
-      this.graphicLayer.add(new this.app.esriGraphic(line, this.polygonSymbol));
-      
      
+    if(selected) {
+
+    
+     try {
+        let geom = JSON.parse(selected.geometry);
       
-      this.map.setExtent(line.getExtent());
+        if(geom.type == "MultiPolygon") {
+          let polygon = new this.app.esriPolygon(geom.coordinates[0]);
+          this.graphicLayer.clear();
+          this.graphicLayer.add(new this.app.esriGraphic(polygon, this.polygonSymbol));
+          this.map.setExtent(polygon.getExtent())
+        }
+        else if(geom.type == "Point") {
+          let point = new this.app.esriPoint(geom.coordinates, new this.app.esriSpatialReference({wkid: 4326}));
+          this.graphicLayer.clear();
+          this.graphicLayer.add(new this.app.esriGraphic(point, this.pointSymbol));
+          
+          let circle = this.app.esriCircle(point, {"radius": 300});
+          
+          this.map.setExtent(circle.getExtent());
+        }else if(geom.type == "MultiLineString"){
+        let line = new this.app.esriPolyline(geom.coordinates);
+        this.graphicLayer.clear();
+        this.graphicLayer.add(new this.app.esriGraphic(line, this.polygonSymbol));
+        
+        this.map.setExtent(line.getExtent());
+        }
+
+     } catch (error) {
+
+      console.log(selected);
+       console.log("SOMETHING HAPPEND SORRY");
      }
+
+    }
+    
   }
 
 
