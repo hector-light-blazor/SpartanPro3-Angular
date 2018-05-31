@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,Input, OnInit } from '@angular/core';
 //
 //import * as esri from "esri-leaflet";
 declare var L:any;
@@ -12,7 +12,8 @@ export class LeafletMapComponent implements OnInit {
 
   map: any;
   mapflex:any;
-
+  @Input() overlay:any;
+  dropP = false;
   constructor() { }
 
   ngOnInit() {
@@ -56,6 +57,19 @@ export class LeafletMapComponent implements OnInit {
     
 
 
+  }
+
+  ngOnChanges() {
+    console.log(this.overlay);
+
+
+    // let overlay = L.imageOverlay.rotated("./assets/basham.jpg", points[0].loc, points[1].loc, points[2].loc, {
+    //   opacity: 0.5,
+    //   interactive: true,
+    //    attribution: "Historical building plan &copy; <a href='http://www.ign.es'>Instituto Geográfico Nacional de España</a>"
+    //  })//.addTo(map);
+   
+    //  this.map.addLayer(overlay);
   }
 
 }
