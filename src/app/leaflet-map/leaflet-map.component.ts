@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import * as esri from "esri-leaflet";
+//
+//import * as esri from "esri-leaflet";
 declare var L:any;
 
 @Component({
@@ -16,12 +17,14 @@ export class LeafletMapComponent implements OnInit {
 
   ngOnInit() {
 
-    this.map = L.map("map", {maxZoom: 22}).setView([26.229259, -98.148752], 8);
+    this.map = L.map("map", {loadingControl: true, maxZoom: 22}).setView([26.229259, -98.148752], 8);
    
-    console.log(esri);
-    //esri.basemapLayer('Gray').addTo(this.map);
-    console.log(L);
+    //console.log(esri);
+    //console.log(L);
+    //esri.TileLayer.exten
     try {
+      //esri.TileLayer.WMTS = new L.TileLayer.WMTS();
+
         var ign = new L.TileLayer.WMTS( "https://wms-txgi.tnris.org/login/path/contour-camera-poetic-poem/wms" ,
         {
             layer: "texas",
@@ -34,14 +37,17 @@ export class LeafletMapComponent implements OnInit {
       );
 
       this.map.addLayer(ign);
+
+      
+    
     } catch (error) {
       console.log("ERROR LOADING WMTS LAYER")
     }
    
-
+    //L.esri.basemapLayer('Gray').addTo(this.map);
     
-     this.mapflex = esri.dynamicMapLayer({
-        url: "https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/MapFlex2/MapServer",
+     this.mapflex = L.esri.dynamicMapLayer({
+        url: "https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/Adress_Streets/MapServer",
         position: 'back',
         zIndex: 0
       }).addTo(this.map);
