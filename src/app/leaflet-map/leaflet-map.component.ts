@@ -125,14 +125,14 @@ export class LeafletMapComponent implements OnInit {
   }
 
 
-  repositionHandler() {
-    this.points[this.points.length - 1].marker.on('drag dragend', () => {
-      if(this.imgOverlay) {
-        this.imgOverlay.reposition(this.points[0].marker.getLatLng(), this.points[1].marker.getLatLng(), this.points[2].marker.getLatLng());
+  // repositionHandler() {
+  //   this.points[this.points.length - 1].marker.on('drag dragend', () => {
+  //     if(this.imgOverlay) {
+  //       this.imgOverlay.reposition(this.points[0].marker.getLatLng(), this.points[1].marker.getLatLng(), this.points[2].marker.getLatLng());
     
-      }
-    });
-  }
+  //     }
+  //   });
+  // }
 
   
 
