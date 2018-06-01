@@ -10,23 +10,58 @@ declare var L:any;
 })
 export class LeafletMapComponent implements OnInit {
 
-  map: any;
-  mapflex:any;
-  @Input() overlay:any;
-  dropP = false;
+  @Input() overlay:any; // This Contains the image picture
+
+  map: any; // Map Object
+  mapflex:any; // The Dynamic Layer
+  wmts: any;  // The WMTS Layer Google Imagery
+  imgOverlay: any = null // The image overlay object
+
+  dropP = false; // This is to control if yes to drop points
+  points: Array<any> = []; // Collection of points to anchor the subdivision into the map
+  opacitySlider: any = null;
   constructor() { }
 
   ngOnInit() {
 
-    this.map = L.map("map", {loadingControl: true, maxZoom: 22}).setView([26.229259, -98.148752], 8);
-   
-    //console.log(esri);
-    //console.log(L);
-    //esri.TileLayer.exten
-    try {
-      //esri.TileLayer.WMTS = new L.TileLayer.WMTS();
+    
+      try {
+         this.setUpMap();
 
-        var ign = new L.TileLayer.WMTS( "https://wms-txgi.tnris.org/login/path/contour-camera-poetic-poem/wms" ,
+         this.setUpMapListener();
+
+        // Setup The Opacity Control
+        this.opacitySlider = new L.control.layerOpacity().addTo(this.map);
+ 
+
+       
+
+      }  catch (error) {
+         console.log("ERROR LEAFLET MAP")
+      }
+
+
+  }
+
+  ngOnChanges() {
+    if(this.overlay) {
+      this.dropP = true;
+    }
+
+  
+  }
+
+  setUpMap() {
+      // 1.) Setup Map Object....
+
+      // 2.) Add Imagery to WMTS...
+
+      // 3.) Add Roads and Points to Map....
+
+      this.map = L.map("map", {loadingControl: true, maxZoom: 22}).setView([26.229259, -98.148752], 8);
+   
+
+      this.wmts = new L.TileLayer.WMTS( "https://wms-txgi.tnris.org/login/path/contour-camera-poetic-poem/wms" ,
         {
             layer: "texas",
             style: "normal",
@@ -37,39 +72,89 @@ export class LeafletMapComponent implements OnInit {
         }
       );
 
-      this.map.addLayer(ign);
+      this.map.addLayer(this.wmts);
 
-      
-    
-    } catch (error) {
-      console.log("ERROR LOADING WMTS LAYER")
-    }
-   
-    //L.esri.basemapLayer('Gray').addTo(this.map);
-    
-     this.mapflex = L.esri.dynamicMapLayer({
+      this.mapflex = L.esri.dynamicMapLayer({
         url: "https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/Adress_Streets/MapServer",
         position: 'back',
         zIndex: 0
       }).addTo(this.map);
     
-   this.map.addLayer(this.mapflex);
+
     
+    this.map.addLayer(this.mapflex);
 
-
-  }
-
-  ngOnChanges() {
-    console.log(this.overlay);
-
-
-    // let overlay = L.imageOverlay.rotated("./assets/basham.jpg", points[0].loc, points[1].loc, points[2].loc, {
-    //   opacity: 0.5,
-    //   interactive: true,
-    //    attribution: "Historical building plan &copy; <a href='http://www.ign.es'>Instituto Geográfico Nacional de España</a>"
-    //  })//.addTo(map);
+      
+    
    
-    //  this.map.addLayer(overlay);
   }
+
+  setUpMapListener() {
+    let _self = this;
+    this.map.on('click', response => {
+      if(this.dropP) {
+         if(this.points.length < 4) {
+            this.points.push({loc: response.latlng, marker:  L.marker(response.latlng, {draggable: true} ).addTo(this.map)});
+            //this.repositionHandler();
+         }else {
+           this.dropP = false;
+
+           this.imgOverlay = new L.DistortableImageOverlay(
+            this.overlay, {
+              corners: [
+                this.points[0].loc,
+                this.points[1].loc,
+                this.points[2].loc,
+                this.points[3].loc
+              ]
+            }
+          ).addTo(this.map);
+
+          L.DomEvent.on(this.imgOverlay._image, 'load', this.imgOverlay.editing.enable, this.imgOverlay.editing);
+
+          //  _self.imgOverlay = L.imageOverlay.rotated(this.overlay, this.points[0].loc, this.points[1].loc, this.points[2].loc, {
+          //       opacity: 0.5,
+          //       interactive: true,
+          //        attribution: "Historical building plan &copy; <a href='http://www.ign.es'>Instituto Geográfico Nacional de España</a>"
+          //      })
+             
+           //    this.map.addLayer(_self.imgOverlay)
+
+
+               // As Well Create The Opacity Control Once the layer is added
+            this.opacitySlider.addLayer(this.imgOverlay);
+         }
+
+      }
+      
+   }); // End of Map Click
+
+   this.map.on("layeradd", response => {
+
+        if(this.imgOverlay) {
+          this.imgOverlay.bringToFront();
+          var element = this.imgOverlay.getElement();
+          element.style.zIndex = 2;
+        }
+ 
+
+    })
+
+
+  }
+
+
+  repositionHandler() {
+    this.points[this.points.length - 1].marker.on('drag dragend', () => {
+      if(this.imgOverlay) {
+        this.imgOverlay.reposition(this.points[0].marker.getLatLng(), this.points[1].marker.getLatLng(), this.points[2].marker.getLatLng());
+    
+      }
+    });
+  }
+
+  
+
+
 
 }

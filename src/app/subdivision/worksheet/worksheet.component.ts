@@ -64,7 +64,7 @@ export class WorksheetComponent implements OnInit {
 
         var dataURL = canvas.toDataURL();
         _self.overlay = dataURL;
-        console.log(dataURL);
+        //console.log(dataURL);
       });
     });
     }, function (reason) {
@@ -93,19 +93,20 @@ export class WorksheetComponent implements OnInit {
   }
 
   handleInputChange(e) {
-      console.log(e);
+    
 
       let files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
       var reader = new FileReader();
 
       reader.onload = (target) => {
-        console.log(target);
+       
         this.test(target.currentTarget['result'])
       }
 
+      // Read the array of buffer...
       reader.readAsArrayBuffer(files[0]);
 
-      console.log(files);
+     // console.log(files);
   }
 
 }

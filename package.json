@@ -24,6 +24,7 @@
     "@ngui/auto-complete": "^1.0.2",
     "@swimlane/ngx-datatable": "^11.1.7",
     "@types/googlemaps": "^3.30.7",
+    "@types/leaflet": "^1.2.7",
     "angular-notice": "^1.0.0",
     "angular2-text-mask": "^8.0.4",
     "chart.js": "^2.7.1",
