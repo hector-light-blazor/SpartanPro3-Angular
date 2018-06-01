@@ -16,7 +16,7 @@ export class LeafletMapComponent implements OnInit {
   mapflex:any; // The Dynamic Layer
   wmts: any;  // The WMTS Layer Google Imagery
   imgOverlay: any = null // The image overlay object
-
+  points: any = [];
   dropP = false; // This is to control if yes to drop points
   // points: Array<any> = []; // Collection of points to anchor the subdivision into the map
   opacitySlider: any = null;
@@ -48,21 +48,21 @@ export class LeafletMapComponent implements OnInit {
       this.dropP = true;
       //console.log(this.map.getBounds());
       var bounds = this.map.getBounds();
-      this.imgOverlay = new L.DistortableImageOverlay(
-        this.overlay, {
-          corners: [
-            bounds.getNorthWest(),
-            bounds.getNorthEast(),
-            bounds.getSouthWest(),
-            bounds.getSouthEast()
-          ]
-        }
-      ).addTo(this.map);
+      // this.imgOverlay = new L.DistortableImageOverlay(
+      //   this.overlay, {
+      //     corners: [
+      //       bounds.getNorthWest(),
+      //       bounds.getNorthEast(),
+      //       bounds.getSouthWest(),
+      //       bounds.getSouthEast()
+      //     ]
+      //   }
+      // ).addTo(this.map);
     
-      this.opacitySlider.addLayer(this.imgOverlay);
+     // this.opacitySlider.addLayer(this.imgOverlay);
 
       // This is to enable editing...
-      L.DomEvent.on(this.imgOverlay._image, 'load', this.imgOverlay.editing.enable, this.imgOverlay.editing);
+      //L.DomEvent.on(this.imgOverlay._image, 'load', this.imgOverlay.editing.enable, this.imgOverlay.editing);
     }
 
   
@@ -109,6 +109,30 @@ export class LeafletMapComponent implements OnInit {
   setUpMapListener() {
     let _self = this;
    
+    this.map.on("click", response => {
+      if(this.dropP) {
+        if(this.points.length < 3) {
+           this.points.push({loc: response.latlng, marker:  L.marker(response.latlng, {draggable: true} ).addTo(this.map)});
+          // this.points[this.points.length - 1].marker.on('drag dragend', this.repositionImage);
+
+          this.repositionHandler();
+        }else {
+          this.dropP = false;
+
+          this.imgOverlay = L.imageOverlay.rotated(this.overlay, this.points[0].loc,this.points[1].loc, this.points[2].loc, {
+               
+               interactive: true,
+                attribution: "Historical building plan &copy; <a href='http://www.ign.es'>Instituto Geográfico Nacional de España</a>"
+              })//.addTo(map);
+            
+              this.map.addLayer(this.imgOverlay);
+
+              this.opacitySlider.addLayer(this.imgOverlay);
+        }
+
+     }
+
+    })
 
    this.map.on("layeradd", response => {
 
@@ -125,14 +149,14 @@ export class LeafletMapComponent implements OnInit {
   }
 
 
-  // repositionHandler() {
-  //   this.points[this.points.length - 1].marker.on('drag dragend', () => {
-  //     if(this.imgOverlay) {
-  //       this.imgOverlay.reposition(this.points[0].marker.getLatLng(), this.points[1].marker.getLatLng(), this.points[2].marker.getLatLng());
+  repositionHandler() {
+    this.points[this.points.length - 1].marker.on('drag dragend', () => {
+      if(this.imgOverlay) {
+        this.imgOverlay.reposition(this.points[0].marker.getLatLng(), this.points[1].marker.getLatLng(), this.points[2].marker.getLatLng());
     
-  //     }
-  //   });
-  // }
+      }
+    });
+  }
 
   
 

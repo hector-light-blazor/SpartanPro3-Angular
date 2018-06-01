@@ -4,7 +4,7 @@
     width: 50%;
     height: calc(100% - 190px);
     z-index: 4000;
-    background: #303030;
+    background: rgba(48,48,48, 0.7);
     cursor: pointer;
     overflow: auto;
 }
