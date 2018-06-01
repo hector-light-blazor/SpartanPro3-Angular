@@ -682,6 +682,7 @@ L.DistortableImage.Edit = L.Handler.extend({
 		opacity: 0.7,
 		outline: '1px solid red',
 		keymap: {
+			67: '_hideToolbar', //C
 			68: '_toggleRotateDistort', // d
 			73: '_toggleIsolate', // i
 			76: '_toggleLock', // l
@@ -736,7 +737,7 @@ L.DistortableImage.Edit = L.Handler.extend({
 		}
 
 		//overlay.on('click', this._showToolbar, this);
-		L.DomEvent.on(overlay._image, 'click', this._showToolbar, this);
+		//L.DomEvent.on(overlay._image, 'click', this._showToolbar, this);
 
 		/* Enable hotkeys. */
 		L.DomEvent.on(window, 'keydown', this._onKeyDown, this);
@@ -835,9 +836,12 @@ L.DistortableImage.Edit = L.Handler.extend({
 	},
 
 	_onKeyDown: function(event) {
+		
+		console.log(event.which);
 		var keymap = this.options.keymap,
+		
 			handlerName = keymap[event.which];
-		console.log(handlerName);
+		//console.log(handlerName);
 		if (handlerName !== undefined) {
 			this[handlerName].call(this);
 		}
@@ -898,6 +902,7 @@ L.DistortableImage.Edit = L.Handler.extend({
 	},
 
 	_hideToolbar: function() {
+		
 		var map = this._overlay._map;
 		if (this.toolbar) {
 			map.removeLayer(this.toolbar);
@@ -944,7 +949,7 @@ L.DistortableImage.Edit = L.Handler.extend({
 
 L.DistortableImageOverlay.addInitHook(function() {
 	this.editing = new L.DistortableImage.Edit(this);
-
+	
 	if (this.options.editable) {
 		L.DomEvent.on(this._image, 'load', this.editing.enable, this.editing);
 	}

@@ -18,7 +18,7 @@ export class LeafletMapComponent implements OnInit {
   imgOverlay: any = null // The image overlay object
 
   dropP = false; // This is to control if yes to drop points
-  points: Array<any> = []; // Collection of points to anchor the subdivision into the map
+  // points: Array<any> = []; // Collection of points to anchor the subdivision into the map
   opacitySlider: any = null;
   constructor() { }
 
@@ -46,6 +46,23 @@ export class LeafletMapComponent implements OnInit {
   ngOnChanges() {
     if(this.overlay) {
       this.dropP = true;
+      //console.log(this.map.getBounds());
+      var bounds = this.map.getBounds();
+      this.imgOverlay = new L.DistortableImageOverlay(
+        this.overlay, {
+          corners: [
+            bounds.getNorthWest(),
+            bounds.getNorthEast(),
+            bounds.getSouthWest(),
+            bounds.getSouthEast()
+          ]
+        }
+      ).addTo(this.map);
+    
+      this.opacitySlider.addLayer(this.imgOverlay);
+
+      // This is to enable editing...
+      L.DomEvent.on(this.imgOverlay._image, 'load', this.imgOverlay.editing.enable, this.imgOverlay.editing);
     }
 
   
@@ -91,43 +108,7 @@ export class LeafletMapComponent implements OnInit {
 
   setUpMapListener() {
     let _self = this;
-    this.map.on('click', response => {
-      if(this.dropP) {
-         if(this.points.length < 4) {
-            this.points.push({loc: response.latlng, marker:  L.marker(response.latlng, {draggable: true} ).addTo(this.map)});
-            //this.repositionHandler();
-         }else {
-           this.dropP = false;
-
-           this.imgOverlay = new L.DistortableImageOverlay(
-            this.overlay, {
-              corners: [
-                this.points[0].loc,
-                this.points[1].loc,
-                this.points[2].loc,
-                this.points[3].loc
-              ]
-            }
-          ).addTo(this.map);
-
-          L.DomEvent.on(this.imgOverlay._image, 'load', this.imgOverlay.editing.enable, this.imgOverlay.editing);
-
-          //  _self.imgOverlay = L.imageOverlay.rotated(this.overlay, this.points[0].loc, this.points[1].loc, this.points[2].loc, {
-          //       opacity: 0.5,
-          //       interactive: true,
-          //        attribution: "Historical building plan &copy; <a href='http://www.ign.es'>Instituto Geográfico Nacional de España</a>"
-          //      })
-             
-           //    this.map.addLayer(_self.imgOverlay)
-
-
-               // As Well Create The Opacity Control Once the layer is added
-            this.opacitySlider.addLayer(this.imgOverlay);
-         }
-
-      }
-      
-   }); // End of Map Click
+   
 
    this.map.on("layeradd", response => {
 
