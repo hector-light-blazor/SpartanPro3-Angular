@@ -7,6 +7,7 @@ import { MainPageComponent } from './worksheet/main-page/main-page.component';
 import { LvPageComponent } from './worksheet/lv-page/lv-page.component';
 import { DbPageComponent } from './worksheet/db-page/db-page.component';
 import { GisPageComponent } from './worksheet/gis-page/gis-page.component';
+import { AttachPageComponent } from './worksheet/attach-page/attach-page.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { GisPageComponent } from './worksheet/gis-page/gis-page.component';
     SharedModule,
     SubdivisionRoutingModule
   ],
-  declarations: [WorksheetComponent, MainPageComponent, LvPageComponent, DbPageComponent, GisPageComponent]
+  declarations: [WorksheetComponent, MainPageComponent, LvPageComponent, DbPageComponent, GisPageComponent, AttachPageComponent]
 })
 export class SubdivisionModule { }
