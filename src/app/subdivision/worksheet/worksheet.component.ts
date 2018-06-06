@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { WorksheetService } from '../worksheet.service';
+import "rxjs/add/operator/takeWhile";
+
 declare var pdfjsLib:any;
+declare var Tiff: any;
 @Component({
   selector: 'app-worksheet',
   templateUrl: './worksheet.component.html',
@@ -17,20 +21,33 @@ export class WorksheetComponent implements OnInit {
   lowError: boolean = false;
   dragging: boolean = false;
   overlay: any = null;
+  isAlive: boolean = true;
+ 
   @ViewChild("pdfCanvas") myCanvas: ElementRef;
-
+  canvas: any;
   context: CanvasRenderingContext2D;
 
     
-  constructor() { }
+  constructor(private worksheetService: WorksheetService) { }
 
   ngOnInit() {
-    let canvas = this.myCanvas.nativeElement;
-    this.context = canvas.getContext("2d");
-   
+    this.canvas = this.myCanvas.nativeElement;
+    this.context = this.canvas.getContext("2d");
+
+    //TWO WAY Communication Service...
+    this.worksheetService.worksheetCommunication.takeWhile(() => this.isAlive)
+    .subscribe(() => {
+        console.log("ATTACHMENT TOLD ME SOMETHING");
+    })
+
   }
 
-  test(binary) {
+  ngOnDestroy() {
+    console.log("I AM DESTROY")
+    this.isAlive = false;
+  }
+
+  parsePDF(binary) {
     let _self = this;
     var loadingTask = pdfjsLib.getDocument({data: binary}) //  this.pdfData});
 
@@ -47,14 +64,13 @@ export class WorksheetComponent implements OnInit {
 
     // Prepare canvas using PDF page dimensions
     
-    let canvas = _self.myCanvas.nativeElement;
-    let context: CanvasRenderingContext2D = canvas.getContext('2d');
-    canvas.height = viewport.height;
-    canvas.width = viewport.width;
+   
+    _self.canvas.height = viewport.height;
+    _self.canvas.width = viewport.width;
 
     // Render PDF page into canvas context
     var renderContext = {
-      canvasContext: context,
+      canvasContext: _self.context,
       viewport: viewport
     };
     var renderTask = page.render(renderContext);
@@ -62,9 +78,15 @@ export class WorksheetComponent implements OnInit {
         console.log('Page rendered');
         let canvas = _self.myCanvas.nativeElement;
 
-        var dataURL = canvas.toDataURL();
+        var dataURL = _self.canvas.toDataURL();
+
+        _self.worksheetService.attachments[_self.worksheetService.attachments.length - 1].source = dataURL;
+
         _self.overlay = dataURL;
-        //console.log(dataURL);
+        
+        //TELL WORKSHEET NEW ATTACHMENT BEEN ADDED.
+        _self.worksheetService.attachCommunication.next(true);
+        
       });
     });
     }, function (reason) {
@@ -75,7 +97,7 @@ export class WorksheetComponent implements OnInit {
 
 
 
-  // =-=-=-=-=-=-=-= THIS IS FOR DRAG AND DROP FILES TO VIEW ON MAP SUCH AS QUICK PICK =-=-=-=-=-=-=-=-=-=-=-=-=-=
+  // =-=-=-=-=-=-=-= THIS IS FOR DRAG AND DROP FILES TO VIEW ON MAP FOR PDF OR TIFFS =-=-=-=-=-=-=-=-=-=-=-=-=-=
   handleDragEnter() {
     this.dragging = true;
   }
@@ -96,17 +118,48 @@ export class WorksheetComponent implements OnInit {
     
 
       let files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
-      var reader = new FileReader();
+      
+      if(files.length == 1) {
+        let name:string = files[0].name;
+        this.worksheetService.attachments.push({name: name, source: ""});
+        if(name.toLowerCase().includes(".pdf")) {
 
-      reader.onload = (target) => {
-       
-        this.test(target.currentTarget['result'])
+          var reader = new FileReader();
+
+          reader.onload = (target) => {
+            this.parsePDF(target.currentTarget['result'])
+          }
+  
+          // Read the array of buffer...
+          reader.readAsArrayBuffer(files[0]);
+      
+        }
+        else if(name.toLowerCase().includes(".tif") || name.toLowerCase().includes('.tiff')) {
+
+          //Process Tiff File...
+          var reader = new FileReader();
+
+          reader.onload = (target) => {
+
+            //GEt The Array Buffer From Tiff and process..
+            var tiff = new Tiff({buffer: target.currentTarget['result']});
+            var canvas = tiff.toCanvas();
+
+            // Send the Tiff to get overlay..
+            var dataURL = canvas.toDataURL();
+            this.overlay = dataURL;
+            
+          }
+  
+          // Read the array of buffer...
+          reader.readAsArrayBuffer(files[0]);
+
+
+
+        }
       }
 
-      // Read the array of buffer...
-      reader.readAsArrayBuffer(files[0]);
-
-     // console.log(files);
+     
   }
 
 }
@@ -116,3 +169,5 @@ interface STREET {
   low:  string;
   high: string;
 }
+
+
