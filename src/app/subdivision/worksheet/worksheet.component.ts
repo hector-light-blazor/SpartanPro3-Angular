@@ -124,6 +124,7 @@ export class WorksheetComponent implements OnInit {
       if(files.length == 1) {
         let name:string = files[0].name;
         this.worksheetService.attachments.push({name: name, source: ""});
+        this.worksheetService.attachments[this.worksheetService.attachments.length - 1].position = this.worksheetService.attachments.length - 1;
         if(name.toLowerCase().includes(".pdf")) {
 
           var reader = new FileReader();
@@ -152,6 +153,7 @@ export class WorksheetComponent implements OnInit {
             this.overlay = dataURL;
 
             this.worksheetService.attachments[this.worksheetService.attachments.length - 1].source = dataURL;
+            
 
             this.sendCommunication();
             

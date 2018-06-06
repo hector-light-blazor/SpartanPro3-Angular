@@ -63,6 +63,10 @@ export class AttachPageComponent implements OnInit {
     this.isAlive = false;
   }
 
+  removeItem(position) {
+    //this.worksheetService.attachments[position]
+  }
+
 }
 
 interface PICS {

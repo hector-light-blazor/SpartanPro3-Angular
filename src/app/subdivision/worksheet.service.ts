@@ -16,4 +16,5 @@ export class WorksheetService {
 interface SUBDIVISIONS {
   name: string;
   source: string;
+  position?: number;
 }
