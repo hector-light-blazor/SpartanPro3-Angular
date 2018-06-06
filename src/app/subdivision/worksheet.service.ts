@@ -4,8 +4,8 @@ import { Subject } from 'rxjs/Subject';
 export class WorksheetService {
   
 
-  attachCommunication = new Subject();
-  worksheetCommunication = new Subject();
+  attachCommunication = new Subject<any>();
+  worksheetCommunication = new Subject<any>();
 
   attachments: Array<SUBDIVISIONS> = [];
 

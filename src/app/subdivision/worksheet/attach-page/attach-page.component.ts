@@ -14,22 +14,46 @@ export class AttachPageComponent implements OnInit {
 
   groupPics: Array<any> = [];
   ngroup: number = 3;
-  isAlive: boolean = false;
+  isAlive: boolean = true;
   constructor(private worksheetService: WorksheetService) { }
 
   ngOnInit() {
     console.log(this.worksheetService.attachments);
     
-    // while(this.arrPics.length > 0) {
-    //    this.groupPics.push(this.arrPics.splice(0, this.ngroup))
-    // }
+    
 
     this.worksheetService.attachCommunication.takeWhile(() => this.isAlive)
-    .subscribe(() => {
+    .subscribe((attach) => {
         console.log("WORKSHEET TOLD ME SOMETHING");
+        this.arrPics = attach.slice();
+
+        this.groupPics = this.chunk(this.arrPics, 0, 3);
+        
+        
+
+
+        console.log(this.groupPics);
+        console.log(this.worksheetService.attachments);
     })
 
   }
+  
+  chunk(arr, start, amount){
+    var result = [], 
+        i, 
+        start = start || 0, 
+        amount = amount || 500, 
+        len = arr.length;
+
+    do {
+        //console.log('appending ', start, '-', start + amount, 'of ', len, '.');
+        result.push(arr.slice(start, start+amount));
+        start += amount;
+
+    } while (start< len);
+
+    return result;
+};
 
   ngOnChanges() {
     console.log(this.worksheetService.attachments);

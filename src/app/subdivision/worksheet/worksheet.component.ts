@@ -84,9 +84,8 @@ export class WorksheetComponent implements OnInit {
 
         _self.overlay = dataURL;
         
-        //TELL WORKSHEET NEW ATTACHMENT BEEN ADDED.
-        _self.worksheetService.attachCommunication.next(true);
         
+        _self.sendCommunication();
       });
     });
     }, function (reason) {
@@ -95,7 +94,10 @@ export class WorksheetComponent implements OnInit {
     });
   }
 
-
+  sendCommunication() {
+    console.log("SENDING COM");
+    this.worksheetService.attachCommunication.next(this.worksheetService.attachments);
+  }
 
   // =-=-=-=-=-=-=-= THIS IS FOR DRAG AND DROP FILES TO VIEW ON MAP FOR PDF OR TIFFS =-=-=-=-=-=-=-=-=-=-=-=-=-=
   handleDragEnter() {
@@ -148,6 +150,10 @@ export class WorksheetComponent implements OnInit {
             // Send the Tiff to get overlay..
             var dataURL = canvas.toDataURL();
             this.overlay = dataURL;
+
+            this.worksheetService.attachments[this.worksheetService.attachments.length - 1].source = dataURL;
+
+            this.sendCommunication();
             
           }
   

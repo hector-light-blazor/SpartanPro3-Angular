@@ -1,30 +1,12 @@
 <div class="grid condensed demo-grid">
-  <div  class="row cells3">
-      <div  class="cell">
+  <div *ngFor="let pics of groupPics" style="margin-top:30px;" class="row cells3">
+      <div *ngFor="let pic of pics" class="cell">
         <div class="card">
             <div></div>
-            <img src="https://www.w3schools.com/w3css/img_avatar3.png" alt="Avatar" style="width:100%;opacity:0.85">
-          <small>Name</small>
+            <img [src]="pic.source"  style="width:100%;height: 300px;">
+          <small>{{pic.name}}</small>
         </div>
       </div>
-      <div class="cell">
-        <div class="card">
-            <img src="https://www.w3schools.com/w3css/img_avatar3.png" alt="Avatar" style="width:100%;opacity:0.85">
-          <small>Name</small>
-        </div>
-      </div>
-      <div class="cell">
-        <div class="card">
-            <img src="https://www.w3schools.com/w3css/img_avatar3.png" alt="Avatar" style="width:100%;opacity:0.85">
-          <small>Name</small>
-        </div>
-      </div>
-      <div style="margin-top: 20px;" class="cell">
-          <div class="card">
-              <img src="https://www.w3schools.com/w3css/img_avatar3.png" alt="Avatar" style="width:100%;opacity:0.85">
-            <small>Name</small>
-          </div>
-        </div>
   </div>
   
   
