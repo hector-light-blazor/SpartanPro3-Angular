@@ -1,3 +1,4 @@
+<app-master-loading  [regularLoading]="true" *ngIf="isLoading"></app-master-loading>
 <div class="tabcontrol"  data-role="tabcontrol">
     <ul class="tabs">
         <li><a href="#worksheet">WORKSHEET</a></li>
@@ -32,7 +33,7 @@
         <div class="frame ribbed-white" id="georef" ondragover="return false;"(dragenter)="handleDragEnter()"
         (dragleave)="handleDragLeave()"
         (drop)="handleDrop($event)">
-            <app-leaflet-map [overlay]="overlay"></app-leaflet-map>
+            <app-leaflet-map [overlay]="overlay" [remove]="remove"></app-leaflet-map>
             <div>
                <canvas style="visibility: hidden;" #pdfCanvas id="the-canvas"></canvas>
             </div>

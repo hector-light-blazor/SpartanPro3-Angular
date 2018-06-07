@@ -11,7 +11,7 @@ declare var L:any;
 export class LeafletMapComponent implements OnInit {
 
   @Input() overlay:any; // This Contains the image picture
-
+  @Input() remove: any = null; // This will remove the layer if user removes it from attachments...
   map: any; // Map Object
   mapflex:any; // The Dynamic Layer
   wmts: any;  // The WMTS Layer Google Imagery
@@ -20,6 +20,9 @@ export class LeafletMapComponent implements OnInit {
   dropP = false; // This is to control if yes to drop points
   // points: Array<any> = []; // Collection of points to anchor the subdivision into the map
   opacitySlider: any = null;
+
+  
+
   constructor() { }
 
   ngOnInit() {
@@ -28,7 +31,7 @@ export class LeafletMapComponent implements OnInit {
       try {
          this.setUpMap();
 
-         this.setUpMapListener();
+        this.setUpMapListener();
 
         // Setup The Opacity Control
         this.opacitySlider = new L.control.layerOpacity().addTo(this.map);
@@ -44,25 +47,60 @@ export class LeafletMapComponent implements OnInit {
   }
 
   ngOnChanges() {
+    
+    if(!isNaN(this.remove)) { // if number then remove the layer and other information...
+
+      // Before we remove lets check is the current one in view...
+      console.log(this.remove);
+      console.log(this.overlay);
+      if(this.remove == this.overlay.selection) {
+         this.map.removeLayer(this.imgOverlay);
+         this.imgOverlay = null;
+
+          this.points.forEach(element => {
+           this.map.removeLayer(element.marker);
+         });
+         this.points = [];
+         
+         return;
+      }
+
+     
+     
+    }
+
     if(this.overlay) {
+
+      this.overlay;
       this.dropP = true;
       //console.log(this.map.getBounds());
       var bounds = this.map.getBounds();
-      // this.imgOverlay = new L.DistortableImageOverlay(
-      //   this.overlay, {
-      //     corners: [
-      //       bounds.getNorthWest(),
-      //       bounds.getNorthEast(),
-      //       bounds.getSouthWest(),
-      //       bounds.getSouthEast()
-      //     ]
-      //   }
-      // ).addTo(this.map);
     
-     // this.opacitySlider.addLayer(this.imgOverlay);
+      if(this.imgOverlay) {
+        this.imgOverlay.setUrl(this.overlay.src);
+      }
+      else {
 
-      // This is to enable editing...
-      //L.DomEvent.on(this.imgOverlay._image, 'load', this.imgOverlay.editing.enable, this.imgOverlay.editing);
+        this.points.push({loc: bounds.getNorthWest(), marker:  L.marker(bounds.getNorthWest(), {draggable: true} ).addTo(this.map)});
+        this.repositionHandler();
+        this.points.push({loc: bounds.getNorthEast(), marker:  L.marker(bounds.getNorthEast(), {draggable: true} ).addTo(this.map)});
+        this.repositionHandler();
+        this.points.push({loc: bounds.getSouthWest(), marker:  L.marker(bounds.getSouthWest(), {draggable: true} ).addTo(this.map)});
+        this.repositionHandler();
+
+        this.imgOverlay = L.imageOverlay.rotated(this.overlay.src,  bounds.getNorthWest(), bounds.getNorthEast(),  bounds.getSouthWest(), {
+               
+          interactive: true,
+           attribution: "Historical building plan &copy; <a href='http://www.ign.es'>Instituto Geográfico Nacional de España</a>"
+         })
+       
+         this.map.addLayer(this.imgOverlay);
+  
+         this.opacitySlider.addLayer(this.imgOverlay);
+      }
+      
+     
+  
     }
 
   
@@ -109,30 +147,35 @@ export class LeafletMapComponent implements OnInit {
   setUpMapListener() {
     let _self = this;
    
-    this.map.on("click", response => {
-      if(this.dropP) {
-        if(this.points.length < 3) {
-           this.points.push({loc: response.latlng, marker:  L.marker(response.latlng, {draggable: true} ).addTo(this.map)});
-          // this.points[this.points.length - 1].marker.on('drag dragend', this.repositionImage);
+    // this.map.on("click", response => {
+    //   if(this.dropP) {
+    //     if(this.points.length < 3) {
+    //        this.points.push({loc: response.latlng, marker:  L.marker(response.latlng, {draggable: true} ).addTo(this.map)});
+    //       // this.points[this.points.length - 1].marker.on('drag dragend', this.repositionImage);
 
-          this.repositionHandler();
-        }else {
-          this.dropP = false;
-
-          this.imgOverlay = L.imageOverlay.rotated(this.overlay, this.points[0].loc,this.points[1].loc, this.points[2].loc, {
+    //       this.repositionHandler();
+    //     }else {
+    //       this.dropP = false;
+          
+    //       if(this.imgOverlay) {
+    //         this.imgOverlay.setUrl(this.overlay);
+    //         return;
+    //       }
+    //       console.log(this.points)
+    //       this.imgOverlay = L.imageOverlay.rotated(this.overlay, this.points[0].loc,this.points[1].loc, this.points[2].loc, {
                
-               interactive: true,
-                attribution: "Historical building plan &copy; <a href='http://www.ign.es'>Instituto Geográfico Nacional de España</a>"
-              })//.addTo(map);
+    //            interactive: true,
+    //             attribution: "Historical building plan &copy; <a href='http://www.ign.es'>Instituto Geográfico Nacional de España</a>"
+    //           })//.addTo(map);
             
-              this.map.addLayer(this.imgOverlay);
+    //           this.map.addLayer(this.imgOverlay);
 
-              this.opacitySlider.addLayer(this.imgOverlay);
-        }
+    //           this.opacitySlider.addLayer(this.imgOverlay);
+    //     }
 
-     }
+    //  }
 
-    })
+    // })
 
    this.map.on("layeradd", response => {
 

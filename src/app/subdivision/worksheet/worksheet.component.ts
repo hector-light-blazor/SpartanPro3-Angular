@@ -22,7 +22,8 @@ export class WorksheetComponent implements OnInit {
   dragging: boolean = false;
   overlay: any = null;
   isAlive: boolean = true;
- 
+  isLoading: boolean = false;
+  remove: number;
   @ViewChild("pdfCanvas") myCanvas: ElementRef;
   canvas: any;
   context: CanvasRenderingContext2D;
@@ -36,7 +37,14 @@ export class WorksheetComponent implements OnInit {
 
     //TWO WAY Communication Service...
     this.worksheetService.worksheetCommunication.takeWhile(() => this.isAlive)
-    .subscribe(() => {
+    .subscribe((action) => {
+
+        console.log(action);
+        if(action.action == "REMOVE")
+        {
+          this.remove = action.pos;
+          console.log("HELLO SENDING REMOVE")
+        }
         console.log("ATTACHMENT TOLD ME SOMETHING");
     })
 
@@ -81,10 +89,10 @@ export class WorksheetComponent implements OnInit {
         var dataURL = _self.canvas.toDataURL();
 
         _self.worksheetService.attachments[_self.worksheetService.attachments.length - 1].source = dataURL;
+   
+        _self.overlay = {src: dataURL, selection: _self.worksheetService.attachments.length - 1};
 
-        _self.overlay = dataURL;
-        
-        
+        _self.isLoading = false;
         _self.sendCommunication();
       });
     });
@@ -112,7 +120,7 @@ export class WorksheetComponent implements OnInit {
   handleDrop(e) {
       e.preventDefault();
       this.dragging = false;
-
+      this.isLoading = true;
       this.handleInputChange(e);
   }
 
@@ -150,11 +158,11 @@ export class WorksheetComponent implements OnInit {
 
             // Send the Tiff to get overlay..
             var dataURL = canvas.toDataURL();
-            this.overlay = dataURL;
+            this.overlay = {src: dataURL, selection: this.worksheetService.attachments.length - 1};
 
             this.worksheetService.attachments[this.worksheetService.attachments.length - 1].source = dataURL;
             
-
+            this.isLoading = false;
             this.sendCommunication();
             
           }

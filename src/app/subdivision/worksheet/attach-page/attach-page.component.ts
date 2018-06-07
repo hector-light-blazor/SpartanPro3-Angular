@@ -10,7 +10,7 @@ import "rxjs/add/operator/takeWhile";
 export class AttachPageComponent implements OnInit {
   
 
-  arrPics: Array<PICS> = [{name: "BOB", src: "TEST.jpg"}];
+  arrPics: Array<any> = [];
 
   groupPics: Array<any> = [];
   ngroup: number = 3;
@@ -18,7 +18,7 @@ export class AttachPageComponent implements OnInit {
   constructor(private worksheetService: WorksheetService) { }
 
   ngOnInit() {
-    console.log(this.worksheetService.attachments);
+   // console.log(this.worksheetService.attachments);
     
     
 
@@ -32,8 +32,8 @@ export class AttachPageComponent implements OnInit {
         
 
 
-        console.log(this.groupPics);
-        console.log(this.worksheetService.attachments);
+        // console.log(this.groupPics);
+        // console.log(this.worksheetService.attachments);
     })
 
   }
@@ -56,7 +56,7 @@ export class AttachPageComponent implements OnInit {
 };
 
   ngOnChanges() {
-    console.log(this.worksheetService.attachments);
+    //console.log(this.worksheetService.attachments);
   }
 
   ngOnDestroy() {
@@ -64,12 +64,13 @@ export class AttachPageComponent implements OnInit {
   }
 
   removeItem(position) {
-    //this.worksheetService.attachments[position]
+    this.worksheetService.attachments.splice(position, 1);
+    let arr =  this.worksheetService.attachments.slice();
+    this.arrPics = arr;
+
+    this.groupPics = this.chunk(this.arrPics, 0, 3);
+
+    this.worksheetService.worksheetCommunication.next({action:"REMOVE", pos: position});
   }
 
-}
-
-interface PICS {
-  src: string,
-  name: string
 }
