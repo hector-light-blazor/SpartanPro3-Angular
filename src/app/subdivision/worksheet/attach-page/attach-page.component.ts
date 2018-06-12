@@ -64,7 +64,18 @@ export class AttachPageComponent implements OnInit {
   }
 
   removeItem(position) {
-    this.worksheetService.attachments.splice(position, 1);
+
+    let index = -1;
+    let len = this.worksheetService.attachments.length;
+
+    for(var i = 0; i < len; i++) {
+      if(this.worksheetService.attachments[i].position == position) {
+        index = i;
+        break;
+      }
+    }
+
+    this.worksheetService.attachments.splice(index, 1);
     let arr =  this.worksheetService.attachments.slice();
     this.arrPics = arr;
 

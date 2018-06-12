@@ -87,10 +87,10 @@ export class WorksheetComponent implements OnInit {
         let canvas = _self.myCanvas.nativeElement;
 
         var dataURL = _self.canvas.toDataURL();
-
-        _self.worksheetService.attachments[_self.worksheetService.attachments.length - 1].source = dataURL;
+        let index = _self.worksheetService.attachments.length - 1
+        _self.worksheetService.attachments[index].source = dataURL;
    
-        _self.overlay = {src: dataURL, selection: _self.worksheetService.attachments.length - 1};
+        _self.overlay = {src: dataURL, selection: _self.worksheetService.attachments[index].position};
 
         _self.isLoading = false;
         _self.sendCommunication();
@@ -130,9 +130,13 @@ export class WorksheetComponent implements OnInit {
       let files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
       
       if(files.length == 1) {
+
+        var d = new Date();
+      
         let name:string = files[0].name;
         this.worksheetService.attachments.push({name: name, source: ""});
-        this.worksheetService.attachments[this.worksheetService.attachments.length - 1].position = this.worksheetService.attachments.length - 1;
+        this.worksheetService.attachments[this.worksheetService.attachments.length - 1].position = d.getTime();
+        
         if(name.toLowerCase().includes(".pdf")) {
 
           var reader = new FileReader();
@@ -158,9 +162,10 @@ export class WorksheetComponent implements OnInit {
 
             // Send the Tiff to get overlay..
             var dataURL = canvas.toDataURL();
-            this.overlay = {src: dataURL, selection: this.worksheetService.attachments.length - 1};
+            let index = this.worksheetService.attachments.length - 1
+            this.overlay = {src: dataURL, selection: this.worksheetService.attachments[index].position};
 
-            this.worksheetService.attachments[this.worksheetService.attachments.length - 1].source = dataURL;
+            this.worksheetService.attachments[index].source = dataURL;
             
             this.isLoading = false;
             this.sendCommunication();

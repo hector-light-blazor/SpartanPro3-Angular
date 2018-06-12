@@ -47,11 +47,11 @@ export class LeafletMapComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log(this.remove);
+   
     if(!isNaN(this.remove)) { // if number then remove the layer and other information...
 
       // Before we remove lets check is the current one in view...
-      console.log(this.remove);
+      console.log("IS NUMBER");
       console.log(this.overlay);
       if(this.remove == this.overlay.selection) {
         console.log(this.map);
