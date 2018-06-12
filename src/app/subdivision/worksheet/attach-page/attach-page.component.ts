@@ -32,7 +32,7 @@ export class AttachPageComponent implements OnInit {
         
 
 
-        // console.log(this.groupPics);
+        console.log(this.groupPics);
         // console.log(this.worksheetService.attachments);
     })
 

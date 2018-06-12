@@ -17,4 +17,5 @@ interface SUBDIVISIONS {
   name: string;
   source: string;
   position?: number;
+  selected?: boolean;
 }
