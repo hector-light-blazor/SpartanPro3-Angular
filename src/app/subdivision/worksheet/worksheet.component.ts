@@ -142,7 +142,7 @@ export class WorksheetComponent implements OnInit {
         });
 
         // The new one only will have selected true...
-        this.worksheetService.attachments.push({name: name, source: "", selected: true});
+        this.worksheetService.attachments.push({name: name, source: "", selected: true, file: files[0]});
         this.worksheetService.attachments[this.worksheetService.attachments.length - 1].position = d.getTime();
         
         if(name.toLowerCase().includes(".pdf")) {

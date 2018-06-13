@@ -13,9 +13,14 @@ export class WorksheetService {
 
 }
 
+
+// This Holds The Name, Source, position holds unique id, selected from the attachments
+// file object holds the original file uploaded to the web client..
+// this is the private properties..
 interface SUBDIVISIONS {
   name: string;
   source: string;
   position?: number;
   selected?: boolean;
+  file?: any;
 }
