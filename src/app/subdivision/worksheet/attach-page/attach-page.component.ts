@@ -84,4 +84,10 @@ export class AttachPageComponent implements OnInit {
     this.worksheetService.worksheetCommunication.next({action:"REMOVE", pos: position});
   }
 
+
+  changeGeo(position) {
+    console.log(position)
+    //this.worksheetService.worksheetCommunication.next({action:"REFERENCE", overlay: });
+  }
+
 }

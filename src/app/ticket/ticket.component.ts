@@ -667,12 +667,16 @@ export class TicketComponent implements OnInit {
       }else {
         name += this.attributes.property_id + "_" + time + ".docx";
       }
+
+      // This fix the hasgh tag -- also change python and php ....
+      name = name.replace("#", "")
       name = encodeURIComponent(name);
+      
       console.log(name)
       
        // http://docs.google.com/gview?url=
        // this.app.url + "template/getDocx/?doc=" +
-        window.open("https://view.officeapps.live.com/op/view.aspx?src=https://gis.lrgvdc911.org/LETTER_TEMPLATES/" +  name, "_blank");
+        window.open("https://view.officeapps.live.com/op/view.aspx?src=https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + name, "_blank");
         this.isLoading = false;
     });
   }

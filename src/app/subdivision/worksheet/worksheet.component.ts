@@ -89,7 +89,7 @@ export class WorksheetComponent implements OnInit {
         var dataURL = _self.canvas.toDataURL();
         let index = _self.worksheetService.attachments.length - 1
         _self.worksheetService.attachments[index].source = dataURL;
-   
+
         _self.overlay = {src: dataURL, selection: _self.worksheetService.attachments[index].position};
 
         _self.isLoading = false;
@@ -134,7 +134,15 @@ export class WorksheetComponent implements OnInit {
         var d = new Date();
       
         let name:string = files[0].name;
-        this.worksheetService.attachments.push({name: name, source: ""});
+
+        // Loop Through All the attachments change them to false...
+        this.worksheetService.attachments.forEach(element => {
+            element.selected = false;
+
+        });
+
+        // The new one only will have selected true...
+        this.worksheetService.attachments.push({name: name, source: "", selected: true});
         this.worksheetService.attachments[this.worksheetService.attachments.length - 1].position = d.getTime();
         
         if(name.toLowerCase().includes(".pdf")) {
