@@ -11,6 +11,10 @@ declare var Tiff: any;
 })
 export class WorksheetComponent implements OnInit {
 
+
+  @ViewChild("pdfCanvas") myCanvas: ElementRef;
+
+
   streets: Array<STREET> = [];
   street: STREET = null;
   name: string;
@@ -24,10 +28,10 @@ export class WorksheetComponent implements OnInit {
   isAlive: boolean = true;
   isLoading: boolean = false;
   remove: number;
-  @ViewChild("pdfCanvas") myCanvas: ElementRef;
   canvas: any;
   context: CanvasRenderingContext2D;
-
+  previewON = false;
+  source: any;
     
   constructor(private worksheetService: WorksheetService) { }
 
@@ -38,20 +42,17 @@ export class WorksheetComponent implements OnInit {
     //TWO WAY Communication Service...
     this.worksheetService.worksheetCommunication.takeWhile(() => this.isAlive)
     .subscribe((action) => {
+        if(action.preview) {
+          this.previewON = true;
 
-        console.log(action);
-        if(action.action == "REMOVE")
-        {
-          this.remove = action.pos;
-          console.log("HELLO SENDING REMOVE")
+          this.source = action.source;
         }
-        console.log("ATTACHMENT TOLD ME SOMETHING");
     })
 
   }
 
   ngOnDestroy() {
-    console.log("I AM DESTROY")
+   // console.log("I AM DESTROY")
     this.isAlive = false;
   }
 
@@ -60,12 +61,12 @@ export class WorksheetComponent implements OnInit {
     var loadingTask = pdfjsLib.getDocument({data: binary}) //  this.pdfData});
 
     loadingTask.promise.then(function(pdf) {
-    console.log('PDF loaded');
+   // console.log('PDF loaded');
   
   // Fetch the first page
   var pageNumber = 1;
   pdf.getPage(pageNumber).then((page) => {
-    console.log('Page loaded');
+    //console.log('Page loaded');
     
     var scale = 1.5;
     var viewport = page.getViewport(scale);
@@ -83,14 +84,17 @@ export class WorksheetComponent implements OnInit {
     };
     var renderTask = page.render(renderContext);
     renderTask.then(function () {
-        console.log('Page rendered');
+       // console.log('Page rendered');
         let canvas = _self.myCanvas.nativeElement;
 
         var dataURL = _self.canvas.toDataURL();
         let index = _self.worksheetService.attachments.length - 1
         _self.worksheetService.attachments[index].source = dataURL;
 
-        _self.overlay = {src: dataURL, selection: _self.worksheetService.attachments[index].position};
+       // _self.overlay = {source: dataURL, selection: _self.worksheetService.attachments[index].position};
+        //  console.log("HELLO")
+        _self.worksheetService.leafletCommunication.next({remove: false, overlay: true, source: dataURL, position: _self.worksheetService.attachments[index].position});
+        
 
         _self.isLoading = false;
         _self.sendCommunication();
@@ -103,7 +107,7 @@ export class WorksheetComponent implements OnInit {
   }
 
   sendCommunication() {
-    console.log("SENDING COM");
+    //console.log("SENDING COM");
     this.worksheetService.attachCommunication.next(this.worksheetService.attachments);
   }
 
@@ -171,8 +175,10 @@ export class WorksheetComponent implements OnInit {
             // Send the Tiff to get overlay..
             var dataURL = canvas.toDataURL();
             let index = this.worksheetService.attachments.length - 1
-            this.overlay = {src: dataURL, selection: this.worksheetService.attachments[index].position};
+            //this.overlay = {src: dataURL, selection: this.worksheetService.attachments[index].position};
 
+            this.worksheetService.leafletCommunication.next({remove: false, overlay: true, source: dataURL, position: this.worksheetService.attachments[index].position});
+        
             this.worksheetService.attachments[index].source = dataURL;
             
             this.isLoading = false;

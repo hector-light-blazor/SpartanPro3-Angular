@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { WorksheetService } from '../../worksheet.service';
+import { WorksheetService, SUBDIVISIONS } from '../../worksheet.service';
 import "rxjs/add/operator/takeWhile";
 
 @Component({
@@ -11,7 +11,7 @@ export class AttachPageComponent implements OnInit {
   
 
   arrPics: Array<any> = [];
-
+  previewON: boolean = false;
   groupPics: Array<any> = [];
   ngroup: number = 3;
   isAlive: boolean = true;
@@ -24,7 +24,7 @@ export class AttachPageComponent implements OnInit {
 
     this.worksheetService.attachCommunication.takeWhile(() => this.isAlive)
     .subscribe((attach) => {
-        console.log("WORKSHEET TOLD ME SOMETHING");
+       // console.log("WORKSHEET TOLD ME SOMETHING");
         this.arrPics = attach.slice();
 
         this.groupPics = this.chunk(this.arrPics, 0, 3);
@@ -32,7 +32,7 @@ export class AttachPageComponent implements OnInit {
         
 
 
-        console.log(this.groupPics);
+       // console.log(this.groupPics);
         // console.log(this.worksheetService.attachments);
     })
 
@@ -84,10 +84,48 @@ export class AttachPageComponent implements OnInit {
     this.worksheetService.worksheetCommunication.next({action:"REMOVE", pos: position});
   }
 
+ // This is to change the overlay picture from the new attachment source
+ // But if the user press the one is current selected then we are going to remove that on from georeference..
+  changeGeo(object:SUBDIVISIONS) {
+    
+    // We are going to try if not we failed...
+    try {
 
-  changeGeo(position) {
-    console.log(position)
-    //this.worksheetService.worksheetCommunication.next({action:"REFERENCE", overlay: });
+      if(object.selected) {
+
+      
+       
+        this.worksheetService.leafletCommunication.next({remove: true, overlay: false, pos: object.position, selection: object.selected});
+        object.selected = false;
+        // Kill it
+        return;
+      }
+
+      if(object) {
+        this.worksheetService.attachments.forEach(element => {
+            element.selected = false;
+        });
+
+
+        // The new selected turn true..
+        object.selected = true;
+
+        // this.worksheetService.worksheetCommunication.next({action:"REFERENCE", overlay:object.source, position: object.position });
+
+        this.worksheetService.leafletCommunication.next({remove: false, overlay: true, source: object.source, position: object.position});
+        
+
+      }
+    } catch (error) {
+      
+    }
+      
+     
+  }
+
+  onPreview(object: SUBDIVISIONS) {
+    console.log(object);
+    this.worksheetService.worksheetCommunication.next({preview: true, source: object.source});
   }
 
 }

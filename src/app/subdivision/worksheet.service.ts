@@ -6,7 +6,7 @@ export class WorksheetService {
 
   attachCommunication = new Subject<any>();
   worksheetCommunication = new Subject<any>();
-
+  leafletCommunication = new Subject<any>();
   attachments: Array<SUBDIVISIONS> = [];
 
   constructor() { }
@@ -17,7 +17,7 @@ export class WorksheetService {
 // This Holds The Name, Source, position holds unique id, selected from the attachments
 // file object holds the original file uploaded to the web client..
 // this is the private properties..
-interface SUBDIVISIONS {
+export interface SUBDIVISIONS {
   name: string;
   source: string;
   position?: number;
