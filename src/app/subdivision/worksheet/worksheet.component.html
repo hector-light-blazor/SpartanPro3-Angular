@@ -1,4 +1,4 @@
-<app-preview [source]="source" *ngIf="previewON"></app-preview>
+<app-preview (close)="previewON = false;" [source]="source" *ngIf="previewON"></app-preview>
 <app-master-loading  [regularLoading]="true" *ngIf="isLoading"></app-master-loading>
 <div class="tabcontrol"  data-role="tabcontrol">
     <ul class="tabs">

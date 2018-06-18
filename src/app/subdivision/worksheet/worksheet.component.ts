@@ -39,6 +39,10 @@ export class WorksheetComponent implements OnInit {
     this.canvas = this.myCanvas.nativeElement;
     this.context = this.canvas.getContext("2d");
 
+    // SET THE CANVAS AND CONTEXT...
+    this.worksheetService.setCanvas(this.canvas);
+    this.worksheetService.setContext(this.context);
+
     //TWO WAY Communication Service...
     this.worksheetService.worksheetCommunication.takeWhile(() => this.isAlive)
     .subscribe((action) => {
@@ -83,16 +87,13 @@ export class WorksheetComponent implements OnInit {
       viewport: viewport
     };
     var renderTask = page.render(renderContext);
-    renderTask.then(function () {
-       // console.log('Page rendered');
-        let canvas = _self.myCanvas.nativeElement;
-
+    renderTask.then(function (e) {
+       
         var dataURL = _self.canvas.toDataURL();
         let index = _self.worksheetService.attachments.length - 1
         _self.worksheetService.attachments[index].source = dataURL;
 
-       // _self.overlay = {source: dataURL, selection: _self.worksheetService.attachments[index].position};
-        //  console.log("HELLO")
+       
         _self.worksheetService.leafletCommunication.next({remove: false, overlay: true, source: dataURL, position: _self.worksheetService.attachments[index].position});
         
 
@@ -132,7 +133,7 @@ export class WorksheetComponent implements OnInit {
     
 
       let files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
-      
+      console.log(files);
       if(files.length == 1) {
 
         var d = new Date();
@@ -146,7 +147,7 @@ export class WorksheetComponent implements OnInit {
         });
 
         // The new one only will have selected true...
-        this.worksheetService.attachments.push({name: name, source: "", selected: true, file: files[0]});
+        this.worksheetService.attachments.push({name: name, source: "", selected: true, file: files[0], degrees: 0, image: document.createElement("img")});
         this.worksheetService.attachments[this.worksheetService.attachments.length - 1].position = d.getTime();
         
         if(name.toLowerCase().includes(".pdf")) {

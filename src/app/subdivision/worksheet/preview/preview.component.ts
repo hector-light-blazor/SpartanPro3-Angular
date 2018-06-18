@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-preview',
@@ -7,9 +7,15 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PreviewComponent implements OnInit {
   @Input() source: any;
+
+  @Output() close = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onClose() {
+    this.close.emit(true);
   }
 
 }

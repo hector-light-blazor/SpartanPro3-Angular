@@ -124,8 +124,13 @@ export class AttachPageComponent implements OnInit {
   }
 
   onPreview(object: SUBDIVISIONS) {
-    console.log(object);
+    //console.log(object);
     this.worksheetService.worksheetCommunication.next({preview: true, source: object.source});
+  }
+
+  onRotate(object: SUBDIVISIONS) {
+      //console.log(object);  
+      this.worksheetService.processRotation(object.position, object.source);
   }
 
 }
