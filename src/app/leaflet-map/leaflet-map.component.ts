@@ -81,7 +81,7 @@ export class LeafletMapComponent implements OnInit {
             }
            }
            else if(action.remove) {
-            if(!isNaN(action.pos)) { // if number then remove the layer and other information...
+            if(!isNaN(action.position)) { // if number then remove the layer and other information...
 
  
               if(action.selection) {

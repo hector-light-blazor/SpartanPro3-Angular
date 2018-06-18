@@ -33,14 +33,16 @@
         </div>
         <div style="padding: 0;" class="frame ribbed-white" id="georef" ondragover="return false;"(dragenter)="handleDragEnter()"
         (dragleave)="handleDragLeave()"
-        (drop)="handleDrop($event)">
+        (drop)="handleDrop($event, true)">
             <app-leaflet-map [overlay]="overlay" [remove]="remove"></app-leaflet-map>
             <div>
                <canvas style="display: none;" #pdfCanvas id="the-canvas"></canvas>
             </div>
         </div>
 
-        <div class="frame ribbed-white" id="attach">
+        <div class="frame ribbed-white" id="attach" ondragover="return false;"(dragenter)="handleDragEnter()"
+        (dragleave)="handleDragLeave()"
+        (drop)="handleDrop($event, false)">
             <app-attach-page ></app-attach-page>
         </div>
 

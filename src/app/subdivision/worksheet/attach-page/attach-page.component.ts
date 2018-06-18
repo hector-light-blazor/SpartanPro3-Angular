@@ -15,6 +15,7 @@ export class AttachPageComponent implements OnInit {
   groupPics: Array<any> = [];
   ngroup: number = 3;
   isAlive: boolean = true;
+  noAttachs: boolean = true;
   constructor(private worksheetService: WorksheetService) { }
 
   ngOnInit() {
@@ -25,6 +26,12 @@ export class AttachPageComponent implements OnInit {
     this.worksheetService.attachCommunication.takeWhile(() => this.isAlive)
     .subscribe((attach) => {
        // console.log("WORKSHEET TOLD ME SOMETHING");
+
+       if(attach.length > 0) {
+         this.noAttachs = false;
+       }else {
+         this.noAttachs = true;
+       }
         this.arrPics = attach.slice();
 
         this.groupPics = this.chunk(this.arrPics, 0, 3);
@@ -63,13 +70,15 @@ export class AttachPageComponent implements OnInit {
     this.isAlive = false;
   }
 
-  removeItem(position) {
+  removeItem(object: SUBDIVISIONS) {
 
     let index = -1;
     let len = this.worksheetService.attachments.length;
 
+   
+
     for(var i = 0; i < len; i++) {
-      if(this.worksheetService.attachments[i].position == position) {
+      if(this.worksheetService.attachments[i].position == object.position) {
         index = i;
         break;
       }
@@ -79,9 +88,14 @@ export class AttachPageComponent implements OnInit {
     let arr =  this.worksheetService.attachments.slice();
     this.arrPics = arr;
 
+    if(arr.length == 0) { // Display the label if no attachments available...
+      this.noAttachs = true;
+    }
+
     this.groupPics = this.chunk(this.arrPics, 0, 3);
 
-    this.worksheetService.worksheetCommunication.next({action:"REMOVE", pos: position});
+
+    this.worksheetService.leafletCommunication.next({remove: true, overlay: false, position: object.position, selection: object.selected});
   }
 
  // This is to change the overlay picture from the new attachment source
@@ -95,7 +109,7 @@ export class AttachPageComponent implements OnInit {
 
       
        
-        this.worksheetService.leafletCommunication.next({remove: true, overlay: false, pos: object.position, selection: object.selected});
+        this.worksheetService.leafletCommunication.next({remove: true, overlay: false, position: object.position, selection: object.selected});
         object.selected = false;
         // Kill it
         return;

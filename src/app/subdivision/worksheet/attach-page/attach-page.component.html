@@ -1,5 +1,6 @@
 
-<div class="grid condensed demo-grid">
+<div class="grid condensed demo-grid" [ngClass]="{'attach': noAttachs}">
+  <h2 *ngIf="noAttachs" style="margin: 0 auto;vertical-align: middle; color: rgb(179, 171, 171);">Drag a File</h2>
   <div *ngFor="let pics of groupPics" style="margin-top:30px;" class="row cells3">
       <div *ngFor="let pic of pics" class="cell">
 
@@ -10,7 +11,7 @@
           <br>
           <button class="button info" (click)="onRotate(pic)"><i class="fa fa-retweet"></i></button>
           <button class="button info" (click)="changeGeo(pic)"><i class="fa fa-globe"></i></button>
-          <button class="button danger"(click)="removeItem(pic.position)"><i class="fa fa-trash"></i></button>
+          <button class="button danger"(click)="removeItem(pic)"><i class="fa fa-trash"></i></button>
         </div>
       </div>
   </div>

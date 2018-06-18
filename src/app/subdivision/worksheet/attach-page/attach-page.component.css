@@ -6,6 +6,14 @@
 
 }
 
+.attach {
+    border: 2px dotted #eee;
+    width: 98%;
+    height: 400px;
+    text-align: center;
+    margin:0 auto;
+}
+
 .cardColor {
     border: 1px solid blueviolet;
 }

@@ -122,18 +122,19 @@ export class WorksheetComponent implements OnInit {
       this.dragging = false;
   }
 
-  handleDrop(e) {
+  handleDrop(e, reference) {
       e.preventDefault();
       this.dragging = false;
       this.isLoading = true;
-      this.handleInputChange(e);
+      
+      this.handleInputChange(e, reference);
   }
 
-  handleInputChange(e) {
+  handleInputChange(e, geo) {
     
 
       let files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
-      console.log(files);
+     
       if(files.length == 1) {
 
         var d = new Date();
@@ -147,7 +148,7 @@ export class WorksheetComponent implements OnInit {
         });
 
         // The new one only will have selected true...
-        this.worksheetService.attachments.push({name: name, source: "", selected: true, file: files[0], degrees: 0, image: document.createElement("img")});
+        this.worksheetService.attachments.push({name: name, source: "", selected: geo, file: files[0], degrees: 0, image: document.createElement("img")});
         this.worksheetService.attachments[this.worksheetService.attachments.length - 1].position = d.getTime();
         
         if(name.toLowerCase().includes(".pdf")) {
@@ -177,9 +178,11 @@ export class WorksheetComponent implements OnInit {
             var dataURL = canvas.toDataURL();
             let index = this.worksheetService.attachments.length - 1
             //this.overlay = {src: dataURL, selection: this.worksheetService.attachments[index].position};
-
-            this.worksheetService.leafletCommunication.next({remove: false, overlay: true, source: dataURL, position: this.worksheetService.attachments[index].position});
+            if(geo){
+              this.worksheetService.leafletCommunication.next({remove: false, overlay: true, source: dataURL, position: this.worksheetService.attachments[index].position});
         
+            }
+           
             this.worksheetService.attachments[index].source = dataURL;
             
             this.isLoading = false;
@@ -192,6 +195,30 @@ export class WorksheetComponent implements OnInit {
 
 
 
+        }
+
+        else if(name.toLowerCase().includes(".png") || name.toLowerCase().includes(".jpg") || name.toLowerCase().includes(".jpeg")) {
+         
+
+          var reader = new FileReader();
+
+            reader.onload =  (e) => {
+            //  console.log(e)
+
+              let index = this.worksheetService.attachments.length - 1;
+              if(geo){
+                this.worksheetService.leafletCommunication.next({remove: false, overlay: true, source: e.target.result, position: this.worksheetService.attachments[index].position});
+        
+              }
+             
+              this.worksheetService.attachments[index].source = e.target.result;
+
+              this.isLoading = false;
+
+              this.sendCommunication();
+            };
+
+            reader.readAsDataURL(files[0]);
         }
       }
 
