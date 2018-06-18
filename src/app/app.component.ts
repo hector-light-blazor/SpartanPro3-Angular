@@ -31,7 +31,6 @@ export class AppComponent {
 
     this.appService.cntAppFromLogin.takeWhile(() => this.isAlive).subscribe(info => {
         this.isLoading = true;
-       
         this.account_info = info.user;
         this.appService.account_info = this.account_info;
 
@@ -53,21 +52,6 @@ export class AppComponent {
           }
       });
 
-     
-
-
-      // Process the msag polygon...
-      // if(this.appService.msagObject) {
-      //   this.appService.msagObject.forEach(element => {
-
-      //       // console.log(element);
-      //       element.geo = new this.appService.esriPolygon(element.geo.coordinates[0]);
-      //    });
-      //   console.log(this.appService.msagObject);
-      // }
-    
-
-
         // this.appService.GET_METHOD(this.appService.route.api.bRouting + this.appService.account_info.organization_id).subscribe(response => {
         //    console.log(response);
         // });
@@ -77,46 +61,30 @@ export class AppComponent {
 
       // this.appService.GET_METHOD(this.appService.route.api.gTConfig).subscribe(response => {
       //    console.log(response);
-      // })
+
+      //  })
       this.appService.GET_METHOD(this.appService.route.api.gUConfig + this.appService.account_info.user_id).subscribe((response:any) => {
        
         if(response){
          
-         // console.log(response);
+         console.log(response);
               for(var x = 0; x < response.length; x++){
                 response[x].json = JSON.parse(response[x].json);
               }
             this.appService.account_info.config = response;
             
+           
+        
+
             setTimeout(() => {
                _self.toolBarOnOff = info.toolbar_on;
+              
                 _self.isLoading = false;
+                _self.appService.cmdToToolbar.next({settings: true});
                 _self.router.navigateByUrl("ticket/dashboard");
                 //_self.router.navigateByUrl("Map");
             }, 400);
-              
-
-             // console.log(response);
-            //     if(response[x].setting_type == "TOOLBAR"){
-            //       // console.log(response[x]);
-            //         this._toolSettings = response[x].json;
-            //         if(!this._toolSettings.SECTIONS.TICKET.QUICKSEARCH.onoff){
-            //             this.appService._toolbarBtns.QUICK_SEARCH = false;
-            //           }
-            //          console.log(this._toolSettings);
-            //           if(this._toolSettings.SECTIONS.SETTINGS.USER.onoff) {
-            //             console.log("ADMIN")
-            //             this.appService.admin = true;
-            //           }else {
-            //             this.appService.admin = false;
-            //           }
-                    
-            //     }else if(response[x].setting_type == "HOMEVIEW") {
-            //         if(response[x].name == "QUICKPICK") {
-            //           this.router.navigateByUrl("/home/mapView");
-            //         }
-            //     }
-            // }
+            
 
         } 
     });

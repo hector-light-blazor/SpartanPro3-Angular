@@ -29,7 +29,8 @@ interface secSub{
 
 interface secMap{
      onoff?: boolean,
-     VIEW?: propMap
+     VIEW?: propMap,
+     TOOLS?: propMapTools
 }
 
 interface secSet{
@@ -40,6 +41,12 @@ interface secSet{
      TOOLBAR?: propToolBar,
      GIS?: propGIS, 
 }
+
+interface propMapTools {
+    onoff?: boolean
+    ids?: btnsMapTool
+}
+
 
 interface propProfile{
     onoff?: boolean,
@@ -117,7 +124,8 @@ interface propFilter{
 interface btnsView{
     dash: boolean,
     calendar: boolean,
-    arch: boolean
+    arch: boolean,
+    charts?: boolean
 }
 
 interface btnsInsert{
@@ -145,7 +153,8 @@ interface btnsTicketInsert{
 
 interface btnsTicketView{
     MAP: boolean,
-    ATTACHMENT: boolean
+    ATTACHMENT: boolean,
+    LETTER?: boolean
 }
 
 interface btnsTicketFilter{
@@ -156,4 +165,9 @@ interface btnsTicketFilter{
 
 interface btnsMap{
     MAP: boolean
+}
+
+interface btnsMapTool {
+    MEASURE?: boolean,
+    IDENTIFY?: boolean
 }

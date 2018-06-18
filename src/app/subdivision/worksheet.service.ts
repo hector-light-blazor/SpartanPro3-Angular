@@ -75,8 +75,12 @@ export class WorksheetService {
 
     this.attachments[index].source = this.canvas.toDataURL();
 
-    this.leafletCommunication.next({remove: false, overlay: true, source: this.attachments[index].source, position: this.attachments[index].position});
+    // Only run this command if the rotation is the one selected...
+    if(this.attachments[index].selected) {
+      this.leafletCommunication.next({remove: false, overlay: true, source: this.attachments[index].source, position: this.attachments[index].position});
         
+    }
+  
   }
 }
 

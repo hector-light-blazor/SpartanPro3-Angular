@@ -99,7 +99,10 @@ export class AppService {
   toolbarActions = new Subject<any>(); // ...This handle all transactions from toolbar to interact with routes...
 
   ticketInteractionToolbar = new Subject<any>();
-
+  
+   // Main To toolbar
+  cmdToToolbar = new Subject<any>();
+  
   // New Subject for Quick Pick...
   actionsQuickPick = new Subject<any>();
   

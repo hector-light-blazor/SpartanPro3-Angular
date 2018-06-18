@@ -1,3 +1,347 @@
-<p>
-  toolbar-i works!
-</p>
+<div class="container">
+  <div class="window">
+     <div class="window-caption">
+       <span class="window-caption-icon">
+          <i class="fa fa-windows" aria-hidden="true"></i>
+       </span>
+       <span class="window-caption-title">Insert Toolbar Settings</span>
+     </div>
+     <div class="window-content">
+        <div  class="input-control text full-size">
+            <input  placeholder="Setting Name" type="text" >
+            <button class="button primary">Save</button>
+        </div>
+
+
+        <div class="grid">
+            <div class="row cells12">
+                <div class="cell"></div>
+                <div  class="cell colspan10">
+                 <div class="treeview padding20" data-role="treeview">
+                    <ul>
+                        <li class="node collapsed">
+                          <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.onoff" ><span class="check"></span></label>
+                          <span class="leaf">TICKET</span>
+                          <span *ngIf="_toolSettings.SECTIONS.TICKET.onoff" class="node-toggle"></span>
+                          <ul  *ngIf="_toolSettings.SECTIONS.TICKET.onoff">
+                              <li class="node collapsed">
+                                  <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.VIEW.onoff" ><span class="check"></span></label>
+                                  <span class="leaf">DISPLAY</span>
+                                  <span *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.onoff" class="node-toggle"></span>
+                                  <ul *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.onoff">
+                                      <li> <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.VIEW.ids.dash" ><span class="check"></span></label>
+                                          <span class="leaf">DASHBOARD</span></li>
+                                      <li><label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.VIEW.ids.calendar"  ><span class="check"></span></label>
+                                          <span class="leaf">CALENDAR</span></li>
+                                      <li><label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.VIEW.ids.arch"  >
+                                          <span class="check"></span></label>
+                                          <span class="leaf">ARCHIVE</span></li>
+                                       <li><label class="input-control checkbox small-check"><input type="checkbox" 
+                                        [(ngModel)]="_toolSettings.SECTIONS.TICKET.VIEW.ids.charts"  >
+                                            <span class="check"></span></label>
+                                            <span class="leaf">CHARTS</span></li>
+                                  </ul>
+                              </li>
+                      <li class="node collapsed">
+                          <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.INSERT.onoff" ><span class="check"></span></label>
+                          <span class="leaf">INSERT</span>
+                          <span *ngIf="_toolSettings.SECTIONS.TICKET.INSERT.onoff" class="node-toggle"></span>
+                            <ul *ngIf="_toolSettings.SECTIONS.TICKET.INSERT.onoff">
+                                <li class="node">
+                                    <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.INSERT.ids.nw" ><span class="check"></span></label>
+                                    <span class="leaf">NEW</span>
+                                </li>
+                            </ul>
+                      </li>
+                      <li class="node collapsed">
+                            <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.RECORDS.onoff" ><span class="check"></span></label>
+                            <span class="leaf">RECORDS</span>
+                            <span *ngIf="_toolSettings.SECTIONS.TICKET.RECORDS.onoff" class="node-toggle"></span>
+                            <ul *ngIf="_toolSettings.SECTIONS.TICKET.RECORDS.onoff">
+                                <li class="node">
+                                        <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.RECORDS.ids.filter" ><span class="check"></span></label>
+                                    <span class="leaf">FILTER</span>
+                                </li>
+                            </ul>
+                      </li>
+                   <li class="node collapsed">
+                        <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.QUICKSEARCH.onoff" ><span class="check"></span></label>
+                       <span class="leaf">QUICK SEARCH</span>
+                       <span *ngIf="_toolSettings.SECTIONS.TICKET.QUICKSEARCH.onoff" class="node-toggle"></span>
+                       <ul *ngIf="_toolSettings.SECTIONS.TICKET.QUICKSEARCH.onoff">
+                           <li class="node">
+                                <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.QUICKSEARCH.ids.search" ><span class="check"></span></label>
+                                <span class="leaf">SEARCH INPUT</span>
+                           </li>
+                       </ul>
+                  </li>
+                   <li  class="node collapsed">
+                       <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.EDITS.onoff" ><span class="check"></span></label>
+                       <span class="leaf">EDITS</span>
+                       <span *ngIf="_toolSettings.SECTIONS.TICKET.EDITS.onoff" class="node-toggle"></span>
+                       <ul *ngIf="_toolSettings.SECTIONS.TICKET.EDITS.onoff">
+                           <li>
+                               <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.EDITS.ids.SAVE_TRANSFER" ><span class="check"></span></label>
+                               <span class="leaf">SAVE</span>
+                           </li>
+                           <li>
+                               <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.EDITS.ids.DELETE" ><span class="check"></span></label>
+                               <span class="leaf">DELETE</span>
+                           </li>
+                           <li>
+                               <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.EDITS.ids.ARCHIVE" ><span class="check"></span></label>
+                               <span class="leaf">ARCHIVE</span>
+                           </li>
+                       </ul>
+                   </li>
+                   <li  class="node collapsed">
+                       <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.TICKET_INSERT.onoff" ><span class="check"></span></label>
+                       <span class="leaf">TICKET INSERT</span>
+                       <span *ngIf="_toolSettings.SECTIONS.TICKET.TICKET_INSERT.onoff" class="node-toggle"></span>
+                       <ul *ngIf="_toolSettings.SECTIONS.TICKET.TICKET_INSERT.onoff">
+                          <li class="node">
+                              <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.TICKET_INSERT.ids.COMMENTS" ><span class="check"></span></label>
+                       
+                              <span class="leaf">COMMENTS</span>
+                          </li>
+                          <li class="node">
+                              <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.TICKET_INSERT.ids.ATTACHMENT" ><span class="check"></span></label>
+                       
+                              <span class="leaf">ATTACHMENT</span>
+                          </li>
+                       </ul>
+                   </li>
+                   <li   class="node collapsed">
+                       <label  class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.TICKET_VIEW.onoff" ><span click-stop-propagation class="check"></span></label>
+                        
+                      <span class="leaf">TICKET VIEW</span>
+                      <span  *ngIf="_toolSettings.SECTIONS.TICKET.TICKET_VIEW.onoff" class="node-toggle"></span>
+                      <ul *ngIf="_toolSettings.SECTIONS.TICKET.TICKET_VIEW.onoff">
+                         <li class="node">
+                           <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.TICKET_VIEW.ids.MAP" ><span class="check"></span></label>
+                       
+                           <span class="leaf">MAP</span>
+                           
+                         </li>
+                         <li>
+                           <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.TICKET_VIEW.ids.ATTACHMENT" ><span class="check"></span></label>
+                       
+                           <span class="leaf">ATTACHMENT</span>
+                           
+                         </li>
+                         <li>
+                                <label class="input-control checkbox small-check"><input type="checkbox" 
+                                    [(ngModel)]="_toolSettings.SECTIONS.TICKET.TICKET_VIEW.ids.LETTER" ><span class="check"></span></label>
+                            
+                                <span class="leaf">LETTER</span>
+                                
+                              </li>
+                      </ul>
+                   </li>
+                   <li class="node collapsed">
+                        <label  class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.FILTER.onoff" ><span  class="check"></span></label>
+                       
+                        <span class="leaf">FILTER</span>
+                        <span *ngIf="_toolSettings.SECTIONS.TICKET.FILTER.onoff" class="node-toggle"></span>
+                        <ul>
+                           <li class="node">
+                               <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.FILTER.ids.DATE" ><span class="check"></span></label>
+                       
+                               <span class="leaf">DATE</span>
+                           </li>
+                           <li class="node">
+                               <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.FILTER.ids.DOWNLOAD" ><span class="check"></span></label>
+                       
+                               <span class="leaf">DOWNLOAD 1000</span>
+                           </li>
+                           <li class="node">
+                               <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.FILTER.ids.RESET" ><span class="check"></span></label>
+                       
+                               <span class="leaf">RESET</span>
+                           </li>
+                        </ul>
+                   </li>
+              </ul>
+          </li>
+              <li class="node collapsed">
+                  <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SUBDIVISION.onoff" ><span class="check"></span></label>
+                  <span class="leaf">SUBDIVISION</span>
+                  <span *ngIf="_toolSettings.SECTIONS.SUBDIVISION.onoff" class="node-toggle"></span>
+                  <ul *ngIf="_toolSettings.SECTIONS.SUBDIVISION.onoff">
+                      <li class="node collapsed">
+                          <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SUBDIVISION.VIEW.onoff" ><span class="check"></span></label>
+                          <span class="leaf">DISPLAY</span>
+                          <span *ngIf="_toolSettings.SECTIONS.SUBDIVISION.VIEW.onoff" class="node-toggle"></span>
+                          <ul   *ngIf="_toolSettings.SECTIONS.SUBDIVISION.VIEW.onoff">
+                              <li>
+                                  <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SUBDIVISION.VIEW.ids.dash" ><span class="check"></span></label>
+                          
+                                  <span class="leaf">DASHBOARD</span>
+                              </li>
+                              <li>
+                                  <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SUBDIVISION.VIEW.ids.calendar" ><span class="check"></span></label>
+                                  <span class="leaf">CALENDAR</span>
+                              </li>
+                              <li>
+                                  <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SUBDIVISION.VIEW.ids.arch" ><span class="check"></span></label>
+                                  <span class="leaf">ARCHIVE</span>
+                              </li>
+                          </ul>
+                      </li>
+                  </ul>
+              </li>
+              <li class="node collapsed">
+                  <label class="input-control checkbox small-check">
+                      <input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.MAP.onoff" >
+                      <span class="check"></span></label>
+                  <span class="leaf">MAP</span>
+                  <span *ngIf="_toolSettings.SECTIONS.MAP.onoff" class="node-toggle"></span>
+                  <ul *ngIf="_toolSettings.SECTIONS.MAP.onoff">
+                      <li class="node collapsed">
+                          <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.MAP.VIEW.onoff" ><span class="check"></span></label>
+                          <span class="leaf">DISPLAY</span>
+                          <span *ngIf="_toolSettings.SECTIONS.MAP.VIEW.onoff" class="node-toggle"></span>
+                          <ul *ngIf="_toolSettings.SECTIONS.MAP.VIEW.onoff">
+                              <li> 
+                                  <label class="input-control checkbox small-check">
+                                      <input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.MAP.VIEW.ids.MAP" >
+                                      <span class="check"></span>
+                                  </label>
+                          
+                                  <span class="leaf">MAP</span>
+                              </li>
+                          </ul>
+                      </li>
+
+                      <li class="node collapsed">
+                            <label class="input-control checkbox small-check"><input type="checkbox" 
+                                [(ngModel)]="_toolSettings.SECTIONS.MAP.VIEW.onoff" >
+                                <span class="check"></span></label>
+                            <span class="leaf">TOOLS</span>
+                            <span  *ngIf="_toolSettings.SECTIONS.MAP.VIEW.onoff" class="node-toggle"></span>
+                            <ul *ngIf="_toolSettings.SECTIONS.MAP.VIEW.onoff">
+                                            <li  class="node collapsed"> <label class="input-control checkbox small-check">
+                                                <input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.VIEW.ids.dash" ><span class="check"></span></label>
+                                                <span class="leaf">MEASURE</span></li>
+                                            <li><label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.TICKET.VIEW.ids.calendar"  ><span class="check"></span></label>
+                                                <span class="leaf">IDENTIFY</span></li>
+                          </ul>
+                      </li>
+                  </ul>
+              </li>
+              <li class="node collapsed">
+                  <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SETTINGS.onoff" ><span class="check"></span></label>
+                  <span class="leaf">SETTINGS</span>
+                  <span  *ngIf="_toolSettings.SECTIONS.SETTINGS.onoff" class="node-toggle"></span>
+                      <ul *ngIf="_toolSettings.SECTIONS.SETTINGS.onoff">
+                          <li class="node collapsed" >
+                              <label class="input-control checkbox small-check"><input type="checkbox"
+                                 [(ngModel)]="_toolSettings.SECTIONS.SETTINGS.PROFILE.onoff" ><span class="check"></span></label>
+                  
+                              <span class="leaf">PROFILE</span>
+                              <span  *ngIf="_toolSettings.SECTIONS.SETTINGS.PROFILE.onoff" class="node-toggle"></span>
+                              <ul *ngIf="_toolSettings.SECTIONS.SETTINGS.PROFILE.onoff">
+                                  <li>
+                                      <label class="input-control checkbox small-check">
+                                      <input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SETTINGS.PROFILE.UPDATE" >
+                                          <span class="check"></span></label>
+                  
+                                      <span class="leaf">UPDATE</span>
+                                      
+                                  </li>
+                              </ul>
+                          </li>
+
+                          <li class="node collapsed" >
+                              <label class="input-control checkbox small-check">
+                                  <input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SETTINGS.USER.onoff" ><span class="check"></span></label>
+                  
+                              <span class="leaf">USER</span>
+                              <span  *ngIf="_toolSettings.SECTIONS.SETTINGS.USER.onoff" class="node-toggle"></span>
+                              <ul *ngIf="_toolSettings.SECTIONS.SETTINGS.USER.onoff">
+                                  <li>
+                                      <label class="input-control checkbox small-check">
+                                  <input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SETTINGS.USER.INSERT" ><span class="check"></span></label>
+                  
+                                      <span class="leaf">INSERT</span>
+                                  </li>
+                                  <li>
+                                      <label class="input-control checkbox small-check">
+                                  <input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SETTINGS.USER.UPDATE" ><span class="check"></span></label>
+                  
+                                      <span class="leaf">UPDATE</span>
+                                  </li>
+                              </ul>
+                          </li>
+
+                          <li class="node collapsed" >
+                              <label class="input-control checkbox small-check">
+                                  <input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SETTINGS.TICKET.onoff" ><span class="check"></span></label>
+                  
+                              <span class="leaf">TICKET</span>
+                              <span  *ngIf="_toolSettings.SECTIONS.SETTINGS.TICKET.onoff" class="node-toggle"></span>
+                              <ul>
+                                  <li>
+                                      <label class="input-control checkbox small-check">
+                                      <input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SETTINGS.TICKET.INSERT" ><span class="check"></span></label>
+                  
+                                      <span class="leaf">INSERT</span>
+                                  </li>
+                                  <li>
+                                      <label class="input-control checkbox small-check">
+                                      <input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SETTINGS.TICKET.UPDATE" ><span class="check"></span></label>
+                  
+                                      <span class="leaf">UPDATE</span>
+                                  </li>
+                              </ul>
+                          </li>
+
+                          <li class="node collapsed" >
+                              <label class="input-control checkbox small-check">
+                                  <input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SETTINGS.TOOLBAR.onoff" ><span class="check"></span></label>
+                  
+                              <span class="leaf">TOOLBAR</span>
+                              <span  *ngIf="_toolSettings.SECTIONS.SETTINGS.TOOLBAR.onoff" class="node-toggle"></span>
+                              <ul>
+                                  <li>
+                                      <label class="input-control checkbox small-check">
+                                          <input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SETTINGS.TOOLBAR.INSERT" >
+                                          <span class="check"></span>
+                                      </label>
+                  
+                                      <span class="leaf">INSERT</span>
+                                  </li>
+                                  <li>
+                                      <label class="input-control checkbox small-check">
+                                          <input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SETTINGS.TOOLBAR.UPDATE" >
+                                          <span class="check"></span>
+                                      </label>
+                  
+                                      <span class="leaf">UPDATE</span>
+                                  </li>
+                              </ul>
+                          </li>
+                          <li class="node collapsed" >
+                              <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SETTINGS.GIS.onoff" ><span class="check"></span></label>
+                  
+                              <span class="leaf">GIS</span>
+                              <span  *ngIf="_toolSettings.SECTIONS.SETTINGS.GIS.onoff" class="node-toggle"></span>
+                              <ul>
+                                  <li>
+                                    <label class="input-control checkbox small-check"><input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.SETTINGS.GIS.ROUTING" ><span class="check"></span></label>
+                                     <span class="leaf">ROUTING</span>
+                                  </li>
+                                 
+                              </ul>
+                          </li>
+                      </ul>
+                  </li>
+               </ul>
+                  </div>
+                 </div>
+           <div  class="cell"></div>
+            </div>
+      </div>
+     </div>
+  </div>
+</div>

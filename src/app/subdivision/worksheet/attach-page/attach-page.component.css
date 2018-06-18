@@ -7,11 +7,12 @@
 }
 
 .attach {
-    border: 2px dotted #eee;
+    border: 2px dashed #0087F7;
     width: 98%;
     height: 400px;
     text-align: center;
     margin:0 auto;
+    border-radius: 5px;
 }
 
 .cardColor {

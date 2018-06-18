@@ -36,7 +36,8 @@ export class ToolbarComponent implements OnInit {
             ids: {
               dash: true,
               calendar: true,
-              arch: true
+              arch: true,
+              charts: true
             }
          },
          INSERT: {
@@ -63,15 +64,16 @@ export class ToolbarComponent implements OnInit {
         VIEW: {onoff: true, ids: {dash: false, calendar: false, arch: false}}
       },
       MAP: {onoff: true,
-          VIEW: {onoff: true, ids: {MAP: true}}
+          VIEW: {onoff: true, ids: {MAP: true}},
+          TOOLS: {onoff: true, ids: {MEASURE: true, IDENTIFY: true}}
       },
       SETTINGS: {
         onoff: true,
         PROFILE: {onoff: true, UPDATE: false},
-        USER: {onoff: false},
-        TICKET: {onoff: false},
-        TOOLBAR: {onoff: false},
-        GIS: {onoff: false}
+        USER: {onoff: true},
+        TICKET: {onoff: true},
+        TOOLBAR: {onoff: true},
+        GIS: {onoff: true}
       }
 
     }
@@ -82,12 +84,23 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit() {
 
-    //Iniate the control for toolbar from any routes..
-    //this.app.ticketInteractionToolbar();
+   
     this.app.ticketInteractionToolbar.takeWhile(() => this.isAlive).subscribe(action => {
        this.ticketAvailable = action;
     });
+
+    // Setup the toolbar information...
+
+    // this.app.account_info.config.forEach(element => {
+    //     if(element.setting_type == "TOOLBAR") {
+    //       this._toolSettings = element.json;
+    //     }
+    // });
+
+    
   }
+
+
 
   // Enable Ticket Toolbar sections..
   enableTicketTools() {

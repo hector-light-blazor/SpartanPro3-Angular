@@ -60,6 +60,10 @@ const routes: Routes = [
   {
     path: 'Map',
     component: MainMapComponent
+  },
+  {
+    path: 'Settings',
+    loadChildren: './settings/settings.module#SettingsModule'
   }
 
 ];

@@ -60,7 +60,7 @@ export class WorksheetComponent implements OnInit {
     this.isAlive = false;
   }
 
-  parsePDF(binary) {
+  parsePDF(binary, geo) {
     let _self = this;
     var loadingTask = pdfjsLib.getDocument({data: binary}) //  this.pdfData});
 
@@ -93,9 +93,11 @@ export class WorksheetComponent implements OnInit {
         let index = _self.worksheetService.attachments.length - 1
         _self.worksheetService.attachments[index].source = dataURL;
 
-       
+       if(geo){
         _self.worksheetService.leafletCommunication.next({remove: false, overlay: true, source: dataURL, position: _self.worksheetService.attachments[index].position});
         
+       }
+      
 
         _self.isLoading = false;
         _self.sendCommunication();
@@ -143,8 +145,9 @@ export class WorksheetComponent implements OnInit {
 
         // Loop Through All the attachments change them to false...
         this.worksheetService.attachments.forEach(element => {
-            element.selected = false;
-
+            if(geo) {
+              element.selected = false;
+            }
         });
 
         // The new one only will have selected true...
@@ -156,7 +159,7 @@ export class WorksheetComponent implements OnInit {
           var reader = new FileReader();
 
           reader.onload = (target) => {
-            this.parsePDF(target.currentTarget['result'])
+            this.parsePDF(target.currentTarget['result'], geo)
           }
   
           // Read the array of buffer...
@@ -207,11 +210,11 @@ export class WorksheetComponent implements OnInit {
 
               let index = this.worksheetService.attachments.length - 1;
               if(geo){
-                this.worksheetService.leafletCommunication.next({remove: false, overlay: true, source: e.target.result, position: this.worksheetService.attachments[index].position});
+                this.worksheetService.leafletCommunication.next({remove: false, overlay: true, source: e.currentTarget['result'], position: this.worksheetService.attachments[index].position});
         
               }
              
-              this.worksheetService.attachments[index].source = e.target.result;
+              this.worksheetService.attachments[index].source = e.currentTarget['result'];
 
               this.isLoading = false;
 
