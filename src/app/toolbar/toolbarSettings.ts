@@ -11,7 +11,7 @@ interface sections{
 }
 interface secTicket{
     onoff?: boolean,
-    VIEW?: propView,
+    DISPLAY?: propView,
     INSERT?: propInsert,
     RECORDS?:propRec,
     QUICKSEARCH?: propSearch,
@@ -24,12 +24,12 @@ interface secTicket{
 
 interface secSub{
      onoff?: boolean,
-     VIEW?: propView
+     DISPLAY?: propView
 }
 
 interface secMap{
      onoff?: boolean,
-     VIEW?: propMap,
+     DISPLAY?: propMap,
      TOOLS?: propMapTools
 }
 

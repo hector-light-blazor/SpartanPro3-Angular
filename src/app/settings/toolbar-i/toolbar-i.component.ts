@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AppService } from '../../app.service';
 import {toolBarSettings} from "../../toolbar/toolbarSettings";
+import { ITOOLBAR_SETTINGS } from '../settings.api';
 @Component({
   selector: 'app-toolbar-i',
   templateUrl: './toolbar-i.component.html',
@@ -25,7 +26,7 @@ export class ToolbarIComponent implements OnInit {
       this._toolSettings = {SECTIONS: {
         TICKET: {
                   onoff: true,
-                    VIEW:{
+                    DISPLAY:{
                       onoff: true,
                       ids: {
                         dash: true,
@@ -86,14 +87,14 @@ export class ToolbarIComponent implements OnInit {
             },
             SUBDIVISION: {
               onoff: true,
-              VIEW: {
+              DISPLAY: {
                 onoff: true,
                 ids: {dash: true, calendar: true, arch: true}
               }
               
             },
             MAP: {onoff: true,
-              VIEW: {onoff: true, ids: {MAP: true}},
+              DISPLAY: {onoff: true, ids: {MAP: true}},
               TOOLS: {onoff: true, ids: {MEASURE: true, IDENTIFY: true}}
           },
             SETTINGS: {
@@ -126,6 +127,20 @@ export class ToolbarIComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  onSave() {
+    console.log(this._toolSettings)
+    let json = {
+          
+      "type": this.name.toUpperCase(),
+      "json": this._toolSettings
+    }
+
+    console.log(json);
+    this._appService.POST_METHOD(ITOOLBAR_SETTINGS, {data: json}).subscribe(response => {
+      console.log(response);
+    })
   }
 
 }
