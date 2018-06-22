@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WorksheetService } from '../../worksheet.service';
 
 @Component({
   selector: 'app-lv-page',
@@ -6,15 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./lv-page.component.css']
 })
 export class LvPageComponent implements OnInit {
-  streets: Array<STREET> = [];
-  street: STREET = null;
+ 
+  // Collect information...
   name: string;
   low: string;
   high: string;
+
+  // Error
   nameError: boolean = false;
   highError: boolean = false;
   lowError: boolean = false;
-  constructor() { }
+  
+  constructor(public workSheet: WorksheetService) { }
 
   ngOnInit() {
   }
@@ -25,7 +29,7 @@ export class LvPageComponent implements OnInit {
       return;
     }
   
-    this.streets.push({name: this.name, low: this.low, high: this.high});
+    this.workSheet.attributes.streets.push({st_name: this.name, low: this.low, high: this.high});
 
     // Back to blank..
     this.low = this.name = this.high = "";
@@ -34,7 +38,7 @@ export class LvPageComponent implements OnInit {
 }
 
 removeItem(index) {
-  this.streets.splice(index, 1);
+  this.workSheet.attributes.streets.splice(index, 1);
 }
 
 checkLVStreets():boolean {
@@ -70,8 +74,3 @@ checkLVStreets():boolean {
 
 }
 
-interface STREET {
-  name: string;
-  low:  string;
-  high: string;
-}

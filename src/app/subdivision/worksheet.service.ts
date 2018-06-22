@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-
+import {HttpClient} from "@angular/common/http";
 declare var pdfjsLib:any;
 declare var Tiff: any;
 
@@ -19,7 +19,12 @@ export class WorksheetService {
   canvas: any= null;
   context: any = null;
   image: any = null;
-  constructor() { }
+  url: string = "https://gis.lrgvdc911.org/php/spartan/api/v2/index.php/";
+
+  attributes: WORKSHEET = {streets: [], 
+    LV: { eng_dev: {checkbox: true, date: "test"}, online_carson: {checkbox: true, date: "carson"}, city: {checkbox: true, date: "online"} }, };
+
+  constructor(private http: HttpClient) { }
 
   setCanvas(object) {
     this.canvas = object;
@@ -27,6 +32,11 @@ export class WorksheetService {
 
   setContext(object) {
     this.context = object;
+  }
+
+
+  GET_METHOD(page) {
+    return  this.http.get(this.url + page);
   }
 
   processRotation(id, source) {
@@ -83,6 +93,83 @@ export class WorksheetService {
   
   }
 }
+
+export interface WORKSHEET {
+  objectid?: number;
+  sub_name?: string;
+  tax_account?: string;
+  community?: string;
+  esn?: number;
+  geojson?: any;
+  streets?: Array<STREET>;
+  LV?: LV;
+  DB?: DB;
+  GIS?: GIS;
+
+}
+
+
+export interface LV {
+   eng_dev?: LV_OPTIONS;
+   online_carson?: LV_OPTIONS;
+   city?: LV_OPTIONS;
+   address_by?: number;
+   date_sign_off?: any;
+   sign_off_by?: any;
+}
+
+export interface LV_OPTIONS {
+  checkbox?: boolean;
+  date?: any;
+}
+
+export interface DB {
+  msag?: DB_MSAG;
+  plat_scan?: DB_PLAT;
+  date_sign_off?: any;
+  sign_off_by?: number
+
+}
+
+export interface DB_MSAG {
+  checkbox_enter?: boolean;
+  checkbox_update?: boolean;
+  checkbox_verified?: boolean;
+  enter_date?: any;
+  update_date?: any;
+  verified_date?: any;
+}
+
+export interface DB_PLAT {
+  checkbox_enter?: boolean;
+  checkbox_update?: boolean;
+  checkbox_verified?: boolean;
+  enter_date?: any;
+  update_date?: any;
+  verified_date?: any;
+}
+
+export interface GIS {
+  map_items?: any;
+  mapping_verified?: any;
+  geocoding_verified?: any;
+  date_sign_off?: any;
+  sign_off_by?: number;
+
+}
+
+export interface GIS {
+
+}
+
+export interface STREET {
+  st_name?: string;
+  low?:  string;
+  high?: string;
+  street_id?: number;
+}
+
+
 
 
 // This Holds The Name, Source, position holds unique id, selected from the attachments

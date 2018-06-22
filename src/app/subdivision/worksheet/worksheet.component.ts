@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { WorksheetService } from '../worksheet.service';
 import "rxjs/add/operator/takeWhile";
+import {WORKSHEET_NUMBER} from '../worksheet.api';
 
 declare var pdfjsLib:any;
 declare var Tiff: any;
@@ -14,15 +15,7 @@ export class WorksheetComponent implements OnInit {
 
   @ViewChild("pdfCanvas") myCanvas: ElementRef;
 
-
-  streets: Array<STREET> = [];
-  street: STREET = null;
-  name: string;
-  low: string;
-  high: string;
-  nameError: boolean = false;
-  highError: boolean = false;
-  lowError: boolean = false;
+  
   dragging: boolean = false;
   overlay: any = null;
   isAlive: boolean = true;
@@ -33,9 +26,34 @@ export class WorksheetComponent implements OnInit {
   previewON = false;
   source: any;
     
-  constructor(private worksheetService: WorksheetService) { }
+  constructor(public worksheetService: WorksheetService) {
+
+   }
 
   ngOnInit() {
+  
+    //Lets Get New Worksheet Number ...
+  
+    this.worksheetService.GET_METHOD(WORKSHEET_NUMBER).subscribe((response) => {
+        console.log(response);
+        if(response['success']) {
+          let count = response['data'][0].count;
+          let today = new Date();
+          let dd = (today.getDate() < 10) ? "0" + today.getDate() : today.getDate();
+          let mm = ((today.getMonth() + 1) < 10) ? 0 + (today.getMonth() + 1).toString() : today.getMonth() + 1;
+          let yyyy = today.getFullYear();
+          let object = (yyyy.toString().substr(-2)) + (mm.toString()) + (dd.toString());
+          let zero = '00';
+          if(count < 100){
+            object += zero + count.toString();
+          }else{
+           object += (count.toString());
+          }
+          this.worksheetService.attributes.objectid =  parseInt(object);
+        }
+    })
+
+
     this.canvas = this.myCanvas.nativeElement;
     this.context = this.canvas.getContext("2d");
 
@@ -56,7 +74,7 @@ export class WorksheetComponent implements OnInit {
   }
 
   ngOnDestroy() {
-   // console.log("I AM DESTROY")
+  
     this.isAlive = false;
   }
 
@@ -196,8 +214,6 @@ export class WorksheetComponent implements OnInit {
           // Read the array of buffer...
           reader.readAsArrayBuffer(files[0]);
 
-
-
         }
 
         else if(name.toLowerCase().includes(".png") || name.toLowerCase().includes(".jpg") || name.toLowerCase().includes(".jpeg")) {
@@ -230,10 +246,5 @@ export class WorksheetComponent implements OnInit {
 
 }
 
-interface STREET {
-  name: string;
-  low:  string;
-  high: string;
-}
 
 

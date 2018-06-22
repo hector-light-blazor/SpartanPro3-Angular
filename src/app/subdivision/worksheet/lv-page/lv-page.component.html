@@ -45,8 +45,8 @@
                           </tr>
                         </thead>
                         <tbody>
-                            <tr (click)="removeItem(i)" *ngFor="let street of streets; let i = index">
-                                <td>{{street.name}}</td>
+                            <tr (click)="removeItem(i)" *ngFor="let street of workSheet.attributes.streets; let i = index">
+                                <td>{{street.st_name}}</td>
                                 <td>{{street.low}}</td>
                                 <td>{{street.high}}</td>
                             </tr>
@@ -63,39 +63,39 @@
          <br>
          <div>
            <label class="input-control checkbox">
-                <input type="checkbox" >
+                <input [(ngModel)]="workSheet.attributes.LV.eng_dev.checkbox" type="checkbox" >
                 <span  class="check"></span>
                 <span  class="caption">ENGINEER/DEVELOPER</span>
                 
            </label>
          </div>
          <div class="input-control text full-size">
-            <input type="text">
+            <input [(ngModel)]="workSheet.attributes.LV.eng_dev.date" type="text" uppercase>
         </div>
          <br>
          <br>
          <div>
             <label class="input-control checkbox">
-                <input type="checkbox" >
+                <input [(ngModel)]="workSheet.attributes.LV.online_carson.checkbox" type="checkbox" >
                 <span  class="check"></span>
                 <span  class="caption">ONLINE/CARSONS</span>
             </label>
          </div>
          <div class="input-control text full-size">
-            <input type="text">
+            <input  [(ngModel)]="workSheet.attributes.LV.online_carson.date"  type="text">
         </div>
          <br>
          <br>
          <div>
             <label class="input-control checkbox">
-                <input type="checkbox" >
+                <input [(ngModel)]="workSheet.attributes.LV.city.checkbox" type="checkbox" >
                 <span  class="check"></span>
                 <span  class="caption">CITY</span>
                 
             </label>
          </div>
          <div class="input-control text full-size">
-            <input type="text">
+            <input [(ngModel)]="workSheet.attributes.LV.city.date" type="text">
         </div>
         <hr>
         <div class="input-control text full-size">
@@ -103,7 +103,7 @@
            
         </div>
         <div class="input-control text full-size">
-            <input type="text" placeholder="Date Sign Off" uppercase>
+            <input [(ngModel)]="workSheet.attributes.LV.date_sign_off" type="text" placeholder="Date Sign Off" uppercase>
            
         </div>
         <div class="input-control text full-size">

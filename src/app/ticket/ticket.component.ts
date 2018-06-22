@@ -241,7 +241,7 @@ export class TicketComponent implements OnInit {
        
       console.log(this.attributes);
       if(response.success){
-          let today = new Date();
+         let today = new Date();
          let dd = (today.getDate() < 10) ? "0" + today.getDate() : today.getDate();
          let mm = ((today.getMonth() + 1) < 10) ? 0 + (today.getMonth() + 1).toString() : today.getMonth() + 1;
          let yyyy = today.getFullYear();
