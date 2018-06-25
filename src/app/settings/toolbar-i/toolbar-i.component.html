@@ -172,7 +172,7 @@
                        
                         <span class="leaf">FILTER</span>
                         <span *ngIf="_toolSettings.SECTIONS.TICKET.FILTER.onoff" class="node-toggle"></span>
-                        <ul>
+                        <ul *ngIf="_toolSettings.SECTIONS.TICKET.FILTER.onoff">
                            <li class="node">
                                <label class="input-control checkbox small-check"><input type="checkbox" 
                                 [(ngModel)]="_toolSettings.SECTIONS.TICKET.FILTER.ids.DATE" ><span class="check"></span></label>

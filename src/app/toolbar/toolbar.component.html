@@ -30,22 +30,22 @@
                   <div  class="tabs-content" >
                        
                       <div *ngIf="_toolSettings.SECTIONS.TICKET.onoff" class="tab-panel" id="tab_tickets" style="display: block;">
-                          <div *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.onoff" class="tab-panel-group">
+                          <div *ngIf="_toolSettings.SECTIONS.TICKET.DISPLAY.onoff" class="tab-panel-group">
                               <div class="tab-group-content">
-                                  <a *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.ids.dash"  [routerLink]="['ticket/dashboard']" class="fluent-big-button">
+                                  <a *ngIf="_toolSettings.SECTIONS.TICKET.DISPLAY.ids.dash"  [routerLink]="['ticket/dashboard']" class="fluent-big-button">
                                       <!--<span class="icon"><i class="fa fa-tachometer" aria-hidden="true"></i></span>-->
                                       <img  src="assets/dashboard.png"  alt="Dashboard Toolbar">
                                       Dashboard
                                   </a>
                                   
-                                  <div *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.ids.calendar" class="tab-content-segment">
+                                  <div *ngIf="_toolSettings.SECTIONS.TICKET.DISPLAY.ids.calendar" class="tab-content-segment">
                                       <a [routerLink]="['ticket/calendar-view']" class="fluent-big-button">
                                           <!--<span class="mif-calendar"></span>-->
                                           <img src="assets/calendar.png" alt="Calendar Toolbar">
                                           Calendar
                                       </a>
                                   </div>
-                                  <div *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.ids.arch" [routerLink]="['ticket/view/archives']" class="tab-content-segment">
+                                  <div *ngIf="_toolSettings.SECTIONS.TICKET.DISPLAY.ids.arch" [routerLink]="['ticket/view/archives']" class="tab-content-segment">
                                       <a class="fluent-big-button">
                                           <img src="assets/cabinet.png" alt="Archive Toolbar">
                                           Archive
@@ -208,23 +208,23 @@
                       </div>
                       
                       <!-- START SUBDIVISION -->
-                      <div *ngIf="_toolSettings.SECTIONS.SUBDIVISION.VIEW.onoff" class="tab-panel" id="tab_subdivision" >
+                      <div *ngIf="_toolSettings.SECTIONS.SUBDIVISION.DISPLAY.onoff" class="tab-panel" id="tab_subdivision" >
                           <div class="tab-panel-group">
                               <div class="tab-group-content">
-                                <a *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.ids.dash"  [routerLink]="['ticket/dashboard']" class="fluent-big-button">
+                                <a *ngIf="_toolSettings.SECTIONS.TICKET.DISPLAY.ids.dash"  [routerLink]="['ticket/dashboard']" class="fluent-big-button">
                                     <!--<span class="icon"><i class="fa fa-tachometer" aria-hidden="true"></i></span>-->
                                     <img  src="assets/dashboard.png"  alt="Dashboard Toolbar">
                                     Dashboard
                                 </a>
                                 
-                                <div *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.ids.calendar" class="tab-content-segment">
+                                <div *ngIf="_toolSettings.SECTIONS.TICKET.DISPLAY.ids.calendar" class="tab-content-segment">
                                     <a [routerLink]="['ticket/calendar-view']" class="fluent-big-button">
                                         <!--<span class="mif-calendar"></span>-->
                                         <img src="assets/calendar.png" alt="Calendar Toolbar">
                                         Calendar
                                     </a>
                                 </div>
-                                <div *ngIf="_toolSettings.SECTIONS.TICKET.VIEW.ids.arch" [routerLink]="['ticket/view/archives']" class="tab-content-segment">
+                                <div *ngIf="_toolSettings.SECTIONS.TICKET.DISPLAY.ids.arch" [routerLink]="['ticket/view/archives']" class="tab-content-segment">
                                     <a class="fluent-big-button">
                                         <img src="assets/cabinet.png" alt="Archive Toolbar">
                                         Archive
@@ -295,7 +295,7 @@
                     <!-- End of NRF -->
                       <!-- Start of Map -->
                       <div  class="tab-panel" id="tab_map" >
-                          <div *ngIf="_toolSettings.SECTIONS.MAP.VIEW.onoff"  class="tab-panel-group">
+                          <div *ngIf="_toolSettings.SECTIONS.MAP.DISPLAY.onoff"  class="tab-panel-group">
                               <div class="tab-group-content">
                                   <div class="tab-group-content">
                                       <button [routerLink]="['Map']" class="fluent-big-button">

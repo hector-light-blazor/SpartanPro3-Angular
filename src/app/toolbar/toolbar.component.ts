@@ -31,7 +31,7 @@ export class ToolbarComponent implements OnInit {
     this._toolSettings = {SECTIONS: {
       TICKET: {
          onoff: true,
-           VIEW:{
+           DISPLAY:{
             onoff: true,
             ids: {
               dash: true,
@@ -61,10 +61,10 @@ export class ToolbarComponent implements OnInit {
       },
 
       SUBDIVISION: {onoff: true,
-        VIEW: {onoff: true, ids: {dash: false, calendar: false, arch: false}}
+        DISPLAY: {onoff: true, ids: {dash: false, calendar: false, arch: false}}
       },
       MAP: {onoff: true,
-          VIEW: {onoff: true, ids: {MAP: true}},
+          DISPLAY: {onoff: true, ids: {MAP: true}},
           TOOLS: {onoff: true, ids: {MEASURE: true, IDENTIFY: true}}
       },
       SETTINGS: {
