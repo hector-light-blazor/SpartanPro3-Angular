@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
        this.username = atob(this.getCookieName('username')); // Get Username information..
        this.password = atob(this.getCookieName('pass')); // Get Password Information from cookie...
        
-       this.remeberMe = true;
+       this.remeberMe = (this.username) ? true : false;
       
     }
 
@@ -37,7 +37,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     
     if(this.remeberMe) {
-      this.loginFromCookie();
+
+      if(this.username && this.password) {
+        this.loginFromCookie();
+      }
+      
     }
   }
 
@@ -50,11 +54,14 @@ export class LoginComponent implements OnInit {
     }
 
     // Save Username and Password in cookie...
-    if(this.remeberMe && !document.cookie) {
+  
+    if(this.remeberMe) {
+      console.log("SAVE")
       let pass = btoa(btoa(this.password));
       this.setCookie('username', btoa(this.username), 200);
       this.setCookie('pass', pass, 200);
     }else {
+      console.log("DONT SAVE")
       document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
       document.cookie = "pass=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
     }

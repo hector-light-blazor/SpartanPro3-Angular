@@ -223,8 +223,10 @@ export class ToolbarComponent implements OnInit {
    //TODO: REMOVE COOKIES...
    this.delete_cookie("username");
    this.delete_cookie("pass");
+   console.log(window.location.origin);
     setTimeout(() => {
-     window.open("https://gis.lrgvdc911.org/spartanpro3/", "_self");
+      //window.open("https://gis.lrgvdc911.org/spartanpro3/", "_self");
+      window.open(window.location.origin, "_self");
     }, 100);
    
  }

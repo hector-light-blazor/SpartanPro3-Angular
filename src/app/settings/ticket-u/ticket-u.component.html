@@ -1,3 +1,32 @@
-<p>
-  ticket-u works!
-</p>
+<div class="container">
+  <insert-toolbar-settings *ngIf="wndUpdateOnOff" (btnClose)="closeForm()" [settings]="setInfo" [btnTitle]="'Update'" [btnOnOff]="true"  [title]="'Update Toolbar Settings'" ></insert-toolbar-settings>
+  <div #wndSettings class="window">
+     <div class="window-caption">
+            <span class="window-caption-icon"><span class="mif-windows"></span></span>
+            <span class="window-caption-title">Toolbar Settings</span>
+      </div>
+  <div class="window-content">
+    <table class="table scroll">
+        <thead>
+           <tr>
+              <th>id</th>
+              <th>Setting Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let toolbar of toolbarSets">
+              <td><a (click)="displayUpdateForm(toolbar)">{{toolbar.id_config}}</a></td>
+              <td>
+                <span *ngIf="!toolbar.show">{{toolbar.name}}</span>
+                <input *ngIf="toolbar.show" (keyup.enter)="saveName(toolbar);" type="text" [(ngModel)]="toolbar.name">
+              </td>
+              <td>
+                <button (click)="renameToolbar(toolbar)" class="button info block-shadow-info text-shadow">Re-Name</button>
+                <button (click)="deleteToolbarSetting(toolbar)" class="button danger block-shadow-danger text-shadow">DELETE</button>
+              </td>
+            </tr>
+          </tbody>
+    </table>
+  </div>
+</div>
+</div>
