@@ -20,6 +20,7 @@ export class ToolbarIComponent implements OnInit {
    @Input() btnTitle:string= "Save";
    @Input() settings:any;
    @Output() btnClose = new EventEmitter<any>();
+
   constructor(public _appService: AppService) { 
 
       //Testing toolbar settings..
@@ -127,20 +128,29 @@ export class ToolbarIComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.settings) {
+      this._toolSettings = JSON.parse(this.settings.json);
+     
+    }
   }
 
   onSave() {
-    console.log(this._toolSettings)
+    
     let json = {
           
       "type": this.name.toUpperCase(),
       "json": this._toolSettings
     }
 
-    console.log(json);
+    
     this._appService.POST_METHOD(ITOOLBAR_SETTINGS, {data: json}).subscribe(response => {
       console.log(response);
     })
+  }
+
+  onClose() {
+     
+     this.btnClose.emit(true);
   }
 
 }

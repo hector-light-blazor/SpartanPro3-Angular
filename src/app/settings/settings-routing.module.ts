@@ -4,11 +4,11 @@ import { ToolbarIComponent } from './toolbar-i/toolbar-i.component';
 import { ToolbarUComponent } from './toolbar-u/toolbar-u.component';
 
 const routes: Routes = [{
-  path: "insertToolbarSettings",
+  path: "createToolbar",
   component: ToolbarIComponent
 },
 {
-  path: "updateToolbarSettingsList",
+  path: "updateToolbars",
   component: ToolbarUComponent
 }
 

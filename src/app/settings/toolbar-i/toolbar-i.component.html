@@ -4,12 +4,15 @@
        <span class="window-caption-icon">
           <i class="fa fa-windows" aria-hidden="true"></i>
        </span>
-       <span class="window-caption-title">Insert Toolbar Settings</span>
+       <span class="window-caption-title">{{title}}</span>
+       <div class="pull-right">
+           <button (click)="onClose()" class="button cycle-button"><i class="fa fa-times-circle"></i></button>
+       </div>
      </div>
      <div class="window-content">
         <div  class="input-control text full-size">
             <input [(ngModel)]="name" placeholder="Setting Name" type="text" >
-            <button (click)="onSave()" class="button primary">Save</button>
+            <button (click)="onSave()" class="button primary">{{btnTitle}}</button>
         </div>
 
 
