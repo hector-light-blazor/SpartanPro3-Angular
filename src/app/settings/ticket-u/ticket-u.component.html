@@ -1,0 +1,30 @@
+<div class="container">
+    <app-ticket-i  (btnClose)="closeForm()" *ngIf="upForm" [btnTitle]="'Update'" [title]="title" [cntButton]="true" [settings]="setInfo"></app-ticket-i>
+    <div #wndTicketSettings class="window">
+       <div class="window-caption">
+              <span class="window-caption-icon"><span class="mif-windows"></span></span>
+              <span class="window-caption-title">Ticket Settings</span>
+              <!--<span class="btn-min"></span>
+              <span class="btn-max"></span>
+              <span class="btn-close"></span>-->
+        </div>
+      
+    <div class="window-content">
+      <table class="table scroll">
+          <thead>
+             <tr>
+                <th>id</th>
+                <th>Setting Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ticket of ticketSets">
+                <td style="cursor: pointer;"><a (click)="displayUpdateForm(ticket)">{{ticket.id_config}}</a></td>
+                <td>{{ticket.name}}</td>
+              </tr>
+            </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+  

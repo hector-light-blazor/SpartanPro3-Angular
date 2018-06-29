@@ -1,3 +1,42 @@
-<p>
-  ticket-i works!
-</p>
+<div class="container frame ribbed-white" style="border-radius:10px;">
+  <button *ngIf="btnOnOff" (click)="closeForm()" class="button cycle-button" style="float:right">X</button>
+<h2 style="text-align: center">{{title}}</h2>
+<div class="container" style="margin-left: 40%; margin-right:50%;width:300px;">
+    <div class="input-control text">
+  <input type="text" [(ngModel)]="settingName" placeholder="Setting Name" appUppercase>
+</div>
+ <br>
+  <label class="input-control checkbox">
+      <input type="checkbox" [(ngModel)]="boolCustomerSection" >
+      <span class="check"></span>
+      <span class="caption">Customer Data</span>
+  </label>
+  <br>
+  <label class="input-control checkbox">
+      <input type="checkbox" [(ngModel)]="boolPremisesSection" >
+      <span class="check"></span>
+      <span class="caption">Premises Data</span>
+  </label>
+  <br>
+  <label class="input-control checkbox">
+      <input type="checkbox" [(ngModel)]="boolLVSection" >
+      <span class="check"></span>
+      <span class="caption">Location Validation Process</span>
+  </label>
+  <br>
+  <label class="input-control checkbox">
+      <input type="checkbox"[(ngModel)]="boolDBSection">
+      <span class="check"></span>
+      <span class="caption">Database Validation Process</span>
+  </label>
+  <br>
+  <label class="input-control checkbox">
+      <input type="checkbox" [(ngModel)]="boolGISSection" >
+      <span class="check"></span>
+      <span class="caption">GIS Validation Process</span>
+  </label>
+  <br>
+  <button (click)="sendSettings()" class="button rounded">{{btnTitle}}</button>
+</div>
+
+</div>

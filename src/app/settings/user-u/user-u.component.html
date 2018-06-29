@@ -1,3 +1,79 @@
-<p>
-  user-u works!
-</p>
+<div id="confirmDeletion" #displayWarning class="window warning" style="position: absolute;z-index:3;display:none;left: 50%;margin-left: -150px; width:300px; height:200px;">
+  <div class="window-caption">
+     <span class="window-caption-icon"><span class="mif-bin"></span></span>
+     <span class="window-caption-title">Are you sure?</span>
+     <span (click)="_closeWarning()" class="mif-cross place-right" style="cursor: pointer"></span>
+  </div>
+  <div class="window-content">
+    <br>
+    <br>
+     <div class="margin10" style="margin-left: 60px;">
+       <button (click)="_closeWarning()" class="button">Cancel</button>
+       <button (click)="sendArchive()"  class="button primary">Submit</button>
+     </div>
+  </div>
+</div>
+<div #displayBadge style="background: white;display: none; width:100%; height:100%;">
+<canvas-editing [icon]="selected_user" ></canvas-editing>
+</div>
+<insert-user *ngIf="editOnOff" [enbPass]="false" [attributes]="selected_user" [btnTitle]="'Update'" [btnOnOff]="true" (closeEditForm)="_closeEdit()" ></insert-user>
+<div #wndUsers class="window">
+ <div class="window-caption">
+        <span class="window-caption-icon"><span class="mif-windows"></span></span>
+        <span class="window-caption-title">Current Users</span>
+        <!--<span class="btn-min"></span>
+        <span class="btn-max"></span>
+        <span class="btn-close"></span>-->
+  </div>
+
+<div class="window-content">
+
+  <table class="table scroll">
+    <thead>
+       <tr>
+          <th>Badge</th>
+          <th>First Name</th>
+          <th>Middle Name</th>
+          <th>Last Name</th>
+          <th>Email (Login)</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+            <td *ngIf="!user.icon">
+                <button (click)="_displayBadge(user); _hideWindowUsers();" class="button cycle-button">
+                <div  style="cursor: pointer; width: 100%; height: 100%;  background-image: url('assets/avatar.png');  background-size: cover; background-repeat: no-repeat; border-radius: 100%;"></div>
+                
+                </button>
+            </td>
+            <td *ngIf="user.icon">
+              <!--<button  class="button cycle-button">-->
+              <div (click)="_displayBadge(user); _hideWindowUsers();" >
+                 <img class="avatar"  [src]="user.icon" width="50" height="60"  alt="Avatar Badge">
+              </div>
+               
+            </td>
+            <td>{{user.first_name}}</td>
+            <td>{{user.middle_name}}</td>
+            <td>{{user.last_name}}</td>
+            <td>{{user.email}}</td>
+            <td>
+              <button (click)="_displayWarning(user)" class="image-button icon-left">
+                Archive
+                <img src="assets/user_archive.png" class="icon" alt="Archive User" width="40" height="40">
+                
+              </button>
+
+              <button (click)="_displayEdit(user)" class="image-button icon-left">
+                Update
+                <img src="assets/user_edit.png" class="icon" alt="Archive User" width="40" height="40">
+              </button>
+              
+            </td>
+         </tr>
+      </tbody>
+  </table>
+  
+</div>
+</div>
