@@ -1,12 +1,18 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AppService } from '../../app.service';
 import {toolBarSettings} from "../../toolbar/toolbarSettings";
-import { ITOOLBAR_SETTINGS } from '../settings.api';
+import { ITOOLBAR_SETTINGS, UTOOLBAR_SETTINGS } from '../settings.api';
+
+//DECLARE JQUERY TO USE IN OUR COMPONENT...
+declare var jQuery:any;
 @Component({
   selector: 'app-toolbar-i',
   templateUrl: './toolbar-i.component.html',
   styleUrls: ['./toolbar-i.component.css']
 })
+
+
+
 export class ToolbarIComponent implements OnInit {
 
 
@@ -129,6 +135,7 @@ export class ToolbarIComponent implements OnInit {
 
   ngOnInit() {
     if(this.settings) {
+      this.name = this.settings.name;
       this._toolSettings = JSON.parse(this.settings.json);
      
     }
@@ -136,6 +143,32 @@ export class ToolbarIComponent implements OnInit {
 
   onSave() {
     
+    if(this.btnTitle == "Update"){
+      let json = {
+      "id"  : this.settings.id_config,
+      "type": this.name.toUpperCase(),
+      "json": this._toolSettings
+    }
+    console.log(json)
+
+      this._appService.POST_METHOD(UTOOLBAR_SETTINGS, {data: json}).subscribe((response:any) => {
+        console.log(response);
+            if(response.success){
+                jQuery.Notify({
+              caption: "TOOLBAR",
+              content: "Setting updated",
+              type: this._appService.msg_codes.success
+            });
+          
+            }else{
+                jQuery.Notify({
+                caption: "TOOLBAR",
+                content: "Couldn't save to database.",
+                type: this._appService.msg_codes.alert
+              });
+            }
+      });
+  }else {
     let json = {
           
       "type": this.name.toUpperCase(),
@@ -146,6 +179,9 @@ export class ToolbarIComponent implements OnInit {
     this._appService.POST_METHOD(ITOOLBAR_SETTINGS, {data: json}).subscribe(response => {
       console.log(response);
     })
+  }    
+
+    
   }
 
   onClose() {

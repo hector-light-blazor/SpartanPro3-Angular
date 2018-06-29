@@ -72,6 +72,9 @@ export class ToolbarUComponent implements OnInit {
    
    this.wndUpdateOnOff = !this.wndUpdateOnOff;
    this.toolbar.nativeElement.style.display = "block";
+
+   //Refresh settings..
+   this.getToolbarSetts();
  }
 
 }
