@@ -4,6 +4,8 @@ import { ToolbarIComponent } from './toolbar-i/toolbar-i.component';
 import { ToolbarUComponent } from './toolbar-u/toolbar-u.component';
 import { TicketIComponent } from './ticket-i/ticket-i.component';
 import { TicketUComponent } from './ticket-u/ticket-u.component';
+import { UserUComponent } from './user-u/user-u.component';
+import { UserIComponent } from './user-i/user-i.component';
 
 const routes: Routes = [{
   path: "createToolbar",
@@ -19,6 +21,14 @@ const routes: Routes = [{
 },{
   path: "updateTicket",
   component: TicketUComponent
+},
+  {
+    path: "createUser",
+    component: UserIComponent
+  },
+{
+  path: "updateUsers",
+  component: UserUComponent
 }
 
 ];

@@ -1,0 +1,15 @@
+.login-form {
+    background-color: #ffffff;
+}
+
+.over {
+    position: absolute;
+    z-index: 999;
+    width: 110px;
+    height: 110px;
+    border: solid 2px rgba(222,60,80,.9);
+   
+}
+canvas{
+    position: absolute;
+}

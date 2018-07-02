@@ -8,3 +8,7 @@ export const DEL_TOOLBAR       = "config/delToolbarSettings";
 export const GTICKET_SETTINGS = "config/getTicketSettings";
 export const ITICKET_SETTINGS = "config/insertTicketSettings/";
 export const UTICKET_SETTINGS = "config/updateTicketSettings";
+
+
+export const GUSERS_SETTINGS = "users/getUsers/";
+export const GHOME_VIEWS = "config/getHomeViews/";

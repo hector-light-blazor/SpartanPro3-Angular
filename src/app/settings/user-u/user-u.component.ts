@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AppService } from '../../app.service';
+import { GUSERS_SETTINGS } from '../settings.api';
 
 @Component({
   selector: 'app-user-u',
@@ -22,11 +23,12 @@ export class UserUComponent implements OnInit {
   constructor(private _appService: AppService) { }
 
   ngOnInit() {
-
+    //On init lets fetch users data for update...
+    this._fetchUsers();
   }
 //   ngOnInit() {
 //     //On Init lets fetch users data for update....
-//     this._fetchUsers();
+    
 //     //Next lets get the canvas give it to the avatar service so he can control the animation..
 //     //this._avatarService._setCanvasElements(this.cropCanvas, this.previewCanvas);
 
@@ -72,97 +74,97 @@ export class UserUComponent implements OnInit {
 //     this.isAlive = false;
 //   }
 
-//   //Module to fetch users...
-//   _fetchUsers(){
-//     this._appService.GET_METHOD(Config.SITES.FETCH_USERS).subscribe(response => {
-//       console.log(response);
-//       let lng = response.data.length;
-      
-//       for(let i = 0; i < lng; i++){
-//           if(response.data[i].icon){
-//              let icon = JSON.parse(response.data[i].icon);
+    //Module to fetch users...
+    _fetchUsers(){
+      this._appService.GET_METHOD(GUSERS_SETTINGS).subscribe((response:any) => {
+        console.log(response);
+        let lng = response.data.length;
+        
+        for(let i = 0; i < lng; i++){
+            if(response.data[i].icon){
+              let icon = JSON.parse(response.data[i].icon);
 
-//              response.data[i].icon = icon.type + ";" + icon.encode + "," + icon.data;
-//           }
-//           if(response.data[i].config_id) response.data[i].config_id = JSON.parse(response.data[i].config_id);
-//       }
-//       this.users = response.data
-//     });
-//   }
+              response.data[i].icon = icon.type + ";" + icon.encode + "," + icon.data;
+            }
+            if(response.data[i].config_id) response.data[i].config_id = JSON.parse(response.data[i].config_id);
+        }
+        this.users = response.data
+      });
+    }
 
-//   //Display component to edit avatar...
-//   _displayBadge(user){
-//     this.selected_user = user;
+  //Display component to edit avatar...
+  _displayBadge(user){
+    this.selected_user = user;
 
 
-//     this.badge.nativeElement.style.display = "block";
-//     //this._avatarService._setImage(user.icon);
+    this.badge.nativeElement.style.display = "block";
+    //this._avatarService._setImage(user.icon);
 
-//     //Turn on the toolbar to edit avatar image..
-//     //display toolbar on..
-//     this._appService.tooglePhotoSettings();
-//   }
+    //Turn on the toolbar to edit avatar image..
+    //display toolbar on..
+    //this._appService.tooglePhotoSettings();
+  }
 
-//  //Close the badge editing..
-//   _hideBadge(){
-//     this.badge.nativeElement.style.display = "none";
-//   }
+ //Close the badge editing..
+  _hideBadge(){
+    this.badge.nativeElement.style.display = "none";
+  }
 
-//   //Close the window of users...
-//   _hideWindowUsers(){
-//     this.window.nativeElement.style.display = "none";
-//   }
+  //Close the window of users...
+  _hideWindowUsers(){
+    this.window.nativeElement.style.display = "none";
+  }
 
-//   //Display the windows of users...
-//   _displayWindowUsers(){
-//     this.window.nativeElement.style.display = "block";
+  //Display the windows of users...
+  _displayWindowUsers(){
+    this.window.nativeElement.style.display = "block";
 
-//   }
+  }
 
-//   //=-=-=-==-=-=- DISPLAY EDIT USER FORM =-=-=-=-=-=-=-=-=
-//   _displayEdit(user){
+  //=-=-=-==-=-=- DISPLAY EDIT USER FORM =-=-=-=-=-=-=-=-=
+  _displayEdit(user){
    
-//     this.selected_user = user;
-//     this.editOnOff = true;
-//     this._hideWindowUsers();
+    this.selected_user = user;
+    this.editOnOff = true;
+    this._hideWindowUsers();
 
-//   }
+  }
 
-//   _closeEdit(){
-//     this.editOnOff = false;
-//     this._displayWindowUsers();
-//     this._fetchUsers();
-//   }
+  _closeEdit(){
+    this.editOnOff = false;
+    this._displayWindowUsers();
+    this._fetchUsers();
+  }
 
 
-//   //Display warning for archive..
-//   //Display pop up are you sure to archive user...
-//   _displayWarning(user){  
-//     //Save selected user in variable..
-//     this.selected_user = user;
-//     this.wrnArchive.nativeElement.style.display = "block";
-//     window.scrollTo(500, 0);  //lets scroll up to the message...
-//   }
+  //Display warning for archive..
+  //Display pop up are you sure to archive user...
+  _displayWarning(user){  
+    //Save selected user in variable..
+    this.selected_user = user;
+    this.wrnArchive.nativeElement.style.display = "block";
+    window.scrollTo(500, 0);  //lets scroll up to the message...
+  }
 
-//   //Close the warning for warning..
-//   _closeWarning(){
-//     this.wrnArchive.nativeElement.style.display = "none";
-//   }
+  //Close the warning for warning..
+  _closeWarning(){
+    this.wrnArchive.nativeElement.style.display = "none";
+  }
 
-//   //Send Archive for user...
-//   sendArchive(){
-//       this._appService.POST_METHOD(Config.SITES.USER_ARCHIVE, this.selected_user.user_id).subscribe(response => {
-//           if(response.success){
-//             this._closeWarning();
-//           }else{
-//             this._closeWarning();
-//             jQuery.Notify({
-//               caption: Config.APP,
-//               content: "Archive failed",
-//               type: Config.MSG.ERROR
-//             });
-//           }
-//       });
-//   }
+  //Send Archive for user...
+  sendArchive(){
+      // this._appService.POST_METHOD(Config.SITES.USER_ARCHIVE, this.selected_user.user_id).subscribe(response => {
+      //     if(response.success){
+      //       this._closeWarning();
+      //     }else{
+      //       this._closeWarning();
+      //       jQuery.Notify({
+      //         caption: Config.APP,
+      //         content: "Archive failed",
+      //         type: Config.MSG.ERROR
+      //       });
+      //     }
+      // });
+  }
 
 }
