@@ -7,8 +7,12 @@
   <app-quick-pick-list (zoom)="zoomPicture($event)" (remove)="removeQPick($event)" [picks]="quickPickCollections" *ngIf="displayCollection"></app-quick-pick-list>
   <app-google-map2  [ngClass]="{'googleDisplay': displayGoogle, 'googleHide': !displayGoogle}"  [extent]="googleExtent" ></app-google-map2>
   
+  <div id="contentEditor" data-dojo-type="dijit/layout/ContentPane"  style="position: absolute;visibility: hidden; background: white;height: 500px; bottom: 0;width: 330px; z-index: 1;">
+    <div  id="picker"></div>
+    <div id="editor"></div>
+  </div>
 
-  <div id="mtool" class="dijitTitlePaneTitle" style="position: absolute; display: none; bottom: 0;width: 330px; z-index: 100;">
+  <div id="mtool" class="dijitTitlePaneTitle" style="position: absolute; display: none; bottom: 0;width: 330px; z-index: 4000;">
     <div id="measurementDiv"></div>
   </div>
      

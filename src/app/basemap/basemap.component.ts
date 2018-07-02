@@ -13,6 +13,7 @@ export class BasemapComponent implements OnInit {
   mapflex: number = 0;
   wms: number = 1;
   google: number =2;
+  vsub: number = 3;
   constructor() { }
 
   ngOnInit() {

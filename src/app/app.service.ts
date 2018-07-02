@@ -89,7 +89,7 @@ export class AppService {
   toolbarActivies: TOOL_ACTIONS = {TICKET_SAVE_TRANSFER: 1, 
     TICKET_ARCHIVE: 2, TICKET_DELETE: 3, TICKET_INSERT_COMMENT: 4, TICKET_ESRI_MAP: 5, TICKET_ESRI_IMAGERY: 6,
     TICKET_DISPLAY_ATTACHMENT: 7, TICKET_LIST_ATTACHMENTS: 8, TICKET_GOOGLE_MAP: 9, TICKET_LETTER: 10,
-    MAP_IDENTIFY: 11, MAP_MEASURE: 12, COLLAPSE_TOOLBAR: 13
+    MAP_IDENTIFY: 11, MAP_MEASURE: 12, COLLAPSE_TOOLBAR: 13, EDIT_RANGES: 14
   };
 
   // Sends information to app component from login component..
@@ -121,6 +121,10 @@ export class AppService {
   esriSpatialReference: any = null;
   esriConfig: any = null;
   esriGraphic: any = null;
+  esriTemplatePicker: any = null;
+  esriEditor: any = null;
+  esriFeature: any = null;
+  esriVectorTileLayer: any = null;
   esriMeasurement: any = null;
   esriwebMercatorUtils: any = null;
   esrigeometryEngine: any = null;
@@ -149,7 +153,7 @@ export class AppService {
   esriIdentifyParams: any = null;
   mapFlexBaseMap: any = null;
   imageryLayer: any = null;
-  mapFlexURL: string = "https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/MapFlex3/MapServer";
+  mapFlexURL: string = "https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/MapFlex/MapServer";
   msagObject: any  = [];
   imageryURL: string = 'https://wms-txgi.tnris.org/login/path/contour-camera-poetic-poem/wms';
   wmtsURL: string = 'https://txgi.tnris.org/login/path/contour-camera-poetic-poem/wmts';
@@ -208,27 +212,32 @@ export class AppService {
   esriLoadObjects() {
     console.log("ESRI LOADED STARTED");
     const options = {
-      url: 'https://js.arcgis.com/3.23/'
+      url: 'https://js.arcgis.com/3.24/'
     };
 
     esriLoader.loadModules(["dojo/parser", 'esri/map',"esri/SpatialReference" , 'esri/config','esri/graphic', "esri/geometry/webMercatorUtils","esri/geometry/geometryEngine",
-    "esri/toolbars/edit","esri/toolbars/draw","esri/dijit/Measurement", 'esri/layers/WMTSLayer', 'esri/layers/GraphicsLayer','esri/layers/WMTSLayerInfo',
-    'esri/layers/ArcGISDynamicMapServiceLayer', "esri/Color", "esri/geometry/Point","esri/geometry/Polyline", "esri/geometry/Circle", 
+    "esri/toolbars/edit","esri/toolbars/draw","esri/dijit/Measurement","esri/dijit/editing/TemplatePicker", "esri/dijit/editing/Editor", 'esri/layers/WMTSLayer', 'esri/layers/GraphicsLayer','esri/layers/WMTSLayerInfo',
+    'esri/layers/ArcGISDynamicMapServiceLayer',"esri/layers/FeatureLayer","esri/layers/VectorTileLayer", "esri/Color", "esri/geometry/Point","esri/geometry/Polyline", "esri/geometry/Circle", 
     "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",'esri/symbols/SimpleFillSymbol', "esri/symbols/PictureMarkerSymbol",
     "esri/tasks/query", "esri/tasks/QueryTask", "esri/tasks/IdentifyTask", "esri/tasks/IdentifyParameters",
 	'esri/geometry/Polygon', 'dojo/fx', 'dojo/_base/fx', 'dojo/fx/easing',  "dijit/layout/BorderContainer",
   "dijit/layout/ContentPane",
   "dijit/TitlePane",
   "dijit/form/CheckBox" ], options)
-    .then(([parser, Map,SpatialReference, Config, Graphic, webMercatorUtils,geometryEngine, Edit,Draw, Measurement, WMTSLayer,GraphicsLayer,WMTSLayerInfo, ArcGISDynamicMapServiceLayer, Color, 
+    .then(([parser, Map,SpatialReference, Config, Graphic, webMercatorUtils,geometryEngine, Edit,Draw, Measurement,TemplatePicker,Editor, WMTSLayer,GraphicsLayer,WMTSLayerInfo, ArcGISDynamicMapServiceLayer,
+      FeatureLayer,VectorTileLayer, Color, 
       Point,Polyline, Circle, SimpleMarkerSymbol, SimpleLineSymbol,SimpleFillSymbol,PictureMarkerSymbol, Query, QueryTask,IdentifyTask, IdentifyParameters,  Polygon, coreFx, fx, easing]) => {
 
     this.esriParser         = parser;
+    this.esriFeature        = FeatureLayer;
+    this.esriVectorTileLayer = VectorTileLayer;
     this.esriMap            = Map;
     this.esriSpatialReference = SpatialReference;
     this.esriConfig         = Config;
     this.esriGraphic        = Graphic;
     this.esriMeasurement    = Measurement;
+    this.esriTemplatePicker = TemplatePicker;
+    this.esriEditor = Editor;
     this.esriwebMercatorUtils = webMercatorUtils;
     this.esriEdit           = Edit;
     this.esriGraphicsLayer  = GraphicsLayer;
@@ -324,6 +333,7 @@ interface TOOL_ACTIONS {
   MAP_IDENTIFY?: number;
   MAP_MEASURE?:number;
   COLLAPSE_TOOLBAR?:number;
+  EDIT_RANGES?: number;
 }
 
 interface API_ROUTES {

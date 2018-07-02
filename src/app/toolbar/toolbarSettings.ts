@@ -169,5 +169,6 @@ interface btnsMap{
 
 interface btnsMapTool {
     MEASURE?: boolean,
-    IDENTIFY?: boolean
+    IDENTIFY?: boolean,
+    EDIT_RANGES?: boolean
 }

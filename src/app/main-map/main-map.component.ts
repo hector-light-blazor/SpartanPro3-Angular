@@ -18,13 +18,23 @@ export class MainMapComponent implements OnInit {
   // Esri Local Variables...
   map: any = null;
   mapFlexBase: any = null;
+  rangesFeatureHCEW: any = null;
+  rangesFeatureHCSN: any = null;
+  rangesFeatureCEW: any = null;
+  rangesFeatureCSN: any = null;
+  rangesFeatureWWE: any = null;
+  rangesFeatureWSN: any = null;
   skeletonFlexBase: any = null;
+  templatePicker: any = null;
+  myEditor: any = null;
   quickPickBase: any = null;
   graphicLayer: any = null;
   mapWMSBase: any = null;
+  vectorSubBase: any = null;
   mapflex: number = 0;
   wms: number = 1;
   google: number =2;
+  vsub: number = 3;
   googleExtent: any = null;
   displayIdentify: boolean = false;
   dragging: boolean = false;
@@ -91,6 +101,18 @@ export class MainMapComponent implements OnInit {
           }
           
           break;
+        case this.app.toolbarActivies.EDIT_RANGES:
+          var edit = document.getElementById("contentEditor");
+        
+          var style = edit.style.visibility;
+       
+          if(style == "hidden") {
+            edit.style.visibility = "visible";
+          }
+          else {
+            edit.style.visibility = "hidden";
+          }
+          break;
         default:
           break;
       }
@@ -100,7 +122,7 @@ export class MainMapComponent implements OnInit {
 
     // Setup some tools
     try {
-      this.mapService.identifyObject = new this.app.esriIdentifyTask(this.app.mapFlexURL);
+      this.mapService.identifyObject = new this.app.esriIdentifyTask("https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/MapFlex3/MapServer");
       this.mapService.identifyParams = new this.app.esriIdentifyParams()
        //=-=-= INIT MAP =-=-=
       this.initMap();
@@ -208,6 +230,15 @@ export class MainMapComponent implements OnInit {
       this.mapFlexBase = new this.app.esriDynamicLayer(this.app.mapFlexURL);
       this.skeletonFlexBase = new this.app.esriDynamicLayer("https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/Adress_Streets/MapServer", {visible: false});
       
+      this.rangesFeatureHCEW = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/1")
+      this.rangesFeatureHCSN = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/2")
+      
+      this.rangesFeatureCEW = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/3");
+      this.rangesFeatureCSN = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/4");
+      this.rangesFeatureWWE = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/5");
+      this.rangesFeatureWSN = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/6");
+
+
       // Create the WMS Layer Google Arieals.
        let layerInfo = new this.app.esriWMTSLayerInfo({identifier: 'texas', 
       titleMatrixSet: '0to20',format: 'png'});
@@ -223,9 +254,11 @@ export class MainMapComponent implements OnInit {
 
       this.graphicLayer = new this.app.esriGraphicsLayer();
 
+      this.vectorSubBase = new this.app.esriVectorTileLayer("https://gis.lrgvdc911.org/arcgis106/rest/services/Hosted/MapFlex_Sub/VectorTileServer");
+      this.vectorSubBase.hide();
       // Lets Load Layers to the map object...
        // add layer...
-       this.map.addLayers([this.mapWMSBase,this.mapFlexBase, this.skeletonFlexBase, this.quickPickBase, this.graphicLayer]);
+       this.map.addLayers([this.mapWMSBase,this.mapFlexBase, this.skeletonFlexBase, this.quickPickBase, this.graphicLayer,this.vectorSubBase, this.rangesFeatureHCEW, this.rangesFeatureHCSN, this.rangesFeatureCEW, this.rangesFeatureCSN, this.rangesFeatureWWE, this.rangesFeatureWSN]);
 
 
 
@@ -240,6 +273,55 @@ export class MainMapComponent implements OnInit {
             }
           }, 300);
 
+       });
+
+       this.map.on('layers-add-result', object => {
+        
+          var templateLayers =  [];
+          var editorLayers = [];
+          var size = object.layers.length;
+          var layers = object.layers;
+          for(var x =0; x < size; x++) {
+            if(layers[x].layer['type'] == "Feature Layer") {
+              templateLayers.push(layers[x].layer)
+              editorLayers.push({ featureLayer: layers[x].layer })
+            }
+          }
+       
+          if(templateLayers.length > 0) { // We have feature layers for editing..
+            this.templatePicker = new this.app.esriTemplatePicker({
+              featureLayers: templateLayers,
+              grouping: true,
+              rows: "auto",
+              columns: 4,
+              style: "height: 94%; width:100%;overflow: auto"
+            }, "picker");
+            this.templatePicker.startup();
+
+
+            var settings = {
+              map: this.map,
+              templatePicker: this.templatePicker,
+              layerInfos: editorLayers,
+              toolbarVisible: true,
+              createOptions: {
+                polylineDrawTools:[ this.app.esriEditor.CREATE_TOOL_FREEHAND_POLYLINE ],
+                polygonDrawTools: [ this.app.esriEditor.CREATE_TOOL_FREEHAND_POLYGON,
+                  this.app.esriEditor.CREATE_TOOL_CIRCLE,
+                  this.app.esriEditor.CREATE_TOOL_TRIANGLE,
+                  this.app.esriEditor.CREATE_TOOL_RECTANGLE
+                ]
+              },
+              toolbarOptions: {
+                reshapeVisible: true
+              }
+            };
+
+
+            var params = { settings: settings };
+            this.myEditor = new this.app.esriEditor(params, 'editor');
+            this.myEditor.startup()
+          }
        });
 
        this.map.on('click', object => {
@@ -345,10 +427,12 @@ export class MainMapComponent implements OnInit {
         
         this.mapFlexBase.show();
         this.mapWMSBase.hide();
+        this.vectorSubBase.hide();
     
       }
       else if(option == this.wms) {
          this.mapFlexBase.hide();
+         this.vectorSubBase.hide();
          this.skeletonFlexBase.show();
          this.mapWMSBase.show();
       
@@ -362,6 +446,11 @@ export class MainMapComponent implements OnInit {
 
          this.displayGoogle = true;
          this.googleExtent = extent;
+      }
+      else if(option == this.vsub) {
+        this.mapFlexBase.hide();
+        this.mapWMSBase.hide();
+        this.vectorSubBase.show();
       }
 
   }
