@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import {HttpClient} from "@angular/common/http";
+
 declare var pdfjsLib:any;
 declare var Tiff: any;
 
