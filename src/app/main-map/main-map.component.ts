@@ -150,6 +150,15 @@ export class MainMapComponent implements OnInit {
        // Destroy the measurement tool
        this.measureDiv.destroy();
 
+       if(this.templatePicker) {
+        this.templatePicker.destroy();
+       }
+       if(this.myEditor) {
+        
+         this.myEditor.destroy();
+       }
+       
+
       this.map.destroy(); // Destroy the map instance...
     } catch (error) {
       console.log("ERROR");
