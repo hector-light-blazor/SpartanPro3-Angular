@@ -15,13 +15,15 @@ import { GoogleMapComponent } from '../google-map/google-map.component';
 import { DatatablePipe } from '../datatable.pipe';
 import { UppercaseDirective } from '../uppercase.directive';
 import { LeafletMapComponent } from '../leaflet-map/leaflet-map.component';
+import { DragAndDropModule } from 'angular-draggable-droppable';
 @NgModule({
   imports: [
 
     CommonModule,
     FormsModule,
     TextMaskModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    DragAndDropModule
   ],
   providers: [],
   declarations: [MasterLoadingComponent, 

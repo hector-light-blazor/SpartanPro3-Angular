@@ -10,6 +10,7 @@
         <li><a href="#feed">COMMENTS FEED</a></li>
         <li><a href="#georef"> GEOREFERENCE</a></li>
         <li><a href="#attach">ATTACHMENTS</a></li>
+        <li><a id="ed" href="#editing">EDITING</a></li>
     </ul>
     <div class="frames">
         
@@ -33,8 +34,8 @@
           
         </div>
         <div style="padding: 0;" class="frame ribbed-white" id="georef" ondragover="return false;"(dragenter)="handleDragEnter()"
-        (dragleave)="handleDragLeave()"
-        (drop)="handleDrop($event, true)">
+            (dragleave)="handleDragLeave()"
+            (drop)="handleDrop($event, true)">
             <app-leaflet-map [overlay]="overlay" [remove]="remove"></app-leaflet-map>
             <div>
                <canvas style="display: none;" #pdfCanvas id="the-canvas"></canvas>
@@ -42,9 +43,13 @@
         </div>
 
         <div class="frame ribbed-white" id="attach" ondragover="return false;"(dragenter)="handleDragEnter()"
-        (dragleave)="handleDragLeave()"
-        (drop)="handleDrop($event, false)">
-            <app-attach-page ></app-attach-page>
+            (dragleave)="handleDragLeave()"
+            (drop)="handleDrop($event, false)">
+                <app-attach-page ></app-attach-page>
+        </div>
+
+        <div  style="padding: 0;" class="frame ribbed-white" id="editing">
+            <app-editing></app-editing>
         </div>
 
     </div>

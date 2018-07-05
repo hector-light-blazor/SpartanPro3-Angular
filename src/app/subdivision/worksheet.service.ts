@@ -14,6 +14,7 @@ export class WorksheetService {
   attachCommunication = new Subject<any>();
   worksheetCommunication = new Subject<any>();
   leafletCommunication = new Subject<any>();
+  editingCommunication = new Subject<any>();
   
   // Private properties to handle certain global variables for other components to use...
   attachments: Array<SUBDIVISIONS> = [];

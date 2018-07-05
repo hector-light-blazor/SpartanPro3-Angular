@@ -34,24 +34,24 @@ export class WorksheetComponent implements OnInit {
   
     //Lets Get New Worksheet Number ...
   
-    this.worksheetService.GET_METHOD(WORKSHEET_NUMBER).subscribe((response) => {
-        console.log(response);
-        if(response['success']) {
-          let count = response['data'][0].count;
-          let today = new Date();
-          let dd = (today.getDate() < 10) ? "0" + today.getDate() : today.getDate();
-          let mm = ((today.getMonth() + 1) < 10) ? 0 + (today.getMonth() + 1).toString() : today.getMonth() + 1;
-          let yyyy = today.getFullYear();
-          let object = (yyyy.toString().substr(-2)) + (mm.toString()) + (dd.toString());
-          let zero = '00';
-          if(count < 100){
-            object += zero + count.toString();
-          }else{
-           object += (count.toString());
-          }
-          this.worksheetService.attributes.objectid =  parseInt(object);
-        }
-    })
+    // this.worksheetService.GET_METHOD(WORKSHEET_NUMBER).subscribe((response) => {
+    //     console.log(response);
+    //     if(response['success']) {
+    //       let count = response['data'][0].count;
+    //       let today = new Date();
+    //       let dd = (today.getDate() < 10) ? "0" + today.getDate() : today.getDate();
+    //       let mm = ((today.getMonth() + 1) < 10) ? 0 + (today.getMonth() + 1).toString() : today.getMonth() + 1;
+    //       let yyyy = today.getFullYear();
+    //       let object = (yyyy.toString().substr(-2)) + (mm.toString()) + (dd.toString());
+    //       let zero = '00';
+    //       if(count < 100){
+    //         object += zero + count.toString();
+    //       }else{
+    //        object += (count.toString());
+    //       }
+    //       this.worksheetService.attributes.objectid =  parseInt(object);
+    //     }
+    // })
 
 
     this.canvas = this.myCanvas.nativeElement;
