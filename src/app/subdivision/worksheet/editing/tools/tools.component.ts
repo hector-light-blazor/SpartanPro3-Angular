@@ -13,6 +13,8 @@ export class ToolsComponent implements OnInit {
   startY: number = 0;
   x: number = 0;
   y: number = 0;
+  xf: string = "";
+  yf: string = "";
   dragStart: boolean = false;
 
  
@@ -20,6 +22,31 @@ export class ToolsComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  // When it starts.
+  onDragStart(event) {
+    
+    this.startX = event.screenX - this.x;
+    this.startY = event.screenY - this.y;
+
+  }
+  // While is dragging.
+  onDrag(event) {
+    
+    this.x = (event.screenX - this.startX);
+    this.y =  (event.screenY - this.startY);
+    this.xf = this.x + "px";
+    this.yf = this.y + "px";
+    
+  }
+
+  // When dragging is done...
+  onDragEnd(event) {
+    this.x = (event.screenX - this.startX);
+    this.y =  (event.screenY - this.startY);
+    this.xf = this.x + "px";
+    this.yf = this.y + "px";
   }
 
  

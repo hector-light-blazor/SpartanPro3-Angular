@@ -16,6 +16,8 @@ import { DatatablePipe } from '../datatable.pipe';
 import { UppercaseDirective } from '../uppercase.directive';
 import { LeafletMapComponent } from '../leaflet-map/leaflet-map.component';
 import { DragAndDropModule } from 'angular-draggable-droppable';
+import { AngularDraggableModule } from 'angular2-draggable';
+
 @NgModule({
   imports: [
 
@@ -23,7 +25,8 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
     FormsModule,
     TextMaskModule,
     NgxDatatableModule,
-    DragAndDropModule
+    DragAndDropModule,
+    AngularDraggableModule
   ],
   providers: [],
   declarations: [MasterLoadingComponent, 

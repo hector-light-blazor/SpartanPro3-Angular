@@ -1,2 +1,8 @@
-<app-tools></app-tools>
-<canvas #editing width="100" height="100"></canvas>
+<div (mousewheel)="mouseScroll($event)" id="editingPreview">
+    <app-tools></app-tools>
+    <div class="close" >
+        <i (click)="onClose()" class="fa fa-times-circle" aria-hidden="true"></i>
+    </div>
+
+<canvas id="c"  #editing width="100" height="100"></canvas>
+</div>

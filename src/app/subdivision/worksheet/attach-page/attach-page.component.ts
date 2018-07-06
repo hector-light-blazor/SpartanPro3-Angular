@@ -46,16 +46,7 @@ export class AttachPageComponent implements OnInit {
   }
 
   onEdit(pic) {
-   
-
-    var obj = document.getElementById("ed");
-    var _self  = this;
-    obj.click();
-
-    setTimeout(() => {
-      _self.worksheetService.editingCommunication.next({load: true, source: pic.source});
-    }, 200);
-    
+    this.worksheetService.worksheetCommunication.next({editing: true, source: pic.source});
   }
   
   chunk(arr, start, amount){

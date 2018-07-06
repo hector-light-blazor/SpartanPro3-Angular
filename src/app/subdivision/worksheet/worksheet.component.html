@@ -1,5 +1,6 @@
 <app-preview (close)="previewON = false;" [source]="source" *ngIf="previewON"></app-preview>
 <app-master-loading  [regularLoading]="true" *ngIf="isLoading"></app-master-loading>
+<app-editing (close)="editingOn = false;" [source]="selectedEditing" *ngIf="editingOn"></app-editing>
 <h3  style="color:white">Worsheet Number: {{worksheetService.attributes.objectid}}</h3>
 <div class="tabcontrol"  data-role="tabcontrol">
     <ul class="tabs">
@@ -10,7 +11,7 @@
         <li><a href="#feed">COMMENTS FEED</a></li>
         <li><a href="#georef"> GEOREFERENCE</a></li>
         <li><a href="#attach">ATTACHMENTS</a></li>
-        <li><a id="ed" href="#editing">EDITING</a></li>
+       
     </ul>
     <div class="frames">
         
@@ -47,10 +48,5 @@
             (drop)="handleDrop($event, false)">
                 <app-attach-page ></app-attach-page>
         </div>
-
-        <div  style="padding: 0;" class="frame ribbed-white" id="editing">
-            <app-editing></app-editing>
-        </div>
-
     </div>
 </div>

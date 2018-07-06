@@ -25,7 +25,9 @@ export class WorksheetComponent implements OnInit {
   context: CanvasRenderingContext2D;
   previewON = false;
   source: any;
-    
+  editingOn: boolean = false;
+  selectedEditing:any = null;
+
   constructor(public worksheetService: WorksheetService) {
 
    }
@@ -68,6 +70,10 @@ export class WorksheetComponent implements OnInit {
           this.previewON = true;
 
           this.source = action.source;
+        }
+        else if(action.editing) {
+          this.editingOn = true;
+          this.selectedEditing = action.source;
         }
     })
 
