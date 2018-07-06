@@ -52,7 +52,7 @@ export class EditingComponent implements OnInit {
   // Loading Canvas with source..
   loadCanvas(source) {
     console.log(fabric);
-
+    let _self   = this;
     this.canvas = new fabric.Canvas('c', {
       hoverCursor: 'pointer',
       selection: true,
@@ -60,29 +60,57 @@ export class EditingComponent implements OnInit {
       targetFindTolerance: 5
     })
 
-     // load sun and center it
-      fabric.Image.fromURL(source, (image)  => {
-        
-        this.canvas.setWidth(image.width);
-        this.canvas.setHeight(image.height);
-       
-       //  image.center();
 
+    this.canvas.on('mouse:down', function(opt) {
+     
+      var evt = opt.e;
+      if (evt.altKey === true) {
+        this.isDragging = true;
+        this.selection = false;
+        this.lastPosX = evt.clientX;
+        this.lastPosY = evt.clientY;
+      }else {
         var itext = new fabric.Text('This is a IText object', {
-          left: 100,
-          top: 150,
-          fill: '#D81B60',
+          left:0,
+          top: 0,
+          fill: 'red',
           strokeWidth: 2,
           stroke: "#880E4F",
         });
+        console.log(itext);
+        _self.canvas.add(itext);
+        this.renderAll();
+        itext.bringToFront();
+      }
+    });
+    this.canvas.on('mouse:move', function(opt) {
+      if (this.isDragging) {
+        var e = opt.e;
+        this.viewportTransform[4] += e.clientX - this.lastPosX;
+        this.viewportTransform[5] += e.clientY - this.lastPosY;
+        this.renderAll();
+        this.lastPosX = e.clientX;
+        this.lastPosY = e.clientY;
+      }
+    });
+    this.canvas.on('mouse:up', function(opt) {
+      this.isDragging = false;
+      this.selection = true;
+    });
 
+     // load sun and center it
+      fabric.Image.fromURL(source, (image)  => {
+        
+        this.canvas.setWidth(window.innerWidth -100);
+        this.canvas.setHeight(window.innerHeight-100);
+       
+       //  image.center();
+
+        
+        console.log(this.canvas);
       
         this.canvas.setOverlayImage(image, this.canvas.renderAll.bind(this.canvas));
-
-        console.log(this.canvas);
      
-
-
       });
     
   }
@@ -103,7 +131,7 @@ export class EditingComponent implements OnInit {
 
   //Controls the zoom in..
   mouseScroll(e) {
-    console.log("I am running");
+   
     var evt=window.event || e;
 		var delta = evt.detail? evt.detail*(-120) : evt.wheelDelta;
 		var curZoom = this.canvas.getZoom(),  newZoom = curZoom + delta / 4000,
@@ -113,5 +141,8 @@ export class EditingComponent implements OnInit {
 		if(e != null)e.preventDefault();
 		return false;
   }
+
+
+ 
 
 }

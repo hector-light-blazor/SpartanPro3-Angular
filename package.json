@@ -31,6 +31,7 @@
     "angular2-text-mask": "^8.0.4",
     "chart.js": "^2.7.1",
     "core-js": "^2.4.1",
+    "dragscroll": "0.0.8",
     "esri-leaflet": "^2.1.4",
     "esri-loader": "^2.0.0",
     "exif-js": "^2.3.0",
