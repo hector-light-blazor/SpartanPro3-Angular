@@ -19,6 +19,7 @@ export class EditingComponent implements OnInit {
   lastY: number =0;
   scaleFactor:any = 1.1;
   image: any = null;
+  cmd: CMD_TOOLS = {text: false, square: false};
   constructor(public worksheet: WorksheetService) {
 
      
@@ -55,61 +56,26 @@ export class EditingComponent implements OnInit {
     let _self   = this;
     this.canvas = new fabric.Canvas('c', {
       hoverCursor: 'pointer',
-      selection: true,
+      selection: false,
       perPixelTargetFind: true,
       targetFindTolerance: 5
     })
 
+    this.HandlerCanvasEvents();
 
-    this.canvas.on('mouse:down', function(opt) {
-     
-      var evt = opt.e;
-      if (evt.altKey === true) {
-        this.isDragging = true;
-        this.selection = false;
-        this.lastPosX = evt.clientX;
-        this.lastPosY = evt.clientY;
-      }else {
-        var itext = new fabric.Text('This is a IText object', {
-          left:0,
-          top: 0,
-          fill: 'red',
-          strokeWidth: 2,
-          stroke: "#880E4F",
-        });
-        console.log(itext);
-        _self.canvas.add(itext);
-        this.renderAll();
-        itext.bringToFront();
-      }
-    });
-    this.canvas.on('mouse:move', function(opt) {
-      if (this.isDragging) {
-        var e = opt.e;
-        this.viewportTransform[4] += e.clientX - this.lastPosX;
-        this.viewportTransform[5] += e.clientY - this.lastPosY;
-        this.renderAll();
-        this.lastPosX = e.clientX;
-        this.lastPosY = e.clientY;
-      }
-    });
-    this.canvas.on('mouse:up', function(opt) {
-      this.isDragging = false;
-      this.selection = true;
-    });
+     console.log(this.canvas);
 
      // load sun and center it
       fabric.Image.fromURL(source, (image)  => {
         
-        this.canvas.setWidth(window.innerWidth -100);
-        this.canvas.setHeight(window.innerHeight-100);
-       
-       //  image.center();
-
+        this.canvas.setWidth(image.width);
+        this.canvas.setHeight(image.height);
         
-        console.log(this.canvas);
+        image.set({width: this.canvas.width, height: this.canvas.height, originX: 'left', originY: 'top'});
+        this.canvas.setBackgroundImage(image, this.canvas.renderAll.bind(this.canvas));
+       // ths.canvas.
       
-        this.canvas.setOverlayImage(image, this.canvas.renderAll.bind(this.canvas));
+       // this.canvas.setOverlayImage(image, this.canvas.renderAll.bind(this.canvas));
      
       });
     
@@ -143,6 +109,75 @@ export class EditingComponent implements OnInit {
   }
 
 
+  // This gets executed when editing/tools : BUTTONS GET PRESSED>>>>>>
+  cmdInfo(event) {
+    if(event['text']) {
+     
+      this.cmd.text = true;
+      this.canvas.defaultCursor = "crosshair";
+    }
+  }
+
+
+
+  // This events are controll by the cmds comming from the editing/tools : component
+  HandlerCanvasEvents() {
+    let _self = this; // GET THE MAIN CLASS OBJECT>..
+
+    this.canvas.on('mouse:down', function(opt) {
+     
+      var evt = opt.e;
+      if (evt.altKey === true) {
+       
+        this.defaultCursor = "move";
+        this.isDragging = true;
+        this.selection = false;
+        this.lastPosX = evt.clientX;
+        this.lastPosY = evt.clientY;
+      }else if(_self.cmd.text){
+        var itext = new fabric.IText('Hello', {
+          left: this.lastPosX,
+          top: this.lastPosY,
+          fill: 'red',
+          strokeWidth: 2,
+          stroke: "#880E4F",
+        });
+       
+        _self.canvas.add(itext);
+        this.renderAll();
+       // itext.bringToFront();
+        _self.cmd.text = false;
+       this.defaultCursor = "default";
+      }
+    });
+    this.canvas.on('mouse:move', function(opt) {
+    
+      var e = opt.e;
+      if (this.isDragging) {
+        this.defaultCursor = "move";
+        this.viewportTransform[4] += e.clientX - this.lastPosX;
+        this.viewportTransform[5] += e.clientY - this.lastPosY;
+        this.renderAll();
+       
+      }
+
+      this.lastPosX = e.clientX;
+      this.lastPosY = e.clientY;
+
+    });
+    this.canvas.on('mouse:up', function(opt) {
+      this.isDragging = false;
+      this.selection = true;
+      this.defaultCursor = "default";
+    });
+  }
+
+
  
 
+}
+
+interface CMD_TOOLS {
+  text: boolean;
+  square: boolean;
 }

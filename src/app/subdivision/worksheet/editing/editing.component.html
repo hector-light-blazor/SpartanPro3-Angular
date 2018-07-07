@@ -1,5 +1,5 @@
 <div (mousewheel)="mouseScroll($event)" id="editingPreview">
-    <app-tools></app-tools>
+    <app-tools (cmd)="cmdInfo($event)"></app-tools>
     <div class="close" >
         <i (click)="onClose()" class="fa fa-times-circle" aria-hidden="true"></i>
     </div>

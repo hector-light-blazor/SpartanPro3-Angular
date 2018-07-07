@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit,Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 
 
 var _self = this;
@@ -9,6 +9,8 @@ var _self = this;
 })
 export class ToolsComponent implements OnInit {
   @ViewChild("tool") tool: ElementRef;
+  @Output() cmd = new EventEmitter();
+
   startX: number = 0;
   startY: number = 0;
   x: number = 0;
@@ -47,6 +49,11 @@ export class ToolsComponent implements OnInit {
     this.y =  (event.screenY - this.startY);
     this.xf = this.x + "px";
     this.yf = this.y + "px";
+  }
+
+
+  addText() {
+    this.cmd.emit({text: true});
   }
 
  

@@ -4,9 +4,10 @@
   style="position: absolute;background: rgba(48,48,48, 0.9);z-index:1;  height: 44px;">
   <div  ngDraggable class="toolbar">
     <div class="toolbar-section">
-        <button class="toolbar-button"><i class="fa fa-text-width" aria-hidden="true"></i></button>
+        <button (click)='addText()' class="toolbar-button"><i class="fa fa-text-width" aria-hidden="true"></i></button>
         <button class="toolbar-button"><i class="fa fa-list" aria-hidden="true"></i></button>
         <button class="toolbar-button"><i class="fa fa-square" aria-hidden="true"></i></button>
+        <button class="toolbar-button"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
     </div>
 </div>
 
