@@ -17,6 +17,8 @@ export class EditingComponent implements OnInit {
   context: any = null;
   lastX:number =0;
   lastY: number =0;
+  mouseX: number = 0;
+  mouseY: number = 0;
   scaleFactor:any = 1.1;
   image: any = null;
   cmd: CMD_TOOLS = {text: false, square: false};
@@ -56,6 +58,7 @@ export class EditingComponent implements OnInit {
     let _self   = this;
     this.canvas = new fabric.Canvas('c', {
       hoverCursor: 'pointer',
+     
       selection: false,
       perPixelTargetFind: true,
       targetFindTolerance: 5
@@ -135,9 +138,14 @@ export class EditingComponent implements OnInit {
         this.lastPosX = evt.clientX;
         this.lastPosY = evt.clientY;
       }else if(_self.cmd.text){
+        console.log("MOUSE MOVE X: " + _self.mouseX)
+        console.log("MOUSE DOWN X: " + evt.clientX);
+        console.log("MOUSE MOVE Y: " + _self.mouseY);
+        console.log("MOUSE DOWN Y: " + evt.clientY);
+        console.log(this);
         var itext = new fabric.IText('Hello', {
-          left: this.lastPosX,
-          top: this.lastPosY,
+          left: (evt.clientX - (this.viewportTransform[4])),
+          top:  (evt.clientY - (this.viewportTransform[5])),
           fill: 'red',
           strokeWidth: 2,
           stroke: "#880E4F",
@@ -171,7 +179,12 @@ export class EditingComponent implements OnInit {
       this.defaultCursor = "default";
     });
   }
-
+  
+  hello(e) {
+    this.mouseX = e.clientX;
+    this.mouseY = e.clientY;
+ 
+  }
 
  
 
