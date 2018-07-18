@@ -66,8 +66,6 @@ export class EditingComponent implements OnInit {
 
     this.HandlerCanvasEvents();
 
-     console.log(this.canvas);
-
      // load sun and center it
       fabric.Image.fromURL(source, (image)  => {
         
@@ -101,7 +99,7 @@ export class EditingComponent implements OnInit {
   //Controls the zoom in..
   mouseScroll(e) {
    
-    var evt=window.event || e;
+    var evt = window.event || e;
 		var delta = evt.detail? evt.detail*(-120) : evt.wheelDelta;
 		var curZoom = this.canvas.getZoom(),  newZoom = curZoom + delta / 4000,
 		x = e.offsetX, y = e.offsetY;
@@ -121,12 +119,30 @@ export class EditingComponent implements OnInit {
     }
   }
 
+ addOrSub(val, bval, mul = 0) {
+   var response = 0;
+   if(Math.sign(bval) == -1) {
+      
+     
+        response = (val - (bval)); 
+   }else {
+      response = val - bval;
+   }
+   console.log(response);
+   return response;
+ }
 
+ newPoint(x, y, transform) {
+   var pnt = new fabric.Point(x, y);
+   var npnt = fabric.util.transformPoint(pnt, transform)
+
+   return npnt;
+ }
 
   // This events are controll by the cmds comming from the editing/tools : component
   HandlerCanvasEvents() {
     let _self = this; // GET THE MAIN CLASS OBJECT>..
-
+    
     this.canvas.on('mouse:down', function(opt) {
      
       var evt = opt.e;
@@ -138,14 +154,13 @@ export class EditingComponent implements OnInit {
         this.lastPosX = evt.clientX;
         this.lastPosY = evt.clientY;
       }else if(_self.cmd.text){
-        console.log("MOUSE MOVE X: " + _self.mouseX)
-        console.log("MOUSE DOWN X: " + evt.clientX);
-        console.log("MOUSE MOVE Y: " + _self.mouseY);
-        console.log("MOUSE DOWN Y: " + evt.clientY);
-        console.log(this);
+       
+        console.log(this.viewportTransform)
+        let point = _self.newPoint(evt.clientX, evt.clientY, this.viewportTransform);
+        let first = this.viewportTransform[0];
         var itext = new fabric.IText('Hello', {
-          left: (evt.clientX - (this.viewportTransform[4])),
-          top:  (evt.clientY - (this.viewportTransform[5])),
+          left: 0,//(first == 1) ? _self.addOrSub(evt.clientX, this.viewportTransform[4]) : point.x,
+          top:  0,//(first == 1) ? _self.addOrSub(evt.clientY, this.viewportTransform[5]) : point.y,
           fill: 'red',
           strokeWidth: 2,
           stroke: "#880E4F",
@@ -153,9 +168,12 @@ export class EditingComponent implements OnInit {
        
         _self.canvas.add(itext);
         this.renderAll();
-       // itext.bringToFront();
+      
         _self.cmd.text = false;
        this.defaultCursor = "default";
+      }else {
+        console.log(opt)
+        console.log(this);
       }
     });
     this.canvas.on('mouse:move', function(opt) {
@@ -183,7 +201,6 @@ export class EditingComponent implements OnInit {
   hello(e) {
     this.mouseX = e.clientX;
     this.mouseY = e.clientY;
- 
   }
 
  
