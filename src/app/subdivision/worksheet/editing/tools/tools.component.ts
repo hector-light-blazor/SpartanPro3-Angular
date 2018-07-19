@@ -16,7 +16,7 @@ export class ToolsComponent implements OnInit {
   x: number = 0;
   y: number = 0;
   xf: string = "";
-  yf: string = "";
+  yf: string = "30px";
   dragStart: boolean = false;
 
  

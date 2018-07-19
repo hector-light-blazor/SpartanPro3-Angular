@@ -12,6 +12,7 @@ import { WorksheetService } from './worksheet.service';
 import { PreviewComponent } from './worksheet/preview/preview.component';
 import { EditingComponent } from './worksheet/editing/editing.component';
 import { ToolsComponent } from './worksheet/editing/tools/tools.component';
+import { TextEditorComponent } from './worksheet/editing/text-editor/text-editor.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { ToolsComponent } from './worksheet/editing/tools/tools.component';
     SharedModule,
     SubdivisionRoutingModule
   ],
-  declarations: [WorksheetComponent, MainPageComponent, LvPageComponent, DbPageComponent, GisPageComponent, AttachPageComponent, PreviewComponent, EditingComponent, ToolsComponent],
+  declarations: [WorksheetComponent, MainPageComponent, LvPageComponent, DbPageComponent, GisPageComponent, AttachPageComponent, PreviewComponent, EditingComponent, ToolsComponent, TextEditorComponent],
   providers: [WorksheetService]
 })
 export class SubdivisionModule { }

@@ -113,9 +113,16 @@ export class EditingComponent implements OnInit {
   // This gets executed when editing/tools : BUTTONS GET PRESSED>>>>>>
   cmdInfo(event) {
     if(event['text']) {
+      var itext = new fabric.IText('Please enter text', {
+        left: 0,//(first == 1) ? _self.addOrSub(evt.clientX, this.viewportTransform[4]) : point.x,
+        top:  0,//(first == 1) ? _self.addOrSub(evt.clientY, this.viewportTransform[5]) : point.y,
+        fill: 'red',
+        strokeWidth: 2,
+        stroke: "#880E4F",
+      });
+
+      this.canvas.add(itext);
      
-      this.cmd.text = true;
-      this.canvas.defaultCursor = "crosshair";
     }
   }
 
@@ -153,28 +160,30 @@ export class EditingComponent implements OnInit {
         this.selection = false;
         this.lastPosX = evt.clientX;
         this.lastPosY = evt.clientY;
-      }else if(_self.cmd.text){
-       
-        console.log(this.viewportTransform)
-        let point = _self.newPoint(evt.clientX, evt.clientY, this.viewportTransform);
-        let first = this.viewportTransform[0];
-        var itext = new fabric.IText('Hello', {
-          left: 0,//(first == 1) ? _self.addOrSub(evt.clientX, this.viewportTransform[4]) : point.x,
-          top:  0,//(first == 1) ? _self.addOrSub(evt.clientY, this.viewportTransform[5]) : point.y,
-          fill: 'red',
-          strokeWidth: 2,
-          stroke: "#880E4F",
-        });
-       
-        _self.canvas.add(itext);
-        this.renderAll();
-      
-        _self.cmd.text = false;
-       this.defaultCursor = "default";
       }else {
         console.log(opt)
         console.log(this);
       }
+
+      // else if(_self.cmd.text){
+       
+      //   console.log(this.viewportTransform)
+      //   let point = _self.newPoint(evt.clientX, evt.clientY, this.viewportTransform);
+      //   let first = this.viewportTransform[0];
+      //   var itext = new fabric.IText('Hello', {
+      //     left: 0,//(first == 1) ? _self.addOrSub(evt.clientX, this.viewportTransform[4]) : point.x,
+      //     top:  0,//(first == 1) ? _self.addOrSub(evt.clientY, this.viewportTransform[5]) : point.y,
+      //     fill: 'red',
+      //     strokeWidth: 2,
+      //     stroke: "#880E4F",
+      //   });
+       
+      //   _self.canvas.add(itext);
+      //   this.renderAll();
+      
+      //   _self.cmd.text = false;
+      //  this.defaultCursor = "default";
+      // }
     });
     this.canvas.on('mouse:move', function(opt) {
     
