@@ -193,11 +193,7 @@
             </div>
             <br>
             <br>
-            <div class="input-control textarea full-size">
-                <label  >Additional Notes</label>
-                <textarea uppercase [disabled]="premisesSection" [(ngModel)]="attributes.comments" ></textarea>
-            </div>
-            <br>
+            
            
       </div> <!-- End Of Premises Section -->
       <div class="frame ribbed-white" id="lv">
@@ -264,6 +260,10 @@
                 </select>
                 <button (click)="attributes.address_by = null" class="button"><i class="fa fa-undo" aria-hidden="true"></i>
                 </button>
+            </div>
+            <div class="input-control text full-size">
+                Date Addressed
+                <input [disabled]="lvSection" type="date" [(ngModel)]="attributes.date_addressed"  >
             </div>
             <br>
             <br>
