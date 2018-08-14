@@ -122,6 +122,7 @@
                 <textarea uppercase [disabled]="customerSection"   [(ngModel)]="attributes.mailing_address" ></textarea>
             </div>
          </div> <!-- End Of Customer Section -->
+
         <div class="frame ribbed-white" id="premisesData">
           
             <div class="input-control text full-size" data-role="input">
@@ -196,6 +197,8 @@
             
            
       </div> <!-- End Of Premises Section -->
+
+      <!-- START LV SECTION -->
       <div class="frame ribbed-white" id="lv">
          <div class="input-control text full-size" data-role="input">
                 <label >Address Number</label>
@@ -261,10 +264,12 @@
                 <button (click)="attributes.address_by = null" class="button"><i class="fa fa-undo" aria-hidden="true"></i>
                 </button>
             </div>
+
             <div class="input-control text full-size">
                 Date Addressed
                 <input [disabled]="lvSection" type="date" [(ngModel)]="attributes.date_addressed"  >
             </div>
+            
             <br>
             <br>
             <label class="switch-original " >
