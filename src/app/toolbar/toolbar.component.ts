@@ -59,6 +59,23 @@ export class ToolbarComponent implements OnInit {
             }
          }
       },
+      NRF: {
+        onoff: true,
+        DISPLAY: {
+          onoff: true,
+          ids: {
+            DASHBOARD: true
+          }
+        },
+        MANAGEMENT: {
+          onoff: true,
+          ids: {
+            UPLOAD: true,
+            USERS: true,
+            EXPORT: true
+          }
+        }
+      },
 
       SUBDIVISION: {onoff: true,
         DISPLAY: {onoff: true, ids: {dash: false, calendar: false, arch: false}}
@@ -73,7 +90,7 @@ export class ToolbarComponent implements OnInit {
         USER: {onoff: true},
         TICKET: {onoff: true},
         TOOLBAR: {onoff: true},
-        GIS: {onoff: true}
+        GIS: {onoff: true, ROUTING: true}
       }
 
     }
@@ -91,11 +108,14 @@ export class ToolbarComponent implements OnInit {
 
     // Setup the toolbar information...
 
-    // this.app.account_info.config.forEach(element => {
-    //     if(element.setting_type == "TOOLBAR") {
-    //       this._toolSettings = element.json;
-    //     }
-    // });
+    this.app.account_info.config.forEach(element => {
+        console.log(element);
+        if(element.setting_type == "TOOLBAR") {
+         // this._toolSettings = element.json;
+           console.log(this._toolSettings)
+         // console.log(element.json);
+        }
+    });
 
     
   }

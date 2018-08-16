@@ -6,6 +6,7 @@ export class toolBarSettings{
 interface sections{
     TICKET?: secTicket,
     SUBDIVISION?: secSub,
+    NRF?: secNRF,
     MAP?: secMap,
     SETTINGS?: secSet
 }
@@ -22,9 +23,16 @@ interface secTicket{
 }
 
 
+
 interface secSub{
      onoff?: boolean,
      DISPLAY?: propView
+}
+
+interface secNRF {
+    onoff?: boolean,
+    DISPLAY?: propDISNRF
+    MANAGEMENT?: propMANGNRF
 }
 
 interface secMap{
@@ -45,6 +53,25 @@ interface secSet{
 interface propMapTools {
     onoff?: boolean
     ids?: btnsMapTool
+}
+interface propDISNRF {
+    onoff?: boolean
+    ids?: btnNRFDis
+}
+
+interface propMANGNRF {
+    onoff?: boolean
+    ids?: btnNRFMan
+}
+
+interface btnNRFDis {
+    DASHBOARD: boolean
+}
+
+interface btnNRFMan {
+    UPLOAD?: boolean
+    USERS?: boolean
+    EXPORT?: boolean
 }
 
 

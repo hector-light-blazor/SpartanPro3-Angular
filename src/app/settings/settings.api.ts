@@ -12,3 +12,9 @@ export const UTICKET_SETTINGS = "config/updateTicketSettings";
 
 export const GUSERS_SETTINGS = "users/getUsers/";
 export const GHOME_VIEWS = "config/getHomeViews/";
+
+
+export const UPDATE_USERS = "users/updateUserProfile/";
+export const NEW_USER = "users/createUser/";
+
+export const DEFAULT_IMAGE = "assets/avatar.png";

@@ -77,7 +77,7 @@ export class UserUComponent implements OnInit {
     //Module to fetch users...
     _fetchUsers(){
       this._appService.GET_METHOD(GUSERS_SETTINGS).subscribe((response:any) => {
-        console.log(response);
+      
         let lng = response.data.length;
         
         for(let i = 0; i < lng; i++){

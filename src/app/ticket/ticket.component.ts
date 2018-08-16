@@ -50,6 +50,7 @@ export class TicketComponent implements OnInit {
   searchParcel: string = ''; // find particular parcel information from db server...
   enableTicket: boolean = false; // this variable will tell esri map comp either to display graphics layer for ticket or not for editing and other purposes.
   users: any = [] // Gets a list of all users to be used in drop downs as options...
+  lvusers: any = []; // assigns the lv list users...
   confirmationName: string = ""; // this controls the name of what to confirm on pop up....
   stopSave: boolean = false; // NG DESTROY HACK PREVENTS FROM SENDING TICKET TO NEXT PERSON....
   displayDialog: boolean = false; // Display
@@ -358,6 +359,10 @@ export class TicketComponent implements OnInit {
         });
         this.users = response.data;
     });
+
+    this.lvusers = this.app.LVUSERS;
+
+
   }
 
   // Module to fetch duplicate tickets in the system...
@@ -1236,6 +1241,7 @@ interface Ticket{
   postal_comm?: string;
   full_address?: string;
   address_by?: any;
+  date_addressed?: any;
   address_issued?: any;
   letter_generated?: any;
   plack_generated?: any;

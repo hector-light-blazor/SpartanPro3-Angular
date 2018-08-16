@@ -102,7 +102,7 @@ export class ToolbarIComponent implements OnInit {
             },
             MAP: {onoff: true,
               DISPLAY: {onoff: true, ids: {MAP: true}},
-              TOOLS: {onoff: true, ids: {MEASURE: true, IDENTIFY: true}}
+              TOOLS: {onoff: true, ids: {MEASURE: true, IDENTIFY: true, EDIT_RANGES: true}}
           },
             SETTINGS: {
               onoff: true,
