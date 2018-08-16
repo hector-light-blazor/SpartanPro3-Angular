@@ -106,14 +106,11 @@
             <br>
             <br>
             <div class="input-control text full-size">
-                <label  >ALT 3 Tele</label>
-                <input [disabled]="customerSection" type="text"   [(ngModel)]="attributes.alt3_telephone" [textMask]="{mask: mask}">
-            </div>
-            <br>
-            <br>
-            <div class="input-control text full-size">
-                <label  >ALT 4 Tele</label>
-                <input [disabled]="customerSection" type="text"  [(ngModel)]="attributes.alt4_telephone" [textMask]="{mask: mask}">
+                <select [disabled]="customerSection" [(ngModel)]="attributes.prf_language">
+                    <option>English</option>
+                    <option>Spanish</option>
+                </select>
+                <input [disabled]="customerSection" type="text"   [(ngModel)]="attributes.prf_language" [textMask]="{mask: mask}">
             </div>
             <br>
             <br>

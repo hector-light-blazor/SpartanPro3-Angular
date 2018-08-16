@@ -1211,7 +1211,7 @@ interface Ticket{
   telephone_land_line?: string;
   alt_telephone?: string;
   alt2_telephone?: string;
-  alt3_telephone?: string;
+  prf_language?: string; //preffered lanuguage duh
   alt4_telephone?: string;
   pfirst_name?: string;
   plast_name?: string;
@@ -1236,6 +1236,7 @@ interface Ticket{
   postal_comm?: string;
   full_address?: string;
   address_by?: any;
+  date_addressed?: string;
   address_issued?: any;
   letter_generated?: any;
   plack_generated?: any;
