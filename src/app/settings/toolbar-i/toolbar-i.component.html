@@ -198,6 +198,7 @@
                    </li>
               </ul>
           </li>
+          <!-- START SUBDIVISION -->
               <li class="node collapsed">
                   <label class="input-control checkbox small-check"><input type="checkbox" 
                     [(ngModel)]="_toolSettings.SECTIONS.SUBDIVISION.onoff" ><span class="check"></span></label>
@@ -212,7 +213,8 @@
                           <span *ngIf="_toolSettings.SECTIONS.SUBDIVISION.DISPLAY.onoff" class="node-toggle"></span>
                           <ul   *ngIf="_toolSettings.SECTIONS.SUBDIVISION.DISPLAY.onoff">
                               <li>
-                                  <label class="input-control checkbox small-check"><input type="checkbox" 
+                                  <label class="input-control checkbox small-check">
+                                      <input type="checkbox" 
                                     [(ngModel)]="_toolSettings.SECTIONS.SUBDIVISION.DISPLAY.ids.dash" ><span class="check"></span></label>
                           
                                   <span class="leaf">DASHBOARD</span>
@@ -231,6 +233,78 @@
                       </li>
                   </ul>
               </li>
+
+              <!-- START OF NRF TOOLBAR -->
+              <li class="node collapsed">
+                    <label class="input-control checkbox small-check">
+                        <input type="checkbox" >
+                        <span class="check"></span>
+                    </label>
+                    <span class="leaft">NRF</span>
+                    <span class="node-toggle"></span>
+                    <ul>
+                        <li class="node collapsed">
+                            <label class="input-control checkbox small-check" >
+                                <input type="checkbox" >
+                                <span class="check"></span>
+                            </label>
+                            <span class="leaf">DISPLAY</span>
+                            <span class="node-toggle"></span>
+                            <ul>
+                                <li>
+                                    <label class="input-control checkbox small-check">
+                                        <input type="checkbox" >
+                                        <span class="check"></span>
+                                    </label>
+                                    <span class="leaf">DASHBOARD</span>
+                                </li>
+                            </ul>
+
+                          
+                        
+                        </li>
+                        <li class="node collapsed">
+                            <label  class="input-control checkbox small-check">
+                                <input type="checkbox" >
+                                <span class="check"></span>
+                            </label>
+                            <span class="leaf">MANAGEMENT</span>
+                            <span class="node-toggle"></span>
+                           
+                            <ul>
+                                <li>
+                                    <label for="" class="input-control checkbox small-check">
+                                        <input type="checkbox" name="" id="">
+                                        <span class="check"></span>
+                                    </label>
+                                    <span class="leaf">
+                                        UPLOAD
+                                    </span>
+                                </li>
+                                <li>
+                                    <label for="" class="input-control checkbox small-check">
+                                        <input type="checkbox" >
+                                        <span class="check"></span>
+                                    </label>
+                                    <span class="leaf">
+                                        USERS
+                                    </span>
+                                </li>
+                                <li>
+                                    <label for="" class="input-control checkbox small-check">
+                                        <input type="checkbox" >
+                                        <span class="check"></span>
+                                    </label>
+                                    <span class="leaf">
+                                        EXPORT
+                                    </span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+              </li>
+              <!-- end of nrf TOOLBAR -->
+              <!-- START OF MAP TOOLBAR -->
               <li class="node collapsed">
                   <label class="input-control checkbox small-check">
                       <input type="checkbox" [(ngModel)]="_toolSettings.SECTIONS.MAP.onoff" >
@@ -269,6 +343,9 @@
                                             <li><label class="input-control checkbox small-check"><input type="checkbox" 
                                                 [(ngModel)]="_toolSettings.SECTIONS.MAP.TOOLS.ids.IDENTIFY"  ><span class="check"></span></label>
                                                 <span class="leaf">IDENTIFY</span></li>
+                                                <li><label class="input-control checkbox small-check"><input type="checkbox" 
+                                                    [(ngModel)]="_toolSettings.SECTIONS.MAP.TOOLS.ids.EDIT_RANGES"  ><span class="check"></span></label>
+                                                    <span class="leaf">EDIT RANGES</span></li>
                           </ul>
                       </li>
                   </ul>

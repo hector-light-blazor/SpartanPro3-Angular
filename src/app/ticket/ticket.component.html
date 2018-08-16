@@ -255,15 +255,18 @@
             <div class="input-control text full-size">
                 <label  >Address By</label>
                 <select [disabled]="lvSection" (change)="changeLVPersonnel()" [(ngModel)]="attributes.address_by" >
-                    <option *ngFor="let usr of users" value="{{usr.user_id}}">{{usr.first_name + " " + usr.last_name}}</option>
+                    <option *ngFor="let usr of lvusers" value="{{usr.user_id}}">{{usr.first_name + " " + usr.last_name}}</option>
                     
                 </select>
                 <button (click)="attributes.address_by = null" class="button"><i class="fa fa-undo" aria-hidden="true"></i>
                 </button>
             </div>
-
+            <!-- BR -->
+            <br>
+            <br>
+            <!-- JCK Added Field -->
             <div class="input-control text full-size">
-                Date Addressed
+               <label>Date Addressed</label>
                 <input [disabled]="lvSection" type="date" [(ngModel)]="attributes.date_addressed"  >
             </div>
             

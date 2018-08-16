@@ -255,9 +255,9 @@
                       <!-- END SUBDIVISION -->
 
                       <!-- START NRF -->
-                      <div class="tab-panel" id="tab_nrfs">
-                        <div  class="tab-panel-group">
-                            <div class="tab-group-content">
+                      <div *ngIf="_toolSettings.SECTIONS.NRF.onoff" class="tab-panel" id="tab_nrfs">
+                        <div *ngIf="_toolSettings.SECTIONS.NRF.DISPLAY.onoff" class="tab-panel-group">
+                            <div *ngIf="_toolSettings.SECTIONS.NRF.DISPLAY.ids.DASHBOARD" class="tab-group-content">
                                 <a  [routerLink]="['nrf/dashboard']" class="fluent-big-button">
                                     <!--<span class="icon"><i class="fa fa-tachometer" aria-hidden="true"></i></span>-->
                                     <img  src="assets/dashboard.png"  alt="Dashboard Toolbar">
@@ -266,23 +266,23 @@
                             </div>
                             <div class="tab-group-caption">Display</div>
                         </div>
-                        <div  class="tab-panel-group">
-                            <div class="tab-group-content">
-                                    <div class="tab-content-segment">
+                        <div *ngIf="_toolSettings.SECTIONS.NRF.MANAGEMENT.onoff"  class="tab-panel-group">
+                            <div  class="tab-group-content">
+                                    <div *ngIf="_toolSettings.SECTIONS.NRF.MANAGEMENT.ids.UPLOAD" class="tab-content-segment">
                                             <a  [routerLink]="['nrf/upload']" class="fluent-big-button">
                                            
                                                 <i class="fa fa-upload"></i>
                                                 Upload
                                             </a>
                                     </div>
-                                    <div class="tab-content-segment">
+                                    <div *ngIf="_toolSettings.SECTIONS.NRF.MANAGEMENT.ids.USERS" class="tab-content-segment">
                                                 <a  [routerLink]="['nrf/assign']" class="fluent-big-button">
                                    
                                                     <i class="fa fa-users"></i>
                                                     Users
                                                 </a>
                                         </div>
-                                    <div class="tab-content-segment">
+                                    <div *ngIf="_toolSettings.SECTIONS.NRF.MANAGEMENT.ids.EXPORT" class="tab-content-segment">
                                         <a  [routerLink]="['nrf/export']" class="fluent-big-button">
                                             <i class="fa fa-download"></i>
                                             Export
@@ -294,11 +294,11 @@
                     </div>
                     <!-- End of NRF -->
                       <!-- Start of Map -->
-                      <div  class="tab-panel" id="tab_map" >
+                      <div *ngIf="_toolSettings.SECTIONS.MAP.onoff" class="tab-panel" id="tab_map" >
                           <div *ngIf="_toolSettings.SECTIONS.MAP.DISPLAY.onoff"  class="tab-panel-group">
-                              <div class="tab-group-content">
+                              <div  class="tab-group-content">
                                   <div class="tab-group-content">
-                                      <button [routerLink]="['Map']" class="fluent-big-button">
+                                      <button *ngIf="_toolSettings.SECTIONS.MAP.DISPLAY.ids.MAP"  [routerLink]="['Map']" class="fluent-big-button">
                                               <img src="assets/map_icon.png" alt="New User">
                                               <span class="label">Map</span>
                                       </button>
@@ -306,17 +306,19 @@
                               </div>
                               <div class="tab-group-caption">Display</div>
                           </div>
-                          <div class="tab-panel-group">
+                          <div *ngIf="_toolSettings.SECTIONS.MAP.TOOLS.onoff" class="tab-panel-group">
                              <div class="tab-group-content">
-                                <button (click)="actionSendToolBar(app.toolbarActivies.MAP_MEASURE)"   class="fluent-big-button">
+                                <button *ngIf="_toolSettings.SECTIONS.MAP.TOOLS.ids.MEASURE" (click)="actionSendToolBar(app.toolbarActivies.MAP_MEASURE)"   class="fluent-big-button">
                                     <img src="assets/measuring-tool.png" alt="M">
                                     <span class="label">Measure</span>
                                 </button>
-                                <button (click)="actionSendToolBar(app.toolbarActivies.MAP_IDENTIFY)"  class="fluent-big-button">
+
+                                <button  *ngIf="_toolSettings.SECTIONS.MAP.TOOLS.ids.IDENTIFY" (click)="actionSendToolBar(app.toolbarActivies.MAP_IDENTIFY)"  class="fluent-big-button">
                                     <img src="assets/identify-tool.png" alt="M">
                                     <span class="label">Identify</span>
                                 </button>
-                                <button  (click)="actionSendToolBar(app.toolbarActivies.EDIT_RANGES)"  class="fluent-big-button">
+                                
+                                <button  *ngIf="_toolSettings.SECTIONS.MAP.TOOLS.ids.EDIT_RANGES"  (click)="actionSendToolBar(app.toolbarActivies.EDIT_RANGES)"  class="fluent-big-button">
                                     <img src="assets/edit_ranges.png" alt="M">
                                     <span class="label">Ranges</span>
                                 </button>
@@ -342,7 +344,8 @@
                           <div *ngIf="_toolSettings.SECTIONS.SETTINGS.PROFILE.onoff" class="tab-panel-group">
                               <div class="tab-group-content">
                                   <div class="tab-content-segment">
-                                      <button *ngIf="_toolSettings.SECTIONS.SETTINGS.PROFILE.UPDATE" routerLink="/home/updateUser/{{appService.user.user_id}}/{{true}}" class="fluent-big-button">
+                                      <!-- routerLink="/home/updateUser/{{appService.account_info.user_id}}/{{true}}" -->
+                                      <button  class="fluent-big-button">
                                           <img src="assets/user_edit.png" alt="Edit User">
                                           <span class="label">Update</span>
                                       </button>

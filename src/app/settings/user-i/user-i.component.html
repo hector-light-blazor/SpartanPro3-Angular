@@ -1,0 +1,126 @@
+<div class="container"  >
+  
+  
+    <div class="login-form padding20 block-shadow" style="opacity: 1;overflow: auto;height: 500px; transform: scale(1); transition: 0.5s;">
+       <div style="position: relative;right: 0;">
+          <button *ngIf="btnOnOff" (click)="_closeForm()" class="button cycle-button" style="cursor:pointer;">X</button>
+       </div>
+      <div class="tabcontrol"  data-role="tabcontrol">
+         
+        <ul  class="tabs">
+            
+            <li >
+              <a href="#user">
+                <img (click)="_displayCanvas()" [src]="src" style="border-radius: 100%; background: #1d1d1d;" width="50" height="50" data-format='cycle' alt="Avatar">
+                User Information
+              </a>
+            </li>
+            <li  *ngIf="admin">
+              <a href="#settings">
+                <img src="assets/gear_settings.png" alt="Settings" width="50" height="50">
+                User Settings</a>
+            </li>
+        </ul>
+        <div class="frames">
+            <div  id="user">
+                <form (ngSubmit)="onSubmit($event)"  style="overflow: auto;">
+                    <label >* Required Fields</label>
+                    <br>
+                    <br>
+                    <div class="input-control text full-size">
+                      <label for="">* First Name</label>
+                      <input type="text" name="fname" (blur)="attributes.first_name = attributes.first_name.toUpperCase(); _changeInit(attributes.first_name);" [(ngModel)]="attributes.first_name"  appUppercase required>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="input-control text full-size">
+                      <label for="">Middle Name</label>
+                      <input type="text" name="mname" (blur)="attributes.middle_name = (attributes.middle_name) ?  attributes.middle_name.toUpperCase() : ''; _changeInit(attributes.middle_name);" [(ngModel)]="attributes.middle_name" appUppercase>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="input-control text full-size">
+                      <label for="">* Last Name</label>
+                      <input type="text" name="lname" (blur)="attributes.last_name = attributes.last_name.toUpperCase(); _changeInit(attributes.last_name);" [(ngModel)]="attributes.last_name" appUppercase required>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="input-control text full-size">
+                      <label for="">* Initials</label>
+                      <input type="text" name="init" (blur)="attributes.initials = attributes.initials.toUpperCase()" [(ngModel)]="attributes.initials" appUppercase required>
+                    </div>
+                    <br>
+                    <br>
+                    <div class="input-control text full-size">
+                      <label for="">* Email (Login)</label>
+                      <input type="email" name="email" (blur)="attributes.email = attributes.email.toUpperCase()" [(ngModel)]="attributes.email" appUppercase required>
+                    </div>
+                    <br>
+                    <br>
+                    <div *ngIf="enbPass" class="input-control password full-size" data-role="input">
+                      <label for="">* Password</label>
+                      <input type="password" [class.error]="error_pass"  name="password" [(ngModel)]="attributes.password"  required>
+                      <button class="button helper-button reveal" tabindex="-1" type="button"><i class="fa fa-key" aria-hidden="true"></i></button>
+                    </div>
+                     <div *ngIf="!enbPass" class="input-control password full-size" data-role="input">
+                      <label for="">Password</label>
+                      <input type="password" [class.error]="error_pass"  name="password" [(ngModel)]="attributes.password"  >
+                      <button class="button helper-button reveal" tabindex="-1" type="button"><i class="fa fa-key" aria-hidden="true"></i></button>
+                    </div>
+                    <br>
+                    <br>
+                    <div *ngIf="enbPass" class="input-control password full-size" data-role="input">
+                        <label for="">* Re-Enter Password</label>
+                        <input type="password" (blur)="_checkPass()" [class.error]="error_pass" name="re-pass" [(ngModel)]="attributes.repass" required>
+                        <button class="button helper-button reveal" tabindex="-1" type="button">
+                          <i class="fa fa-key" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div *ngIf="!enbPass" class="input-control password full-size" data-role="input">
+                        <label for=""> Re-Enter Password</label>
+                        <input type="password" (blur)="_checkPass()" [class.error]="error_pass" name="re-pass" [(ngModel)]="attributes.repass" >
+                        <button class="button helper-button reveal" tabindex="-1" type="button">
+                          <i class="fa fa-key" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <br>
+                    <br>
+                    <button class="button primary" type="submit"  >{{btnTitle}}</button>
+                </form>
+            </div>
+            <div  id="settings">
+              <form>
+                <br>
+                <br>
+                <div class="input-control select">
+                  <label for="">Ticket Settings</label>
+                    <select [(ngModel)]="attributes.ticket_option" name="ticketSet">
+                        <option value="-1">NONE</option>
+                        <option  *ngFor="let ticket of tickets" value="{{ticket.id_config}}">{{ticket.name}}</option>
+                    </select>
+                </div>
+                <br>
+                <br>
+                 <div class="input-control select">
+                  <label for="">Toolbar Settings</label>
+                    <select  [(ngModel)]="attributes.toolbar_option" name="toolbarSet">
+                        <option value="-1">NONE</option>
+                        <option  *ngFor="let tool of toolbars"  value="{{tool.id_config}}">{{tool.name}}</option>
+                    </select>
+                </div>
+                  <br>
+                  <br>
+                  <div class="input-control select">
+                  <label for="">Home View Settings</label>
+                    <select  [(ngModel)]="attributes.home_view_option" name="homeViewSet">
+                        <option value="-1">NONE</option>
+                        <option  *ngFor="let toolbar of homeviews"  value="{{toolbar.id_config}}">{{toolbar.name}}</option>
+                    </select>
+                </div>
+              </form>
+            </div>
+        </div>
+    </div>
+ 
+    </div>
+  </div>

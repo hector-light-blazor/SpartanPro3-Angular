@@ -33,7 +33,7 @@ export class AppComponent {
         this.isLoading = true;
         this.account_info = info.user;
         this.appService.account_info = this.account_info;
-
+      console.log(this.appService.account_info);
         // Get Inbox Information..
         this.timer.flatMap((i) =>  this.appService.POST_METHOD(this.appService.route.api.ftInbox, {data: this.appService.account_info.user_id})).takeWhile(() => this.isAlive).subscribe((response:any) => {
           if(response.success) {
@@ -98,6 +98,13 @@ export class AppComponent {
         if(response.success) {
            this.appService.users = response.data;
         }
+    });
+
+    // GET LIST BY DEPT USERS...
+    this.appService.GET_METHOD(this.appService.route.api.fUsersDept + "?id=1").subscribe((response:any) => {
+          if(response.success) {
+            this.appService.LVUSERS = response.data;
+          }
     });
 
     // Get List of Organizations....
