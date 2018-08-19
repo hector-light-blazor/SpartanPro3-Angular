@@ -54,7 +54,7 @@ export class TicketComponent implements OnInit {
   confirmationName: string = ""; // this controls the name of what to confirm on pop up....
   stopSave: boolean = false; // NG DESTROY HACK PREVENTS FROM SENDING TICKET TO NEXT PERSON....
   displayDialog: boolean = false; // Display
-
+  iswalking: string = "";
   // Control ticket fields..
   customerSection: boolean = false;
   premisesSection: boolean = false;
@@ -91,8 +91,8 @@ export class TicketComponent implements OnInit {
       esn: 0,
       address_by: -1,
       address_issued_by: -1,
-      plack_generated: false,
-      letter_generated: false,
+      letter_plack_generated: false,  ///JKC made change
+      called_cust: false, ///JKC made change
       address_issued: false
 
     }
@@ -1187,6 +1187,15 @@ export class TicketComponent implements OnInit {
        }
     }
 
+    isWalking() {
+      
+      if(this.attributes.walk_in == "Yes") {
+        this.iswalking = "WALK IN";
+      }else{
+        this.iswalking = "";
+      }
+    }
+
     // End of Class..
 }
 
@@ -1216,8 +1225,8 @@ interface Ticket{
   telephone_land_line?: string;
   alt_telephone?: string;
   alt2_telephone?: string;
-  prf_language?: string; //preffered lanuguage duh
-  alt4_telephone?: string;
+  prf_language?: string; //JKC preffered lanuguage duh
+  walk_in?: string; ///JKC distinguish if customer is a walk in
   pfirst_name?: string;
   plast_name?: string;
   pfull_name?: string;
@@ -1241,14 +1250,10 @@ interface Ticket{
   postal_comm?: string;
   full_address?: string;
   address_by?: any;
-<<<<<<< HEAD
-  date_addressed?: string;
-=======
   date_addressed?: any;
->>>>>>> f19347cc59cef37bbfb8b5c75b01f49af2d675a3
   address_issued?: any;
-  letter_generated?: any;
-  plack_generated?: any;
+  called_cust?: any; //JKC so LV knows when customer has been called
+  letter_plack_generated?: any;
   address_issued_date?: string;
   address_issued_by?: any;
   lat?: string;

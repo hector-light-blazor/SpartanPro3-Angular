@@ -46,7 +46,7 @@
                 <div style="float: left;">
                      <h3  style="color:white">Ticket Number: {{attributes.objectid}}</h3>
                 </div>
-               
+               <h2 style="color: yellow; text-align: center">{{iswalking}}</h2>
                 <!--{{::ticket.attributes.objectid}}-->
               </div>
               <div (mouseenter)="showBack()" (mouseout)="showFront()" [hidden]="showAttach || showViewAttach || showViewRoutes || showRoutes" id="card"  class="place-left bg-red fg-white" style="cursor:pointer; width: 10%; height:50px;text-align:center;padding: 14px;">
@@ -106,16 +106,27 @@
             <br>
             <br>
             <div class="input-control text full-size">
+                    <label  >Preffered Language</label>
                 <select [disabled]="customerSection" [(ngModel)]="attributes.prf_language">
                     <option>English</option>
                     <option>Spanish</option>
                 </select>
-                <input [disabled]="customerSection" type="text"   [(ngModel)]="attributes.prf_language" [textMask]="{mask: mask}">
+                <!-- <input [disabled]="customerSection" type="text"   [(ngModel)]="attributes.prf_language" [textMask]="{mask: mask}"> -->
             </div>
             <br>
             <br>
-             <div class="input-control textarea full-size">
-                <label  >Mailing Info</label>
+            <div class="input-control text full-size">
+                    <label >Walk In</label>
+                <select [disabled]="customerSection" (change)="isWalking();" [(ngModel)]="attributes.walk_in">
+                    <option>Yes</option>
+                    <option>No</option>                    
+                </select>
+                <!-- <input [disabled]="customerSection" type="text" [(ngModel)]="attributes.walk_in" [textMask]="{mask: mask}"> -->
+            </div>
+            <br>
+            <br>
+            <div class="input-control textarea full-size">
+                 <label  >Mailing Info</label>
                 <textarea uppercase [disabled]="customerSection"   [(ngModel)]="attributes.mailing_address" ></textarea>
             </div>
          </div> <!-- End Of Customer Section -->
@@ -264,7 +275,7 @@
             <!-- BR -->
             <br>
             <br>
-            <!-- JCK Added Field -->
+            <!-- JKC Added Field -->
             <div class="input-control text full-size">
                <label>Date Addressed</label>
                 <input [disabled]="lvSection" type="date" [(ngModel)]="attributes.date_addressed"  >
@@ -278,13 +289,13 @@
                 <span class="check"></span>
             </label>
             <label class="switch-original " >
-              Letter Generated
-                <input [disabled]="lvSection" type="checkbox" [(ngModel)]="attributes.letter_generated"  >
+              Called Customer 
+                <input [disabled]="lvSection" type="checkbox" [(ngModel)]="attributes.called_cust"  >
                 <span class="check"></span>
             </label>
             <label class="switch-original " >
-                Plack Generated
-                <input [disabled]="lvSection" type="checkbox" [(ngModel)]="attributes.plack_generated"  >
+                Address Letter and Plack Generated
+                <input [disabled]="lvSection" type="checkbox" [(ngModel)]="attributes.letter_plack_generated"  >
                 <span class="check"></span>
             </label>
             <br>
