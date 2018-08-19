@@ -91,7 +91,7 @@ export class ToolbarIComponent implements OnInit {
                       RESET: true
                     }
                   }
-            },
+        },
             SUBDIVISION: {
               onoff: true,
               DISPLAY: {
@@ -100,6 +100,22 @@ export class ToolbarIComponent implements OnInit {
               }
               
             },
+            NRF: {
+              onoff: true,
+              DISPLAY: {
+                onoff: true,
+                ids: {DASHBOARD: true}
+              },
+              MANAGEMENT: {
+                onoff: true,
+                ids: {
+                  UPLOAD: true,
+                  USERS: true,
+                  EXPORT: true
+                }
+              }
+            }
+            ,
             MAP: {onoff: true,
               DISPLAY: {onoff: true, ids: {MAP: true}},
               TOOLS: {onoff: true, ids: {MEASURE: true, IDENTIFY: true, EDIT_RANGES: true}}

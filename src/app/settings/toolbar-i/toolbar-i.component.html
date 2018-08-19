@@ -200,8 +200,10 @@
           </li>
           <!-- START SUBDIVISION -->
               <li class="node collapsed">
-                  <label class="input-control checkbox small-check"><input type="checkbox" 
-                    [(ngModel)]="_toolSettings.SECTIONS.SUBDIVISION.onoff" ><span class="check"></span></label>
+                  <label class="input-control checkbox small-check">
+                      <input type="checkbox" 
+                    [(ngModel)]="_toolSettings.SECTIONS.SUBDIVISION.onoff" >
+                    <span class="check"></span></label>
                   <span class="leaf">SUBDIVISION</span>
                   <span *ngIf="_toolSettings.SECTIONS.SUBDIVISION.onoff" class="node-toggle"></span>
                   <ul *ngIf="_toolSettings.SECTIONS.SUBDIVISION.onoff">
@@ -237,7 +239,7 @@
               <!-- START OF NRF TOOLBAR -->
               <li class="node collapsed">
                     <label class="input-control checkbox small-check">
-                        <input type="checkbox" >
+                        <input [(ngModel)]="_toolSettings.SECTIONS.NRF.onoff" type="checkbox" >
                         <span class="check"></span>
                     </label>
                     <span class="leaft">NRF</span>
@@ -245,7 +247,7 @@
                     <ul>
                         <li class="node collapsed">
                             <label class="input-control checkbox small-check" >
-                                <input type="checkbox" >
+                                <input [(ngModel)]="_toolSettings.SECTIONS.NRF.DISPLAY.onoff" type="checkbox" >
                                 <span class="check"></span>
                             </label>
                             <span class="leaf">DISPLAY</span>
@@ -253,7 +255,7 @@
                             <ul>
                                 <li>
                                     <label class="input-control checkbox small-check">
-                                        <input type="checkbox" >
+                                        <input [(ngModel)]="_toolSettings.SECTIONS.NRF.DISPLAY.ids.DASHBOARD" type="checkbox" >
                                         <span class="check"></span>
                                     </label>
                                     <span class="leaf">DASHBOARD</span>
