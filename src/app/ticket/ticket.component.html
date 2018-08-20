@@ -293,11 +293,11 @@
                 <input [disabled]="lvSection" type="checkbox" [(ngModel)]="attributes.called_cust"  >
                 <span class="check"></span>
             </label>
-            <label class="switch-original " >
+            <!-- <label class="switch-original " >
                 Address Letter and Plack Generated
                 <input [disabled]="lvSection" type="checkbox" [(ngModel)]="attributes.letter_plack_generated"  >
                 <span class="check"></span>
-            </label>
+            </label> -->
             <br>
             <br>
             <div class="input-control text full-size">
@@ -310,7 +310,7 @@
             <div class="input-control text full-size">
                 <label  >Address Issued By</label>
                 <select [disabled]="lvSection" [(ngModel)]="attributes.address_issued_by" >
-                    <option *ngFor="let usr of users" value="{{usr.user_id}}">{{usr.first_name + " " + usr.last_name}}</option>
+                    <option *ngFor="let usr of susers" value="{{usr.user_id}}">{{usr.first_name + " " + usr.last_name}}</option>
                     
                 </select>
                 <button (click)="attributes.address_issued_by = null" class="button"><i class="fa fa-undo" aria-hidden="true"></i>

@@ -107,6 +107,13 @@ export class AppComponent {
           }
     });
 
+    // GET LIST BY SUPER USERS...
+    this.appService.GET_METHOD(this.appService.route.api.fSuperUsers).subscribe((response:any) => {
+        if(response.success) {
+          this.appService.SUSERS = response.data;
+        }
+    });
+
     // Get List of Organizations....
     this.appService.GET_METHOD(this.appService.route.api.gListOrga).subscribe((response: any) => {
       

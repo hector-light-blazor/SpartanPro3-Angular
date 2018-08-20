@@ -51,6 +51,7 @@ export class TicketComponent implements OnInit {
   enableTicket: boolean = false; // this variable will tell esri map comp either to display graphics layer for ticket or not for editing and other purposes.
   users: any = [] // Gets a list of all users to be used in drop downs as options...
   lvusers: any = []; // assigns the lv list users...
+  susers: any  = []; // the super users list...
   confirmationName: string = ""; // this controls the name of what to confirm on pop up....
   stopSave: boolean = false; // NG DESTROY HACK PREVENTS FROM SENDING TICKET TO NEXT PERSON....
   displayDialog: boolean = false; // Display
@@ -159,6 +160,9 @@ export class TicketComponent implements OnInit {
 
               // ...After That Next Lets Retrieve Feeds Comments For This Particular Ticket..
               this.getComments();
+              
+              // ... Display walk in
+              this.isWalking();
 
               // ... GET PARCELS INFORMATION FROM HCAD>>>>
               this.findParcelsInfo(this.attributes.property_id, this.app.propertyId, true);
@@ -362,6 +366,8 @@ export class TicketComponent implements OnInit {
 
     this.lvusers = this.app.LVUSERS;
 
+    this.susers = this.app.SUSERS;
+
 
   }
 
@@ -559,7 +565,7 @@ export class TicketComponent implements OnInit {
       // else if(x == 'point' && !this.attributes[x]) {
          
       // }
-      else if(x == "address_issued" || x == "letter_generated" || x == "plack_generated") {
+      else if(x == "address_issued" || x == "letter_generated" || x == "plack_generated" || x == "called_cust") {
         
         attr[x] = (this.attributes[x]) ? 1 : 0;
       }
@@ -586,7 +592,7 @@ export class TicketComponent implements OnInit {
      
         if(attributes[x] || x == 'point') 
         {
-          if(x == "address_issued" || x == "letter_generated" || x == "plack_generated"){
+          if(x == "address_issued" || x == "letter_generated" || x == "plack_generated" || x == "called_cust"){
            
             attributes[x] = (attributes[x] == 1) ? true : false;
           }else if(x == 'point'){

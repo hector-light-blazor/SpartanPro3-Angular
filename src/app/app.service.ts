@@ -22,6 +22,7 @@ export class ROUTES {
        uImage: "users/getUserImage/?pic=",  // user image.."users/getUsers/"
        fUsers: "users/getUsers/", // fetch all users.
        fUsersDept: "users/getUsersByDept/", // fetch users by dept.
+       fSuperUsers: "users/getSuperUsers/", // fetch supervisors and all lv dept...
        hTicket: "addressticket/getHistory", // history tickets..
        tNumber: "addressticket/getTicketNumber", // Generate new Ticket number
        initTicket: "addressticket/initTicket",   // Save Initial Ticket
@@ -66,6 +67,7 @@ export class AppService {
   id_ticket: number = null; // get current ticket number..
   users: any = null; // Get a list of users from server...
   LVUSERS: any = []; // GET ALL LV LIST OF USERS FROM DB SERVER >>>>> 
+  SUSERS: any = []; // GET ALL LV AND SUPERVISOR USERS FROM DB SERVER >>>>
   organizations: any = []; // stores the list of organizations in this variable...
   route: ROUTES = new ROUTES();
   url: string  = "https://gis.lrgvdc911.org/php/spartan/api/v2/index.php/";
@@ -352,6 +354,7 @@ interface API_ROUTES {
    uImage?: string;
    fUsers?: string;
    fUsersDept?: string;
+   fSuperUsers?: string;
    hTicket?: string;
    tNumber?: string;
    initTicket?: string;
