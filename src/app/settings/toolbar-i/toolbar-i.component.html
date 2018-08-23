@@ -243,8 +243,8 @@
                         <span class="check"></span>
                     </label>
                     <span class="leaft">NRF</span>
-                    <span class="node-toggle"></span>
-                    <ul>
+                    <span *ngIf="_toolSettings.SECTIONS.NRF.onoff" class="node-toggle"></span>
+                    <ul *ngIf="_toolSettings.SECTIONS.NRF.onoff">
                         <li class="node collapsed">
                             <label class="input-control checkbox small-check" >
                                 <input [(ngModel)]="_toolSettings.SECTIONS.NRF.DISPLAY.onoff" type="checkbox" >
