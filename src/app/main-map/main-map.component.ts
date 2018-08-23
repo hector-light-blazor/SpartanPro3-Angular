@@ -238,7 +238,9 @@ export class MainMapComponent implements OnInit {
       // Create Dynamic Map..
       this.mapFlexBase = new this.app.esriDynamicLayer(this.app.mapFlexURL);
       this.skeletonFlexBase = new this.app.esriDynamicLayer("https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/Adress_Streets/MapServer", {visible: false});
-      
+     
+    
+
       this.rangesFeatureHCEW = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/1")
       this.rangesFeatureHCSN = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/2")
       

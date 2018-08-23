@@ -251,8 +251,8 @@
                                 <span class="check"></span>
                             </label>
                             <span class="leaf">DISPLAY</span>
-                            <span class="node-toggle"></span>
-                            <ul>
+                            <span *ngIf="_toolSettings.SECTIONS.NRF.DISPLAY.onoff" class="node-toggle"></span>
+                            <ul *ngIf="_toolSettings.SECTIONS.NRF.DISPLAY.onoff">
                                 <li>
                                     <label class="input-control checkbox small-check">
                                         <input [(ngModel)]="_toolSettings.SECTIONS.NRF.DISPLAY.ids.DASHBOARD" type="checkbox" >
@@ -267,16 +267,16 @@
                         </li>
                         <li class="node collapsed">
                             <label  class="input-control checkbox small-check">
-                                <input type="checkbox" >
+                                <input [(ngModel)]="_toolSettings.SECTIONS.NRF.MANAGEMENT.onoff" type="checkbox" >
                                 <span class="check"></span>
                             </label>
                             <span class="leaf">MANAGEMENT</span>
-                            <span class="node-toggle"></span>
+                            <span *ngIf="_toolSettings.SECTIONS.NRF.MANAGEMENT.onoff" class="node-toggle"></span>
                            
-                            <ul>
+                            <ul *ngIf="_toolSettings.SECTIONS.NRF.MANAGEMENT.onoff">
                                 <li>
-                                    <label for="" class="input-control checkbox small-check">
-                                        <input type="checkbox" name="" id="">
+                                    <label  class="input-control checkbox small-check">
+                                        <input [(ngModel)]="_toolSettings.SECTIONS.NRF.MANAGEMENT.ids.UPLOAD"  type="checkbox" >
                                         <span class="check"></span>
                                     </label>
                                     <span class="leaf">
@@ -284,8 +284,8 @@
                                     </span>
                                 </li>
                                 <li>
-                                    <label for="" class="input-control checkbox small-check">
-                                        <input type="checkbox" >
+                                    <label  class="input-control checkbox small-check">
+                                        <input [(ngModel)]="_toolSettings.SECTIONS.NRF.MANAGEMENT.ids.USERS" type="checkbox" >
                                         <span class="check"></span>
                                     </label>
                                     <span class="leaf">
@@ -293,8 +293,8 @@
                                     </span>
                                 </li>
                                 <li>
-                                    <label for="" class="input-control checkbox small-check">
-                                        <input type="checkbox" >
+                                    <label  class="input-control checkbox small-check">
+                                        <input [(ngModel)]="_toolSettings.SECTIONS.NRF.MANAGEMENT.ids.EXPORT" type="checkbox" >
                                         <span class="check"></span>
                                     </label>
                                     <span class="leaf">
