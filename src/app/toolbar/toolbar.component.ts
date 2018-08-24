@@ -111,7 +111,7 @@ export class ToolbarComponent implements OnInit {
     this.app.account_info.config.forEach(element => {
         console.log(element);
         if(element.setting_type == "TOOLBAR") {
-         // this._toolSettings = element.json;
+          this._toolSettings = element.json;
            console.log(this._toolSettings)
          // console.log(element.json);
         }
