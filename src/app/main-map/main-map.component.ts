@@ -236,18 +236,44 @@ export class MainMapComponent implements OnInit {
 
 
       // Create Dynamic Map..
-      this.mapFlexBase = new this.app.esriDynamicLayer(this.app.mapFlexURL);
+
+      
+        let config = this.app.account_info.config;
+        let ranges_found = false;
+        for(var x in config) {
+           if(config[x].setting_type == "TOOLBAR") {
+             let json  = config[x].json;
+             if(json.SECTIONS.MAP.TOOLS.ids.EDIT_RANGES) {
+              ranges_found = true;
+              break;
+             }
+            
+           }    
+        }
+
+        console.log(ranges_found)
+
+       
+        if(ranges_found) {
+          this.mapFlexBase = new this.app.esriDynamicLayer(this.app.mapFlexURL);
+        }else {
+          this.mapFlexBase = new this.app.esriDynamicLayer(this.app.mapFlexURLRanges);
+        }
+    
+      
       this.skeletonFlexBase = new this.app.esriDynamicLayer("https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/Adress_Streets/MapServer", {visible: false});
      
-    
+      if(ranges_found) {
+        this.rangesFeatureHCEW = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/1")
+        this.rangesFeatureHCSN = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/2")
+        
+        this.rangesFeatureCEW = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/3");
+        this.rangesFeatureCSN = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/4");
+        this.rangesFeatureWWE = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/5");
+        this.rangesFeatureWSN = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/6");
+      }
 
-      this.rangesFeatureHCEW = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/1")
-      this.rangesFeatureHCSN = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/2")
-      
-      this.rangesFeatureCEW = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/3");
-      this.rangesFeatureCSN = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/4");
-      this.rangesFeatureWWE = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/5");
-      this.rangesFeatureWSN = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/6");
+    
 
 
       // Create the WMS Layer Google Arieals.
