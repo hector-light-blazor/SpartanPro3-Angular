@@ -104,7 +104,9 @@ export class UserIComponent implements OnInit {
   }
 
 
+  _changeInit(value) {
 
+  }
 
    //=-=-=-=-=-=-=-= FETCH TOOLBAR SETTINGS =-=-=-=-==-=-=-=-=-=
    fetchToolbarSettings(){

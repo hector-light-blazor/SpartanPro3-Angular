@@ -157,7 +157,7 @@ export class AppService {
   esriIdentifyParams: any = null;
   mapFlexBaseMap: any = null;
   imageryLayer: any = null;
-  mapFlexURL: string = "https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/MapFlex/MapServer"; // OLD SERVER
+  mapFlexURL: string = "https://gis.lrgvdc911.org/arcgis2/rest/services/Dynamic/MapFlex_NR/MapServer"; //"https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/MapFlex/MapServer"; // OLD SERVER
   mapFlexURLRanges: string = "https://gis.lrgvdc911.org/arcgis2/rest/services/Dynamic/MapFlex_Ranges/MapServer"; // NEW SERVER
   msagObject: any  = [];
   imageryURL: string = 'https://wms-txgi.tnris.org/login/path/contour-camera-poetic-poem/wms';

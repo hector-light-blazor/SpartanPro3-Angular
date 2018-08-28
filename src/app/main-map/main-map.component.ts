@@ -122,8 +122,9 @@ export class MainMapComponent implements OnInit {
 
     // Setup some tools
     try {
-      this.mapService.identifyObject = new this.app.esriIdentifyTask("https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/MapFlex3/MapServer");
+      this.mapService.identifyObject = new this.app.esriIdentifyTask(this.app.mapFlexURLRanges);
       this.mapService.identifyParams = new this.app.esriIdentifyParams()
+      //console.log(this.app.mapFlexBaseMap);
        //=-=-= INIT MAP =-=-=
       this.initMap();
     } catch (error) {
@@ -204,7 +205,7 @@ export class MainMapComponent implements OnInit {
      // FINISH THE INDENTIFY PARAMS.....
      this.mapService.identifyParams.tolerance = 3;
      this.mapService.identifyParams.returnGeometry = true;
-     this.mapService.identifyParams.layerIds = [2, 8, 11, 47, 34, 30, 29];
+     this.mapService.identifyParams.layerIds = [2, 8, 11, 26, 13, 32, 31];
      this.mapService.identifyParams.layerOption = this.app.esriIdentifyParams.LAYER_OPTION_ALL;
      this.mapService.identifyParams.width = this.map.width;
      this.mapService.identifyParams.height = this.map.height;
@@ -463,6 +464,7 @@ export class MainMapComponent implements OnInit {
       if(option == this.mapflex){
         
         this.mapFlexBase.show();
+        this.skeletonFlexBase.hide();
         this.mapWMSBase.hide();
         this.vectorSubBase.hide();
     

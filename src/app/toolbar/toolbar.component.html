@@ -51,7 +51,7 @@
                                           Archive
                                       </a>
                                   </div>
-                                  <div [routerLink]="['ticket/charts']">
+                                  <div *ngIf="_toolSettings.SECTIONS.TICKET.DISPLAY.ids.charts" [routerLink]="['ticket/charts']">
                                       <a class="fluent-big-button">
                                             <i class="fa fa-chart-bar"></i>
                                             <i class="fa fa-chart-bar"></i>
@@ -177,8 +177,9 @@
                                   <!--</button>-->
                                   
                                 </div>
-                                <div class="tab-content-segment">
-                                        <button (click)="actionSendToolBar(app.toolbarActivies.TICKET_LETTER)" class="button rounded">LETTER</button>
+                                <div *ngIf="_toolSettings.SECTIONS.TICKET.TICKET_VIEW.ids.LETTER" class="tab-content-segment">
+                                        <button (click)="actionSendToolBar(app.toolbarActivies.TICKET_LETTER)" class="button rounded">
+                                            LETTER</button>
                                 </div>
   
                             </div>
