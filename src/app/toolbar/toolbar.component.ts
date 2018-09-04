@@ -247,9 +247,12 @@ export class ToolbarComponent implements OnInit {
    this.delete_cookie("username");
    this.delete_cookie("pass");
    console.log(window.location.origin);
+   console.log(window.location);
+   var split = window.location.pathname.split("/");
+  
     setTimeout(() => {
       //window.open("https://gis.lrgvdc911.org/spartanpro3/", "_self");
-      window.open(window.location.origin, "_self");
+      window.open(window.location.origin + "/" + split[1], "_self");
     }, 100);
    
  }

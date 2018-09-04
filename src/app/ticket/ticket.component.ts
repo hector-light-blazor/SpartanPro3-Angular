@@ -688,6 +688,7 @@ export class TicketComponent implements OnInit {
        // http://docs.google.com/gview?url=
        // this.app.url + "template/getDocx/?doc=" +
         window.open("https://view.officeapps.live.com/op/view.aspx?src=https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + name, "_blank");
+        window.open("https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + name, "_blank");
         this.isLoading = false;
     });
   }
