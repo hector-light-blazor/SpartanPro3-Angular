@@ -21,6 +21,7 @@ import { KeysPipe } from './keys.pipe';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { GoogleMap2Component } from './google-map2/google-map2.component';
 import { BasemapComponent } from './basemap/basemap.component';
+import { BookmarkComponent } from './bookmark/bookmark.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +34,8 @@ import { BasemapComponent } from './basemap/basemap.component';
     IdentifyListComponent,
     KeysPipe,
     GoogleMap2Component,
-    BasemapComponent
+    BasemapComponent,
+    BookmarkComponent
   ],
   imports: [
     BrowserModule,

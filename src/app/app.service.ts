@@ -10,6 +10,7 @@ export class ROUTES {
    constructor() {
      this.api = {
        login: "users/checkLogin/", // Handles Login
+       gBookmark: "gis/getBookmarkUser/?id=",
        vwTicket: "addressticket/view2/?", // gets viewing ticket
        ssTicket: "addressticket/saveSinglePiece/", // save single ticket
        vtFeeds: "addressticket/getComments/?id=", // view ticket feeds
@@ -343,6 +344,7 @@ interface TOOL_ACTIONS {
 
 interface API_ROUTES {
    login?: string;
+   gBookmark?: string;
    ssTicket?: string;
    vwTicket?: string;
    vtFeeds?: string;

@@ -1,0 +1,37 @@
+<div style="position: absolute;width: 40%; left: 50%; margin-left: -20%; background: white;z-index: 1000;">
+  <div class="window">
+    <div class="window-caption">
+        <span class="window-caption-icon"><span class="mif-windows"></span></span>
+        <span class="window-caption-title">Bookmarks</span>
+        <span class="btn-min"></span>
+        <span class="btn-max"></span>
+        <span class="btn-close"></span>
+    </div>
+    <div class="window-content" style="height: 30%">
+      <div style="margin-left: 100px;">
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th class="sortable-column">Name</th>
+                      <th class="sortable-column">Comments</th>
+                      <th class="sortable-column"></th>
+                  </tr>
+              </thead>
+
+              <tbody>
+                  <tr *ngFor="let mark of bookmarks">
+                      <td>{{mark.name}}</td>
+                      <td>{{mark.comment}}</td>
+                      <td>
+                        <button *ngIf="mark.bappear" (mouseleave)="appearButton(mark);" class="button rounded">Zoom!</button>
+                        <button *ngIf="!mark.bappear" (mouseover)="appearButton(mark);" class="button cycle-button">Z!</button>
+                      </td>
+                  </tr>
+                 
+               </tbody>
+          </table>
+      </div>
+      
+    </div>
+</div>
+</div>

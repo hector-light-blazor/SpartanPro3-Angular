@@ -323,6 +323,11 @@
                                     <img src="assets/edit_ranges.png" alt="M">
                                     <span class="label">Ranges</span>
                                 </button>
+
+                                <button *ngIf="_toolSettings.SECTIONS.MAP.TOOLS.ids.MEASURE" (click)="actionSendToolBar(app.toolbarActivies.MAP_MEASURE)"   class="fluent-big-button">
+                                    <img src="assets/measuring-tool.png" alt="M">
+                                    <span class="label">Bookmarks</span>
+                                </button>
                              </div>
                              <div class="tab-group-caption">Tools</div>
                           </div>
