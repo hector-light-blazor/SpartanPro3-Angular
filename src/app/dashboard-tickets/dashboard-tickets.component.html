@@ -118,7 +118,7 @@
                         ((customer.cfirst_name) ? (((customer.cfirst_name.length > 7) ? (customer.cfirst_name | slice:0:7) +'..' : customer.cfirst_name) + ' ' + ((customer.clast_name.length > 7) ? (customer.clast_name | slice:0:7)+'..' : customer.clast_name)) : '')
                         }}</span>
                       <label class="switch-original ">
-                        <input type="checkbox" [(ngModel)]="customer.letter_generated" disabled >
+                        <input type="checkbox" [(ngModel)]="customer.called_cust" disabled >
                         <span class="check"></span>
                       </label>
                     </div>

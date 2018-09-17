@@ -94,6 +94,7 @@ export class DashboardTicketsComponent implements OnInit {
             response.data.forEach(element => {
                 element.total = (element.total == "0") ? false : true;
                 element.letter_generated = (element.letter_generated == "1") ? true : false;
+                element.called_cust = (element.called_cust == "1") ? true : false; 
                 element.icon = (element.icon) ? this.app.url + this.app.route.api.uImage + element.icon : "assets/avatar.png";
             });
             this.inbox = (response.success) ? response.data : [];
