@@ -14,8 +14,15 @@ export class BookmarkComponent implements OnInit {
 
   ngOnInit() {
 
-    this.app.GET_METHOD(this.app.route.api.gBookmark + this.app.account_info.user_id).subscribe((response: any) => {
+    console.log(this.app.account_info);
 
+    // if no user id kill the function lol :->
+    if(!this.app.account_info.user_id) {
+      return;
+    }
+
+    this.app.GET_METHOD(this.app.route.api.gBookmark + this.app.account_info.user_id).subscribe((response: any) => {
+        console.log(response);
         if(!response.success) {
           return;
         }
@@ -25,7 +32,7 @@ export class BookmarkComponent implements OnInit {
         for(var x = 0; x < len; x++) {
           data[x].bappear = false;
         }
-
+        console.log(data);
         this.bookmarks = data;
 
 

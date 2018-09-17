@@ -20,8 +20,8 @@
 
               <tbody>
                   <tr *ngFor="let mark of bookmarks">
-                      <td>{{mark.name}}</td>
-                      <td>{{mark.comment}}</td>
+                      <td>{{mark.bookmark_name}}</td>
+                      <td>{{mark.bookmark_comments}}</td>
                       <td>
                         <button *ngIf="mark.bappear" (mouseleave)="appearButton(mark);" class="button rounded">Zoom!</button>
                         <button *ngIf="!mark.bappear" (mouseover)="appearButton(mark);" class="button cycle-button">Z!</button>
