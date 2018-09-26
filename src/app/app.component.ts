@@ -33,7 +33,7 @@ export class AppComponent {
         this.isLoading = true;
         this.account_info = info.user;
         this.appService.account_info = this.account_info;
-      console.log(this.appService.account_info);
+       //  console.log(this.appService.account_info);
         // Get Inbox Information..
         this.timer.flatMap((i) =>  this.appService.POST_METHOD(this.appService.route.api.ftInbox, {data: this.appService.account_info.user_id})).takeWhile(() => this.isAlive).subscribe((response:any) => {
           if(response.success) {
@@ -67,7 +67,7 @@ export class AppComponent {
        
         if(response){
          
-         console.log(response);
+        // console.log(response);
               for(var x = 0; x < response.length; x++){
                 response[x].json = JSON.parse(response[x].json);
               }

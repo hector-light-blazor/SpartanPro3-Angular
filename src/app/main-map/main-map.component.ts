@@ -37,6 +37,7 @@ export class MainMapComponent implements OnInit {
   vsub: number = 3;
   googleExtent: any = null;
   displayIdentify: boolean = false;
+  displayBookmarks: boolean = false;
   dragging: boolean = false;
   files: Array<File>;
   fileName: string = "Waiting...";
@@ -53,6 +54,7 @@ export class MainMapComponent implements OnInit {
   measureTool: any = null;
   offsetbase: boolean = false;
   offsetsearch: boolean = false;
+  extent_change: any = null;
   constructor(private app: AppService,private mapService: MapServiceService, private sanitizer: DomSanitizer) { }
 
   
@@ -112,6 +114,9 @@ export class MainMapComponent implements OnInit {
           else {
             edit.style.visibility = "hidden";
           }
+          break;
+        case this.app.toolbarActivies.BOOKMARK:
+          this.displayBookmarks = true;
           break;
         default:
           break;
@@ -262,7 +267,8 @@ export class MainMapComponent implements OnInit {
         }
     
       
-      this.skeletonFlexBase = new this.app.esriDynamicLayer("https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/Adress_Streets/MapServer", {visible: false});
+      this.skeletonFlexBase = new this.app.esriDynamicLayer("https://gis.lrgvdc911.org/arcgis2/rest/services/Dynamic/Adress_Streets/MapServer", {visible: false});
+      //new this.app.esriDynamicLayer("https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/Adress_Streets/MapServer", {visible: false});
      
       if(ranges_found) {
         this.rangesFeatureHCEW = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/RangeFeature/FeatureServer/1")
@@ -303,7 +309,8 @@ export class MainMapComponent implements OnInit {
        // Setup Listeners...
 
        this.map.on("extent-change", object => {
-
+       
+        this.extent_change = object.extent.getExtent();
           // Time outs on extent change..
           setTimeout(() => {
             if(_self.mapService.iOn) {
@@ -440,9 +447,13 @@ export class MainMapComponent implements OnInit {
     this.map.setExtent(circle.getExtent());
   }
 
+  zoomToExtent(extent) {
+    var extent = this.app.esriExtent(extent.extent);
+    this.map.setExtent(extent);
+  }
 
   zoomToXY(event) {
-    //console.log(event);
+   
     let point = new this.app.esriPoint([parseFloat(event.x), parseFloat(event.y)], new this.app.esriSpatialReference({wkid: 4326}));
     this.graphicLayer.clear();
     this.graphicLayer.add(new this.app.esriGraphic(point, this.pointSymbol));

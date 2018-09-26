@@ -1,7 +1,7 @@
 <div id="main" style="height: 100%"  ondragover="return false;"(dragenter)="handleDragEnter()"
       (dragleave)="handleDragLeave()"
       (drop)="handleDrop($event)">
-  <app-bookmark></app-bookmark>
+  <app-bookmark (action)="zoomToExtent($event)" [extent]="extent_change" *ngIf="displayBookmarks" (close)="displayBookmarks = false"></app-bookmark>
   <app-search-address [offset]="offsetsearch" (xysearch)="zoomToXY($event)" (selected)="zoomToSelected($event)"></app-search-address>
   <app-basemap [offset]="offsetbase" (change)="changeBase($event)"></app-basemap>
   <app-identify-list (display)="zoomAndFlash($event)" (close)="displayIdentify = false;graphicLayer.clear();" [list]="mapService.identifyResponse" *ngIf="displayIdentify"></app-identify-list>

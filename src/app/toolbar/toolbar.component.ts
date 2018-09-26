@@ -109,10 +109,10 @@ export class ToolbarComponent implements OnInit {
     // Setup the toolbar information...
 
     this.app.account_info.config.forEach(element => {
-        console.log(element);
+        //console.log(element);
         if(element.setting_type == "TOOLBAR") {
           this._toolSettings = element.json;
-           console.log(this._toolSettings)
+          // console.log(this._toolSettings)
          // console.log(element.json);
         }
     });
@@ -214,6 +214,8 @@ export class ToolbarComponent implements OnInit {
         case this.app.toolbarActivies.EDIT_RANGES:
           this.app.toolbarActions.next({action: action, data: null})
           break;
+        case this.app.toolbarActivies.BOOKMARK:
+          this.app.toolbarActions.next({action: action, data: null});
         default:
           break;
       }

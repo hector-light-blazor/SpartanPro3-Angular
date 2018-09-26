@@ -218,9 +218,10 @@ export class EsriMapComponent implements OnInit {
           this.ticketLayer.add(graphic); // add to the new graphic new location..
         
           this.point = this.app.esriwebMercatorUtils.webMercatorToGeographic(response.mapPoint); // Convert to 4326 spatial reference...
+       
           this.mapEvents.emit(this.point); // send the 4326 geometry back to the user...
           this.app.animateGraphic(graphic); // animate the graphic to be cool
-          console.log(JSON.stringify(response.mapPoint));
+       
 
            // lets search the property and send the found parcel from either hcad or db server holding the other information...
          
@@ -233,9 +234,13 @@ export class EsriMapComponent implements OnInit {
                 let graphic = new _self.app.esriGraphic(poly, _self.polygonSymbol);
                 _self.parcelLayer.clear();
                 _self.parcelLayer.add(graphic);
+                console.log("SELF");
 
-                 _self.mapEvents.emit(response.features[0]);
+                setTimeout(() => {
+                  _self.mapEvents.emit( response.features[0]);
 
+                }, 100);
+                
 
                  _self.app.animateGraphic(graphic);
                }

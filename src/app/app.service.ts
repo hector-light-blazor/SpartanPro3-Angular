@@ -57,7 +57,9 @@ export class ROUTES {
        dFNRF: "nrf/downloadDateNRF/?f=", // Download Filter NREF Excel...
        fNRF: "nrf/filterNRF/?f=", // filter by date nrf...
        gMSAG: "gis/getMSAG/",  // GET MSAG...
-       gLTicket: "template/getLetter/?j=" // This is to generate letter
+       gLTicket: "template/getLetter/?j=", // This is to generate letter
+       sBookmark: "gis/saveBookmark", // SAVE BOOKMARK TO GIS TABLE..
+       dBookmark: "gis/deleteBookmark"
     }
    }
 }
@@ -94,7 +96,7 @@ export class AppService {
   toolbarActivies: TOOL_ACTIONS = {TICKET_SAVE_TRANSFER: 1, 
     TICKET_ARCHIVE: 2, TICKET_DELETE: 3, TICKET_INSERT_COMMENT: 4, TICKET_ESRI_MAP: 5, TICKET_ESRI_IMAGERY: 6,
     TICKET_DISPLAY_ATTACHMENT: 7, TICKET_LIST_ATTACHMENTS: 8, TICKET_GOOGLE_MAP: 9, TICKET_LETTER: 10,
-    MAP_IDENTIFY: 11, MAP_MEASURE: 12, COLLAPSE_TOOLBAR: 13, EDIT_RANGES: 14
+    MAP_IDENTIFY: 11, MAP_MEASURE: 12, COLLAPSE_TOOLBAR: 13, EDIT_RANGES: 14, BOOKMARK: 15
   };
 
   // Sends information to app component from login component..
@@ -123,6 +125,7 @@ export class AppService {
 
   // =-=-=-=-= ESRI GLOBAL VARIABLES =-=-=-=-=-=-=-=
   esriMap:any = null;
+  esriExtent: any = null;
   esriSpatialReference: any = null;
   esriConfig: any = null;
   esriGraphic: any = null;
@@ -221,7 +224,7 @@ export class AppService {
       url: 'https://js.arcgis.com/3.24/'
     };
 
-    esriLoader.loadModules(["dojo/parser", 'esri/map',"esri/SpatialReference" , 'esri/config','esri/graphic', "esri/geometry/webMercatorUtils","esri/geometry/geometryEngine",
+    esriLoader.loadModules(["dojo/parser", 'esri/map',"esri/geometry/Extent", "esri/SpatialReference" , 'esri/config','esri/graphic', "esri/geometry/webMercatorUtils","esri/geometry/geometryEngine",
     "esri/toolbars/edit","esri/toolbars/draw","esri/dijit/Measurement","esri/dijit/editing/TemplatePicker", "esri/dijit/editing/Editor", 'esri/layers/WMTSLayer', 'esri/layers/GraphicsLayer','esri/layers/WMTSLayerInfo',
     'esri/layers/ArcGISDynamicMapServiceLayer',"esri/layers/FeatureLayer","esri/layers/VectorTileLayer", "esri/Color", "esri/geometry/Point","esri/geometry/Polyline", "esri/geometry/Circle", 
     "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",'esri/symbols/SimpleFillSymbol', "esri/symbols/PictureMarkerSymbol",
@@ -230,14 +233,15 @@ export class AppService {
   "dijit/layout/ContentPane",
   "dijit/TitlePane",
   "dijit/form/CheckBox" ], options)
-    .then(([parser, Map,SpatialReference, Config, Graphic, webMercatorUtils,geometryEngine, Edit,Draw, Measurement,TemplatePicker,Editor, WMTSLayer,GraphicsLayer,WMTSLayerInfo, ArcGISDynamicMapServiceLayer,
+    .then(([parser, Map,Extent, SpatialReference, Config, Graphic, webMercatorUtils,geometryEngine, Edit,Draw, Measurement,TemplatePicker,Editor, WMTSLayer,GraphicsLayer,WMTSLayerInfo, ArcGISDynamicMapServiceLayer,
       FeatureLayer,VectorTileLayer, Color, 
       Point,Polyline, Circle, SimpleMarkerSymbol, SimpleLineSymbol,SimpleFillSymbol,PictureMarkerSymbol, Query, QueryTask,IdentifyTask, IdentifyParameters,  Polygon, coreFx, fx, easing]) => {
 
-    this.esriParser         = parser;
-    this.esriFeature        = FeatureLayer;
+    this.esriParser          = parser;
+    this.esriExtent          = Extent;
+    this.esriFeature         = FeatureLayer;
     this.esriVectorTileLayer = VectorTileLayer;
-    this.esriMap            = Map;
+    this.esriMap             = Map;
     this.esriSpatialReference = SpatialReference;
     this.esriConfig         = Config;
     this.esriGraphic        = Graphic;
@@ -340,11 +344,13 @@ interface TOOL_ACTIONS {
   MAP_MEASURE?:number;
   COLLAPSE_TOOLBAR?:number;
   EDIT_RANGES?: number;
+  BOOKMARK?: number;
 }
 
 interface API_ROUTES {
    login?: string;
    gBookmark?: string;
+   dBookmark?: string;
    ssTicket?: string;
    vwTicket?: string;
    vtFeeds?: string;
@@ -392,6 +398,7 @@ interface API_ROUTES {
    dFNRF?: string;
    fNRF?: string;
    gLTicket?: string;
+   sBookmark?: string;
 }
 
 interface LOGIN_INFO {

@@ -3,28 +3,35 @@
     <div class="window-caption">
         <span class="window-caption-icon"><span class="mif-windows"></span></span>
         <span class="window-caption-title">Bookmarks</span>
-        <span class="btn-min"></span>
-        <span class="btn-max"></span>
-        <span class="btn-close"></span>
+      
+        <span (click)="onClose()" class="btn-close"></span>
     </div>
     <div class="window-content" style="height: 30%">
-      <div style="margin-left: 100px;">
+      <div style="margin-left: 20px;">
           <table class="table">
               <thead>
                   <tr>
                       <th class="sortable-column">Name</th>
                       <th class="sortable-column">Comments</th>
-                      <th class="sortable-column"></th>
+                      <th class="sortable-column"><button (click)="addRow()" class="button cycle-button">+</button></th>
                   </tr>
               </thead>
 
               <tbody>
                   <tr *ngFor="let mark of bookmarks">
-                      <td>{{mark.bookmark_name}}</td>
-                      <td>{{mark.bookmark_comments}}</td>
+                      <td>{{((mark.binput) ? '': mark.bookmark_name)}}
+                          <input *ngIf="mark.binput" type="text" [(ngModel)]="mark.bookmark_name">
+                      </td>
+                      <td>{{((mark.binput) ? '' : mark.bookmark_comments)}}
+                        <input *ngIf="mark.binput" type="text" [(ngModel)]="mark.bookmark_comments">
+                      </td>
                       <td>
-                        <button *ngIf="mark.bappear" (mouseleave)="appearButton(mark);" class="button rounded">Zoom!</button>
-                        <button *ngIf="!mark.bappear" (mouseover)="appearButton(mark);" class="button cycle-button">Z!</button>
+                        <div *ngIf="!mark.binput">
+                            <button *ngIf="mark.bappear" (click)="onZoom(mark)" (mouseleave)="appearButton(mark);" class="button rounded">Zoom!</button>
+                            <button *ngIf="!mark.bappear" (click)="onZoom(mark)" (mouseover)="appearButton(mark);" class="button cycle-button">Z!</button>
+                            <button (click)="onDelete(mark.bookmarks_id)" >X</button>
+                        </div>
+                        <button *ngIf="mark.binput" class="button rounded" (click)="onSave(mark)" >Save</button>
                       </td>
                   </tr>
                  

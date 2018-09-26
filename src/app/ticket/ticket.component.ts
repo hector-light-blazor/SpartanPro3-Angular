@@ -1152,9 +1152,11 @@ export class TicketComponent implements OnInit {
 
     //Collect esri events...
     collectMapEvents(event) {
-    
-      if(event.hasOwnProperty('type')) { // if is geometry check 
-        if(event.type == "point") { // if is geometry point then get x and y send to attributes.
+     
+      if(event.hasOwnProperty('spatialReference')) { // if is geometry check 
+       
+        if(event['type'] == "point") { // if is geometry point then get x and y send to attributes.
+          
             // if point update lat and longy as well point..
             this.attributes.lat = event.y;
             this.attributes.longy = event.x;
@@ -1165,6 +1167,7 @@ export class TicketComponent implements OnInit {
 
         }
       }else if(event.hasOwnProperty('attributes')) {
+      
 
         this.findParcelsInfo(event.attributes[this.app.propertyId], this.app.propertyId, true);
       }
