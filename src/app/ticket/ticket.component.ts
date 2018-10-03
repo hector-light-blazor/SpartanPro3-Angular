@@ -92,7 +92,7 @@ export class TicketComponent implements OnInit {
       esn: 0,
       address_by: -1,
       address_issued_by: -1,
-      letter_plack_generated: false,  ///JKC made change
+      //letter_plack_generated: false,  ///JKC made change
       called_cust: false, ///JKC made change
       address_issued: false
 
@@ -244,7 +244,7 @@ export class TicketComponent implements OnInit {
     // TODO: ASK API TO CREATE TICKET NUMBER..
     this.app.GET_METHOD(this.app.route.api.tNumber).subscribe((response:any) => {
        
-      console.log(this.attributes);
+     // console.log(this.attributes);
       if(response.success){
          let today = new Date();
          let dd = (today.getDate() < 10) ? "0" + today.getDate() : today.getDate();
@@ -364,9 +364,9 @@ export class TicketComponent implements OnInit {
         this.users = response.data;
     });
 
-    this.lvusers = this.app.LVUSERS;
+   // this.lvusers = this.app.LVUSERS;
 
-    this.susers = this.app.SUSERS;
+    this.lvusers = this.susers = this.app.SUSERS;
 
 
   }
@@ -544,6 +544,8 @@ export class TicketComponent implements OnInit {
      }
   }
 
+
+
   prepareTicket() {
     let attr = {}; 
     // Prepare tickets for saving into the db server..
@@ -569,11 +571,13 @@ export class TicketComponent implements OnInit {
         
         attr[x] = (this.attributes[x]) ? 1 : 0;
       }
-      else if(this.attributes[x] && typeof(this.attributes[x]) != "boolean") {
-        attr[x] = this.attributes[x];
-      }
       else if(x == 'add_num' && !this.attributes[x]){
         attr[x] = 0;
+      }else if(this.attributes[x] == ""){
+        attr[x] = "";
+      }
+      else if(this.attributes[x] && typeof(this.attributes[x]) != "boolean") {
+        attr[x] = this.attributes[x];
       }
       // else {
 
@@ -683,7 +687,7 @@ export class TicketComponent implements OnInit {
       name = name.replace("#", "")
       name = encodeURIComponent(name);
       
-      console.log(name)
+    //  console.log(name)
       
        // http://docs.google.com/gview?url=
        // this.app.url + "template/getDocx/?doc=" +
@@ -1263,7 +1267,7 @@ interface Ticket{
   date_addressed?: any;
   address_issued?: any;
   called_cust?: any; //JKC so LV knows when customer has been called
-  letter_plack_generated?: any;
+  //letter_plack_generated?: any;
   address_issued_date?: string;
   address_issued_by?: any;
   lat?: string;
