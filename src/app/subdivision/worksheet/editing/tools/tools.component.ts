@@ -56,6 +56,10 @@ export class ToolsComponent implements OnInit {
     this.cmd.emit({text: true});
   }
 
+  onSave() {
+    this.cmd.emit({save: true});
+  }
+
  
 
 }

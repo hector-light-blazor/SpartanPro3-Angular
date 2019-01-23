@@ -1,4 +1,11 @@
 <div class="container">
+    <div style="cursor: pointer;float: left;">
+       <ul class="sidebar2" style="cursor: pointer;">
+            <li (click)="onListClick(year)" [ngClass]="{active: year.active}" class="stick bg-green" *ngFor="let year of listYears">
+               <a>{{year.yr}}</a>
+            </li>
+       </ul>
+    </div>
     <div class="center">
         <canvas id="myChart" width="500" height="500"></canvas>
     </div>

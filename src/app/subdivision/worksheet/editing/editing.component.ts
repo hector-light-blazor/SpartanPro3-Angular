@@ -21,6 +21,8 @@ export class EditingComponent implements OnInit {
   mouseY: number = 0;
   scaleFactor:any = 1.1;
   image: any = null;
+  imgW: any = null;
+  imgH: any = null;
   cmd: CMD_TOOLS = {text: false, square: false};
   constructor(public worksheet: WorksheetService) {
 
@@ -69,9 +71,11 @@ export class EditingComponent implements OnInit {
      // load sun and center it
       fabric.Image.fromURL(source, (image)  => {
         
-        this.canvas.setWidth(image.width);
-        this.canvas.setHeight(image.height);
-        
+        // this.canvas.setWidth(image.width);
+        // this.canvas.setHeight(image.height);
+        this.imgH = image.height;
+        this.imgW = image.width;
+
         image.set({width: this.canvas.width, height: this.canvas.height, originX: 'left', originY: 'top'});
         this.canvas.setBackgroundImage(image, this.canvas.renderAll.bind(this.canvas));
        // ths.canvas.
@@ -92,6 +96,7 @@ export class EditingComponent implements OnInit {
 
   // Tell Parent component that we are closing the component
   onClose() {
+    this.canvas.dispose();
     this.close.emit(true);
   }
 
@@ -113,9 +118,14 @@ export class EditingComponent implements OnInit {
   // This gets executed when editing/tools : BUTTONS GET PRESSED>>>>>>
   cmdInfo(event) {
     if(event['text']) {
+
+     
+      var center = this.canvas.getCenter()
       var itext = new fabric.IText('Please enter text', {
-        left: 0,//(first == 1) ? _self.addOrSub(evt.clientX, this.viewportTransform[4]) : point.x,
-        top:  0,//(first == 1) ? _self.addOrSub(evt.clientY, this.viewportTransform[5]) : point.y,
+
+
+        left: center.left,//(first == 1) ? _self.addOrSub(evt.clientX, this.viewportTransform[4]) : point.x,
+        top:  center.top,//(first == 1) ? _self.addOrSub(evt.clientY, this.viewportTransform[5]) : point.y,
         fill: 'red',
         strokeWidth: 2,
         stroke: "#880E4F",
@@ -123,6 +133,12 @@ export class EditingComponent implements OnInit {
 
       this.canvas.add(itext);
      
+    }else if(event['save']) {
+        this.canvas.setWidth(this.imgW);
+        this.canvas.setHeight(this.imgH);
+        this.canvas.setZoom(1);
+      // console.log(this.canvas.getZoom())
+        
     }
   }
 
@@ -135,7 +151,7 @@ export class EditingComponent implements OnInit {
    }else {
       response = val - bval;
    }
-   console.log(response);
+  // console.log(response);
    return response;
  }
 
@@ -161,8 +177,8 @@ export class EditingComponent implements OnInit {
         this.lastPosX = evt.clientX;
         this.lastPosY = evt.clientY;
       }else {
-        console.log(opt)
-        console.log(this);
+        // console.log(opt)
+        // console.log(this);
       }
 
       // else if(_self.cmd.text){

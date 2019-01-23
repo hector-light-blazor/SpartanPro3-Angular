@@ -40,6 +40,8 @@ export class ROUTES {
        gListOrga:   "users/getListOrganization/", // Get List of organization..
        dQuickPick: "qprocess/displayPic/?path=", // Display QUick Pick picture...
        gMultiSearch: "addressticket/getSearchMultiple/?s=", // Search Multi this is part of quick search..
+       gLYears: "addressticket/getYearsList/", // Get List Of Years of tickets on system...
+       gChartY: "addressticket/getChartYear/?o=", // Get Chart by Year from Ticket system..
        gTCharts: "addressticket/getCharts/?o=", // Get Ticket Charts by organization number of tickets by month...
        gFTable: "addressticket/getTable/?lmt=", // Get Filter Table by limits of 1000
        gFRTable: "addressticket/getRange/?f=", // Get Table by Range for address ticket..
@@ -380,6 +382,8 @@ interface API_ROUTES {
    gListOrga?: string;
    dQuickPick?: string;
    gMultiSearch?: string;
+   gLYears?: string;
+   gChartY?: string;
    gTCharts?: string;
    gFTable?: string;
    gFRTable?: string;
