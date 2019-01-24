@@ -21,6 +21,7 @@ export class ToolbarComponent implements OnInit {
   commentText:string;
   ticketAvailable: boolean = false; 
   filterAvailable: boolean = false;
+  fullScreen:boolean = false;
   isAlive: boolean = true;
   expandShow: boolean = true;
   qsearch: string = ''; // Controls quick search input...
@@ -257,6 +258,26 @@ export class ToolbarComponent implements OnInit {
       window.open(window.location.origin + "/" + split[1], "_self");
     }, 100);
    
+ }
+
+ //New Function to go Full Screen
+ goFullScreen() {
+ 
+  
+
+  if(this.fullScreen) {
+    this.fullScreen = false;
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+  }
+  }
+  else {
+    this.fullScreen = true;
+    if (document.body.requestFullscreen) {
+      document.body.requestFullscreen();
+    }
+  }
+  
  }
 
 

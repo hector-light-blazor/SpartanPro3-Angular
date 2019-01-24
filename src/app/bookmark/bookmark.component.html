@@ -29,7 +29,7 @@
                         <div *ngIf="!mark.binput">
                             <button *ngIf="mark.bappear" (click)="onZoom(mark)" (mouseleave)="appearButton(mark);" class="button rounded">Zoom!</button>
                             <button *ngIf="!mark.bappear" (click)="onZoom(mark)" (mouseover)="appearButton(mark);" class="button cycle-button">Z!</button>
-                            <button (click)="onDelete(mark.bookmarks_id)" >X</button>
+                            <button class="button cycle-button" (click)="onDelete(mark.bookmarks_id)" >X</button>
                         </div>
                         <button *ngIf="mark.binput" class="button rounded" (click)="onSave(mark)" >Save</button>
                       </td>
