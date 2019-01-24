@@ -147,7 +147,7 @@ export class LeafletMapComponent implements OnInit {
       // Only address and streets send to the front...
       
       this.mapflex = L.esri.dynamicMapLayer({
-        url: "https://gis.lrgvdc911.org/arcgis2/rest/services//Dynamic/Adress_Streets/MapServer",
+        url: "https://gis.lrgvdc911.org/arcgis2/rest/services/Dynamic/Adress_Streets/MapServer",
         position: 'back',
         zIndex: 0
       }).addTo(this.map);
