@@ -16,6 +16,7 @@ export class LeafletMapComponent implements OnInit {
 
 
   map: any; // Map Object
+  worksheetURL: string = "https://gis.lrgvdc911.org/arcgis2/rest/services/Features/Worksheet/FeatureServer/0";
   mapflex:any; // The Dynamic Layer
   wmts: any;  // The WMTS Layer Google Imagery
   imgOverlay: any = null // The image overlay object
