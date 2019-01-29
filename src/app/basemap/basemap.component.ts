@@ -14,6 +14,7 @@ export class BasemapComponent implements OnInit {
   wms: number = 1;
   google: number =2;
   vsub: number = 3;
+  varrow: number = 4;
   constructor() { }
 
   ngOnInit() {

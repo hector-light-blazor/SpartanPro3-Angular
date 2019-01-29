@@ -125,6 +125,15 @@
             </div>
             <br>
             <br>
+            <div class="input-control text full-size">
+                <label >Utilities</label>
+                <select [disabled]="customerSection" (change)="isUti();" [(ngModel)]="attributes.utility">
+                    <option>Yes</option>
+                    <option>No</option>                    
+                </select>
+            </div>
+            <br>
+            <br>
             <div class="input-control textarea full-size">
                  <label  >Mailing Info</label>
                 <textarea uppercase [disabled]="customerSection"   [(ngModel)]="attributes.mailing_address" ></textarea>

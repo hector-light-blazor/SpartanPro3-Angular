@@ -164,6 +164,9 @@ export class TicketComponent implements OnInit {
               // ... Display walk in
               this.isWalking();
 
+              //... display utility in
+              this.isUti();
+
               // ... GET PARCELS INFORMATION FROM HCAD>>>>
               this.findParcelsInfo(this.attributes.property_id, this.app.propertyId, true);
               
@@ -1210,6 +1213,16 @@ export class TicketComponent implements OnInit {
       }
     }
 
+
+    isUti() {
+      
+      if(this.attributes.utility == "Yes") {
+        this.iswalking = "UTILITY";
+      }else{
+        this.iswalking = "";
+      }
+    }
+
     // End of Class..
 }
 
@@ -1241,6 +1254,7 @@ interface Ticket{
   alt2_telephone?: string;
   prf_language?: string; //JKC preffered lanuguage duh
   walk_in?: string; ///JKC distinguish if customer is a walk in
+  utility?: string; //If is utility or not ticket based on importance...
   pfirst_name?: string;
   plast_name?: string;
   pfull_name?: string;

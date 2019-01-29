@@ -28,4 +28,9 @@ export class QuickPickListComponent implements OnInit {
     this.zoom.emit(item);
   }
 
+  uploadPic(item) { 
+
+      console.log(item);
+  }
+
 }

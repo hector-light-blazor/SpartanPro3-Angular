@@ -28,9 +28,12 @@ export class MainMapComponent implements OnInit {
   templatePicker: any = null;
   myEditor: any = null;
   quickPickBase: any = null;
+  quickPickView: any = null;
   graphicLayer: any = null;
   mapWMSBase: any = null;
   vectorSubBase: any = null;
+  vectorArrBase: any = null;
+  vecURL: string = "https://gis.lrgvdc911.org/arcgis106/rest/services/Hosted/MapFlex_Sub/VectorTileServer";
   mapflex: number = 0;
   wms: number = 1;
   google: number =2;
@@ -55,6 +58,13 @@ export class MainMapComponent implements OnInit {
   offsetbase: boolean = false;
   offsetsearch: boolean = false;
   extent_change: any = null;
+
+  // =-=-= QUICK PICK TOOLS =-=-=-=-=-=
+  quickPickEnabled: boolean = false;
+  selectedAttributes: any = null;
+  selectedPic: any = null;
+  selectedQuickPick: any = null;
+  enabledFullScreenPic: boolean = false;
   constructor(private app: AppService,private mapService: MapServiceService, private sanitizer: DomSanitizer) { }
 
   
@@ -263,7 +273,7 @@ export class MainMapComponent implements OnInit {
         if(ranges_found) {
           this.mapFlexBase = new this.app.esriDynamicLayer(this.app.mapFlexURL);
         }else {
-          this.mapFlexBase = new this.app.esriDynamicLayer(this.app.mapFlexURLRanges);
+          this.mapFlexBase =  new this.app.esriDynamicLayer(this.app.mapFlexURLRanges);
         }
     
       
@@ -296,14 +306,21 @@ export class MainMapComponent implements OnInit {
 
       this.quickPickBase = new this.app.esriGraphicsLayer();
 
+      this.quickPickView = new this.app.esriGraphicsLayer();
+      this.quickPickView.setMinScale(150000); // Set min Scale for the layer...
       this.graphicLayer = new this.app.esriGraphicsLayer();
+      
 
-      this.vectorSubBase = new this.app.esriVectorTileLayer("https://gis.lrgvdc911.org/arcgis106/rest/services/Hosted/MapFlex_Sub/VectorTileServer");
+
+      this.vectorArrBase = new this.app.esriVectorTileLayer("https://tiles.arcgis.com/tiles/HZn9sYWTEUxVRQW9/arcgis/rest/services/MapFlex_Arrows/VectorTileServer");
+      this.vectorArrBase.hide();
+      this.vectorSubBase = new this.app.esriVectorTileLayer("https://tiles.arcgis.com/tiles/HZn9sYWTEUxVRQW9/arcgis/rest/services/MapFlex_Sub2/VectorTileServer");//"https://gis.lrgvdc911.org/arcgis106/rest/services/Hosted/MapFlex_Sub/VectorTileServer", {credential: credential});
       this.vectorSubBase.hide();
+       
       // Lets Load Layers to the map object...
-       // add layer...
-       this.map.addLayers([this.mapWMSBase,this.mapFlexBase, this.skeletonFlexBase, this.quickPickBase, this.graphicLayer,this.vectorSubBase, this.rangesFeatureHCEW, this.rangesFeatureHCSN, this.rangesFeatureCEW, this.rangesFeatureCSN, this.rangesFeatureWWE, this.rangesFeatureWSN]);
-
+      // add layer...
+      this.map.addLayers([this.mapWMSBase,this.mapFlexBase, this.skeletonFlexBase, this.quickPickBase,this.quickPickView, this.graphicLayer,this.vectorSubBase,this.vectorArrBase, this.rangesFeatureHCEW, this.rangesFeatureHCSN, this.rangesFeatureCEW, this.rangesFeatureCSN, this.rangesFeatureWWE, this.rangesFeatureWSN]);
+     
 
 
        // Setup Listeners...
@@ -311,6 +328,8 @@ export class MainMapComponent implements OnInit {
        this.map.on("extent-change", object => {
        
         this.extent_change = object.extent.getExtent();
+        let extent = this.app.esriwebMercatorUtils.webMercatorToGeographic(object.extent);
+        this.getCameraLayer(extent.xmin, extent.ymin, extent.xmax, extent.ymax);
           // Time outs on extent change..
           setTimeout(() => {
             if(_self.mapService.iOn) {
@@ -390,7 +409,33 @@ export class MainMapComponent implements OnInit {
           }
 
        });
-      
+       
+
+       //Quick Pick View Listener...
+       // Add Click on quick pick ...
+    this.quickPickView.on("click", response => {
+
+      if(response) { // Is there response
+
+        if(response.graphic) { // is there graphic from the response
+          console.log("I AM CHANGING ATTRIBUTES");
+          this.selectedAttributes = null;
+          this.selectedAttributes = response.graphic.attributes; // Send attributes to quick pick tools..
+          this.selectedPic = this.app.url + this.app.route.api.dQuickPick + response.graphic.attributes.filepath;
+          this.quickPickEnabled = true; // Display quick pick tools
+          // Draw square for selecting the graphic...
+          let symbol = new this.app.esriSimpleMarkerSymbol(this.app.esriSimpleMarkerSymbol.STYLE_SQUARE, 35,
+           new this.app.esriSimpleLineSymbol(this.app.esriSimpleLineSymbol.STYLE_SOLID,
+           new this.app.esriColor([255,0,0]), 1),
+           new this.app.esriColor([0,0,0,0.1]));
+         this.map.graphics.clear();
+         let graphic = new this.app.esriGraphic(response.graphic.geometry, symbol)
+         this.map.graphics.add(graphic);
+
+         this.app.animateGraphic(graphic);
+       }
+      }
+   })
 
   }
 
@@ -464,6 +509,11 @@ export class MainMapComponent implements OnInit {
 
   }
 
+  // =-=-=-= MODULE CLEAR MAP GRAPHICS IF NEEDED =-=-=-=
+  clearMapGraphics() {
+    this.map.graphics.clear();
+  }
+
 
   // =-=-=-=-=-=-= CHANGE LAYERS =-=-=-=-
   changeBase(option) {
@@ -477,12 +527,14 @@ export class MainMapComponent implements OnInit {
         this.mapFlexBase.show();
         this.skeletonFlexBase.hide();
         this.mapWMSBase.hide();
+        this.vectorArrBase.hide();
         this.vectorSubBase.hide();
     
       }
       else if(option == this.wms) {
          this.mapFlexBase.hide();
          this.vectorSubBase.hide();
+         this.vectorArrBase.hide();
          this.skeletonFlexBase.show();
          this.mapWMSBase.show();
       
@@ -498,9 +550,16 @@ export class MainMapComponent implements OnInit {
          this.googleExtent = extent;
       }
       else if(option == this.vsub) {
+        
         this.mapFlexBase.hide();
         this.mapWMSBase.hide();
+        this.vectorArrBase.hide();
         this.vectorSubBase.show();
+      }else if(option == 4) {
+        this.mapFlexBase.hide();
+        this.mapWMSBase.hide();
+        this.vectorSubBase.hide();
+        this.vectorArrBase.show();
       }
 
   }
@@ -678,6 +737,53 @@ export class MainMapComponent implements OnInit {
        break;
    }
   }
+
+  // GET CAMERA INFORMATION FROM SERVER =-=-=-=-=--=-
+  getCameraLayer(xmin, ymin, xmax, ymax) {
+    this.quickPickView.clear();
+    this.app.POST_METHOD("qprocess/getBoxPics/", {data: { 
+      xmin: xmin, ymin: ymin, xmax: xmax, ymax: ymax,
+      orga: this.app.account_info.organization_id
+         }}).subscribe((response:any) => {
+          if(response.success) {
+              let i = response.data.length;
+              while(i--)
+              {
+                if(response.data[i].type == "H")
+                {
+                  this.quickPickView.add(new this.app.esriGraphic(new this.app.esriPoint(
+                    response.data[i].x, response.data[i].y), this.app.cameraGraphics.HomeObj, response.data[i]
+                  ));
+                }
+                else if(response.data[i].type == "B")
+                {  
+                    this.quickPickView.add(new this.app.esriGraphic(new this.app.esriPoint(
+                    response.data[i].x, response.data[i].y), this.app.cameraGraphics.BusObj, response.data[i]));
+                }
+                else if(response.data[i].type == "M")
+                {
+                  this.quickPickView.add(new this.app.esriGraphic(new this.app.esriPoint(
+                    response.data[i].x, response.data[i].y), this.app.cameraGraphics.MobileObj, response.data[i]));
+                }
+                else if(response.data[i].type == "F")
+                {
+                  this.quickPickView.add(new this.app.esriGraphic(new this.app.esriPoint(
+                    response.data[i].x, response.data[i].y), this.app.cameraGraphics.FireObj, response.data[i]));
+                }
+                else if(response.data[i].type == "N")
+                {
+                  this.quickPickView.add(new this.app.esriGraphic(new this.app.esriPoint(
+                    response.data[i].x, response.data[i].y), this.app.cameraGraphics.PicNewObj, response.data[i]));
+                }
+                else if(response.data[i].type == "S")
+                {
+                 this.quickPickView.add(new this.app.esriGraphic(new this.app.esriPoint(
+                    response.data[i].x, response.data[i].y), this.app.cameraGraphics.StreetSignObj, response.data[i]));
+                }
+              }
+          }
+    });
+}
 
     
 

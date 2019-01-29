@@ -61,7 +61,8 @@ export class ROUTES {
        gMSAG: "gis/getMSAG/",  // GET MSAG...
        gLTicket: "template/getLetter/?j=", // This is to generate letter
        sBookmark: "gis/saveBookmark", // SAVE BOOKMARK TO GIS TABLE..
-       dBookmark: "gis/deleteBookmark"
+       dBookmark: "gis/deleteBookmark",
+       gToken: "gis/getToken/?u="  // GET TOKEN FOR VECTOR TILE MAP..
     }
    }
 }
@@ -130,6 +131,7 @@ export class AppService {
   esriExtent: any = null;
   esriSpatialReference: any = null;
   esriConfig: any = null;
+  esriCredential: any = null;
   esriGraphic: any = null;
   esriTemplatePicker: any = null;
   esriEditor: any = null;
@@ -226,7 +228,7 @@ export class AppService {
       url: 'https://js.arcgis.com/3.24/'
     };
 
-    esriLoader.loadModules(["dojo/parser", 'esri/map',"esri/geometry/Extent", "esri/SpatialReference" , 'esri/config','esri/graphic', "esri/geometry/webMercatorUtils","esri/geometry/geometryEngine",
+    esriLoader.loadModules(["dojo/parser","esri/Credential", 'esri/map',"esri/geometry/Extent", "esri/SpatialReference" , 'esri/config','esri/graphic', "esri/geometry/webMercatorUtils","esri/geometry/geometryEngine",
     "esri/toolbars/edit","esri/toolbars/draw","esri/dijit/Measurement","esri/dijit/editing/TemplatePicker", "esri/dijit/editing/Editor", 'esri/layers/WMTSLayer', 'esri/layers/GraphicsLayer','esri/layers/WMTSLayerInfo',
     'esri/layers/ArcGISDynamicMapServiceLayer',"esri/layers/FeatureLayer","esri/layers/VectorTileLayer", "esri/Color", "esri/geometry/Point","esri/geometry/Polyline", "esri/geometry/Circle", 
     "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",'esri/symbols/SimpleFillSymbol', "esri/symbols/PictureMarkerSymbol",
@@ -235,10 +237,11 @@ export class AppService {
   "dijit/layout/ContentPane",
   "dijit/TitlePane",
   "dijit/form/CheckBox" ], options)
-    .then(([parser, Map,Extent, SpatialReference, Config, Graphic, webMercatorUtils,geometryEngine, Edit,Draw, Measurement,TemplatePicker,Editor, WMTSLayer,GraphicsLayer,WMTSLayerInfo, ArcGISDynamicMapServiceLayer,
+    .then(([parser,Credential, Map,Extent, SpatialReference, Config, Graphic, webMercatorUtils,geometryEngine, Edit,Draw, Measurement,TemplatePicker,Editor, WMTSLayer,GraphicsLayer,WMTSLayerInfo, ArcGISDynamicMapServiceLayer,
       FeatureLayer,VectorTileLayer, Color, 
       Point,Polyline, Circle, SimpleMarkerSymbol, SimpleLineSymbol,SimpleFillSymbol,PictureMarkerSymbol, Query, QueryTask,IdentifyTask, IdentifyParameters,  Polygon, coreFx, fx, easing]) => {
 
+    this.esriCredential      = Credential;
     this.esriParser          = parser;
     this.esriExtent          = Extent;
     this.esriFeature         = FeatureLayer;
@@ -403,6 +406,7 @@ interface API_ROUTES {
    fNRF?: string;
    gLTicket?: string;
    sBookmark?: string;
+   gToken?: string;
 }
 
 interface LOGIN_INFO {

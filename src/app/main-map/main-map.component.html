@@ -6,6 +6,8 @@
   <app-basemap [offset]="offsetbase" (change)="changeBase($event)"></app-basemap>
   <app-identify-list (display)="zoomAndFlash($event)" (close)="displayIdentify = false;graphicLayer.clear();" [list]="mapService.identifyResponse" *ngIf="displayIdentify"></app-identify-list>
   <app-quick-pick-list (zoom)="zoomPicture($event)" (remove)="removeQPick($event)" [picks]="quickPickCollections" *ngIf="displayCollection"></app-quick-pick-list>
+  <app-full-screen-pick *ngIf="enabledFullScreenPic" [src]="selectedPic" (onClose)="enabledFullScreenPic = false" ></app-full-screen-pick>
+    <app-quick-pick-tools *ngIf="quickPickEnabled" [pic]="selectedPic" (closeOutput)="quickPickEnabled = false; clearMapGraphics();"></app-quick-pick-tools>
   <app-google-map2  [ngClass]="{'googleDisplay': displayGoogle, 'googleHide': !displayGoogle}"  [extent]="googleExtent" ></app-google-map2>
   
   <div id="contentEditor" data-dojo-type="dijit/layout/ContentPane"  style="position: absolute;visibility: hidden; background: white;height: 500px; bottom: 0;width: 330px; z-index: 1;">
