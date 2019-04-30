@@ -40,6 +40,8 @@ export class DashboardTicketsComponent implements OnInit {
     // 1.) First Get Worker Ticket Inbox...
     // 2.) Gather All Open Tickets...
     this.allLoading = true;
+    this.openTickets = [];
+    this.inbox = [];
     this.app.POST_METHOD(this.app.route.api.ftInbox, {data: this.app.account_info.user_id}).subscribe((response:any) => {
         if(response.success) {
           response.data.forEach(element => {

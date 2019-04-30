@@ -1,5 +1,6 @@
 import { Component,Input,Output, EventEmitter, OnInit } from '@angular/core';
 import {AppService} from '../app.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-ticket-workflow',
   templateUrl: './ticket-workflow.component.html',
@@ -10,15 +11,18 @@ export class TicketWorkflowComponent implements OnInit {
   @Input() staffId: any = null;
   @Input() routing: any = null;
   @Input() sentto: any = null;
+  @Input() ticketid: any = null;
   @Output() onClose = new EventEmitter<any>();
   staff: any = {name: ""};
   profileImage: string = "";
   workflow: any = [];
   mainUser: boolean = false;
-  
-  constructor(private app: AppService) { }
+  users: Array<any> = [];
+  constructor(private app: AppService, private router: Router) { }
 
   ngOnInit() {
+   this.users = this.app.users;
+  
   }
 
   ngOnChanges() {
@@ -37,38 +41,42 @@ export class TicketWorkflowComponent implements OnInit {
       this.fetchUserImage();
     }
 
+    this.processRouting();
+  }
+
+  processRouting() {
     if(this.routing) {
        
-       // Parse Routing
-       if(typeof(this.routing) == "string") {
-         this.routing = JSON.parse(this.routing);
-        //  console.log(this.app.users);
-       }
-       let show: boolean = false;
-       
-       this.routing.a.forEach(route => {
-          if(route == this.sentto) {
-             show = true;
-          } 
+      // Parse Routing
+      if(typeof(this.routing) == "string") {
+        this.routing = JSON.parse(this.routing);
+       //  console.log(this.app.users);
+      }
+      let show: boolean = false;
+      
+      this.routing.a.forEach(route => {
+         if(route == this.sentto) {
+            show = true;
+         } 
 
-          this.app.users.forEach(user => {
-              
-              if(route == user.user_id){
-                  if(show) {
-                     user.hasticket = true;
-                     show = false;
-                  }else {
-                    user.hasticket = false;
-                  }
-                  user.avatar = (user.icon2) ? this.app.url + this.app.route.api.uImage + user.icon2 : "assets/avatar.png";
-                  this.workflow.push(user);
-                  return;
-              }
-          });
-       });
-      //  console.log(this.workflow);
-      //  console.log(this.routing);
-    }
+         this.app.users.forEach(user => {
+             
+             if(route == user.user_id){
+                 if(show) {
+                    user.hasticket = true;
+                    show = false;
+                 }else {
+                   user.hasticket = false;
+                 }
+                 user.avatar = (user.icon2) ? this.app.url + this.app.route.api.uImage + user.icon2 : "assets/avatar.png";
+                 this.workflow.push(user);
+                 return;
+             }
+         });
+      });
+     //  console.log(this.workflow);
+     //  console.log(this.routing);
+   }
   }
 
 
@@ -86,8 +94,35 @@ export class TicketWorkflowComponent implements OnInit {
     });
   }
 
+
+  onChangeSentTo(sent:any) {
+    //Reset everything else..
+    this.workflow.forEach(element => {
+        element.hasticket = false;
+    });
+   
+    sent.hasticket = true;
+    //Finally Change and save info
+    this.app.POST_METHOD("addressticket/moveTicketNewStaff", {data: 
+      {objectid: this.ticketid, sent: sent.user_id }
+    }).subscribe((response) => {
+      this.onClose.emit({close: true, routing: this.routing, stopSave: true});
+        setTimeout(() => {
+          this.router.navigate(['ticket/dashboard']);
+        }, 300);
+        
+    });
+  }
+
   _onCloseWindow(){
-    this.onClose.emit(true);
+    this.onClose.emit({close: true, routing: this.routing, stopSave: false});
+  }
+
+  setSelected(option, index: number) {
+    //console.log(option, index);
+    this.routing['a'][index] = parseInt(option);
+    this.workflow = [];
+    this.processRouting();
   }
 
 }

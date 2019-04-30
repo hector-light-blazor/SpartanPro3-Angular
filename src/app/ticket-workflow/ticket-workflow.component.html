@@ -26,10 +26,10 @@
             <tr>
               <td><h2>Workflow</h2></td>
             </tr>
-            <tr *ngFor="let user of workflow">
+            <tr *ngFor="let user of workflow; index as i;">
               <td>
                   <label class="switch">
-                      <input [(ngModel)]="user.hasticket" type="checkbox">
+                      <input (click)="onChangeSentTo(user, i)" [(ngModel)]="user.hasticket" type="checkbox">
                       <span class="check"></span>
                   </label>
               </td>
@@ -40,6 +40,19 @@
                  {{user.first_name + ' ' + user.last_name}}
                  <br>
                  {{user.organization_name}}
+               </td>
+               <td>
+
+                <div class="input-control select">
+                 <label ></label>
+                  <select (change)="setSelected($event.target.value, i)">
+                      <option>Select User</option>
+                      <option [value]="user.user_id" *ngFor="let user of users">{{user.first_name  + ' ' + user.last_name}}
+                         
+                      </option>
+                      
+                  </select>
+               </div>
                </td>
             </tr>
           </table>  

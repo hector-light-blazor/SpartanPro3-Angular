@@ -300,6 +300,12 @@ export class TicketComponent implements OnInit {
 
   }
 
+  //Function update ticket route..
+  updateRoute(event) {
+    this.stopSave = event.stopSave;
+    this.attributes.system_assign = event.routing;
+  }
+
 
   //============ MODULE GETS THE CREATED DATE AND REMAINDER DAYS FOR DUE DATE ===================
   fetchNumberOfDaysTicket(){

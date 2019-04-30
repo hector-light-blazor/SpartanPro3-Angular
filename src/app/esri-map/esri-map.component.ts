@@ -13,6 +13,8 @@ export class EsriMapComponent implements OnInit {
   @Output() closeClick = new EventEmitter<string>(); // close click element send event emitter to parent..
   @Output() reset = new EventEmitter<boolean>(); // handles reseting variables on parent comp if needed.
   @Output() mapEvents = new EventEmitter<any>(); // handles map events send back to parent..
+  @Input() image: boolean = false;
+  @Input() base: boolean = false;
   @Input() extent:any = null; // on change extent to zoom particular point of interest...
   @Input() polygon:any = null; // display polygon graphic location..
   @Input() point: any = null; // Display point graphic location....
@@ -112,7 +114,9 @@ export class EsriMapComponent implements OnInit {
 
     // =-=-=-=-=-=-= CHECK WHAT BASEMAP TO USE =-=-=-=-=-=-=-=
     if(this.basemap == 'MAPFLEX') {
-     
+      
+      this.image = true;
+      this.base = false;
       if(this.app.mapFlexBaseMap) {
         // Create the Layer...
         if(this.app.esriDynamicLayer) {
@@ -126,7 +130,8 @@ export class EsriMapComponent implements OnInit {
       }
      
     }else if(this.basemap == 'IMAGERY') {
-
+      this.base = true;
+      this.image = false;
       let layerInfo = new this.app.esriWMTSLayerInfo({identifier: 'texas', 
       titleMatrixSet: '0to20',format: 'png'});
 
@@ -365,6 +370,42 @@ export class EsriMapComponent implements OnInit {
   // =-=-=-=-=-=-=-=-=-= MODULE MAXIMIZE MAP =-=-=-=-=-=-=-=-=-=
   maximizeMap() {
 
+  }
+
+  //=-=-=-=-=-= MODULE TO CHANGE BASE MAP =-=-=-=-=-=
+  changeBaseMap() {
+    if(!this.image) {
+      console.log("ADD BASE")
+      this.base = true;
+      this.image = false;
+      let layers = this.map.getLayersVisibleAtScale(this.map.getScale());
+      console.log(layers);
+      if(!this.app.mapFlexBaseMap) {
+        console.log("base map");
+        this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURL);
+      }
+      console.log(this.app.mapFlexBaseMap);
+      console.log(layers[0]);
+      this.map.removeLayer(layers[0]);
+      this.map.addLayer(this.app.mapFlexBaseMap,0);
+     
+    }else if(!this.base){
+      console.log("ADDING IMAGERY");
+      this.base = false;
+      this.image = true;
+      let layers = this.map.getLayersVisibleAtScale(this.map.getScale());
+      if(!this.app.imageryLayer) {
+        console.log("ADDING IMAGERY IF")
+        let layerInfo = new this.app.esriWMTSLayerInfo({identifier: 'texas', 
+        titleMatrixSet: '0to20',format: 'png'});
+  
+        let options = {serviceMode: 'KVP', layerInfo: layerInfo};
+        this.app.imageryLayer = new this.app.esriWMTSLayer(this.app.wmtsURL, options);
+      }
+      console.log(this.app.imageryLayer);
+      this.map.removeLayer(layers[0]);
+      this.map.addLayer(this.app.imageryLayer,0);
+    }
   }
 
   // GET CAMERA INFORMATION FROM SERVER =-=-=-=-=--=-
