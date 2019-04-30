@@ -37,7 +37,9 @@ export class EsriMapComponent implements OnInit {
   msagLayer: any = null; // msag community layer..
   trackExtent: any = null;
 
+
   // =-=-= QUICK PICK TOOLS =-=-=-=-=-=
+  quickPickOnOff:boolean = true;
   quickPickEnabled: boolean = false;
   selectedAttributes: any = null;
   selectedPic: any = null;
@@ -114,14 +116,14 @@ export class EsriMapComponent implements OnInit {
 
     // =-=-=-=-=-=-= CHECK WHAT BASEMAP TO USE =-=-=-=-=-=-=-=
     if(this.basemap == 'MAPFLEX') {
-      
+      this.quickPickOnOff = true;
       this.image = true;
       this.base = false;
       if(this.app.mapFlexBaseMap) {
         // Create the Layer...
         if(this.app.esriDynamicLayer) {
           
-          this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURL);
+          this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURL, {id: "base"});
           this.map.addLayer(this.app.mapFlexBaseMap);
           //this.map.addLayer(this.msagLayer);
           this.map.addLayer(this.parcelLayer);
@@ -130,15 +132,16 @@ export class EsriMapComponent implements OnInit {
       }
      
     }else if(this.basemap == 'IMAGERY') {
+      this.quickPickOnOff = true;
       this.base = true;
       this.image = false;
       let layerInfo = new this.app.esriWMTSLayerInfo({identifier: 'texas', 
       titleMatrixSet: '0to20',format: 'png'});
 
-      let options = {serviceMode: 'KVP', layerInfo: layerInfo};
+      let options = {serviceMode: 'KVP', layerInfo: layerInfo, id: "wms"};
       this.app.imageryLayer = new this.app.esriWMTSLayer(this.app.wmtsURL, options);
       this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURL);
-      this.app.mapFlexBaseMap.setVisibleLayers([32,0, 8]);
+      this.app.mapFlexBaseMap.setVisibleLayers([10,13, 0, 8]);
       this.map.addLayer(this.app.imageryLayer);
       this.map.addLayer(this.app.mapFlexBaseMap);
       //this.map.addLayer(this.msagLayer);
@@ -374,37 +377,69 @@ export class EsriMapComponent implements OnInit {
 
   //=-=-=-=-=-= MODULE TO CHANGE BASE MAP =-=-=-=-=-=
   changeBaseMap() {
-    if(!this.image) {
-      console.log("ADD BASE")
-      this.base = true;
-      this.image = false;
+
+
+      //First get all layers...
       let layers = this.map.getLayersVisibleAtScale(this.map.getScale());
-      console.log(layers);
-      if(!this.app.mapFlexBaseMap) {
-        console.log("base map");
-        this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURL);
-      }
-      console.log(this.app.mapFlexBaseMap);
-      console.log(layers[0]);
-      this.map.removeLayer(layers[0]);
-      this.map.addLayer(this.app.mapFlexBaseMap,0);
-     
-    }else if(!this.base){
-      console.log("ADDING IMAGERY");
+      let holdLayer = null;
+    if(this.base) {
+      console.log("ADD BASE")
       this.base = false;
       this.image = true;
-      let layers = this.map.getLayersVisibleAtScale(this.map.getScale());
-      if(!this.app.imageryLayer) {
-        console.log("ADDING IMAGERY IF")
+      
+      console.log(layers, "BASE");
+      if(!this.app.mapFlexBaseMap) {
+        console.log("base map");
+        this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURL, {id: "base"});
+      }
+
+      layers.forEach(element => {
+         
+          if(element.id == "wms") {
+            holdLayer = element;
+            return; //Kill the function...
+          }
+      });
+      
+      this.map.removeLayer(layers[0]);
+      this.map.addLayer(this.app.mapFlexBaseMap,0);
+      layers = this.map.getLayersVisibleAtScale(this.map.getScale());
+      console.log(layers);
+    }else if(this.image){
+      console.log("ADDING IMAGERY");
+      this.base = true;
+      this.image = false;
+     
+      layers.forEach(element => {
+        console.log(element);
+        if(element.id == "base") {
+          holdLayer = element;
+          return; //Stop the function...
+        }
+    });
+     
         let layerInfo = new this.app.esriWMTSLayerInfo({identifier: 'texas', 
         titleMatrixSet: '0to20',format: 'png'});
   
-        let options = {serviceMode: 'KVP', layerInfo: layerInfo};
+        let options = {serviceMode: 'KVP', layerInfo: layerInfo, id: "wms"};
         this.app.imageryLayer = new this.app.esriWMTSLayer(this.app.wmtsURL, options);
-      }
-      console.log(this.app.imageryLayer);
-      this.map.removeLayer(layers[0]);
+      
+      
+      this.map.removeLayer(holdLayer);
       this.map.addLayer(this.app.imageryLayer,0);
+      console.log(this.map)
+     
+    }
+  }
+
+  //Turn on and off the layer..
+  toggleQuickPick() {
+    if(this.quickPickLayer.visible) {
+      this.quickPickLayer.hide()
+      this.quickPickOnOff = false;
+    }else {
+      this.quickPickLayer.show();
+      this.quickPickOnOff = true;
     }
   }
 

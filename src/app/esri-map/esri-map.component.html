@@ -14,6 +14,7 @@
       </button>
     </span>
     <span class="pull-right">
+      <button (click)="toggleQuickPick()" [ngClass]="{'enable': quickPickOnOff}" class="button btnSize">QuickPick</button>
         <button (click)="changeBaseMap()" *ngIf="image" class="button btnSize">Aerial</button>
         <button (click)="changeBaseMap()" *ngIf="base" class="button btnSize">baseMap</button>
       <button (click)="minimizedMap()" class="button btnSize">

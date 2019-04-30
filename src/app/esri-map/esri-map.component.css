@@ -2,6 +2,10 @@
     height: 20px;
 }
 
+.enable {
+    background: rgb(119, 6, 6);
+}
+
 .window-content {
     height: 95%;
 }
