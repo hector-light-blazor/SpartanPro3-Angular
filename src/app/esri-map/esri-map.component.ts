@@ -115,8 +115,9 @@ export class EsriMapComponent implements OnInit {
      this.quickPickLayer.setMinScale(150000); // Set min Scale for the layer...
 
     // =-=-=-=-=-=-= CHECK WHAT BASEMAP TO USE =-=-=-=-=-=-=-=
+    this.quickPickOnOff = true;
     if(this.basemap == 'MAPFLEX') {
-      this.quickPickOnOff = true;
+      
       this.image = true;
       this.base = false;
       if(this.app.mapFlexBaseMap) {
@@ -126,25 +127,45 @@ export class EsriMapComponent implements OnInit {
           this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURL, {id: "base"});
           this.map.addLayer(this.app.mapFlexBaseMap);
           //this.map.addLayer(this.msagLayer);
+         
+
+
+          let layerInfo = new this.app.esriWMTSLayerInfo({identifier: 'texas', 
+            titleMatrixSet: '0to20',format: 'png'});
+
+          let options = {serviceMode: 'KVP', layerInfo: layerInfo, id: "wms"};
+          this.app.imageryLayer = new this.app.esriWMTSLayer(this.app.wmtsURL, options);
+          this.app.imageryLayer.hide();
+          this.app.mapFlexRoad = new this.app.esriDynamicLayer(this.app.mapFlexURL);
+          this.app.mapFlexRoad.setVisibleLayers([10,13, 0, 8]);
+          this.app.mapFlexRoad.hide();
+
+          this.map.addLayer(this.app.imageryLayer);
+          this.map.addLayer(this.app.mapFlexRoad);
           this.map.addLayer(this.parcelLayer);
         }
 		
       }
      
     }else if(this.basemap == 'IMAGERY') {
-      this.quickPickOnOff = true;
+      
       this.base = true;
       this.image = false;
+
+      this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURL, {id: "base"});
+      this.app.mapFlexBaseMap.hide();
+      
+
       let layerInfo = new this.app.esriWMTSLayerInfo({identifier: 'texas', 
       titleMatrixSet: '0to20',format: 'png'});
 
       let options = {serviceMode: 'KVP', layerInfo: layerInfo, id: "wms"};
       this.app.imageryLayer = new this.app.esriWMTSLayer(this.app.wmtsURL, options);
-      this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURL);
-      this.app.mapFlexBaseMap.setVisibleLayers([10,13, 0, 8]);
+      this.app.mapFlexRoad = new this.app.esriDynamicLayer(this.app.mapFlexURL);
+      this.app.mapFlexRoad.setVisibleLayers([10,13, 0, 8]);
       this.map.addLayer(this.app.imageryLayer);
       this.map.addLayer(this.app.mapFlexBaseMap);
-      //this.map.addLayer(this.msagLayer);
+      this.map.addLayer(this.app.mapFlexRoad);
       this.map.addLayer(this.parcelLayer);
     
     }
@@ -383,51 +404,21 @@ export class EsriMapComponent implements OnInit {
       let layers = this.map.getLayersVisibleAtScale(this.map.getScale());
       let holdLayer = null;
     if(this.base) {
-      console.log("ADD BASE")
+      
       this.base = false;
       this.image = true;
-      
-      console.log(layers, "BASE");
-      if(!this.app.mapFlexBaseMap) {
-        console.log("base map");
-        this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURL, {id: "base"});
-      }
-
-      layers.forEach(element => {
-         
-          if(element.id == "wms") {
-            holdLayer = element;
-            return; //Kill the function...
-          }
-      });
-      
-      this.map.removeLayer(layers[0]);
-      this.map.addLayer(this.app.mapFlexBaseMap,0);
-      layers = this.map.getLayersVisibleAtScale(this.map.getScale());
-      console.log(layers);
+      this.app.mapFlexBaseMap.show();
+      this.app.imageryLayer.hide();
+      this.app.mapFlexRoad.hide();
+    
     }else if(this.image){
-      console.log("ADDING IMAGERY");
+    
       this.base = true;
       this.image = false;
      
-      layers.forEach(element => {
-        console.log(element);
-        if(element.id == "base") {
-          holdLayer = element;
-          return; //Stop the function...
-        }
-    });
-     
-        let layerInfo = new this.app.esriWMTSLayerInfo({identifier: 'texas', 
-        titleMatrixSet: '0to20',format: 'png'});
-  
-        let options = {serviceMode: 'KVP', layerInfo: layerInfo, id: "wms"};
-        this.app.imageryLayer = new this.app.esriWMTSLayer(this.app.wmtsURL, options);
-      
-      
-      this.map.removeLayer(holdLayer);
-      this.map.addLayer(this.app.imageryLayer,0);
-      console.log(this.map)
+      this.app.mapFlexBaseMap.hide();
+      this.app.imageryLayer.show();
+      this.app.mapFlexRoad.show();
      
     }
   }

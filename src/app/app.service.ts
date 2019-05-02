@@ -164,6 +164,7 @@ export class AppService {
   esriIdentifyTask: any = null;
   esriIdentifyParams: any = null;
   mapFlexBaseMap: any = null;
+  mapFlexRoad: any = null;
   imageryLayer: any = null;
   mapFlexURL: string = "https://gis.lrgvdc911.org/arcgis2/rest/services/Dynamic/MapFlex_NR/MapServer"; //"https://gis.lrgvdc911.org/arcgis/rest/services/Dynamic/MapFlex/MapServer"; // OLD SERVER
   mapFlexURLRanges: string = "https://gis.lrgvdc911.org/arcgis2/rest/services/Dynamic/MapFlex_Ranges/MapServer"; // NEW SERVER
@@ -225,7 +226,7 @@ export class AppService {
   esriLoadObjects() {
     console.log("ESRI LOADED STARTED");
     const options = {
-      url: 'https://js.arcgis.com/3.24/'
+      url: 'https://js.arcgis.com/3.28/'
     };
 
     esriLoader.loadModules(["dojo/parser","esri/Credential", 'esri/map',"esri/geometry/Extent", "esri/SpatialReference" , 'esri/config','esri/graphic', "esri/geometry/webMercatorUtils","esri/geometry/geometryEngine",
