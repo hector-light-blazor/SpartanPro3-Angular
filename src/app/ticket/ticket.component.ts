@@ -744,7 +744,9 @@ export class TicketComponent implements OnInit {
         console.log("TEST");
         console.log(wcadResponse);
         if(wcadResponse) {
+
           this.wparcels = wcadResponse.results;
+          this.messagesCount += this.wparcels.length;
         }
      });
   }
@@ -764,7 +766,7 @@ export class TicketComponent implements OnInit {
                 element.display = [];
               });
 
-              this.messagesCount = response.results.length;
+              this.messagesCount += response.results.length;
               this.parcels = response.results;
 
               //Display MESSAGE TO USER WE FOUND INFORMATION.
