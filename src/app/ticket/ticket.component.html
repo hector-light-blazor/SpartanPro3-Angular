@@ -527,7 +527,54 @@
                         </ng-template>
                    
                 </tbody>
-            </table>            
+            </table>   
+            
+            <table class="table">
+                <caption><h3>WCAD</h3></caption>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Owner Name</th>
+                        <th>Subdivision</th>
+                        <th class="sortable-column">Tax ID</th>
+                        <th class="sortable-column">Property ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-template ngFor let-parcel [ngForOf]="wparcels">
+                        <tr >
+                            <td>
+                              <button class="button rounded" (click)="openMessageTable(parcel)">
+                                  <i *ngIf="!parcel.moreinfo" class="fa fa-plus-circle" aria-hidden="true"></i>
+                                  <i *ngIf="parcel.moreinfo" class="fa fa-minus-circle" aria-hidden="true"></i>
+
+                            </button>
+                              <button class="button rounded" (click)="copyConfiramtion(parcel)"><i class="fa fa-clipboard" aria-hidden="true"></i></button>
+                              <button class="button rounded" (click)="displayMap(parcel)" ><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+                            </td>
+                            <td>
+                                    {{
+                                        (parcel.attributes.file_as_na.length>24)? (parcel.attributes.file_as_na | slice:0:24)+'..':(parcel.attributes.file_as_na) 
+                                    }}</td>
+                                    <td>{{ (parcel.attributes.legal_desc.length>14)? (parcel.attributes.legal_desc | slice:0:14)+'..':(parcel.attributes.legal_desc)    
+                                    }}</td>
+                                    <td>{{parcel.attributes.geo_id}}</td>
+                                    <td>{{parcel.attributes.PROP_ID}}</td>
+                        </tr>
+                        <tr *ngIf="parcel.moreinfo">
+                            <td>
+                                <table class="table"  style="padding-left:100px;" cellspacing="0" cellpadding="5" border="0">
+                                    <tbody>
+                                        <tr *ngFor="let item of parcel.display">
+                                            <td>{{item.name}}:</td><td>{{item.value}}</td></tr>
+                                    </tbody>
+                                </table>
+                            </td> 
+                        </tr>
+                        </ng-template>
+                   
+                </tbody>
+            </table>
       </div>
 </div>
 </div>

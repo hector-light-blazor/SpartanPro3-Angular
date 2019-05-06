@@ -39,6 +39,7 @@ export class TicketComponent implements OnInit {
   front: boolean = true; // Controls display remainder days left...
   confirmSelection: number = -1; // display confirmation display.. for delete and archive...
   parcels: any; // List All Parcels from db server
+  wparcels: any;//List All WCAD Parcels from db server..
   profileImage: string = "assets/avatar.png"; //display profile image...
   isMapEnabled: boolean = false; // Controls the esri map view to display ...
   isGoogleEnabled: boolean = false; // Controls the google map view to display ...
@@ -727,6 +728,7 @@ export class TicketComponent implements OnInit {
    
     this.isLoading = true;
     this.parcels = [];
+    this.wparcels = [];
     this.messagesCount = 0;
     value = (typeof(value) == "string") ? value.replace(' #', '+%23') : value; //if user inputs # fix with ascii character//
     
@@ -734,6 +736,18 @@ export class TicketComponent implements OnInit {
     
     //This find method for wcad...
    // this.app.FIND_WCAD()
+   //ONLY IF IS PROPERTY ID SEARCH WCAD...
+   if(this.app.propertyId == property) {
+     let wcadsearch = "searchText=" + value + "&contains=true&searchFields=pid&layers=0&returnGeometry=true&f=pjson";
+    
+     this.app.FIND_WCAD(wcadsearch).subscribe((wcadResponse: any) => {
+        console.log("TEST");
+        console.log(wcadResponse);
+        if(wcadResponse) {
+          this.wparcels = wcadResponse.results;
+        }
+     });
+  }
 
 
     //This find method is for hcad..
