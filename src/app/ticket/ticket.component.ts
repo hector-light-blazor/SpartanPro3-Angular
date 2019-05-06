@@ -731,7 +731,12 @@ export class TicketComponent implements OnInit {
     value = (typeof(value) == "string") ? value.replace(' #', '+%23') : value; //if user inputs # fix with ascii character//
     
     let search = 'search='+ value + '&field=' + property;
-  
+    
+    //This find method for wcad...
+   // this.app.FIND_WCAD()
+
+
+    //This find method is for hcad..
     this.app.FIND_METHOD(search).subscribe((response:any) => {
       
       this.isLoading = false;

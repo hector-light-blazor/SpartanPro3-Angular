@@ -80,6 +80,7 @@ export class AppService {
   url_letter: string = "https://gis.lrgvdc911.org/WebAPI/api/letter";
   hcadurl: string = this.url + 'proxy/findHCADParcels/?' //"http://propaccess.hidalgoad.org:6080/arcgis/rest/services/HidalgoMapSearch/MapServer/find?";
   hcadurl2: string = this.url + 'proxy/geometryHCADParcels/?';
+  wcadurl: string = "https://gis.lrgvdc911.org/arcgis/rest/services/Features/Parcels/MapServer/find?";
   hcadquery: string = "http://propaccess.hidalgoad.org:6080/arcgis/rest/services/HidalgoMapSearch/MapServer/1";
   // Get Account Info
   account_info: LOGIN_INFO = {
@@ -187,6 +188,10 @@ export class AppService {
   FIND_METHOD(request) {
 
     return this.http.get(this.hcadurl + request);
+  }
+
+  FIND_WCAD(request) {
+    return this.http.get(this.wcadurl + request);
   }
 
   GEOMETRY_METHOD(request) {
