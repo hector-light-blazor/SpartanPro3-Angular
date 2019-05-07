@@ -276,6 +276,28 @@ export class EsriMapComponent implements OnInit {
     });
 
     this.map.on('click', response => {
+
+
+              // Identifies layers..
+              if(this.mapService.iOn) {
+              
+                this.mapService.identifyParams.geometry = response.mapPoint;
+                this.mapService.identifyParams.mapExtent = this.map.extent;
+                var deferred = this.mapService.identifyObject.execute(this.mapService.identifyParams).addCallback(response => {
+      
+                   response.forEach(element => {
+                      element.display = false;
+                   });
+      
+                   this.mapService.identifyResponse = response;
+                   this.mapService.iOn = false;
+                   this.displayIdentify = true;
+                   this.map.setCursor("default");
+                });
+      
+              }
+
+
         if(this.ticketEnabled && !this.point) {
           let graphic = new this.app.esriGraphic(response.mapPoint, this.pointSymbol); // temporarily hold graphic...
           this.map.setMapCursor("default"); // Change Cursor back default
@@ -291,24 +313,7 @@ export class EsriMapComponent implements OnInit {
        
 
 
-            // Identifies layers..
-        if(this.mapService.iOn) {
-          console.log("I AM IDENTIFY");
-          this.mapService.identifyParams.geometry = response.mapPoint;
-          this.mapService.identifyParams.mapExtent = this.map.extent;
-          var deferred = this.mapService.identifyObject.execute(this.mapService.identifyParams).addCallback(response => {
-
-             response.forEach(element => {
-                element.display = false;
-             });
-
-             this.mapService.identifyResponse = response;
-             this.mapService.iOn = false;
-             this.displayIdentify = true;
-             this.map.setCursor("default");
-          });
-
-        }
+      
 
 
            // lets search the property and send the found parcel from either hcad or db server holding the other information...
