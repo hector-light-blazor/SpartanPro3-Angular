@@ -1,4 +1,4 @@
-import { Component,ViewChild,Input, Output,ElementRef, EventEmitter, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component,ViewChild,Input, Output,ElementRef, EventEmitter, OnInit,OnDestroy, ViewEncapsulation } from '@angular/core';
 import {AppService} from '../app.service';
 import "rxjs/add/operator/takeWhile";
 import { MapServiceService } from '../map-service.service';
@@ -11,7 +11,7 @@ declare var esri;
   styleUrls: ['./esri-map.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class EsriMapComponent implements OnInit {
+export class EsriMapComponent implements OnInit, OnDestroy {
 
   @Output() closeClick = new EventEmitter<string>(); // close click element send event emitter to parent..
   @Output() reset = new EventEmitter<boolean>(); // handles reseting variables on parent comp if needed.
@@ -83,10 +83,11 @@ export class EsriMapComponent implements OnInit {
   ngOnDestroy() {
     this.isAlive = false;
     if(this.map) {
+      //FIRST TOOLS THEN MAP  Destroy the measurement tool
+      this.measureDiv.destroy();
       this.map.removeAllLayers();
       this.map.destroy();
-      // Destroy the measurement tool
-      this.measureDiv.destroy();
+      
     }
     
   }
@@ -167,6 +168,7 @@ export class EsriMapComponent implements OnInit {
      
     }else if(this.basemap == 'IMAGERY') {
       
+      console.log("IMAGERY")
       this.base = true;
       this.image = false;
 

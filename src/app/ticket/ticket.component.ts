@@ -738,11 +738,10 @@ export class TicketComponent implements OnInit {
    // this.app.FIND_WCAD()
    //ONLY IF IS PROPERTY ID SEARCH WCAD...
    if(this.app.propertyId == property) {
-     let wcadsearch = "searchText=" + value + "&contains=true&searchFields=pid&layers=0&returnGeometry=true&f=pjson";
+     let wcadsearch = "searchText=" + value + "&sr=4326&contains=true&searchFields=pid&layers=0&returnGeometry=true&f=pjson";
     
      this.app.FIND_WCAD(wcadsearch).subscribe((wcadResponse: any) => {
-        console.log("TEST");
-        console.log(wcadResponse);
+        
         if(wcadResponse) {
 
           this.wparcels = wcadResponse.results;

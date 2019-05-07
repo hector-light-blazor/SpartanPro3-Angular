@@ -10,7 +10,7 @@ import { MapServiceService } from '../map-service.service';
   templateUrl: './main-map.component.html',
   styleUrls: ['./main-map.component.css']
 })
-export class MainMapComponent implements OnInit {
+export class MainMapComponent implements OnInit, OnDestroy {
 
   // Global Variables..
   @ViewChild('map') mapObj:ElementRef; 
