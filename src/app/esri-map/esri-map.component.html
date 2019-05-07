@@ -14,6 +14,8 @@
       </button>
     </span>
     <span class="pull-right">
+      <button (click)="onIdentify()"><img style="margin-bottom: 4px;" src="assets/searchengin-brands.svg" /></button>
+      <button (click)="onMeasure()"  class="button btnSize"><img style="margin-bottom: 4px;" src="assets/tape-solid.svg" /></button>
       <button (click)="toggleQuickPick()" [ngClass]="{'enable': quickPickOnOff}" class="button btnSize">QuickPick</button>
         <button (click)="changeBaseMap()" *ngIf="image" class="button btnSize">Aerial</button>
         <button (click)="changeBaseMap()" *ngIf="base" class="button btnSize">baseMap</button>
@@ -25,6 +27,10 @@
     <app-master-loading [regularLoading]="true" *ngIf="isLoading"></app-master-loading>
     <app-full-screen-pick *ngIf="enabledFullScreenPic" [src]="selectedPic" (onClose)="enabledFullScreenPic = false" ></app-full-screen-pick>
     <app-quick-pick-tools *ngIf="quickPickEnabled" [pic]="selectedPic" (closeOutput)="quickPickEnabled = false; clearMapGraphics();"></app-quick-pick-tools>
+    <app-identify-list (display)="zoomAndFlash($event)" (close)="displayIdentify = false;graphicLayer.clear();" [list]="mapService.identifyResponse" *ngIf="displayIdentify"></app-identify-list>
+    <div id="mtool" class="dijitTitlePaneTitle" style="position: absolute; display: none; bottom: 0;width: 330px; z-index: 4000;">
+      <div id="measurementDiv"></div>
+    </div>
     <div #map id="map" >
 
     </div>

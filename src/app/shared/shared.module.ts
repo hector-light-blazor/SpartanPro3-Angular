@@ -6,6 +6,7 @@ import { MasterLoadingComponent } from '../master-loading/master-loading.compone
 import { FilterminePipe } from '../filtermine.pipe';
 import { TicketWorkflowComponent } from '../ticket-workflow/ticket-workflow.component';
 import { FormsModule } from '@angular/forms';
+import { IdentifyListComponent } from '../identify-list/identify-list.component';
 import { FileUploaderComponent } from '../file-uploader/file-uploader.component';
 import { FileViewerComponent } from '../file-viewer/file-viewer.component';
 import { EsriMapComponent } from '../esri-map/esri-map.component';
@@ -15,7 +16,7 @@ import { GoogleMapComponent } from '../google-map/google-map.component';
 import { DatatablePipe } from '../datatable.pipe';
 import { UppercaseDirective } from '../uppercase.directive';
 import { LeafletMapComponent } from '../leaflet-map/leaflet-map.component';
-
+import { KeysPipe } from '../keys.pipe';
 
 @NgModule({
   imports: [
@@ -27,6 +28,8 @@ import { LeafletMapComponent } from '../leaflet-map/leaflet-map.component';
   ],
   providers: [],
   declarations: [MasterLoadingComponent, 
+    KeysPipe,
+    IdentifyListComponent,
     TicketWorkflowComponent,
     FileUploaderComponent, 
     FileViewerComponent, 
@@ -37,7 +40,7 @@ import { LeafletMapComponent } from '../leaflet-map/leaflet-map.component';
     GoogleMapComponent,
     FilterminePipe, DatatablePipe, UppercaseDirective],
   exports: [MasterLoadingComponent,FormsModule, TextMaskModule,NgxDatatableModule,
-    TicketWorkflowComponent,FileUploaderComponent, EsriMapComponent,LeafletMapComponent, GoogleMapComponent,
-    FileViewerComponent,QuickPickToolsComponent ,FullScreenPickComponent, FilterminePipe, DatatablePipe, UppercaseDirective]
+    TicketWorkflowComponent,IdentifyListComponent, FileUploaderComponent, EsriMapComponent,LeafletMapComponent, GoogleMapComponent,
+    FileViewerComponent,QuickPickToolsComponent ,FullScreenPickComponent,KeysPipe, FilterminePipe, DatatablePipe, UppercaseDirective]
 })
 export class SharedModule { }

@@ -1,7 +1,10 @@
 import { Component,ViewChild,Input, Output,ElementRef, EventEmitter, OnInit, ViewEncapsulation } from '@angular/core';
 import {AppService} from '../app.service';
 import "rxjs/add/operator/takeWhile";
+import { MapServiceService } from '../map-service.service';
 
+//We might used don't know yet...
+declare var esri;
 @Component({
   selector: 'app-esri-map',
   templateUrl: './esri-map.component.html',
@@ -26,17 +29,20 @@ export class EsriMapComponent implements OnInit {
   // =-=-=-= ESRI VARIABLES _+_+__+_
   map: any; //Map Object to display layers...
   parcelLayer: any = null; // this layer displays all parcels for selection or display...
+  graphicLayer: any = null; // this layer is for identify...
   ticketLayer: any = null; //Be able to edit and move graphic tickets...
   isLoading: boolean = true;
   edit: any = null;// this object handles the editing for the current graphics layer...
   pointSymbol: any = null; //holds the point symbol...
+  lineSymbol: any = null; // holds the polyline symbol..
   polygonSymbol: any = null; // holds the polygon symbol....
   query: any = null; // holds query object...
   queryTask: any = null; // holds query task....
   quickPickLayer: any = null; // Holds all the camera pictures coming from quick pick...]
   msagLayer: any = null; // msag community layer..
   trackExtent: any = null;
-
+  measureDiv: any = null;
+  displayIdentify: boolean = false;
 
   // =-=-= QUICK PICK TOOLS =-=-=-=-=-=
   quickPickOnOff:boolean = true;
@@ -47,9 +53,13 @@ export class EsriMapComponent implements OnInit {
   enabledFullScreenPic: boolean = false;
   isAlive: boolean = true; //Controls the alive part for unsubscribe and subscribe...
 
-  constructor(private app: AppService){ }
+  constructor(private app: AppService, public  mapService: MapServiceService){ }
 
   ngOnInit() {
+    //console.log(esri);
+
+    this.mapService.identifyObject = new this.app.esriIdentifyTask(this.app.mapFlexURLRanges);
+    this.mapService.identifyParams = new this.app.esriIdentifyParams()
 
     //=-=-= INIT MAP =-=-=
     this.initMap();
@@ -75,6 +85,8 @@ export class EsriMapComponent implements OnInit {
     if(this.map) {
       this.map.removeAllLayers();
       this.map.destroy();
+      // Destroy the measurement tool
+      this.measureDiv.destroy();
     }
     
   }
@@ -100,11 +112,18 @@ export class EsriMapComponent implements OnInit {
      this.query.outFields = [this.app.propertyId];
      this.queryTask = new this.app.esriQueryTask(this.app.hcadquery);
 
-
+     //Start the measurement tool
+     //defaultLengthUnit: 
+     this.measureDiv = new this.app.esriMeasurement({
+      map: this.map,
+      defaultLengthUnit: esri.Units.FEET
+     
+     }, document.getElementById("measurementDiv"));
+    this.measureDiv.startup();
 
      // DIsplay parcels
      this.parcelLayer = new this.app.esriGraphicsLayer({id: "parcel"});
-
+     this.graphicLayer = new this.app.esriGraphicsLayer();
      // Display msag community
      //this.msagLayer = new this.app.esriGraphicsLayer({id: "msag"});
 
@@ -126,9 +145,7 @@ export class EsriMapComponent implements OnInit {
           
           this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURL, {id: "base"});
           this.map.addLayer(this.app.mapFlexBaseMap);
-          //this.map.addLayer(this.msagLayer);
          
-
 
           let layerInfo = new this.app.esriWMTSLayerInfo({identifier: 'texas', 
             titleMatrixSet: '0to20',format: 'png'});
@@ -143,6 +160,7 @@ export class EsriMapComponent implements OnInit {
           this.map.addLayer(this.app.imageryLayer);
           this.map.addLayer(this.app.mapFlexRoad);
           this.map.addLayer(this.parcelLayer);
+          this.map.addLayer(this.graphicLayer);
         }
 		
       }
@@ -167,6 +185,7 @@ export class EsriMapComponent implements OnInit {
       this.map.addLayer(this.app.mapFlexBaseMap);
       this.map.addLayer(this.app.mapFlexRoad);
       this.map.addLayer(this.parcelLayer);
+      this.map.addLayer(this.graphicLayer);
     
     }
 
@@ -180,6 +199,18 @@ export class EsriMapComponent implements OnInit {
       this.map.addLayer(this.ticketLayer);
     }
 
+
+     // Set the map object..
+     this.mapService.setMapObj(this.map);
+
+     // FINISH THE INDENTIFY PARAMS.....
+     this.mapService.identifyParams.tolerance = 3;
+     this.mapService.identifyParams.returnGeometry = true;
+     this.mapService.identifyParams.layerIds = [2, 8, 11, 26, 13, 32, 31];
+     this.mapService.identifyParams.layerOption = this.app.esriIdentifyParams.LAYER_OPTION_ALL;
+     this.mapService.identifyParams.width = this.map.width;
+     this.mapService.identifyParams.height = this.map.height;
+
     this.pointSymbol = new this.app.esriSimpleMarkerSymbol(
       this.app.esriSimpleMarkerSymbol.STYLE_CIRCLE, 
       12, 
@@ -190,6 +221,13 @@ export class EsriMapComponent implements OnInit {
       ), 
       new this.app.esriColor([220,20,60])
       );
+
+
+      this.lineSymbol = new this.app.esriSimpleLineSymbol(
+        this.app.esriSimpleLineSymbol.STYLE_SOLID,
+        new this.app.esriColor([0, 0, 0]), 
+        4
+        )
 
      
     this.polygonSymbol = new this.app.esriSimpleFillSymbol(this.app.esriSimpleFillSymbol.STYLE_SOLID,
@@ -251,6 +289,27 @@ export class EsriMapComponent implements OnInit {
           this.mapEvents.emit(this.point); // send the 4326 geometry back to the user...
           this.app.animateGraphic(graphic); // animate the graphic to be cool
        
+
+
+            // Identifies layers..
+        if(this.mapService.iOn) {
+          console.log("I AM IDENTIFY");
+          this.mapService.identifyParams.geometry = response.mapPoint;
+          this.mapService.identifyParams.mapExtent = this.map.extent;
+          var deferred = this.mapService.identifyObject.execute(this.mapService.identifyParams).addCallback(response => {
+
+             response.forEach(element => {
+                element.display = false;
+             });
+
+             this.mapService.identifyResponse = response;
+             this.mapService.iOn = false;
+             this.displayIdentify = true;
+             this.map.setCursor("default");
+          });
+
+        }
+
 
            // lets search the property and send the found parcel from either hcad or db server holding the other information...
          
@@ -394,6 +453,54 @@ export class EsriMapComponent implements OnInit {
   // =-=-=-=-=-=-=-=-=-= MODULE MAXIMIZE MAP =-=-=-=-=-=-=-=-=-=
   maximizeMap() {
 
+  }
+
+  // =-=-=-=-==-=-=- TURN ON AND OFF MEASURING TOOL =-=-=-=-=-=-=-=
+  onMeasure() {
+    var tool = document.getElementById("mtool");
+    var style = tool.style.display;
+    if(style == "none") {
+      tool.style.display = "block";
+    }
+    else {
+      tool.style.display = "none";
+    }
+  }
+
+  //=-=-=-= TURN ON IDENTIFY =-=-=-=
+  onIdentify() {
+    console.log("HELLO");
+    console.log(this.mapService);
+    this.mapService.iOn = true;
+    this.map.setCursor("pointer")
+  }
+
+  //=-=-=- ZOOM AND FLASH =-=-=-
+   // Zoom And Flash...
+   zoomAndFlash(feature) {
+
+    // First all Graphics in the layer
+    this.graphicLayer.clear();
+
+   // What geometry type to check...
+   switch (feature.geometry.type) {
+     case new this.app.esriPoint().type:
+       this.graphicLayer.add(new this.app.esriGraphic(feature.geometry, this.pointSymbol));
+       let circle = this.app.esriCircle(feature.geometry, {"radius": 300});
+       
+       this.map.setExtent(circle.getExtent());
+       break;
+     case new this.app.esriPolyline().type:
+        this.graphicLayer.add(new this.app.esriGraphic(feature.geometry, this.lineSymbol));
+        this.map.setExtent(feature.geometry.getExtent())
+        break;
+     case new this.app.esriPolygon().type:
+        this.graphicLayer.add(new this.app.esriGraphic(feature.geometry, this.polygonSymbol));
+        this.map.setExtent(feature.geometry.getExtent())
+        break;
+     default:
+       break;
+   }
   }
 
   //=-=-=-=-=-= MODULE TO CHANGE BASE MAP =-=-=-=-=-=
