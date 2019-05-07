@@ -1124,7 +1124,7 @@ export class TicketComponent implements OnInit {
         this.isMapEnabled = true;
         this.app.ticketCenter = poly;
         this.extent = poly.getExtent();
-        this.base = 'MAPFLEX';
+        this.base = 'IMAGERY';
         this.parcel = poly;
         this.enableTicket = false;
         this.loc = null;
