@@ -275,7 +275,7 @@ export class TicketComponent implements OnInit {
   }
 
   // Once ticket number is generate save initial ticket to db server
-  saveInitialTicket() {
+  saveInitialTicket() { //THIS SAVES THE BASIC INFO OF THE TICKET WHEN CREATED>>>>
 
       let attr = {
         objectid: this.attributes.objectid,
@@ -288,6 +288,7 @@ export class TicketComponent implements OnInit {
       this.app.POST_METHOD(this.app.route.api.initTicket, {data: attr}).subscribe((response: any) => {
         if(response.success){
           this.attributes.id_ticket = response.id.id_ticket;
+          this.attributes.started_ticket = this.app.account_info.user_id; //WE WILL SAVE THE STARTED TICKET>>>>
           // this.ticketNum.emit(this.attributes.id_ticket);
         
           setTimeout(function() {
@@ -449,9 +450,10 @@ export class TicketComponent implements OnInit {
           ok = (this.attributes.system_assign) ? ((typeof this.attributes.system_assign == "string") ?  (this.attributes.system_assign.indexOf("[]") == -1) : ((this.attributes.system_assign.a.length > 0) ? true : false)) : false;
           
           if(ok) { //if there is something here perfect no route..
-            this.attributes['sentto'] = this._routeFigure();
+            this.attributes['sentto'] = this._routeFigureAdvance();
             ok = true;
           }else { //if there is no personnel lets get random people..
+            console.log()
             ok = false;
             let lv:number = 0;
             let db: number = 0;
@@ -473,7 +475,7 @@ export class TicketComponent implements OnInit {
                   });
                   // Set it up to the variable..
                   this.attributes.system_assign = {a: [lv, db, gis, started], index: 0};
-                  this.attributes['sentto'] = this._routeFigure(); // make decision who to pass...
+                  this.attributes['sentto'] = this._routeFigureAdvance(); // make decision who to pass...
                   // Finally we can save the information to the db server..
                   this.masterSave(this.prepareTicket());
 
@@ -1155,7 +1157,7 @@ export class TicketComponent implements OnInit {
       let object = "x=" + x + "&y=" + y;
       let started:number = parseInt(this.attributes.started_ticket);
       this.app.GET_METHOD(this.app.route.api.gRouting + object).subscribe((response:any) => {
-         // console.log(response);
+         console.log(response);
           if(response.success){
             let arr = (response.data.length == 1) ? JSON.parse("[" + response.data[0].staff.split(",") + "]") : response.data;
             
@@ -1163,6 +1165,7 @@ export class TicketComponent implements OnInit {
               arr.push(started); //add one more to the list which is the creator of the ticket...
                 this.attributes.system_assign = {a: arr, index: 0};
             }
+            console.log(this.attributes.system_assign);
           }
       }, error => { // If error go on fall back but only get the information needed..
 

@@ -5,7 +5,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "buildtest"     : "ng build --prod --aot --bh=/spartantest/",
+    "build": "ng build --prod --aot --bh=/spartanpro/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
