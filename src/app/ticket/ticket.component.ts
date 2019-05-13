@@ -448,15 +448,15 @@ export class TicketComponent implements OnInit {
           // If system assign null then get random people...
           ok = (this.attributes.system_assign) ? ((typeof this.attributes.system_assign == "string") ?  (this.attributes.system_assign.indexOf("[]") == -1) : ((this.attributes.system_assign.a.length > 0) ? true : false)) : false;
           
-          if(ok) {
+          if(ok) { //if there is something here perfect no route..
             this.attributes['sentto'] = this._routeFigure();
             ok = true;
-          }else {
+          }else { //if there is no personnel lets get random people..
             ok = false;
             let lv:number = 0;
             let db: number = 0;
             let gis: number = 0;
-           
+            let started: number = parseInt(this.attributes.started_ticket);
             // if system assign is blank lets get back route from db server
             this.app.GET_METHOD(this.app.route.api.bRouting + this.app.account_info.organization_id).subscribe((response: any) => {
                 if(response.success){ // Routing Fail .. needs to assign users for this operation..
@@ -472,7 +472,7 @@ export class TicketComponent implements OnInit {
                         }
                   });
                   // Set it up to the variable..
-                  this.attributes.system_assign = {a: [lv, db, gis], index: 0};
+                  this.attributes.system_assign = {a: [lv, db, gis, started], index: 0};
                   this.attributes['sentto'] = this._routeFigure(); // make decision who to pass...
                   // Finally we can save the information to the db server..
                   this.masterSave(this.prepareTicket());
@@ -914,7 +914,8 @@ export class TicketComponent implements OnInit {
     }
 
     // =-=-=-=-=-=-=-= MODULE PASS TICKET TO NEXT ROUTE =-==-=-=-=-=
-    _routeFigure() {
+    // ===-=-=-IMPLEMENTATION FROM THE BEGINING ONLY WORKS FOR 3 people =-=-=-=-=-=
+    _routeFigure():number {
       let sentto:number = parseInt(this.attributes['started_ticket']);
     
       this.attributes.system_assign = (typeof(this.attributes.system_assign) == "string") ? JSON.parse(this.attributes.system_assign) : this.attributes.system_assign;
@@ -922,7 +923,7 @@ export class TicketComponent implements OnInit {
       if(this.attributes['system_assign'].a.length > 0) {
            if(this.attributes['system_assign'].a[this.attributes['system_assign'].index] == sentto && this.attributes['system_assign'].index == 0)
           {
-            //.log("IF HERE");
+          
             this.attributes['system_assign'].index++;
             sentto = this.attributes['system_assign'].a[this.attributes['system_assign'].index];
             this.attributes['system_assign'].index++;
@@ -936,6 +937,26 @@ export class TicketComponent implements OnInit {
       }
      // console.log(sentto);
       return sentto;
+    }
+
+
+    //Figure out where to send the ticket based on the routes specified...
+    _routeFigureAdvance() {
+      //Default sentto will always be to itself...
+      let sentto:number = parseInt(this.attributes['started_ticket']);//GET USER ID...
+
+      //If is string lets parse it to json...
+      this.attributes.system_assign = (typeof(this.attributes.system_assign) == "string") ? JSON.parse(this.attributes.system_assign) : this.attributes.system_assign;
+      let lng: number = this.attributes['system_assign'].a.length;
+
+      sentto = this.attributes['system_assign'].a[this.attributes['system_assign'].index]; //Get what ever is the index...
+      
+      this.attributes['system_assign'].index++;
+
+      this.attributes['system_assign'].index = (this.attributes['system_assign'].index == lng) ? 0 : this.attributes['system_assign'].index;
+
+      return sentto;
+
     }
 	
 	// Make Decision from pop up confirm decision to delete or archive...
@@ -1132,12 +1153,14 @@ export class TicketComponent implements OnInit {
 
     gisRouting(x, y) { // <<<<<<GET PEOPLE RESPONSIBLE FOR THE GIS ROUTE>>>>>
       let object = "x=" + x + "&y=" + y;
+      let started:number = parseInt(this.attributes.started_ticket);
       this.app.GET_METHOD(this.app.route.api.gRouting + object).subscribe((response:any) => {
          // console.log(response);
           if(response.success){
-            let arr = (response.data.length == 1) ? JSON.parse("[" + response.data[0].staff.split(",") + "]"): response.data;
+            let arr = (response.data.length == 1) ? JSON.parse("[" + response.data[0].staff.split(",") + "]") : response.data;
             
             if(arr.length > 0){ // Add the new route to the ticket...
+              arr.push(started); //add one more to the list which is the creator of the ticket...
                 this.attributes.system_assign = {a: arr, index: 0};
             }
           }
@@ -1147,6 +1170,7 @@ export class TicketComponent implements OnInit {
             let lv:number = 0;
             let db: number = 0;
             let gis: number = 0;
+            let started:number = parseInt(this.attributes.started_ticket);
            // if system assign is blank lets get back route from db server
            this.app.GET_METHOD(this.app.route.api.bRouting + this.app.account_info.organization_id).subscribe((response: any) => {
             if(response.success){ // Routing Fail .. needs to assign users for this operation..
@@ -1162,7 +1186,7 @@ export class TicketComponent implements OnInit {
                     }
               });
               // Set it up to the variable..
-              this.attributes.system_assign = {a: [lv, db, gis], index: 0};
+              this.attributes.system_assign = {a: [lv, db, gis, started], index: 0};
             
             }
         });
