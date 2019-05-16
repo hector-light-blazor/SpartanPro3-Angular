@@ -25,7 +25,7 @@ export class EsriMapComponent implements OnInit, OnDestroy {
   @Input() basemap: string = ''; //Tell the component what basemap to choose to display...
   @ViewChild('map') mapObj:ElementRef; // Controls the html element to put the web map..
   @ViewChild('window') window: ElementRef; // controls the container html of the map..
-
+  height: any = "95%";
   // =-=-=-= ESRI VARIABLES _+_+__+_
   map: any; //Map Object to display layers...
   parcelLayer: any = null; // this layer displays all parcels for selection or display...
@@ -454,12 +454,23 @@ export class EsriMapComponent implements OnInit, OnDestroy {
   
   // =-=-=-=-=-=-=-=-= MODULE MINIMIZED MAP =-=-=-=-=-
   minimizedMap() {
-
+   
+    if(this.height == "95%") {
+      this.height = "4%";
+    }else {
+      this.height = "95%";
+    }
   }
 
   // =-=-=-=-=-=-=-=-=-= MODULE MAXIMIZE MAP =-=-=-=-=-=-=-=-=-=
-  maximizeMap() {
-
+  maximizeMap() { // GO FULL SCREENT..
+    var elem = this.window.nativeElement;
+    if(elem.webkitFullscreenElement) {
+      elem.webkitCancelFullScreen();
+    }
+    else {
+      elem.webkitRequestFullScreen();
+    };
   }
 
   // =-=-=-=-==-=-=- TURN ON AND OFF MEASURING TOOL =-=-=-=-=-=-=-=

@@ -1,4 +1,4 @@
-<div #window class="window" style="position: absolute;top: 8px;left:4px; z-index:2000;width: 99%;height:95%;">
+<div #window class="window" [ngStyle]="{'height': height}" style="position: absolute;top: 8px;left:4px; z-index:2000;width: 99%;">
   <div class="window-caption">
     <span class="window-caption-icon"><i class="fa fa-gamepad" aria-hidden="true"></i></span>
     <span class="window-caption-title">Map Viewer</span>
@@ -23,7 +23,7 @@
           <i class="fa fa-window-minimize" aria-hidden="true"></i>
       </button></span>
   </div>
-  <div class="window-content" style="overflow: hidden;">
+  <div  class="window-content" style="overflow: hidden;">
     <app-master-loading [regularLoading]="true" *ngIf="isLoading"></app-master-loading>
     <app-full-screen-pick *ngIf="enabledFullScreenPic" [src]="selectedPic" (onClose)="enabledFullScreenPic = false" ></app-full-screen-pick>
     <app-quick-pick-tools *ngIf="quickPickEnabled" [pic]="selectedPic" (closeOutput)="quickPickEnabled = false; clearMapGraphics();"></app-quick-pick-tools>
