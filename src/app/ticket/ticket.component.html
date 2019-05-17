@@ -77,13 +77,13 @@
         <div class="frame ribbed-white" id="customerData">
             <div class="input-control text full-size" data-role="input">
                <label  >First Name</label>
-               <input [disabled]="customerSection" type="text"  uppercase   [(ngModel)]="attributes.cfirst_name"  >
+               <input [disabled]="customerSection" type="text"     [(ngModel)]="attributes.cfirst_name"  >
             </div>
             <br>
             <br>
             <div class="input-control text full-size" data-role="input">
                 <label  >Last Name</label>
-                <input [disabled]="customerSection" type="text"  uppercase  [(ngModel)]="attributes.clast_name" >
+                <input [disabled]="customerSection" type="text"    [(ngModel)]="attributes.clast_name" >
             </div>
             <br>
             <br>
@@ -136,7 +136,7 @@
             <br>
             <div class="input-control textarea full-size">
                  <label  >Mailing Info</label>
-                <textarea uppercase [disabled]="customerSection"   [(ngModel)]="attributes.mailing_address" ></textarea>
+                <textarea  [disabled]="customerSection"   [(ngModel)]="attributes.mailing_address" ></textarea>
             </div>
          </div> <!-- End Of Customer Section -->
 
@@ -144,69 +144,69 @@
           
             <div class="input-control text full-size" data-role="input">
             <label  >Owner First Name</label>
-              <input uppercase [disabled]="premisesSection" type="text"  [(ngModel)]="attributes.pfirst_name" >
+              <input  [disabled]="premisesSection" type="text"  [(ngModel)]="attributes.pfirst_name" >
             </div>
             <br>
             <br>
             <div class="input-control text full-size" data-role="input">
                 <label  >Owner Last Name</label>
-                <input uppercase [disabled]="premisesSection" type="text"   [(ngModel)]="attributes.plast_name" >
+                <input  [disabled]="premisesSection" type="text"   [(ngModel)]="attributes.plast_name" >
             </div>
             
             <!-- <div class="input-control text full-size">
                 <label  >Owner Full Name</label>
-                <input uppercase [disabled]="premisesSection" type="text" $event, 'pfull_name')" [(ngModel)]="attributes.pfull_name" >
+                <input  [disabled]="premisesSection" type="text" $event, 'pfull_name')" [(ngModel)]="attributes.pfull_name" >
             </div> -->
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Subdivision</label>
-                <input uppercase [disabled]="premisesSection" type="text"  [(ngModel)]="attributes.subdivision"  >
+                <input  [disabled]="premisesSection" type="text"  [(ngModel)]="attributes.subdivision"  >
                 <button class="button"><i aria-hidden="true" class="fa fa-search"></i></button>
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Block Number</label>
-                <input uppercase [disabled]="premisesSection" type="text"    [(ngModel)]="attributes.block_num"  >
+                <input  [disabled]="premisesSection" type="text"    [(ngModel)]="attributes.block_num"  >
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Lot Number</label>
-                <input uppercase [disabled]="premisesSection" type="text"   [(ngModel)]="attributes.lot_num" >
+                <input  [disabled]="premisesSection" type="text"   [(ngModel)]="attributes.lot_num" >
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Tax Account</label>
-                <input uppercase [disabled]="premisesSection"  type="text" (focusout)="getConnections(); findParcelsInfo(attributes.tax_account_num, app.taxAccount, true)"  [(ngModel)]="attributes.tax_account_num"  >
+                <input  [disabled]="premisesSection"  type="text" (focusout)="getConnections(); findParcelsInfo(attributes.tax_account_num, app.taxAccount, true)"  [(ngModel)]="attributes.tax_account_num"  >
               
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Property ID</label>
-                <input uppercase [disabled]="premisesSection" type="text" (focusout)="getConnections(); findParcelsInfo(attributes.property_id, app.propertyId, true, true);"  [(ngModel)]="attributes.property_id"  >
+                <input  [disabled]="premisesSection" type="text" (focusout)="getConnections(); findParcelsInfo(attributes.property_id, app.propertyId, true, true);"  [(ngModel)]="attributes.property_id"  >
                 
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Street</label>
-                <input uppercase [disabled]="premisesSection" type="text"   [(ngModel)]="attributes.street"  >
+                <input  [disabled]="premisesSection" type="text"   [(ngModel)]="attributes.street"  >
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Intersection</label>
-                <input uppercase [disabled]="premisesSection" type="text"   [(ngModel)]="attributes.intersection" >
+                <input  [disabled]="premisesSection" type="text"   [(ngModel)]="attributes.intersection" >
             </div>
             <br>
             <br>
             <div class="input-control textarea full-size">
                 <label  >Building Description</label>
-                <textarea uppercase [disabled]="premisesSection"    [(ngModel)]="attributes.building_description" >
+                <textarea  [disabled]="premisesSection"    [(ngModel)]="attributes.building_description" >
                 </textarea>
             </div>
             <br>
@@ -225,49 +225,49 @@
             <br>
             <div class="input-control text full-size" data-role="input">
                 <label  >Pre Directional</label>
-                <input uppercase [disabled]="lvSection" type="text"   [(ngModel)]="attributes.prd"  >
+                <input  [disabled]="lvSection" type="text"   [(ngModel)]="attributes.prd"  >
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Road Name</label>
-                <input uppercase [disabled]="lvSection" type="text"  [(ngModel)]="attributes.rd" >
+                <input  [disabled]="lvSection" type="text"  [(ngModel)]="attributes.rd" >
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Street Type</label>
-                <input uppercase [disabled]="lvSection" type="text"  [(ngModel)]="attributes.sts"  >
+                <input  [disabled]="lvSection" type="text"  [(ngModel)]="attributes.sts"  >
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Post Directional</label>
-                <input uppercase [disabled]="lvSection" type="text"    [(ngModel)]="attributes.pod"  >
+                <input  [disabled]="lvSection" type="text"    [(ngModel)]="attributes.pod"  >
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Unit</label>
-                <input uppercase [disabled]="lvSection" type="text"   [(ngModel)]="attributes.unit" >
+                <input  [disabled]="lvSection" type="text"   [(ngModel)]="attributes.unit" >
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >MSAG Comm</label>
-                <input uppercase [disabled]="lvSection" type="text"   [(ngModel)]="attributes.msag_comm" >
+                <input  [disabled]="lvSection" type="text"   [(ngModel)]="attributes.msag_comm" >
             </div>
             <!-- <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Postal Comm</label>
-                <input uppercase [disabled]="lvSection" type="text"  [(ngModel)]="attributes.postal_comm" >
+                <input  [disabled]="lvSection" type="text"  [(ngModel)]="attributes.postal_comm" >
             </div> -->
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Full Address</label>
-                <input uppercase [disabled]="lvSection" type="text"  [(ngModel)]="attributes.full_address"  >
+                <input  [disabled]="lvSection" type="text"  [(ngModel)]="attributes.full_address"  >
                 <button class="button"><span class="mif-search"></span></button>
             </div>
             <br>
@@ -299,7 +299,7 @@
             </label>
             <label class="switch-original " >
               Called Customer 
-                <input [disabled]="lvSection" type="checkbox" [(ngModel)]="attributes.called_cust"  >
+                <input  type="checkbox" [(ngModel)]="attributes.called_cust"  >
                 <span class="check"></span>
             </label>
             <!-- <label class="switch-original " >
@@ -329,13 +329,15 @@
             <br>
             <div class="input-control text full-size">
               <label>Lat</label>
-              <input type="text" (focusout)="changeXYFields()" [(ngModel)]="attributes.lat" >
+              <input id='latty' type="text" (focusout)="changeXYFields()" [(ngModel)]="attributes.lat" >
+              <button (click)="copyAndPaste('latty')" class="button">COPY</button>
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
               <label>Long</label>
-              <input  type="text" (focusout)="changeXYFields()" [(ngModel)]="attributes.longy" >
+              <input id="longy" type="text" (focusout)="changeXYFields()" [(ngModel)]="attributes.longy" >
+              <button (click)="copyAndPaste('longy')" class="button">COPY</button>
             </div>       
       </div> <!-- End Of LV Section -->
       <div class="frame ribbed-white" id="db">
@@ -447,7 +449,7 @@
                             
                         </div>
                         <p>
-                          <textarea rows="4" cols="40" *ngIf="com.edit" (keyup.enter)="editComment(com)" [(ngModel)]="com.ticket_comments"  uppercase>
+                          <textarea rows="4" cols="40" *ngIf="com.edit" (keyup.enter)="editComment(com)" [(ngModel)]="com.ticket_comments"  >
                             </textarea>
                           <label *ngIf="!com.edit">{{com.ticket_comments}}</label>
                         </p>

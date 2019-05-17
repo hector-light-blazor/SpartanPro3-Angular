@@ -302,6 +302,15 @@ export class TicketComponent implements OnInit {
 
   }
 
+  //FUnction to copy and paste 
+  copyAndPaste(ele) {
+    let element = (<HTMLInputElement>document.getElementById(ele));
+  
+    element.select();
+    document.execCommand("copy");
+    
+  }
+
   //Function update ticket route..
   updateRoute(event) {
     this.stopSave = event.stopSave;

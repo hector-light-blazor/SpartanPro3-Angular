@@ -14,8 +14,8 @@
       </button>
     </span>
     <span class="pull-right">
-      <button class="button btnSize" (click)="onIdentify()"><img style="margin-bottom: 4px;" src="assets/searchengin-brands.svg" /></button>
-      <button (click)="onMeasure()"  class="button btnSize"><img style="margin-bottom: 4px;" src="assets/tape-solid.svg" /></button>
+      <button class="button btnSize" (click)="onIdentify()"><img class="img18" style="margin-bottom: 4px;" src="assets/searchengin-brands.svg" /></button>
+      <button (click)="onMeasure()"  class="button btnSize"><img class="img18" style="margin-bottom: 4px;" src="assets/tape-solid.svg" /></button>
       <button (click)="toggleQuickPick()" [ngClass]="{'enable': quickPickOnOff}" class="button btnSize">QuickPick</button>
         <button (click)="changeBaseMap()" *ngIf="image" class="button btnSize">Aerial</button>
         <button (click)="changeBaseMap()" *ngIf="base" class="button btnSize">baseMap</button>
