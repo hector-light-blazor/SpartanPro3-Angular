@@ -436,7 +436,7 @@ export class TicketComponent implements OnInit {
 
   stamp2() {
 
-    if(this.attributes.address_by < 1) {
+    if(this.attributes.address_issued_by < 1) {
       this.meFullName2 = this.app.account_info.first_name + " " + this.app.account_info.last_name;
       this.attributes.address_issued_by = this.app.account_info.user_id;
     }else{
