@@ -57,6 +57,11 @@ export class TicketComponent implements OnInit {
   stopSave: boolean = false; // NG DESTROY HACK PREVENTS FROM SENDING TICKET TO NEXT PERSON....
   displayDialog: boolean = false; // Display
   iswalking: string = "";
+  meFullName: string = "";
+  meFullName2: string = "";
+  meStamp: boolean = false;
+  meStamp2: boolean = false;
+
   // Control ticket fields..
   customerSection: boolean = false;
   premisesSection: boolean = false;
@@ -168,6 +173,8 @@ export class TicketComponent implements OnInit {
               //... display utility in
               this.isUti();
 
+              
+
               // ... GET PARCELS INFORMATION FROM HCAD>>>>
               this.findParcelsInfo(this.attributes.property_id, this.app.propertyId, true);
               
@@ -272,6 +279,29 @@ export class TicketComponent implements OnInit {
 
   
     
+  }
+
+
+  //Check the stamps in the ticket section of lv.
+  checkStamps() {
+    
+    this.users.forEach(element => {
+        let id = element['user_id'];
+        if(this.attributes.address_by == id) {
+          this.meFullName = element['first_name'] + " " + element['last_name'];
+          return;
+        }
+    });
+    
+    this.users.forEach(element => {
+      let id = element['user_id'];
+     if(this.attributes.address_issued_by == id) {
+        this.meFullName2 = element['first_name'] + " " + element['last_name'];
+        return;
+      }
+
+
+  });
   }
 
   // Once ticket number is generate save initial ticket to db server
@@ -382,13 +412,37 @@ export class TicketComponent implements OnInit {
             element.user_id = parseInt(element.user_id);
         });
         this.users = response.data;
+
+        this.checkStamps();
     });
 
-   // this.lvusers = this.app.LVUSERS;
+   //this.lvusers = this.app.LVUSERS;
 
     this.lvusers = this.susers = this.app.SUSERS;
+    //console.log(this.lvusers);
 
+  }
 
+  //stamp the address by clicking here
+  stamp() {
+    if(this.attributes.address_by < 1) {
+      this.meFullName = this.app.account_info.first_name + " " + this.app.account_info.last_name;
+      this.attributes.address_by = this.app.account_info.user_id;
+    }else {
+      this.meStamp = true;
+    }
+   
+  }
+
+  stamp2() {
+
+    if(this.attributes.address_by < 1) {
+      this.meFullName2 = this.app.account_info.first_name + " " + this.app.account_info.last_name;
+      this.attributes.address_issued_by = this.app.account_info.user_id;
+    }else{
+      this.meStamp2 = true;
+    }
+    
   }
 
   // Module to fetch duplicate tickets in the system...

@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   remeberMe: boolean = false;
   display: boolean = true;
   
+  
   cookie: Array<string> = [];
   constructor(private _appService: AppService, private router: Router) { 
    

@@ -77,13 +77,13 @@
         <div class="frame ribbed-white" id="customerData">
             <div class="input-control text full-size" data-role="input">
                <label  >First Name</label>
-               <input [disabled]="customerSection" type="text"     [(ngModel)]="attributes.cfirst_name"  >
+               <input [disabled]="customerSection" type="text"     [(ngModel)]="attributes.cfirst_name"  uppercase>
             </div>
             <br>
             <br>
             <div class="input-control text full-size" data-role="input">
                 <label  >Last Name</label>
-                <input [disabled]="customerSection" type="text"    [(ngModel)]="attributes.clast_name" >
+                <input [disabled]="customerSection" type="text"    [(ngModel)]="attributes.clast_name" uppercase>
             </div>
             <br>
             <br>
@@ -144,13 +144,13 @@
           
             <div class="input-control text full-size" data-role="input">
             <label  >Owner First Name</label>
-              <input  [disabled]="premisesSection" type="text"  [(ngModel)]="attributes.pfirst_name" >
+              <input  [disabled]="premisesSection" type="text"  [(ngModel)]="attributes.pfirst_name" uppercase >
             </div>
             <br>
             <br>
             <div class="input-control text full-size" data-role="input">
                 <label  >Owner Last Name</label>
-                <input  [disabled]="premisesSection" type="text"   [(ngModel)]="attributes.plast_name" >
+                <input  [disabled]="premisesSection" type="text"   [(ngModel)]="attributes.plast_name" uppercase>
             </div>
             
             <!-- <div class="input-control text full-size">
@@ -161,7 +161,7 @@
             <br>
             <div class="input-control text full-size">
                 <label  >Subdivision</label>
-                <input  [disabled]="premisesSection" type="text"  [(ngModel)]="attributes.subdivision"  >
+                <input  [disabled]="premisesSection" type="text"  [(ngModel)]="attributes.subdivision"  uppercase>
                 <button class="button"><i aria-hidden="true" class="fa fa-search"></i></button>
             </div>
             <br>
@@ -225,37 +225,37 @@
             <br>
             <div class="input-control text full-size" data-role="input">
                 <label  >Pre Directional</label>
-                <input  [disabled]="lvSection" type="text"   [(ngModel)]="attributes.prd"  >
+                <input  [disabled]="lvSection" type="text"   [(ngModel)]="attributes.prd"  uppercase>
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Road Name</label>
-                <input  [disabled]="lvSection" type="text"  [(ngModel)]="attributes.rd" >
+                <input  [disabled]="lvSection" type="text"  [(ngModel)]="attributes.rd" uppercase>
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Street Type</label>
-                <input  [disabled]="lvSection" type="text"  [(ngModel)]="attributes.sts"  >
+                <input  [disabled]="lvSection" type="text"  [(ngModel)]="attributes.sts"  uppercase>
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Post Directional</label>
-                <input  [disabled]="lvSection" type="text"    [(ngModel)]="attributes.pod"  >
+                <input  [disabled]="lvSection" type="text"    [(ngModel)]="attributes.pod"  uppercase>
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Unit</label>
-                <input  [disabled]="lvSection" type="text"   [(ngModel)]="attributes.unit" >
+                <input  [disabled]="lvSection" type="text"   [(ngModel)]="attributes.unit" uppercase>
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >MSAG Comm</label>
-                <input  [disabled]="lvSection" type="text"   [(ngModel)]="attributes.msag_comm" >
+                <input  [disabled]="lvSection" type="text"   [(ngModel)]="attributes.msag_comm" uppercase>
             </div>
             <!-- <br>
             <br>
@@ -267,19 +267,20 @@
             <br>
             <div class="input-control text full-size">
                 <label  >Full Address</label>
-                <input  [disabled]="lvSection" type="text"  [(ngModel)]="attributes.full_address"  >
+                <input  [disabled]="lvSection" type="text"  [(ngModel)]="attributes.full_address" uppercase >
                 <button class="button"><span class="mif-search"></span></button>
             </div>
             <br>
             <br>
             <div class="input-control text full-size">
                 <label  >Address By</label>
-                <select [disabled]="lvSection" (change)="changeLVPersonnel()" [(ngModel)]="attributes.address_by" >
-                    <option *ngFor="let usr of lvusers" value="{{usr.user_id}}">{{usr.first_name + " " + usr.last_name}}</option>
-                    
-                </select>
-                <button (click)="attributes.address_by = null" class="button"><i class="fa fa-undo" aria-hidden="true"></i>
+                <input class="point"   [value]="meFullName" type="text" (click)="stamp()" placeholder="CLICK HERE TO STAMP"  readonly  />
+               
+                <button (click)="stamp()" class="button">
+                    STAMP ME
                 </button>
+                <span style="float: right; color: red;" *ngIf="meStamp">GET WITH ADMIN CAN'T CHANGE STAMP</span>
+                <br >
             </div>
             <!-- BR -->
             <br>
@@ -318,12 +319,19 @@
             <br>
             <div class="input-control text full-size">
                 <label  >Address Issued By</label>
-                <select [disabled]="lvSection" [(ngModel)]="attributes.address_issued_by" >
+                <input class="point"   [value]="meFullName2" type="text" (click)="stamp2()" placeholder="CLICK HERE TO STAMP" readonly   />
+               
+                <button (click)="stamp2()" class="button">
+                    STAMP ME
+                </button>
+                <span style="float: right; color: red;" *ngIf="meStamp2">GET WITH ADMIN CAN'T CHANGE STAMP</span>
+                <br>
+                <!-- <select  class="point" [disabled]="lvSection" [(ngModel)]="attributes.address_issued_by" >
                     <option *ngFor="let usr of susers" value="{{usr.user_id}}">{{usr.first_name + " " + usr.last_name}}</option>
                     
-                </select>
-                <button (click)="attributes.address_issued_by = null" class="button"><i class="fa fa-undo" aria-hidden="true"></i>
-                </button>
+                </select> -->
+                <!-- <button (click)="attributes.address_issued_by = null" class="button"><i class="fa fa-undo" aria-hidden="true"></i>
+                </button> -->
             </div>
             <br>
             <br>
