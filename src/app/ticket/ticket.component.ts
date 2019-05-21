@@ -1067,6 +1067,7 @@ export class TicketComponent implements OnInit {
            
               let attributes = {
                 id_ticket: this.attributes.id_ticket,
+                address_issued_date: this.attributes.address_issued_date,
                 address_issued_by: this.attributes.address_issued_by,
                 system_assign: '{"a": [], "index": 0}',
                 sentto: "00",
