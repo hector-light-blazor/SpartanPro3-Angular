@@ -50,7 +50,7 @@
                       <input [(ngModel)]="searchAll"  type="text" placeholder="Search Info" capitalize>
                   </div>
                   <div class="dropdown-button">
-                    <button class="button rounded small-button dropdown-toggle">
+                    <button *ngIf="organizationID == 6" class="button rounded small-button dropdown-toggle">
                       <i class="fa fa-cogs"></i>
                     </button>
                     <ul class="split-content d-menu" data-role="dropdown">

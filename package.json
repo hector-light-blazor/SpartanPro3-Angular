@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "buildtest"     : "ng build --prod --aot --bh=/spartantest/",
+    "buildtest": "ng build --prod --aot --bh=/spartantest/",
     "build": "ng build --prod --aot --bh=/spartanpro/",
     "test": "ng test",
     "lint": "ng lint",
@@ -36,6 +36,7 @@
     "esri-leaflet": "^2.1.4",
     "esri-loader": "^2.0.0",
     "exif-js": "^2.3.0",
+    "logrocket": "^1.0.0",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
   },

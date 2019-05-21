@@ -21,7 +21,7 @@ export class DashboardTicketsComponent implements OnInit {
   searchInbox: string = '';
   searchMine: string = '';
   organizationFilter: string = ''; //Controls the organization filter for the open tickets..
-  
+  organizationID: number = 0;
   timer = Observable.timer(0, 6000);
   isAlive:boolean = true;
   choosen: any = null; // this variable handles the right click...
@@ -41,6 +41,7 @@ export class DashboardTicketsComponent implements OnInit {
     // 2.) Gather All Open Tickets...
     this.allLoading = true;
     this.openTickets = [];
+    this.organizationID = parseInt(this.app.account_info.organization_id);
     this.inbox = [];
     this.app.POST_METHOD(this.app.route.api.ftInbox, {data: this.app.account_info.user_id}).subscribe((response:any) => {
         if(response.success) {

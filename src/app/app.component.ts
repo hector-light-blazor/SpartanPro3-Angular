@@ -4,6 +4,7 @@ import {AppService} from "./app.service";
 import { Observable } from 'rxjs';
 import "rxjs/add/operator/takeWhile";
 import { NativeNotificationService } from 'angular-notice/lib/native-notification.service';
+import * as LogRocket from 'logrocket';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,7 @@ export class AppComponent {
   ticketCount: number = 0;
 
   constructor(private router: Router, private appService: AppService, private notify: NativeNotificationService) {
-
+    LogRocket.init('t1zy37/test');
     let _self = this;
 
   
