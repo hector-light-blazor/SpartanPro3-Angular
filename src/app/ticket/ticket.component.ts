@@ -171,7 +171,7 @@ export class TicketComponent implements OnInit {
               this.isWalking();
 
               //... display utility in
-              this.isUti();
+              //this.isUti();
 
               
 
@@ -1067,6 +1067,7 @@ export class TicketComponent implements OnInit {
            
               let attributes = {
                 id_ticket: this.attributes.id_ticket,
+                address_issued: (this.attributes.address_issued) ? 1 : 0,
                 address_issued_date: this.attributes.address_issued_date,
                 address_issued_by: this.attributes.address_issued_by,
                 system_assign: '{"a": [], "index": 0}',
@@ -1324,22 +1325,25 @@ export class TicketComponent implements OnInit {
 
     isWalking() {
       
-      if(this.attributes.walk_in == "Yes") {
+      if(this.attributes.walk_in == "Yes" && this.attributes.utility == "Yes") {
+        this.iswalking = "WALK IN - UTILITY";
+      }
+      else if(this.attributes.walk_in == "Yes") {
         this.iswalking = "WALK IN";
-      }else{
-        this.iswalking = "";
-      }
-    }
-
-
-    isUti() {
-      
-      if(this.attributes.utility == "Yes") {
+      }else if(this.attributes.utility == "Yes") {
         this.iswalking = "UTILITY";
-      }else{
-        this.iswalking = "";
       }
     }
+
+
+    // isUti() {
+      
+    //   if(this.attributes.utility == "Yes") {
+    //     this.iswalking += " UTILITY";
+    //   }else{
+    //     this.iswalking = "";
+    //   }
+    // }
 
     // End of Class..
 }

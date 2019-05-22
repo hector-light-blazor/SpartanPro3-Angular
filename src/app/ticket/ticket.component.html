@@ -127,7 +127,7 @@
             <br>
             <div class="input-control text full-size">
                 <label >Utilities</label>
-                <select [disabled]="customerSection" (change)="isUti();" [(ngModel)]="attributes.utility">
+                <select [disabled]="customerSection" (change)="isWalking();" [(ngModel)]="attributes.utility">
                     <option>Yes</option>
                     <option>No</option>                    
                 </select>
@@ -295,7 +295,7 @@
             <br>
             <label class="switch-original " >
               Address Issued
-                <input [disabled]="lvSection" type="checkbox"  [(ngModel)]="attributes.address_issued"  >
+                <input type="checkbox"  [(ngModel)]="attributes.address_issued"  >
                 <span class="check"></span>
             </label>
             <label class="switch-original " >
@@ -312,7 +312,7 @@
             <br>
             <div class="input-control text full-size">
                 Address Issued Date
-                <input [disabled]="lvSection" type="date" [(ngModel)]="attributes.address_issued_date"  >
+                <input  type="date" [(ngModel)]="attributes.address_issued_date"  >
             </div>
             <br>
             <br>
