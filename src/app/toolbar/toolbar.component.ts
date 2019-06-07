@@ -206,6 +206,9 @@ export class ToolbarComponent implements OnInit {
           
           this.app.toolbarActions.next({action: action, data: null});
           break;
+        case this.app.toolbarActivies.TICKET_LETTER_ESIGN:
+          this.app.toolbarActions.next({action: action, data: null});
+          break;
         case this.app.toolbarActivies.MAP_IDENTIFY:
           this.app.toolbarActions.next({action: action, data: null});
           break;

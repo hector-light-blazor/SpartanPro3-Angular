@@ -5,7 +5,9 @@ import { Observable } from 'rxjs';
 import "rxjs/add/operator/takeWhile";
 import { NativeNotificationService } from 'angular-notice/lib/native-notification.service';
 import * as LogRocket from 'logrocket';
+import io from 'socket.io-client';
 
+//const socket = io("http://localhost:3000");
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -21,9 +23,12 @@ export class AppComponent {
   account_info: any;
   ticketFirst: boolean = true;
   ticketCount: number = 0;
+  spartansOnline: any = {};
+  
 
   constructor(private router: Router, private appService: AppService, private notify: NativeNotificationService) {
-    LogRocket.init('t1zy37/test');
+  
+
     let _self = this;
 
   
@@ -33,7 +38,13 @@ export class AppComponent {
     this.appService.cntAppFromLogin.takeWhile(() => this.isAlive).subscribe(info => {
         this.isLoading = true;
         this.account_info = info.user;
+        
         this.appService.account_info = this.account_info;
+
+        //NOTIFY THE SOCKET WE ARE ONLINE....
+        //this.socket.emit("new user", this.appService.account_info.)
+
+
        //  console.log(this.appService.account_info);
         // Get Inbox Information..
         this.timer.flatMap((i) =>  this.appService.POST_METHOD(this.appService.route.api.ftInbox, {data: this.appService.account_info.user_id})).takeWhile(() => this.isAlive).subscribe((response:any) => {
@@ -64,32 +75,32 @@ export class AppComponent {
       //    console.log(response);
 
       //  })
-      this.appService.GET_METHOD(this.appService.route.api.gUConfig + this.appService.account_info.user_id).subscribe((response:any) => {
-       
-        if(response){
-         
-        // console.log(response);
-              for(var x = 0; x < response.length; x++){
-                response[x].json = JSON.parse(response[x].json);
-              }
-            this.appService.account_info.config = response;
+          this.appService.GET_METHOD(this.appService.route.api.gUConfig + this.appService.account_info.user_id).subscribe((response:any) => {
+          
+            if(response){
             
-           
-        
-
-            setTimeout(() => {
-               _self.toolBarOnOff = info.toolbar_on;
+            // console.log(response);
+                  for(var x = 0; x < response.length; x++){
+                    response[x].json = JSON.parse(response[x].json);
+                  }
+                this.appService.account_info.config = response;
+                
               
-                _self.isLoading = false;
-                _self.appService.cmdToToolbar.next({settings: true});
-                _self.router.navigateByUrl("ticket/dashboard");
-                //_self.router.navigateByUrl("Map");
-            }, 400);
             
 
-        } 
-    });
-    });
+                setTimeout(() => {
+                  _self.toolBarOnOff = info.toolbar_on;
+                  
+                    _self.isLoading = false;
+                    _self.appService.cmdToToolbar.next({settings: true});
+                    _self.router.navigateByUrl("ticket/dashboard");
+                    //_self.router.navigateByUrl("Map");
+                }, 400);
+                
+
+            } 
+        });
+    }); //END OF THIS SUBSCRIBE GOING TO USED IT AS WELL FOR OTHER TYPE OF COMMUNICATIONS>>>>
 
   
    
@@ -123,6 +134,11 @@ export class AppComponent {
     });
     
 
+  }
+
+
+  init() {
+      
   }
 
   // make sure to change the service into more elegant solution

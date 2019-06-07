@@ -60,6 +60,7 @@ export class ROUTES {
        fNRF: "nrf/filterNRF/?f=", // filter by date nrf...
        gMSAG: "gis/getMSAG/",  // GET MSAG...
        gLTicket: "template/getLetter/?j=", // This is to generate letter
+       gEsignLetter: "template/pythonTemplateRequest/", //This is to send python spartan server generate letter convert pdf
        sBookmark: "gis/saveBookmark", // SAVE BOOKMARK TO GIS TABLE..
        dBookmark: "gis/deleteBookmark",
        gToken: "gis/getToken/?u="  // GET TOKEN FOR VECTOR TILE MAP..
@@ -100,7 +101,7 @@ export class AppService {
   toolbarActivies: TOOL_ACTIONS = {TICKET_SAVE_TRANSFER: 1, 
     TICKET_ARCHIVE: 2, TICKET_DELETE: 3, TICKET_INSERT_COMMENT: 4, TICKET_ESRI_MAP: 5, TICKET_ESRI_IMAGERY: 6,
     TICKET_DISPLAY_ATTACHMENT: 7, TICKET_LIST_ATTACHMENTS: 8, TICKET_GOOGLE_MAP: 9, TICKET_LETTER: 10,
-    MAP_IDENTIFY: 11, MAP_MEASURE: 12, COLLAPSE_TOOLBAR: 13, EDIT_RANGES: 14, BOOKMARK: 15
+    MAP_IDENTIFY: 11, MAP_MEASURE: 12, COLLAPSE_TOOLBAR: 13, EDIT_RANGES: 14, BOOKMARK: 15, TICKET_LETTER_ESIGN: 16
   };
 
   // Sends information to app component from login component..
@@ -351,6 +352,7 @@ interface TOOL_ACTIONS {
   TICKET_LIST_ATTACHMENTS?: number;
   TICKET_GOOGLE_MAP?: number;
   TICKET_LETTER?: number;
+  TICKET_LETTER_ESIGN?: number;
   MAP_IDENTIFY?: number;
   MAP_MEASURE?:number;
   COLLAPSE_TOOLBAR?:number;
@@ -411,6 +413,7 @@ interface API_ROUTES {
    dFNRF?: string;
    fNRF?: string;
    gLTicket?: string;
+   gEsignLetter?: string;
    sBookmark?: string;
    gToken?: string;
 }

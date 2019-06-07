@@ -18,6 +18,8 @@ export class TicketComponent implements OnInit {
   // ... Private Variables ...
    @ViewChild(DatatableComponent) table: DatatableComponent;
   attributes: Ticket; // ..This Holds the binding for ticket form attributes..
+  showSignature: boolean = false; //Holds the signature pad to esign...
+  pdfFile: any = {};//Holds the file name and page number of the pdf page...
   showFileUploader: boolean = false; // Displays the file uploader to attach files to ticket...
   showFileViewer: boolean = false; //Displays all the attachments to this ticket...
   displayWorkflow: boolean = false; //Display all worflow for this ticket...
@@ -68,6 +70,9 @@ export class TicketComponent implements OnInit {
   lvSection: boolean = false;
   dbSection: boolean = false;
   gisSection: boolean = false;
+
+  //Control the esign letter generation
+  esign: boolean = false;
 
   rows = [];
   columns = [
@@ -576,6 +581,10 @@ export class TicketComponent implements OnInit {
           this.enterComment(action.data);
          break;
         case this.app.toolbarActivies.TICKET_LETTER:
+          this.displayDialogOption();
+          break;
+        case this.app.toolbarActivies.TICKET_LETTER_ESIGN:
+          this.esign = true;
           this.displayDialogOption();
           break;
         case this.app.toolbarActivies.TICKET_ESRI_MAP:

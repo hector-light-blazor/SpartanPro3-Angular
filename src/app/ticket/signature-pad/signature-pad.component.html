@@ -1,0 +1,24 @@
+<div  class="window" style="position: absolute; z-index: 3000;width: 720px;height: 28%; left: 10%">
+  <div class="window-caption">
+      <span class="window-caption-icon"><span class="mif-windows"></span></span>
+      <span class="window-caption-title">Signature PAD</span>
+      <span class="mif-file-pdf"></span>
+      <span class="btn-close" (click)="closeDialog()"></span>
+  </div>
+  <div id="bodyContent" class="window-content " style="height: 100%">
+    <canvas id="signature-pad" width="660" style="border: 1px solid #d00f0fde;" height="120" ></canvas>
+     
+    <br>
+      <button class="button rounded" (click)="clearSign()">
+        Clear Signature
+      </button>
+      <button class="button rounded" (click)="previewLetter()">
+          Preview Letter
+      </button>
+      <button class="button rounded" (click)="clearSign()">
+          Email Letter
+      </button>
+
+  </div>
+</div>
+

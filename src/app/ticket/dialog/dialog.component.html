@@ -1,4 +1,4 @@
-<div class="window" style="position: absolute; z-index: 3000;left: 50%; top: 50%;margin-top: -150px;margin-left: -200px; height: 300px;width: 400px;">
+<div *ngIf="!ESIGN" class="window" style="position: absolute; z-index: 3000;left: 50%; top: 50%;margin-top: -150px;margin-left: -200px; height: 300px;width: 400px;">
     <div class="window-caption">
         <span class="window-caption-icon"><span class="mif-windows"></span></span>
         <span class="window-caption-title">Name Letter</span>
@@ -20,5 +20,39 @@
         </div>
         <br>
         <button class="button rounded" (click)="sendLetterRequest()">Submit</button>
+    </div>
+</div>
+<!-- this div to handle the e sign with tablet -->
+<div *ngIf="ESIGN" class="window" style="position: absolute; z-index: 3000;left: 50%; top: 50%;margin-top: -200px;margin-left: -200px; height: 400px;width: 400px;">
+    <div class="window-caption">
+        <span class="window-caption-icon"><span class="mif-windows"></span></span>
+        <span class="window-caption-title">Letter Information</span>
+       
+        <span class="btn-close" (click)="closeDialog()"></span>
+    </div>
+    <div class="window-content" style="height: auto">
+      <label >Type the name of the customer</label>
+      <br>
+        <div class="input-control text full-size">
+            <input [(ngModel)]="choosen" type="text" uppercase>
+        </div>
+        <label >Suggestions</label>
+        <br>
+        <div class="input-control select full-size">
+            <select  [(ngModel)]="choosen">
+                <option *ngFor="let name of names">{{name}}</option>
+            </select>
+        </div>
+        <hr>
+        <br>
+        <div class="input-control text full-size">
+                <label >Type the print name esign:</label>
+                <br>
+            <input [(ngModel)]="print_name" type="text" uppercase>
+        </div>
+        <br>
+        <br>
+        <button [ngClass]="{'loading-cube': loadingEnglish}" class="button rounded" (click)="sendLetterEsign(ENGLISH)">ENGLISH ESIGN</button>
+        <button [ngClass]="{'loading-cube': loadingSpanish}" class="button rounded" (click)="sendLetterEsign(SPANISH)">SPANISH ESIGN</button>
     </div>
 </div>
