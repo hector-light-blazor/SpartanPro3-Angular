@@ -1,3 +1,4 @@
 <app-master-loading *ngIf="isLoading" [regularLoading]="true" [title]="msg"></app-master-loading> 
 <app-toolbar  *ngIf="toolBarOnOff"></app-toolbar>  
+<app-letter-viewer [src]="pdfSRC" [esign]="esign" [page]="pageNumber" (close)="letterViewerOnOff = false" *ngIf="letterViewerOnOff"></app-letter-viewer>
 <router-outlet></router-outlet>

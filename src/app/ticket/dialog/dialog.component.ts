@@ -144,20 +144,20 @@ export class DialogComponent implements OnInit {
 
    
     let pdfFile: string = "";
-    this.esignPDF.emit({"pdf" : this.pdfFile, "page" : this.pageSelection});
-    // this.app.POST_METHOD(this.app.route.api.gEsignLetter, form).subscribe((response) => {
+    //this.esignPDF.emit({"pdf" : this.pdfFile, "page" : this.pageSelection});
+    this.app.POST_METHOD(this.app.route.api.gEsignLetter, form).subscribe((response) => {
         
-    //   if(response.hasOwnProperty("pdf")) {
-    //       this.pdfFile = response['pdf'];
+      if(response.hasOwnProperty("pdf")) {
+          this.pdfFile = response['pdf'];
 
-    //       this.esignPDF.emit({"pdf" : this.pdfFile, "page" : this.pageSelection});
-    //     }
-    //     if(this.loadingEnglish) {
-    //       this.loadingEnglish = false;
-    //     }else if(this.loadingSpanish) {
-    //       this.loadingSpanish = false;
-    //     }
-    // });
+          this.esignPDF.emit({"pdf" : this.pdfFile, "page" : this.pageSelection});
+        }
+        if(this.loadingEnglish) {
+          this.loadingEnglish = false;
+        }else if(this.loadingSpanish) {
+          this.loadingSpanish = false;
+        }
+    });
   }
 
 }

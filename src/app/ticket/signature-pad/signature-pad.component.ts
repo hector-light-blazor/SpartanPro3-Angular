@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import SignaturePad from 'signature_pad';
+import { AppService } from '../../app.service';
 
 declare var pdfjsLib:any;
 @Component({
@@ -14,12 +15,12 @@ export class SignaturePadComponent implements OnInit {
   @Output() close = new EventEmitter();
   canvas: HTMLCanvasElement = null;
   windowBody: HTMLElement = null;
-  constructor() { 
+  constructor(private appService: AppService) { 
     
   }
 
   ngOnInit() {
-      console.log(document.body.clientWidth);
+      console.log(this.pdfFile);
       this.canvas = <HTMLCanvasElement> document.getElementById('signature-pad');
       this.windowBody = <HTMLElement> document.getElementById("bodyContent");
       this.signature = new SignaturePad(this.canvas);
@@ -38,10 +39,11 @@ export class SignaturePadComponent implements OnInit {
   }
 
   previewLetter() {
-    console.log(this.signature.toData());
-    console.log(this.signature.toDataURL());
+   
 
-    var w = window.open(this.signature.toDataURL());
-       // w.document.write(this.signature.toDataURL());
+   // var w = window.open(this.signature.toDataURL());
+    this.appService.cntAppFromLogin.next({esign: this.signature.toDataURL(), 
+          pdfSRC:this.pdfFile.pdf, 
+          PAGE_NUMBER:this.pdfFile.page});
   }
 }

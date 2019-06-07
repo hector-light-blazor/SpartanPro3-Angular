@@ -15,6 +15,7 @@ import io from 'socket.io-client';
 })
 export class AppComponent {
   toolBarOnOff: boolean = false;
+  letterViewerOnOff: boolean = false;
   title = 'app';
   isAlive: boolean = true;
   isLoading: boolean = false;
@@ -24,7 +25,9 @@ export class AppComponent {
   ticketFirst: boolean = true;
   ticketCount: number = 0;
   spartansOnline: any = {};
-  
+  pageNumber: number = 1;
+  pdfSRC: string; //"https://gis.lrgvdc911.org/LETTER_TEMPLATES/1906041469_1559924597195.pdf";
+  esign: string = null;
 
   constructor(private router: Router, private appService: AppService, private notify: NativeNotificationService) {
   
@@ -36,6 +39,19 @@ export class AppComponent {
      this.appService.esriLoadObjects();
 
     this.appService.cntAppFromLogin.takeWhile(() => this.isAlive).subscribe(info => {
+        
+        if(!info.hasOwnProperty('user')) {
+          //THIS IS TO DISPLAY THE LETTER VIEWER..
+          console.log(info);
+          this.letterViewerOnOff = true;
+          this.pdfSRC = info.pdfSRC;
+          this.pageNumber = info.PAGE_NUMBER;
+          this.esign = info.esign
+          
+          return; //Kill it from here...
+        }
+
+
         this.isLoading = true;
         this.account_info = info.user;
         

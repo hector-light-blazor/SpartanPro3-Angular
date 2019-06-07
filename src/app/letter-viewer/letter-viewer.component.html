@@ -1,0 +1,13 @@
+<div class="window" style="position: absolute;top:0; z-index: 3000;">
+  <div class="window-caption">
+    <span class="window-caption-icon">
+      <span class="mif-windows"></span>
+
+    </span>
+    <span class="window-caption-title">Letter Viewer</span>
+    <span class="btn-close" (click)="onClose()" ></span>
+  </div>
+  <div class="window-content" style="height: auto;">
+    <canvas  #pdfCanvas id="the-canvas"></canvas>
+  </div>
+</div>
