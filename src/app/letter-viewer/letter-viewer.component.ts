@@ -14,9 +14,13 @@ export class LetterViewerComponent implements OnInit {
   @Input() pdfFile: any;
   @Output() close = new EventEmitter();
   @ViewChild("pdfCanvas") myCanvas: ElementRef;
+  @ViewChild("signCanvas") signCanvas: ElementRef;
   canvas:any;
+  canvasSign: any;
   context: CanvasRenderingContext2D;
   signature: SignaturePad;
+  width: string;
+  height: string;
   constructor() { }
 
   ngOnInit() {
@@ -24,6 +28,7 @@ export class LetterViewerComponent implements OnInit {
     console.log(this.esign);
     console.log(this.src);
     console.log(this.page);
+    this.canvasSign = this.signCanvas.nativeElement;
     this.canvas = this.myCanvas.nativeElement;
     
     this.context = this.canvas.getContext("2d");
@@ -40,11 +45,12 @@ export class LetterViewerComponent implements OnInit {
 
   parsePDF() {
     let _self = this;
-    var loadingTask = pdfjsLib.getDocument("https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + this.src);
+    let sourcePDF = (this.src.includes("https")) ? this.src : "https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + this.src;
+    var loadingTask = pdfjsLib.getDocument("https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + this.pdfFile['pdf']);
     loadingTask.promise.then(function(pdf) {
       // you can now use *pdf* here
-      console.log("PAGE NUMBER " + _self.page);
-      pdf.getPage(_self.page).then((page) => {
+      console.log("PAGE NUMBER " + _self.pdfFile['page']);
+      pdf.getPage(_self.pdfFile['page']).then((page) => {
           var scale = 1.5;
           var viewport = page.getViewport(scale);
 
@@ -52,7 +58,10 @@ export class LetterViewerComponent implements OnInit {
         
           _self.canvas.height = viewport.height;
           _self.canvas.width = viewport.width;
-
+          _self.canvasSign.height = viewport.height;
+          _self.canvasSign.width = viewport.width;
+          _self.width = viewport.width + "px";
+          _self.height = viewport.height + "px";
           // Render PDF page into canvas context
           var renderContext = {
             canvasContext: _self.context,
@@ -61,7 +70,7 @@ export class LetterViewerComponent implements OnInit {
           var renderTask = page.render(renderContext);
           renderTask.promise.then(function () {
             console.log('Page rendered');
-            _self.signature = new SignaturePad(_self.canvas);
+            _self.signature = new SignaturePad(_self.canvasSign);
             // var image = new Image();
             //   image.onload = function() {
             //     _self.context.drawImage(image, 466, 928);

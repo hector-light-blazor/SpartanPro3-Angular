@@ -7,7 +7,8 @@
     <span class="window-caption-title">Letter Viewer</span>
     <span class="btn-close" (click)="onClose()" ></span>
   </div>
-  <div class="window-content" style="height: auto;">
-    <canvas  #pdfCanvas id="the-canvas"></canvas>
+  <div class="window-content" [ngStyle]="{'height': height, 'width': width}" style="height: auto;">
+    <canvas  #pdfCanvas ></canvas>
+    <canvas  #signCanvas ></canvas>
   </div>
 </div>

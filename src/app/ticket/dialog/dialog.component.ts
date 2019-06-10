@@ -45,6 +45,8 @@ export class DialogComponent implements OnInit {
   }
 
   sendLetterEsign(selection) {
+
+    
     this.pageSelection = selection;
     //console.log(this.attributes);
     let form = new FormData();
@@ -142,12 +144,12 @@ export class DialogComponent implements OnInit {
       this.loadingSpanish = true;
     }
 
-   
-    let pdfFile: string = "";
+
     //this.esignPDF.emit({"pdf" : this.pdfFile, "page" : this.pageSelection});
     this.app.POST_METHOD(this.app.route.api.gEsignLetter, form).subscribe((response) => {
         
       if(response.hasOwnProperty("pdf")) {
+        console.log(response)
           this.pdfFile = response['pdf'];
 
           this.esignPDF.emit({"pdf" : this.pdfFile, "page" : this.pageSelection});

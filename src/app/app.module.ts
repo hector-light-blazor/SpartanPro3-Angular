@@ -23,7 +23,7 @@ import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { GoogleMap2Component } from './google-map2/google-map2.component';
 import { BasemapComponent } from './basemap/basemap.component';
 import { BookmarkComponent } from './bookmark/bookmark.component';
-import { LetterViewerComponent } from './letter-viewer/letter-viewer.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,8 +38,7 @@ import { LetterViewerComponent } from './letter-viewer/letter-viewer.component';
     
     GoogleMap2Component,
     BasemapComponent,
-    BookmarkComponent,
-    LetterViewerComponent
+    BookmarkComponent
   ],
   imports: [
     BrowserModule,
