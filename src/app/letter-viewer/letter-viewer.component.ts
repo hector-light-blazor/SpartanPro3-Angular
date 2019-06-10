@@ -1,6 +1,6 @@
 import { Component, OnInit, Input,Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 
-
+import SignaturePad from 'signature_pad';
 declare var pdfjsLib:any;
 @Component({
   selector: 'app-letter-viewer',
@@ -11,10 +11,12 @@ export class LetterViewerComponent implements OnInit {
   @Input() src: string = "https://gis.lrgvdc911.org/LETTER_TEMPLATES/1906041469_1559924597195.pdf";
   @Input() page: number = 0;
   @Input() esign: string;
+  @Input() pdfFile: any;
   @Output() close = new EventEmitter();
   @ViewChild("pdfCanvas") myCanvas: ElementRef;
   canvas:any;
   context: CanvasRenderingContext2D;
+  signature: SignaturePad;
   constructor() { }
 
   ngOnInit() {
@@ -23,6 +25,7 @@ export class LetterViewerComponent implements OnInit {
     console.log(this.src);
     console.log(this.page);
     this.canvas = this.myCanvas.nativeElement;
+    
     this.context = this.canvas.getContext("2d");
     if(this.src) {
       this.parsePDF();
@@ -58,12 +61,12 @@ export class LetterViewerComponent implements OnInit {
           var renderTask = page.render(renderContext);
           renderTask.promise.then(function () {
             console.log('Page rendered');
-
-            var image = new Image();
-              image.onload = function() {
-                _self.context.drawImage(image, 466, 928);
-              };
-              image.src = _self.esign;
+            _self.signature = new SignaturePad(_self.canvas);
+            // var image = new Image();
+            //   image.onload = function() {
+            //     _self.context.drawImage(image, 466, 928);
+            //   };
+            //   image.src = _self.esign;
           });
       });
 
