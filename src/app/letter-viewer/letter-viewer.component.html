@@ -1,13 +1,20 @@
-<div class="window" style="position: absolute;top:0; z-index: 3000;">
+<div class="window" [ngStyle]="{'width': width}" style="position: absolute;top:0; z-index: 3000;">
   <div class="window-caption">
     <span class="window-caption-icon">
       <span class="mif-windows"></span>
 
     </span>
     <span class="window-caption-title">Letter Viewer</span>
+    <button (click)="onErase()" class="button" style="float: right;bottom: 4px;outline: none;margin-right: 28px;height: 1.5rem; min-height: 1.5rem" >
+        <i class="fa fa-eraser" aria-hidden="true"></i>
+    </button>
+    <button (click)="printCanvas()" class="button" style="float: right;bottom: 4px;outline: none;margin-right: 28px;height: 1.5rem; min-height: 1.5rem" >
+
+        <i class="fa fa-print" aria-hidden="true"></i>
+    </button>
     <span class="btn-close" (click)="onClose()" ></span>
   </div>
-  <div class="window-content" [ngStyle]="{'height': height, 'width': width}" style="height: auto;">
+  <div class="window-content" [ngStyle]="{'height': height}" style="height: auto;">
     <canvas  #pdfCanvas ></canvas>
     <canvas  #signCanvas ></canvas>
   </div>

@@ -17,7 +17,9 @@ export class LetterViewerComponent implements OnInit {
   @ViewChild("signCanvas") signCanvas: ElementRef;
   canvas:any;
   canvasSign: any;
+  canvasMerge: any;
   context: CanvasRenderingContext2D;
+  mergeContext: CanvasRenderingContext2D;
   signature: SignaturePad;
   width: string;
   height: string;
@@ -30,6 +32,7 @@ export class LetterViewerComponent implements OnInit {
     console.log(this.page);
     this.canvasSign = this.signCanvas.nativeElement;
     this.canvas = this.myCanvas.nativeElement;
+    this.canvasMerge =  document.createElement('canvas');
     
     this.context = this.canvas.getContext("2d");
     if(this.src) {
@@ -55,7 +58,9 @@ export class LetterViewerComponent implements OnInit {
           var viewport = page.getViewport(scale);
 
           // Prepare canvas using PDF page dimensions
-        
+
+          _self.canvasMerge.height = viewport.height;
+          _self.canvasMerge.width = viewport.width;
           _self.canvas.height = viewport.height;
           _self.canvas.width = viewport.width;
           _self.canvasSign.height = viewport.height;
@@ -71,6 +76,7 @@ export class LetterViewerComponent implements OnInit {
           renderTask.promise.then(function () {
             console.log('Page rendered');
             _self.signature = new SignaturePad(_self.canvasSign);
+            _self.mergeContext = _self.canvasMerge.getContext('2d');
             // var image = new Image();
             //   image.onload = function() {
             //     _self.context.drawImage(image, 466, 928);
@@ -82,23 +88,35 @@ export class LetterViewerComponent implements OnInit {
     });
   }
 
+  onErase() { //Erase the signature..
+    this.signature.clear();
+  }
+
   printCanvas()  
 {  
-    var dataUrl = this.canvas.toDataURL(); //attempt to save base64 string to server using this var  
+
+  
+    this.mergeContext.drawImage(this.canvas, 0, 0);
+    this.mergeContext.drawImage(this.canvasSign, 0, 0);
+    
+    var dataUrl = this.canvasMerge.toDataURL(); //attempt to save base64 string to server using this var  
+   // var dataURL = this.canvasSign.toDataURL();
     var windowContent = '<!DOCTYPE html>';
     windowContent += '<html>'
-    windowContent += '<head><title>Print canvas</title></head>';
+    windowContent += '<head><title>Address Letter</title></head>';
+    //windowContent += '<style>img {position: absolute;} </style>'
     windowContent += '<body>'
     windowContent += '<img src="' + dataUrl + '">';
+   // windowContent += '<img src="' + dataURL + '">';
     windowContent += '</body>';
     windowContent += '</html>';
-    var printWin = window.open('','','width=340,height=260');
+    var printWin = window.open('','_blank');
     printWin.document.open();
     printWin.document.write(windowContent);
-    printWin.document.close();
+    //printWin.document.close();
     printWin.focus();
     printWin.print();
-    printWin.close();
+    //printWin.close();
 }
 
 }
