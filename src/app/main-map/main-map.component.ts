@@ -53,6 +53,7 @@ export class MainMapComponent implements OnInit, OnDestroy {
   collectionIndex: number = 0;
   isAlive: boolean = true;
   displayGoogle: boolean = false;
+  quickPickOnOff: boolean = true;
   measureDiv: any = null;
   measureTool: any = null;
   offsetbase: boolean = false;
@@ -127,6 +128,10 @@ export class MainMapComponent implements OnInit, OnDestroy {
           break;
         case this.app.toolbarActivies.BOOKMARK:
           this.displayBookmarks = true;
+          break;
+        case this.app.toolbarActivies.QUICK_PICK:
+          this.quickPickOnOff = !this.quickPickOnOff;
+          this.quickPickView.setVisibility(this.quickPickOnOff);
           break;
         default:
           break;

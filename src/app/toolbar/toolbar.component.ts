@@ -220,6 +220,9 @@ export class ToolbarComponent implements OnInit {
           break;
         case this.app.toolbarActivies.BOOKMARK:
           this.app.toolbarActions.next({action: action, data: null});
+        case this.app.toolbarActivies.QUICK_PICK:
+          this.app.toolbarActions.next({action: action, data: null});
+          break;
         default:
           break;
       }
