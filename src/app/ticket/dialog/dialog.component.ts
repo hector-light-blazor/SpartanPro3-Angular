@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AppService } from '../../app.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 declare var jQuery:any;
 @Component({
@@ -15,6 +16,7 @@ export class DialogComponent implements OnInit {
   @Output() close = new EventEmitter();
   @Output() send = new EventEmitter();
   @Output() esignPDF = new EventEmitter<any>();
+  loading: boolean = false;
   loadingEnglish: boolean = false;
   loadingSpanish: boolean = false;
   showSignature: boolean = false;
@@ -41,7 +43,94 @@ export class DialogComponent implements OnInit {
   }
 
   sendLetterRequest() {
-    this.send.emit(this.choosen);
+    //this.send.emit(this.choosen);
+    let form = new FormData();
+    if(!this.choosen) {
+      jQuery.Notify({
+        caption: 'Error',
+        content: 'Please provide name!',
+        timeout: 5000,
+        type: this.app.msg_codes.alert
+
+      });
+      return; //Exit FUNCTION
+    }
+    
+   else if(!this.attributes.objectid) {
+      jQuery.Notify({
+        caption: 'Error',
+        content: 'No ticket number!',
+        timeout: 5000,
+        type: this.app.msg_codes.alert
+
+      });
+      return; //Exit FUNCTION
+    }
+    else if(!this.attributes.full_address) {
+      jQuery.Notify({
+        caption: 'Error',
+        content: 'No address available!',
+        timeout: 5000,
+        type: this.app.msg_codes.alert
+
+      });
+      return;
+    }
+    else if(!this.attributes.msag_comm) {
+      jQuery.Notify({
+        caption: 'Error',
+        content: 'No msag community!',
+        timeout: 5000,
+        type: this.app.msg_codes.alert
+
+      });
+      return;
+    }
+    else if(!this.attributes.property_id) { // No Property id then use subdivision name..
+      
+       let name = "";
+    
+         
+      for(var x = 0; x < 29; x++) {
+            name +=  '\xa0';
+       }
+      form.append("name", this.choosen);
+       form.append("ticket", this.attributes.objectid);
+       form.append("pr_name", name);
+       form.append("propid", this.attributes.subdivision + " " + this.attributes.lot_num)
+       form.append("addr1", this.attributes.full_address);
+       form.append("addr2", this.attributes.msag_comm);
+
+
+    }else {
+      let name = "";
+    
+         
+      for(var x = 0; x < 29; x++) {
+            name +=  '\xa0';
+       }
+      form.append("name", this.choosen);
+      form.append("ticket", this.attributes.objectid);
+      form.append("pr_name", name);
+      form.append("propid", "PID # " +  this.attributes.property_id);
+      form.append("addr1", this.attributes.full_address);
+      form.append("addr2", this.attributes.msag_comm);
+    
+    }
+    this.loading= true;
+    this.app.POST_METHOD(this.app.route.api.gEsignLetter, form).subscribe((response) => {
+        this.loading = false;
+      if(response.hasOwnProperty("pdf")) {
+        console.log(response)
+          this.pdfFile = response['pdf'];
+          var name = this.pdfFile.replace(".pdf", ".docx");
+          window.open("https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + this.pdfFile, "_blank");
+
+          window.open("https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + name, "_blank");
+        }
+        
+    });
+
   }
 
   sendLetterEsign(selection) {

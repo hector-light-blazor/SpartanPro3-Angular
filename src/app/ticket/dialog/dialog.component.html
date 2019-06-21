@@ -19,7 +19,7 @@
             </select>
         </div>
         <br>
-        <button class="button rounded" (click)="sendLetterRequest()">Submit</button>
+        <button [ngClass]="{'loading-cube': loading}"  class="button rounded" (click)="sendLetterRequest()">Submit</button>
     </div>
 </div>
 <!-- this div to handle the e sign with tablet -->
