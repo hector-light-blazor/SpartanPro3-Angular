@@ -8,10 +8,13 @@
     <button (click)="onErase()" class="button" style="float: right;bottom: 4px;outline: none;margin-right: 28px;height: 1.5rem; min-height: 1.5rem" >
         <i class="fa fa-eraser" aria-hidden="true"></i>
     </button>
-    <button (click)="printCanvas()" class="button" style="float: right;bottom: 4px;outline: none;margin-right: 28px;height: 1.5rem; min-height: 1.5rem" >
+    <button [ngClass]="{'loading-cube': loading}" (click)="printCanvas2()" class="button" style="float: right;bottom: 4px;outline: none;margin-right: 28px;height: 1.5rem; min-height: 1.5rem" >
 
         <i class="fa fa-print" aria-hidden="true"></i>
     </button>
+    <button class="button" style="float: right;bottom: 4px;outline: none;margin-right: 28px;height: 1.5rem; min-height: 1.5rem">
+      <i class="fa fa-paperclip"></i></button>
+    <button class="class" style="float: right;bottom: 4px;outline: none;margin-right: 28px;height: 1.5rem; min-height: 1.5rem"><i class="fa fa-envelope-o"></i></button>
     <span class="btn-close" (click)="onClose()" ></span>
   </div>
   <div class="window-content" [ngStyle]="{'height': height}" style="height: auto;">

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input,Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 
 import SignaturePad from 'signature_pad';
+import { AppService } from '../app.service';
 declare var pdfjsLib:any;
 @Component({
   selector: 'app-letter-viewer',
@@ -8,13 +9,14 @@ declare var pdfjsLib:any;
   styleUrls: ['./letter-viewer.component.css']
 })
 export class LetterViewerComponent implements OnInit {
-  @Input() src: string = "https://gis.lrgvdc911.org/LETTER_TEMPLATES/1906041469_1559924597195.pdf";
+  @Input() src: string;
   @Input() page: number = 0;
   @Input() esign: string;
   @Input() pdfFile: any;
   @Output() close = new EventEmitter();
   @ViewChild("pdfCanvas") myCanvas: ElementRef;
   @ViewChild("signCanvas") signCanvas: ElementRef;
+  loading: boolean = false;
   canvas:any;
   canvasSign: any;
   canvasMerge: any;
@@ -23,19 +25,18 @@ export class LetterViewerComponent implements OnInit {
   signature: SignaturePad;
   width: string;
   height: string;
-  constructor() { }
+  constructor(private app: AppService) { }
 
   ngOnInit() {
 
-    console.log(this.esign);
-    console.log(this.src);
-    console.log(this.page);
     this.canvasSign = this.signCanvas.nativeElement;
     this.canvas = this.myCanvas.nativeElement;
     this.canvasMerge =  document.createElement('canvas');
     
     this.context = this.canvas.getContext("2d");
     if(this.src) {
+      this.parsePDF();
+    }else if(this.pdfFile) {
       this.parsePDF();
     }
    
@@ -48,7 +49,7 @@ export class LetterViewerComponent implements OnInit {
 
   parsePDF() {
     let _self = this;
-    let sourcePDF = (this.src.includes("https")) ? this.src : "https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + this.src;
+    //let sourcePDF = (this.src.includes("https")) ? this.src : "https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + this.src;
     var loadingTask = pdfjsLib.getDocument("https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + this.pdfFile['pdf']);
     loadingTask.promise.then(function(pdf) {
       // you can now use *pdf* here
@@ -118,5 +119,33 @@ export class LetterViewerComponent implements OnInit {
     printWin.print();
     //printWin.close();
 }
+
+  printCanvas2() {
+    this.loading = true;
+    let form = new FormData();
+    
+    form.append("image", this.canvasSign.toDataURL());
+    form.append("pdf", this.pdfFile['pdf']);
+    form.append("page", this.pdfFile['page'])
+    
+      this.app.POST_METHOD(this.app.route.api.gEsignCompletion, form).subscribe((response) => {
+
+          response = (typeof(response) == 'string') ? JSON.parse(response) : response;
+          
+          console.log(response);
+          
+          if(response.hasOwnProperty("watermark")) {
+            var url = 'https://gis.lrgvdc911.org/LETTER_TEMPLATES/' + response['watermark'];
+            
+            console.log(url);
+            
+            window.open(url);
+            
+            
+           
+          }
+          this.loading = false;
+      });
+  }
 
 }

@@ -97,7 +97,8 @@ export class DialogComponent implements OnInit {
       form.append("name", this.choosen);
        form.append("ticket", this.attributes.objectid);
        form.append("pr_name", name);
-       form.append("propid", this.attributes.subdivision + " " + this.attributes.lot_num)
+       var lot = (this.attributes.lot_num.includes("LOT") ? this.attributes.lot_num : "LOT " + this.attributes.lot_num)
+       form.append("propid", this.attributes.subdivision + " " + lot)
        form.append("addr1", this.attributes.full_address);
        form.append("addr2", this.attributes.msag_comm);
 
@@ -121,7 +122,7 @@ export class DialogComponent implements OnInit {
     this.app.POST_METHOD(this.app.route.api.gEsignLetter, form).subscribe((response) => {
         this.loading = false;
       if(response.hasOwnProperty("pdf")) {
-        console.log(response)
+        
           this.pdfFile = response['pdf'];
           var name = this.pdfFile.replace(".pdf", ".docx");
           window.open("https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + this.pdfFile, "_blank");
@@ -204,7 +205,10 @@ export class DialogComponent implements OnInit {
        form.append("name", this.choosen);
        form.append("ticket", this.attributes.objectid);
        form.append("pr_name", this.print_name);
-       form.append("propid", this.attributes.subdivision + " " + this.attributes.lot_num)
+
+       var lot = (this.attributes.lot_num.includes("LOT") ? this.attributes.lot_num : "LOT " + this.attributes.lot_num)
+
+       form.append("propid", this.attributes.subdivision + " " + lot)
        form.append("addr1", this.attributes.full_address);
        form.append("addr2", this.attributes.msag_comm);
 
@@ -220,7 +224,7 @@ export class DialogComponent implements OnInit {
       form.append("name", this.choosen);
       form.append("ticket", this.attributes.objectid);
       form.append("pr_name", this.print_name);
-      form.append("propid", this.attributes.property_id);
+      form.append("propid","PID # " +  this.attributes.property_id);
       form.append("addr1", this.attributes.full_address);
       form.append("addr2", this.attributes.msag_comm);
     
@@ -238,9 +242,8 @@ export class DialogComponent implements OnInit {
     this.app.POST_METHOD(this.app.route.api.gEsignLetter, form).subscribe((response) => {
         
       if(response.hasOwnProperty("pdf")) {
-        console.log(response)
           this.pdfFile = response['pdf'];
-
+          console.log(`Hello response = ${response}`)
           this.esignPDF.emit({"pdf" : this.pdfFile, "page" : this.pageSelection});
         }
         if(this.loadingEnglish) {

@@ -61,6 +61,7 @@ export class ROUTES {
        gMSAG: "gis/getMSAG/",  // GET MSAG...
        gLTicket: "template/getLetter/?j=", // This is to generate letter
        gEsignLetter: "template/pythonTemplateRequest/", //This is to send python spartan server generate letter convert pdf
+       gEsignCompletion: "template/mergePDF",
        sBookmark: "gis/saveBookmark", // SAVE BOOKMARK TO GIS TABLE..
        dBookmark: "gis/deleteBookmark",
        gToken: "gis/getToken/?u="  // GET TOKEN FOR VECTOR TILE MAP..
@@ -416,6 +417,7 @@ interface API_ROUTES {
    fNRF?: string;
    gLTicket?: string;
    gEsignLetter?: string;
+   gEsignCompletion?: string;
    sBookmark?: string;
    gToken?: string;
 }
