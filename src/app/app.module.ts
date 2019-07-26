@@ -23,6 +23,7 @@ import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { GoogleMap2Component } from './google-map2/google-map2.component';
 import { BasemapComponent } from './basemap/basemap.component';
 import { BookmarkComponent } from './bookmark/bookmark.component';
+import { EmailComponent } from './email/email.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { BookmarkComponent } from './bookmark/bookmark.component';
     
     GoogleMap2Component,
     BasemapComponent,
-    BookmarkComponent
+    BookmarkComponent,
+    EmailComponent
   ],
   imports: [
     BrowserModule,

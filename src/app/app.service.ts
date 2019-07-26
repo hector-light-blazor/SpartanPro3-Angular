@@ -11,6 +11,7 @@ export class ROUTES {
      this.api = {
        login: "users/checkLogin/", // Handles Login
        gBookmark: "gis/getBookmarkUser/?id=",
+       aLTicket: "addressticket/moveAttachment/",
        vwTicket: "addressticket/view2/?", // gets viewing ticket
        ssTicket: "addressticket/saveSinglePiece/", // save single ticket
        vtFeeds: "addressticket/getComments/?id=", // view ticket feeds
@@ -365,6 +366,7 @@ interface TOOL_ACTIONS {
 
 interface API_ROUTES {
    login?: string;
+   aLTicket?: string;
    gBookmark?: string;
    dBookmark?: string;
    ssTicket?: string;

@@ -17,6 +17,7 @@ export class LetterViewerComponent implements OnInit {
   @ViewChild("pdfCanvas") myCanvas: ElementRef;
   @ViewChild("signCanvas") signCanvas: ElementRef;
   loading: boolean = false;
+  waterMark: string;
   canvas:any;
   canvasSign: any;
   canvasMerge: any;
@@ -53,7 +54,7 @@ export class LetterViewerComponent implements OnInit {
     var loadingTask = pdfjsLib.getDocument("https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + this.pdfFile['pdf']);
     loadingTask.promise.then(function(pdf) {
       // you can now use *pdf* here
-      console.log("PAGE NUMBER " + _self.pdfFile['page']);
+      
       pdf.getPage(_self.pdfFile['page']).then((page) => {
           var scale = 1.5;
           var viewport = page.getViewport(scale);
@@ -135,9 +136,8 @@ export class LetterViewerComponent implements OnInit {
           console.log(response);
           
           if(response.hasOwnProperty("watermark")) {
+            this.waterMark = response['watermark'];
             var url = 'https://gis.lrgvdc911.org/LETTER_TEMPLATES/' + response['watermark'];
-            
-            console.log(url);
             
             window.open(url);
             
@@ -147,5 +147,17 @@ export class LetterViewerComponent implements OnInit {
           this.loading = false;
       });
   }
+
+  attachLetter() {
+      //Lets merge the signature for base jpg to send to php
+      this.mergeContext.drawImage(this.canvas, 0, 0);
+      this.mergeContext.drawImage(this.canvasSign, 0, 0);
+      let form = new FormData();
+      form.append('fname', this.waterMark);
+      //form.append('ticketNumber', )
+      form.append('jpg', this.canvasMerge.toDataURL('image/jpeg'));
+      this.app.POST_METHOD(this.app.route.api.aLTicket, form).subscribe((response) => {
+
+      });
 
 }
