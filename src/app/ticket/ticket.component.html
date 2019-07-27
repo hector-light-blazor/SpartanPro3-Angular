@@ -15,7 +15,7 @@
     </div>
 </div> <!-- Confirmation Window -->
 
-<app-letter-viewer *ngIf="showSignature" (close)="showSignature = false" [pdfFile]="pdfFile"></app-letter-viewer>
+<app-letter-viewer *ngIf="showSignature" (close)="showSignature = false" [id_ticket]="attributes.id_ticket" [pdfFile]="pdfFile"></app-letter-viewer>
 <!-- <app-signature-pad *ngIf="showSignature" (close)="showSignature = false" [pdfFile]="pdfFile"></app-signature-pad> -->
 <app-dialog *ngIf="displayDialog" [ESIGN]="esign" (esignPDF)="pdfFile = $event; showSignature = true; displayDialog = false;" (send)="generateLetter($event)" (close)="displayDialog = false;" [attributes]="attributes"></app-dialog>
 <app-ticket-workflow *ngIf="displayWorkflow" [ticketid]="attributes.id_ticket" (onClose)="updateRoute($event);displayWorkflow = false;" [sentto]="attributes.sentto" [routing]="attributes.system_assign" [staffId]="attributes.started_ticket"></app-ticket-workflow>
