@@ -31,6 +31,7 @@ export class ToolbarComponent implements OnInit {
     // =-=-=-= Define Blank Tool Settings Configs =-=-=-=-
     this._toolSettings = {SECTIONS: {
       TICKET: {
+        
          onoff: true,
            DISPLAY:{
             onoff: true,
@@ -53,11 +54,20 @@ export class ToolbarComponent implements OnInit {
               filter: true
             }
          },
+         
          QUICKSEARCH: {
             onoff: true,
             ids: {
               search: true
             }
+         },
+         TICKET_VIEW: {
+           onoff: true,
+           ids: {
+             MAP: true,
+             ATTACHMENT: true,
+             LETTER: true
+           }
          }
       },
       NRF: {
