@@ -3,6 +3,7 @@ import { Component, OnInit, Input,Output, EventEmitter, ViewChild, ElementRef } 
 import SignaturePad from 'signature_pad';
 import { AppService } from '../app.service';
 declare var pdfjsLib:any;
+declare var jQuery:any;
 @Component({
   selector: 'app-letter-viewer',
   templateUrl: './letter-viewer.component.html',
@@ -13,10 +14,12 @@ export class LetterViewerComponent implements OnInit {
   @Input() page: number = 0;
   @Input() esign: string;
   @Input() pdfFile: any;
+  @Input() id_ticket: any;
   @Output() close = new EventEmitter();
   @ViewChild("pdfCanvas") myCanvas: ElementRef;
   @ViewChild("signCanvas") signCanvas: ElementRef;
   loading: boolean = false;
+  attach_loading: boolean = false;
   waterMark: string;
   canvas:any;
   canvasSign: any;
@@ -149,15 +152,36 @@ export class LetterViewerComponent implements OnInit {
   }
 
   attachLetter() {
-      //Lets merge the signature for base jpg to send to php
-      this.mergeContext.drawImage(this.canvas, 0, 0);
-      this.mergeContext.drawImage(this.canvasSign, 0, 0);
-      let form = new FormData();
-      form.append('fname', this.waterMark);
-      //form.append('ticketNumber', )
-      form.append('jpg', this.canvasMerge.toDataURL('image/jpeg'));
-      this.app.POST_METHOD(this.app.route.api.aLTicket, form).subscribe((response) => {
+    this.attach_loading = true;
+    const data = this.signature.toData();
+    console.log(data)
+      //if no signature then can't attach...
+      if(data.length < 0) {
+        jQuery.Notify({
+          caption: 'Error',
+          content: "No Signature Found!!",
+          type: this.app.msg_codes.alert
+        });
+        this.attach_loading = false;
+        return;
+      }
 
-      });
+      if(this.waterMark){ //Awesome process it
+            //Lets merge the signature for base jpg to send to php
+          this.mergeContext.drawImage(this.canvas, 0, 0);
+          this.mergeContext.drawImage(this.canvasSign, 0, 0);
+          let form = new FormData();
+          form.append('fname', this.waterMark);
+          form.append('ticketNumber', this.id_ticket);
+          form.append('jpg', this.canvasMerge.toDataURL('image/jpeg'));
+          this.app.POST_METHOD(this.app.route.api.aLTicket, form).subscribe((response) => {
+             this.attach_loading = false;
+          });
+      }else {
+
+      }
+      
+
+}
 
 }
