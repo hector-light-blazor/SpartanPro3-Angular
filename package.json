@@ -7,6 +7,7 @@
     "start": "ng serve",
     "buildtest": "ng build --prod --aot --bh=/spartantest/",
     "build": "ng build --prod --aot --bh=/spartanpro/",
+    "mobilebuild": "ng build --prod --aot --bh=/spartanmobile/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
