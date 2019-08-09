@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   // =-=-=- DECLARE VARIABLES =-=-=-=-=-=-=-=-=
   
   username: string = "";
+  users: Array<string> = [];
   password: string = "";
   remeberMe: boolean = false;
   display: boolean = true;
@@ -22,6 +23,11 @@ export class LoginComponent implements OnInit {
   cookie: Array<string> = [];
   constructor(private _appService: AppService, private router: Router) { 
    
+    this._appService.GET_METHOD(this._appService.route.api.fEmails).subscribe((response: Array<string>) => {
+        console.log(response);
+        this.users = response;
+    });
+
     if(document.cookie) {
        // Lets Process the cookie
       
@@ -68,7 +74,7 @@ export class LoginComponent implements OnInit {
     }
 
     
-    this._appService.POST_METHOD(this._appService.route.api.login, {data: {json: {username: this.username.toUpperCase(), password: btoa(this.password) }}}).subscribe((response: any) => {
+    this._appService.POST_METHOD(this._appService.route.api.loginPin, {data: {json: {username: this.username.toUpperCase(), password: this.password }}}).subscribe((response: any) => {
       
       if(response.success) {
          

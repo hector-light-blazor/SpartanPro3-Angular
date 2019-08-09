@@ -1,23 +1,27 @@
 <div class="bgbody">
+  
   <div *ngIf="display" class="login-form padding20 block-shadow" style="opacity: 1; transform: scale(1); transition: 0.5s;">
         
      
           <div style="position: absolute;top: 1.8px; z-index: 1000">
             <img src="assets/public_safety_logo.png" width="80" height="80" alt="">
           </div>
-          <h1 style="margin-left:90px;" class="text-light">SpartanPro V3.1</h1>
+          <h1 style="margin-left:90px;" class="text-light">SpartanMobile V3.5</h1>
           <hr class="thin">
           <br>
           <div class="input-control text full-size" data-role="input">
               <label for="user_login">User email:</label>
-              <input [(ngModel)]="username" type="text" id="user_login" style="padding-right: 38px;" autofocus>
+              <!-- <input [(ngModel)]="username" type="text" id="user_login" style="padding-right: 38px;" autofocus> -->
+              <select [(ngModel)]="username">
+                <option *ngFor="let user of users">{{user.email}}</option>
+              </select>
               <button class="button helper-button clear" tabindex="-1" type="button"><i class="fa fa-times" aria-hidden="true"></i></button>
           </div>
           <br>
           <br>
           <div class="input-control password full-size" data-role="input">
               <label for="user_password">User password:</label>
-              <input [(ngModel)]="password" type="password" (keyup.enter)="checkLogin()" id="user_password" style="padding-right: 38px;">
+              <input [(ngModel)]="password" pattern="[0-9]*" inputmode="numeric" type="password" (keyup.enter)="checkLogin()" id="user_password" style="padding-right: 38px;">
               <button class="button helper-button reveal" tabindex="-1" type="button"><i class="fa fa-key" aria-hidden="true"></i></button>
           </div>
           <br>
@@ -25,11 +29,11 @@
           <div class="form-actions">
                 <button (click)="checkLogin()"  class="button primary">Login</button>
                 &nbsp;
-                <label class="switch">
+                <!-- <label class="switch">
                         <input [(ngModel)]="remeberMe" name="remeberMe" type="checkbox">
                         <span class="check"></span>
                         Remeber Me
-                </label>
+                </label> -->
           </div>
 </div>
 <!-- <push-notification  #myNotification

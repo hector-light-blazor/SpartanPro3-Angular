@@ -10,6 +10,7 @@ export class ROUTES {
    constructor() {
      this.api = {
        login: "users/checkLogin/", // Handles Login
+       loginPin: "users/pin/", //Handles pin login
        gBookmark: "gis/getBookmarkUser/?id=",
        aLTicket: "addressticket/moveAttachment/",
        vwTicket: "addressticket/view2/?", // gets viewing ticket
@@ -23,6 +24,7 @@ export class ROUTES {
        mTicket: "addressticket/getMine/?id=", //mine tickets..
        uImage: "users/getUserImage/?pic=",  // user image.."users/getUsers/"
        fUsers: "users/getUsers/", // fetch all users.
+       fEmails: "users/fetchEmails",
        fUsersDept: "users/getUsersByDept/", // fetch users by dept.
        fSuperUsers: "users/getSuperUsers/", // fetch supervisors and all lv dept...
        hTicket: "addressticket/getHistory", // history tickets..
@@ -366,6 +368,7 @@ interface TOOL_ACTIONS {
 
 interface API_ROUTES {
    login?: string;
+   loginPin?: string;
    aLTicket?: string;
    gBookmark?: string;
    dBookmark?: string;
@@ -380,6 +383,7 @@ interface API_ROUTES {
    mTicket?: string;
    uImage?: string;
    fUsers?: string;
+   fEmails?: string;
    fUsersDept?: string;
    fSuperUsers?: string;
    hTicket?: string;

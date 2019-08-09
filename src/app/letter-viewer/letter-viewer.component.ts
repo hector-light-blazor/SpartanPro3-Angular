@@ -24,6 +24,8 @@ export class LetterViewerComponent implements OnInit {
   canvas:any;
   canvasSign: any;
   canvasMerge: any;
+  message: string = "";
+  informationDisplay: boolean= false;
   context: CanvasRenderingContext2D;
   mergeContext: CanvasRenderingContext2D;
   signature: SignaturePad;
@@ -124,8 +126,28 @@ export class LetterViewerComponent implements OnInit {
     //printWin.close();
 }
 
-  printCanvas2() {
-    this.loading = true;
+  printCanvas2(open:boolean = true, attach: boolean = false) {
+    if(open) {
+      this.loading = true;
+      let data = this.signature.toData();
+   
+      //if no signature then can't attach...
+      if(data.length < 1) {
+        jQuery.Notify({
+          caption: 'Error',
+          content: "No Signature Found!!",
+          type: this.app.msg_codes.alert
+        });
+        this.attach_loading = false;
+        this.informationDisplay = true;
+             this.message = "No Signature Found!!";
+        return;
+      }
+   
+    }
+
+
+    
     let form = new FormData();
     
     form.append("image", this.canvasSign.toDataURL());
@@ -136,13 +158,20 @@ export class LetterViewerComponent implements OnInit {
 
           response = (typeof(response) == 'string') ? JSON.parse(response) : response;
           
-          console.log(response);
+          
           
           if(response.hasOwnProperty("watermark")) {
             this.waterMark = response['watermark'];
             var url = 'https://gis.lrgvdc911.org/LETTER_TEMPLATES/' + response['watermark'];
             
-            window.open(url);
+            if(open) {
+              window.open(url);
+            }
+
+            if(attach) {
+              this.attachFunction()
+            }
+            
             
             
            
@@ -151,34 +180,44 @@ export class LetterViewerComponent implements OnInit {
       });
   }
 
+  attachFunction() {
+    this.mergeContext.drawImage(this.canvas, 0, 0);
+    this.mergeContext.drawImage(this.canvasSign, 0, 0);
+    let form = new FormData();
+    form.append('fname', this.waterMark);
+    form.append('ticketNumber', this.id_ticket);
+    form.append('jpg', this.canvasMerge.toDataURL('image/jpeg'));
+    this.app.POST_METHOD(this.app.route.api.aLTicket, form).subscribe((response) => {
+       this.attach_loading = false;
+       this.informationDisplay = true;
+       this.message = "Letter has been attach";
+
+    });
+  }
+  
+
   attachLetter() {
     this.attach_loading = true;
     const data = this.signature.toData();
-    console.log(data)
+   
       //if no signature then can't attach...
-      if(data.length < 0) {
+      if(data.length < 1) {
         jQuery.Notify({
           caption: 'Error',
           content: "No Signature Found!!",
           type: this.app.msg_codes.alert
         });
         this.attach_loading = false;
+        this.informationDisplay = true;
+             this.message = "No Signature Found!!";
         return;
       }
 
       if(this.waterMark){ //Awesome process it
             //Lets merge the signature for base jpg to send to php
-          this.mergeContext.drawImage(this.canvas, 0, 0);
-          this.mergeContext.drawImage(this.canvasSign, 0, 0);
-          let form = new FormData();
-          form.append('fname', this.waterMark);
-          form.append('ticketNumber', this.id_ticket);
-          form.append('jpg', this.canvasMerge.toDataURL('image/jpeg'));
-          this.app.POST_METHOD(this.app.route.api.aLTicket, form).subscribe((response) => {
-             this.attach_loading = false;
-          });
+          this.attachFunction();
       }else {
-
+          this.printCanvas2(false, true);
       }
       
 

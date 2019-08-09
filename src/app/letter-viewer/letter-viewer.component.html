@@ -1,3 +1,4 @@
+<app-infomartion (close)="informationDisplay = $event;" *ngIf="informationDisplay" [message]="message"></app-infomartion>
 <div class="window" [ngStyle]="{'width': width}" style="position: absolute;top:0; z-index: 3000;">
   <div class="window-caption">
     <span class="window-caption-icon">

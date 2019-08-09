@@ -18,7 +18,7 @@ import { UppercaseDirective } from '../uppercase.directive';
 import { LeafletMapComponent } from '../leaflet-map/leaflet-map.component';
 import { KeysPipe } from '../keys.pipe';
 import { LetterViewerComponent } from '../letter-viewer/letter-viewer.component';
-
+import { InfomartionComponent } from '../infomartion/infomartion.component';
 @NgModule({
   imports: [
 
@@ -39,10 +39,11 @@ import { LetterViewerComponent } from '../letter-viewer/letter-viewer.component'
     EsriMapComponent,
     LeafletMapComponent,
     LetterViewerComponent,
+    InfomartionComponent,
     GoogleMapComponent,
     FilterminePipe, DatatablePipe, UppercaseDirective],
   exports: [MasterLoadingComponent,FormsModule, TextMaskModule,NgxDatatableModule,
-    TicketWorkflowComponent,IdentifyListComponent, FileUploaderComponent, EsriMapComponent,LeafletMapComponent, GoogleMapComponent,
+    TicketWorkflowComponent,IdentifyListComponent,InfomartionComponent, FileUploaderComponent, EsriMapComponent,LeafletMapComponent, GoogleMapComponent,
     FileViewerComponent,QuickPickToolsComponent ,FullScreenPickComponent,LetterViewerComponent,KeysPipe, FilterminePipe, DatatablePipe, UppercaseDirective]
 })
 export class SharedModule { }
