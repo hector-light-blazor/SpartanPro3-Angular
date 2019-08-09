@@ -141,6 +141,7 @@ export class LetterViewerComponent implements OnInit {
         this.attach_loading = false;
         this.informationDisplay = true;
              this.message = "No Signature Found!!";
+        this.loading = false;
         return;
       }
    
