@@ -43,6 +43,10 @@ export class EsriMapComponent implements OnInit, OnDestroy {
   trackExtent: any = null;
   measureDiv: any = null;
   displayIdentify: boolean = false;
+  legendOnOff: boolean = false;
+
+ 
+  legendLayers: any = [];
 
   // =-=-= QUICK PICK TOOLS =-=-=-=-=-=
   quickPickOnOff:boolean = true;
@@ -52,7 +56,7 @@ export class EsriMapComponent implements OnInit, OnDestroy {
   selectedQuickPick: any = null;
   enabledFullScreenPic: boolean = false;
   isAlive: boolean = true; //Controls the alive part for unsubscribe and subscribe...
-
+  arrayVisibleRoads = [10,13, 0, 8, 20];
   constructor(private app: AppService, public  mapService: MapServiceService){ }
 
   ngOnInit() {
@@ -144,7 +148,7 @@ export class EsriMapComponent implements OnInit, OnDestroy {
         // Create the Layer...
         if(this.app.esriDynamicLayer) {
           
-          this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURL, {id: "base"});
+          this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURLRanges, {id: "base"});
           this.map.addLayer(this.app.mapFlexBaseMap);
          
 
@@ -154,8 +158,8 @@ export class EsriMapComponent implements OnInit, OnDestroy {
           let options = {serviceMode: 'KVP', layerInfo: layerInfo, id: "wms"};
           this.app.imageryLayer = new this.app.esriWMTSLayer(this.app.wmtsURL, options);
           this.app.imageryLayer.hide();
-          this.app.mapFlexRoad = new this.app.esriDynamicLayer(this.app.mapFlexURL);
-          this.app.mapFlexRoad.setVisibleLayers([10,13, 0, 8]);
+          this.app.mapFlexRoad = new this.app.esriDynamicLayer(this.app.mapFlexURLRanges);
+          this.app.mapFlexRoad.setVisibleLayers(this.arrayVisibleRoads);
           this.app.mapFlexRoad.hide();
 
           this.map.addLayer(this.app.imageryLayer);
@@ -172,8 +176,14 @@ export class EsriMapComponent implements OnInit, OnDestroy {
       this.base = true;
       this.image = false;
 
-      this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURL, {id: "base"});
+      this.app.mapFlexBaseMap = new this.app.esriDynamicLayer(this.app.mapFlexURLRanges, {id: "base"});
       this.app.mapFlexBaseMap.hide();
+
+      this.app.mapFlexRoadsArrows = new this.app.esriDynamicLayer(this.app.mapFlexURLArrows, {id: "arrows"});
+      this.app.mapFlexRoadsArrows.hide();
+
+      this.app.mapFlexRegions = new this.app.esriDynamicLayer(this.app.mapFlexURLBoundary, {id: "regions"});
+      this.app.mapFlexRegions.setVisibleLayers(this.legendLayers);
       
 
       let layerInfo = new this.app.esriWMTSLayerInfo({identifier: 'texas', 
@@ -181,11 +191,13 @@ export class EsriMapComponent implements OnInit, OnDestroy {
 
       let options = {serviceMode: 'KVP', layerInfo: layerInfo, id: "wms"};
       this.app.imageryLayer = new this.app.esriWMTSLayer(this.app.wmtsURL, options);
-      this.app.mapFlexRoad = new this.app.esriDynamicLayer(this.app.mapFlexURL);
-      this.app.mapFlexRoad.setVisibleLayers([10,13, 0, 8]);
+      this.app.mapFlexRoad = new this.app.esriDynamicLayer(this.app.mapFlexURLRanges);
+      this.app.mapFlexRoad.setVisibleLayers(this.arrayVisibleRoads);
       this.map.addLayer(this.app.imageryLayer);
       this.map.addLayer(this.app.mapFlexBaseMap);
       this.map.addLayer(this.app.mapFlexRoad);
+      this.map.addLayer(this.app.mapFlexRoadsArrows);
+      this.map.addLayer(this.app.mapFlexRegions);
       this.map.addLayer(this.parcelLayer);
       this.map.addLayer(this.graphicLayer);
     
@@ -443,6 +455,81 @@ export class EsriMapComponent implements OnInit, OnDestroy {
     this.quickPickLayer.on('dbl-click', response => {
         console.log(response);
     });
+
+  }
+
+
+  // =-=-=-=- MODULE TURN ON AND OFF LEGEND UI =-=-=-=
+
+  onLegendOnOff() {
+    this.legendOnOff = !this.legendOnOff;
+  }
+
+  // =-=-=-=-=-= MODULE DISPLAY THE LAYER =-=-=-=
+  onLegend(ele:any, purpose: string, selection: number = -1) {
+        
+    
+        if(purpose == "polygon") {
+
+          this.legendLayers =  [];
+
+     
+
+          if(ele.checked) {
+            
+            this.legendLayers.push(selection)
+
+          }
+
+          switch (selection) {
+            case 0:
+              var etj = document.getElementById("etj");
+              var msag = document.getElementById("msag");
+              this.legendLayers.push(((etj['checked']) ? 1 : -1))
+              this.legendLayers.push(((msag['checked']) ? 2 : -1))
+             
+
+              break;
+            case 1:
+                var city = document.getElementById("city");
+                var msag = document.getElementById("msag");
+                this.legendLayers.push(((city['checked']) ? 0 : -1))
+                this.legendLayers.push(((msag['checked']) ? 2 : -1))
+                break;
+            case 2:
+                var city = document.getElementById("city");
+                var etj = document.getElementById("etj");
+                this.legendLayers.push(((city['checked']) ? 0 : -1))
+                this.legendLayers.push(((etj['checked']) ? 1 : -1))
+              break;
+          
+            default:
+              break;
+          }
+
+
+
+          this.app.mapFlexRegions.setVisibleLayers(this.legendLayers);
+          this.app.mapFlexRegions.refresh();
+        }
+
+      
+     
+
+      
+
+      if(purpose == "roads") {
+        if(ele.checked) {
+          this.app.mapFlexRoadsArrows.show();
+          
+        }else{
+          this.app.mapFlexRoadsArrows.hide();
+         
+        }
+        this.app.mapFlexRoadsArrows.refresh();
+      }
+
+     
 
   }
 

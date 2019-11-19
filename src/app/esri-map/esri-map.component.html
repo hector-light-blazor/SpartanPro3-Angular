@@ -16,6 +16,7 @@
     <span class="pull-right">
       <button class="button btnSize" (click)="onIdentify()"><img class="img18" style="margin-bottom: 4px;" src="assets/searchengin-brands.svg" /></button>
       <button (click)="onMeasure()"  class="button btnSize"><img class="img18" style="margin-bottom: 4px;" src="assets/tape-solid.svg" /></button>
+      <button class="button btnSize" (click)="onLegendOnOff()">Legend</button>
       <button (click)="toggleQuickPick()" [ngClass]="{'enable': quickPickOnOff}" class="button btnSize">QuickPick</button>
         <button (click)="changeBaseMap()" *ngIf="image" class="button btnSize">Aerial</button>
         <button (click)="changeBaseMap()" *ngIf="base" class="button btnSize">baseMap</button>
@@ -28,6 +29,31 @@
     <app-full-screen-pick *ngIf="enabledFullScreenPic" [src]="selectedPic" (onClose)="enabledFullScreenPic = false" ></app-full-screen-pick>
     <app-quick-pick-tools *ngIf="quickPickEnabled" [pic]="selectedPic" (closeOutput)="quickPickEnabled = false; clearMapGraphics();"></app-quick-pick-tools>
     <app-identify-list (display)="zoomAndFlash($event)" (close)="displayIdentify = false;graphicLayer.clear();" [list]="mapService.identifyResponse" *ngIf="displayIdentify"></app-identify-list>
+    <div *ngIf="legendOnOff" id="legend" style="position: absolute; left: 0;width: 330px; z-index: 4000; border: 1px solid; background: white;">
+        <ul>
+          <li>
+
+            <input (click)="onLegend($event.target, 'polygon', 0)"  type="checkbox" name="city" id="city">
+            <label >Inside City</label>
+          </li>
+          <li>
+
+            <input (click)="onLegend($event.target, 'polygon', 1)"  type="checkbox" name="etj" id="etj">
+            <label >ETJ</label>
+          </li>
+          <li>
+
+            <input (click)="onLegend($event.target, 'polygon', 2)"  type="checkbox" name="msag" id="msag">
+            <label >MSAG</label>
+          </li>
+          <li>
+
+            <input (click)="onLegend($event.target, 'roads', 0)" [(ngModel)]="roadArrows" type="checkbox" name="" id="">
+            <label >Road Arrows</label>
+          </li>
+
+        </ul>
+    </div>
     <div id="mtool" class="dijitTitlePaneTitle" style="position: absolute; display: none; bottom: 0;width: 330px; z-index: 4000;">
       <div id="measurementDiv"></div>
     </div>
