@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
     }
 
     
-    this._appService.POST_METHOD(this._appService.route.api.loginPin, {data: {json: {username: this.username.toUpperCase(), password: this.password }}}).subscribe((response: any) => {
+    this._appService.POST_METHOD(this._appService.route.api.login, {data: {json: {username: this.username.toUpperCase(), password: btoa(this.password) }}}).subscribe((response: any) => {
       
       if(response.success) {
          
