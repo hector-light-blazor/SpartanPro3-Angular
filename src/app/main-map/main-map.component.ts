@@ -59,6 +59,7 @@ export class MainMapComponent implements OnInit, OnDestroy {
   offsetbase: boolean = false;
   offsetsearch: boolean = false;
   extent_change: any = null;
+  windmills: any = null;
 
   // =-=-= QUICK PICK TOOLS =-=-=-=-=-=
   quickPickEnabled: boolean = false;
@@ -321,10 +322,13 @@ export class MainMapComponent implements OnInit, OnDestroy {
       this.vectorArrBase.hide();
       this.vectorSubBase = new this.app.esriVectorTileLayer("https://tiles.arcgis.com/tiles/HZn9sYWTEUxVRQW9/arcgis/rest/services/MapFlex_Sub2/VectorTileServer");//"https://gis.lrgvdc911.org/arcgis106/rest/services/Hosted/MapFlex_Sub/VectorTileServer", {credential: credential});
       this.vectorSubBase.hide();
+
+
+      this.windmills = new this.app.esriDynamicLayer("https://gis.lrgvdc911.org/arcgis2/rest/services/Dynamic/Turbines/MapServer");
        
       // Lets Load Layers to the map object...
       // add layer...
-      this.map.addLayers([this.mapWMSBase,this.mapFlexBase, this.skeletonFlexBase, this.quickPickBase,this.quickPickView, this.graphicLayer,this.vectorSubBase,this.vectorArrBase, this.rangesFeatureHCEW, this.rangesFeatureHCSN, this.rangesFeatureCEW, this.rangesFeatureCSN, this.rangesFeatureWWE, this.rangesFeatureWSN]);
+      this.map.addLayers([this.mapWMSBase,this.mapFlexBase, this.skeletonFlexBase, this.quickPickBase,this.quickPickView, this.graphicLayer, this.windmills, this.vectorSubBase,this.vectorArrBase, this.rangesFeatureHCEW, this.rangesFeatureHCSN, this.rangesFeatureCEW, this.rangesFeatureCSN, this.rangesFeatureWWE, this.rangesFeatureWSN]);
      
 
 
