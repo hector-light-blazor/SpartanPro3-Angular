@@ -324,7 +324,7 @@ export class MainMapComponent implements OnInit, OnDestroy {
       this.vectorSubBase.hide();
 
 
-      this.windmills = new this.app.esriDynamicLayer("https://gis.lrgvdc911.org/arcgis2/rest/services/Dynamic/Turbines/MapServer");
+      this.windmills = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/Turbines_Feature/FeatureServer/0", {fields: ["hno", "prd", "stp", "rd", "sts", "pod", "status_address"]});//esriDynamicLayer("https://gis.lrgvdc911.org/arcgis2/rest/services/Dynamic/Turbines/MapServer");
        
       // Lets Load Layers to the map object...
       // add layer...
