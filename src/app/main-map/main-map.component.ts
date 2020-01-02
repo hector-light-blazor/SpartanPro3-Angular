@@ -324,8 +324,14 @@ export class MainMapComponent implements OnInit, OnDestroy {
       this.vectorSubBase.hide();
 
 
-      this.windmills = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/Turbines_Feature/FeatureServer/0", {fields: ["hno", "prd", "stp", "rd", "sts", "pod", "status_address"]});//esriDynamicLayer("https://gis.lrgvdc911.org/arcgis2/rest/services/Dynamic/Turbines/MapServer");
-       
+      //if(this.app.ser)
+      if(this.app.account_info.user_id == "12") {
+        this.windmills = new this.app.esriFeature("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/Turbines_Feature/FeatureServer/0", {outFields: ["hno", "prd", "stp", "rd", "sts", "pod", "status_address", "notes"]});//esriDynamicLayer("https://gis.lrgvdc911.org/arcgis2/rest/services/Dynamic/Turbines/MapServer");
+      }else {
+        this.windmills = new this.app.esriDynamicLayer("https://gis.lrgvdc911.org/arcgis2/rest/services/Features/Turbines_Feature/MapServer")
+      }
+      
+      
       // Lets Load Layers to the map object...
       // add layer...
       this.map.addLayers([this.mapWMSBase,this.mapFlexBase, this.skeletonFlexBase, this.quickPickBase,this.quickPickView, this.graphicLayer, this.windmills, this.vectorSubBase,this.vectorArrBase, this.rangesFeatureHCEW, this.rangesFeatureHCSN, this.rangesFeatureCEW, this.rangesFeatureCSN, this.rangesFeatureWWE, this.rangesFeatureWSN]);
