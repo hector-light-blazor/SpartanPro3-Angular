@@ -63,7 +63,8 @@ export class ROUTES {
        fNRF: "nrf/filterNRF/?f=", // filter by date nrf...
        gMSAG: "gis/getMSAG/",  // GET MSAG...
        gLTicket: "template/getLetter/?j=", // This is to generate letter
-       gEsignLetter: "template/pythonTemplateRequest/", //This is to send python spartan server generate letter convert pdf
+       gEsignLetter: "template/pythonTemplateRequest/", //This is to send python spartan server generate letter convert pdf this is for gisweb1 microservice..
+       gLetterAny: "template/pythonTemplateAnySvr/", //This is to any server... micro service
        gEsignCompletion: "template/mergePDF",
        sBookmark: "gis/saveBookmark", // SAVE BOOKMARK TO GIS TABLE..
        dBookmark: "gis/deleteBookmark",
@@ -427,6 +428,7 @@ interface API_ROUTES {
    fNRF?: string;
    gLTicket?: string;
    gEsignLetter?: string;
+   gLetterAny?: string;
    gEsignCompletion?: string;
    sBookmark?: string;
    gToken?: string;

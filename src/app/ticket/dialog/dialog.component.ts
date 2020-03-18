@@ -27,6 +27,10 @@ export class DialogComponent implements OnInit {
   public ENGLISH: number = 1;
   public SPANISH: number = 2;
   pageSelection: number = 0;
+
+  listServers: Array<String> = ["911gisweb1", "911appsvr" ];
+  listPorts: Array<number> = [5000, 8080];
+
   constructor(private app: AppService) { }
 
   ngOnInit() {
@@ -119,9 +123,20 @@ export class DialogComponent implements OnInit {
     
     }
     this.loading= true;
-    this.app.POST_METHOD(this.app.route.api.gEsignLetter, form).subscribe((response) => {
+    let found = false;
+    let index = Math.floor(Math.random() * 2)
+    console.log(index);
+    let selectServer: String = this.listServers[index];
+    form.append("srv", selectServer.toString());
+    form.append("port", this.listPorts[index].toString());
+    var firstRoute = null;
+    var secondRoute = null;
+    firstRoute = this.app.POST_METHOD(this.app.route.api.gLetterAny, form).subscribe((response) => {
         this.loading = false;
+
       if(response.hasOwnProperty("pdf")) {
+
+        
         
           this.pdfFile = response['pdf'];
           var name = this.pdfFile.replace(".pdf", ".docx");
@@ -130,8 +145,34 @@ export class DialogComponent implements OnInit {
           window.open("https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + name, "_blank");
         }
         
-    });
+    }, (error) => { //If Any Error Dispatch Second Server...
 
+       let reindex = Math.floor(Math.random() * 2)
+       let reServer: String = this.listServers[reindex];
+       form.delete('srv');
+       form.delete('port');
+       form.append("srv", reServer.toString());
+       form.append("port", this.listPorts[reindex].toString());
+
+       secondRoute = this.app.POST_METHOD(this.app.route.api.gLetterAny, form).subscribe((response) => {
+            this.loading = false;
+          
+            if(response.hasOwnProperty("pdf")) {
+
+
+            
+                firstRoute.unsubscribe();
+              
+              
+                this.pdfFile = response['pdf'];
+                var name = this.pdfFile.replace(".pdf", ".docx");
+                window.open("https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + this.pdfFile, "_blank");
+
+                window.open("https://gis.lrgvdc911.org/LETTER_TEMPLATES/" + name, "_blank");
+              }
+        });
+
+    });
   }
 
   sendLetterEsign(selection) {
