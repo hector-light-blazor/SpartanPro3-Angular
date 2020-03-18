@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --open",
     "buildtest": "ng build --prod --aot --bh=/spartantest/",
     "build": "ng build --prod --aot --bh=/spartanpro/",
     "mobilebuild": "ng build --prod --aot --bh=/spartanmobile/",
